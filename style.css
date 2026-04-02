@@ -511,9 +511,10 @@ img {
 }
 
 .theory-card {
+  position: relative;
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 16px;
+  clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
   padding: 36px 30px;
   transition: all 0.4s var(--ease-out);
   opacity: 0;
@@ -533,6 +534,35 @@ img {
   border-color: var(--border-hover);
   transform: translateY(-4px);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+.theory-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-top: 2px solid var(--accent);
+  border-left: 2px solid var(--accent);
+  width: 15px; height: 15px;
+  opacity: 0;
+  transition: opacity 0.4s;
+  pointer-events: none;
+}
+
+.theory-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; right: 0;
+  border-bottom: 2px solid var(--accent);
+  border-right: 2px solid var(--accent);
+  width: 15px; height: 15px;
+  opacity: 0;
+  transition: opacity 0.4s;
+  pointer-events: none;
+}
+
+.theory-card:hover::before,
+.theory-card:hover::after {
+  opacity: 0.8;
 }
 
 .theory-icon {
@@ -623,8 +653,9 @@ img {
 }
 
 .frontier-card {
+  position: relative;
   padding: 30px 24px;
-  border-radius: 14px;
+  clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
   border: 1px solid var(--border);
   background: var(--bg-surface);
   backdrop-filter: blur(12px);
@@ -651,6 +682,35 @@ img {
   border-color: var(--border-hover);
   transform: translateY(-4px);
   box-shadow: 0 10px 36px rgba(0, 0, 0, 0.3);
+}
+
+.frontier-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-top: 1px solid var(--accent);
+  border-left: 1px solid var(--accent);
+  width: 10px; height: 10px;
+  opacity: 0;
+  transition: opacity 0.4s;
+  pointer-events: none;
+}
+
+.frontier-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; right: 0;
+  border-bottom: 1px solid var(--accent);
+  border-right: 1px solid var(--accent);
+  width: 10px; height: 10px;
+  opacity: 0;
+  transition: opacity 0.4s;
+  pointer-events: none;
+}
+
+.frontier-card:hover::before,
+.frontier-card:hover::after {
+  opacity: 1;
 }
 
 .frontier-icon {
@@ -692,7 +752,7 @@ img {
 .product-step {
   position: relative;
   padding: 36px 30px;
-  border-radius: 16px;
+  clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
   background: var(--bg-card);
   border: 1px solid var(--border);
   transition: all 0.4s var(--ease-out);
@@ -713,6 +773,22 @@ img {
   border-color: var(--border-hover);
   transform: translateY(-4px);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+.product-step::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  border-top: 2px solid var(--gold);
+  border-right: 2px solid var(--gold);
+  width: 15px; height: 15px;
+  opacity: 0.2;
+  transition: opacity 0.4s;
+  pointer-events: none;
+}
+
+.product-step:hover::before {
+  opacity: 0.8;
 }
 
 .step-number {

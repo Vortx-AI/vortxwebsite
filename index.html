@@ -166,7 +166,14 @@
       <div class="theory-grid">
         <div class="theory-card" id="theory-card-1">
           <div class="theory-icon" aria-hidden="true">
-            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="1.5"/><path d="M8 14C8 14 10 8 14 8C18 8 20 14 20 14C20 14 18 20 14 20C10 20 8 14 8 14Z" stroke="currentColor" stroke-width="1.2"/><circle cx="14" cy="14" r="2.5" fill="currentColor" opacity="0.4"/></svg>
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+              <!-- Orbit and Nodes -->
+              <circle cx="14" cy="14" r="10" stroke="currentColor" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.6"/>
+              <circle cx="14" cy="14" r="14" stroke="currentColor" stroke-width="0.8" opacity="0.3"/>
+              <circle cx="14" cy="14" r="4" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="21" cy="7" r="2" fill="currentColor" opacity="0.8"/>
+              <path d="M16 12L20 8" stroke="currentColor" stroke-width="1.5"/>
+            </svg>
           </div>
           <h3>Encoders in orbit</h3>
           <p>
@@ -178,7 +185,12 @@
         </div>
         <div class="theory-card" id="theory-card-2">
           <div class="theory-icon" aria-hidden="true">
-            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 4L14 10M14 18L14 24M4 14H10M18 14H24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="14" cy="14" r="5" stroke="currentColor" stroke-width="1.5"/><path d="M10 10L18 18M18 10L10 18" stroke="currentColor" stroke-width="0.8" opacity="0.3"/></svg>
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+              <!-- HUD Target Box -->
+              <path d="M8 4H4V8M20 4H24V8M8 24H4V20M20 24H24V20" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="14" cy="14" r="3" fill="currentColor" opacity="0.8"/>
+              <path d="M14 6L14 10M14 18L14 22M6 14H10M18 14H22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+            </svg>
           </div>
           <h3>Decoders on devices</h3>
           <p>
@@ -190,7 +202,13 @@
         </div>
         <div class="theory-card" id="theory-card-3">
           <div class="theory-icon" aria-hidden="true">
-            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="4" y="4" width="20" height="20" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M4 14H24M14 4V24" stroke="currentColor" stroke-width="1" opacity="0.2"/><circle cx="9" cy="9" r="2" fill="currentColor" opacity="0.3"/><circle cx="19" cy="19" r="2" fill="currentColor" opacity="0.3"/><circle cx="19" cy="9" r="1.5" fill="currentColor" opacity="0.2"/></svg>
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+              <!-- Neural Grid -->
+              <path d="M4 14L14 4L24 14L14 24L4 14Z" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M4 14H24M14 4V24" stroke="currentColor" stroke-width="1" opacity="0.4"/>
+              <circle cx="14" cy="14" r="5" fill="currentColor" opacity="0.3"/>
+              <circle cx="14" cy="14" r="2" fill="currentColor"/>
+            </svg>
           </div>
           <h3>The world model hypothesis</h3>
           <p>
@@ -233,56 +251,89 @@
       <div class="frontier-grid">
         <article class="frontier-card" id="frontier-card-1">
           <div class="frontier-icon" aria-hidden="true">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M6 20V23C6 23.55 6.45 24 7 24H9C9.55 24 10 23.55 10 23V22H22V23C22 23.55 22.45 24 23 24H25C25.55 24 26 23.55 26 23V20M6 20L8 13C8.35 11.83 9.42 11 10.63 11H21.37C22.58 11 23.65 11.83 24 13L26 20M6 20H26" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="20" r="1.5" fill="currentColor" opacity="0.5"/><circle cx="22" cy="20" r="1.5" fill="currentColor" opacity="0.5"/></svg>
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <path d="M16 4V8M16 24V28M4 16H8M24 16H28" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <ellipse cx="16" cy="16" rx="6" ry="12" stroke="currentColor" stroke-width="1.2" transform="rotate(45 16 16)" opacity="0.6"/>
+              <circle cx="16" cy="16" r="2" fill="currentColor"/>
+            </svg>
           </div>
           <h3>Autonomous Vehicles</h3>
           <p>Self-driving systems trained on guided synthetic overhead views develop richer spatial priors — understanding road topology, intersection geometry, and terrain from perspectives grounded in real satellite observations.</p>
         </article>
         <article class="frontier-card" id="frontier-card-2">
           <div class="frontier-icon" aria-hidden="true">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect x="8" y="12" width="16" height="14" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="13" cy="19" r="2" fill="currentColor" opacity="0.4"/><circle cx="19" cy="19" r="2" fill="currentColor" opacity="0.4"/><path d="M16 8V12M12 8H20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M5 18H8M24 18H27" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <path d="M16 6L24 11V21L16 26L8 21V11L16 6Z" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="16" cy="16" r="4" stroke="currentColor" stroke-width="1" stroke-dasharray="2 2"/>
+              <path d="M16 16L24 11M16 16V26M16 16L8 11" stroke="currentColor" stroke-width="1.2" opacity="0.5"/>
+            </svg>
           </div>
           <h3>Robotics</h3>
           <p>Delivery robots, warehouse bots, and industrial arms gain spatial awareness beyond their sensors — understanding facility layout and terrain context from synthetic orbital pretraining anchored in real observation.</p>
         </article>
         <article class="frontier-card" id="frontier-card-3">
           <div class="frontier-icon" aria-hidden="true">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect x="12" y="14" width="8" height="6" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M12 17H6M20 17H26" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="6" cy="17" r="3" stroke="currentColor" stroke-width="1.2"/><circle cx="26" cy="17" r="3" stroke="currentColor" stroke-width="1.2"/><path d="M14 14L10 10M18 14L22 10" stroke="currentColor" stroke-width="1" stroke-linecap="round" opacity="0.4"/></svg>
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <path d="M4 16C4 22.6274 9.37258 28 16 28C22.6274 28 28 22.6274 28 16" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.5"/>
+              <path d="M16 16L24 8" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="24" cy="8" r="2" fill="currentColor"/>
+              <circle cx="16" cy="16" r="3" stroke="currentColor" stroke-width="1.5"/>
+            </svg>
           </div>
           <h3>UAVs &amp; Drones</h3>
           <p>Drones surveying pipelines, farmland, or disaster zones navigate with pre-trained models that already know the terrain — because they were trained on synthetic views guided by actual satellite passes of the area.</p>
         </article>
         <article class="frontier-card" id="frontier-card-4">
           <div class="frontier-icon" aria-hidden="true">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M16 6L16 26" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M6 16L16 12L26 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 24L16 22L20 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="16" cy="14" r="1.5" fill="currentColor" opacity="0.4"/></svg>
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <path d="M4 16C4 16 11 8 16 8C21 8 28 16 28 16C28 16 21 24 16 24C11 24 4 16 4 16Z" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="16" cy="16" r="4" stroke="currentColor" stroke-width="1.2" opacity="0.6"/>
+              <path d="M16 6V26" stroke="currentColor" stroke-width="1" stroke-dasharray="2 2" opacity="0.5"/>
+            </svg>
           </div>
           <h3>Aviation</h3>
           <p>Commercial and military aircraft benefit from synthetic terrain awareness for approach planning and situational understanding — especially in GPS-denied or low-visibility environments.</p>
         </article>
         <article class="frontier-card" id="frontier-card-5">
           <div class="frontier-icon" aria-hidden="true">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M16 4L6 9V16C6 22.08 10.28 27.72 16 29C21.72 27.72 26 22.08 26 16V9L16 4Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 17L15 20L21 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/></svg>
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <path d="M16 4V12M16 20V28M8 16H24" stroke="currentColor" stroke-width="1.5"/>
+              <rect x="12" y="12" width="8" height="8" stroke="currentColor" stroke-width="1.5" transform="rotate(45 16 16)"/>
+              <path d="M6 6L10 10M26 26L22 22" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+            </svg>
           </div>
           <h3>Defense &amp; Security</h3>
           <p>Guided synthetic imagery provides training data for classifying installations, detecting change, and maintaining persistent surveillance awareness — without depending on tasked real satellite passes.</p>
         </article>
         <article class="frontier-card" id="frontier-card-6">
           <div class="frontier-icon" aria-hidden="true">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect x="10" y="5" width="12" height="22" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M14 8H18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="16" cy="23" r="1.5" fill="currentColor" opacity="0.4"/></svg>
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <path d="M12 20H8V12H12M20 12H24V20H20" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="16" cy="16" r="6" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 3"/>
+              <circle cx="16" cy="16" r="2" fill="currentColor"/>
+            </svg>
           </div>
           <h3>Mobile &amp; Edge</h3>
           <p>Smartphones and edge devices run lightweight models distilled from the LBVM — enabling on-device spatial reasoning for navigation, AR, environmental sensing, and location intelligence.</p>
         </article>
         <article class="frontier-card" id="frontier-card-7">
           <div class="frontier-icon" aria-hidden="true">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M4 26H28" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><rect x="5" y="14" width="6" height="12" stroke="currentColor" stroke-width="1.5"/><path d="M11 20L17 14V20L23 14V26H11V20Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><rect x="25" y="8" width="3" height="18" stroke="currentColor" stroke-width="1.2"/><circle cx="26.5" cy="10" r="0.8" fill="currentColor" opacity="0.5"/></svg>
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <path d="M6 22L12 16L18 20L26 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M6 14L14 8L20 12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.4"/>
+              <circle cx="26" cy="12" r="2" fill="currentColor"/>
+            </svg>
           </div>
           <h3>Industrial &amp; Factories</h3>
           <p>Factory automation systems use synthetic aerial views — grounded in real site imagery — to understand facility topology, monitor changes, optimize logistics, and detect structural anomalies.</p>
         </article>
         <article class="frontier-card" id="frontier-card-8">
           <div class="frontier-icon" aria-hidden="true">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M16 26V14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M16 14C16 14 12 10 12 7C12 4 16 4 16 4C16 4 20 4 20 7C20 10 16 14 16 14Z" stroke="currentColor" stroke-width="1.5"/><path d="M16 20C16 20 10 18 8 15C8 15 12 14 16 20Z" stroke="currentColor" stroke-width="1.2" opacity="0.6"/><path d="M16 22C16 22 22 20 24 17C24 17 20 16 16 22Z" stroke="currentColor" stroke-width="1.2" opacity="0.6"/><path d="M8 26H24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <path d="M4 24C10 24 12 18 16 18C20 18 22 12 28 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M4 18C10 18 12 12 16 12C20 12 22 6 28 6" stroke="currentColor" stroke-width="1.2" opacity="0.4" stroke-linecap="round"/>
+              <circle cx="16" cy="18" r="2" fill="currentColor"/>
+            </svg>
           </div>
           <h3>Agriculture &amp; Environment</h3>
           <p>Precision agriculture models trained on guided synthetic multispectral imagery monitor crop health, predict yield, track deforestation, and detect environmental change at planetary scale.</p>
