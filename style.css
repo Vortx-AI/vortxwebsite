@@ -274,13 +274,13 @@ img {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.2fr 0.8fr;
   align-items: center;
   min-height: 100vh;
   max-width: var(--container);
   margin: 0 auto;
   padding: 120px 0 80px;
-  gap: 60px;
+  gap: 40px;
 }
 
 .hero-content {
@@ -941,6 +941,78 @@ img {
 .footer-bottom p {
   font-size: 13px;
   color: var(--text-muted);
+}
+
+/* ============================================================
+   SVG Icon Animations
+   ============================================================ */
+
+@keyframes anim-orbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes anim-orbit-reverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+@keyframes anim-pendulum {
+  from { transform: rotate(-15deg); }
+  to { transform: rotate(15deg); }
+}
+
+@keyframes anim-pulse {
+  from { opacity: 0.2; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1.1); }
+}
+
+@keyframes anim-scan-h {
+  from { transform: translateX(-4px); }
+  to { transform: translateX(4px); }
+}
+
+@keyframes anim-scan-v {
+  from { transform: translateY(-4px); }
+  to { transform: translateY(4px); }
+}
+
+.anim-orbit {
+  animation: anim-orbit 14s linear infinite;
+  transform-origin: 50% 50%;
+}
+
+.anim-orbit-fast {
+  animation: anim-orbit 8s linear infinite;
+  transform-origin: 50% 50%;
+}
+
+.anim-orbit-reverse {
+  animation: anim-orbit-reverse 20s linear infinite;
+  transform-origin: 50% 50%;
+}
+
+.anim-pendulum {
+  animation: anim-pendulum 4s ease-in-out infinite alternate;
+  transform-origin: 50% 50%;
+}
+
+.anim-pulse {
+  animation: anim-pulse 3s ease-in-out infinite alternate;
+  transform-origin: 50% 50%;
+}
+
+.anim-pulse-fast {
+  animation: anim-pulse 1.5s ease-in-out infinite alternate;
+  transform-origin: 50% 50%;
+}
+
+.anim-scan-h {
+  animation: anim-scan-h 3s ease-in-out infinite alternate;
+}
+
+.anim-scan-v {
+  animation: anim-scan-v 3s ease-in-out infinite alternate;
 }
 
 /* ============================================================
