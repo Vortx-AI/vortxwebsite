@@ -112,10 +112,10 @@
         <span class="hero-accent">Act on Earth.</span>
       </h1>
       <p class="hero-subtitle" id="hero-subtitle">
-        We build the <strong>Large Bio-Vision Model</strong> — a world model that learns from 
-        real satellites, CCTV, and ground sensors, then generates <strong>guided synthetic 
-        satellite imagery</strong> to train the AI inside every robot, vehicle, drone, and 
-        device on the planet.
+        We build the <strong>Large Bio-Vision Model</strong>. Instead of beaming down raw 
+        imagery, we deploy <strong>encoders in orbit</strong> and run <strong>decoders on Earth</strong>, 
+        equipping every robot, vehicle, and drone with the most spatially aware real-time 
+        intelligence in the world.
       </p>
       <div class="hero-actions" id="hero-actions">
         <a href="https://geo.qa" class="btn btn-primary" id="cta-primary" target="_blank" rel="noopener">
@@ -142,28 +142,25 @@
       <h2 class="section-title" id="thesis-heading">Guided synthesis, not random generation.<br>Real observations in. Synthetic intelligence out.</h2>
       <div class="thesis-statement">
         <p>
-          Every intelligent machine on Earth — every autonomous car navigating an intersection, 
-          every delivery robot crossing a sidewalk, every drone surveying a pipeline, every 
-          fighter jet reading terrain — depends on spatial understanding from above. Today, that 
-          understanding comes from real satellite imagery: expensive, infrequent, weather-dependent, 
-          and scarce.
+          Every intelligent agent deployed in the real world — an autonomous car navigating a city, 
+          a drone surveying a grid, a robot operating in a facility — needs profound spatial 
+          awareness. Today, that intelligence is bottlenecked by the legacy model of Earth 
+          observation: capturing heavy, raw images and beaming them down to terrestrial ground 
+          stations. It is slow, expensive, and a colossal waste of bandwidth.
         </p>
         <p>
-          Our approach is fundamentally different from random generative models. The LBVM 
-          <em>learns from actual Earth observations</em> — real satellite passes, CCTV feeds, 
-          drone surveys, ground-level telematics — and uses that learned understanding to 
-          synthesize new perspectives that are physically consistent and contextually accurate. 
-          Every synthetic image is grounded in reality: guided by sensor data, constrained by 
-          physics, and validated against known ground truth.
+          Our approach shifts the paradigm to where the data originates: we are building the 
+          foundation for <em>data centres in space</em>. Rather than transmitting billions of 
+          pixels back to Earth, the LBVM processes the world dynamically from orbit. We deploy 
+          powerful visual encoders directly onto space architecture, compressing the physical 
+          world into dense, semantic latent representations at the source.
         </p>
         <p>
-          This is the principle of <em>guided synthesis</em>. We do not hallucinate terrain — 
-          we extend what real sensors have observed into viewpoints, times, conditions, and 
-          spectral bands that no single satellite captured. The result is training data for AI 
-          models that is orders of magnitude richer than any real dataset, yet rooted in actual 
-          observation. As we scale toward our own satellite constellation, the loop tightens: 
-          more real data feeds better synthesis, better synthesis trains better ground-level AI, 
-          and the intelligence compounds.
+          These compressed latents are beamed instantly to <em>decoders running directly on 
+          edge devices</em>. A robot doesn't need a high-res photo from space — it needs the 
+          mathematical meaning of its surroundings. By splitting the architecture — encoders 
+          in orbit, decoders on devices — machines on Earth wake up vastly more intelligent, 
+          understanding the topology and context of the world they act within.
         </p>
       </div>
       <div class="theory-grid">
@@ -171,25 +168,24 @@
           <div class="theory-icon" aria-hidden="true">
             <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="1.5"/><path d="M8 14C8 14 10 8 14 8C18 8 20 14 20 14C20 14 18 20 14 20C10 20 8 14 8 14Z" stroke="currentColor" stroke-width="1.2"/><circle cx="14" cy="14" r="2.5" fill="currentColor" opacity="0.4"/></svg>
           </div>
-          <h3>Guided, not generative</h3>
+          <h3>Encoders in orbit</h3>
           <p>
-            Unlike diffusion models that generate from noise, the LBVM synthesizes from 
-            <em>observation</em>. Real satellite passes, CCTV feeds, and sensor telemetry 
-            anchor every generated view. The synthesis extends coverage — filling temporal 
-            gaps, weather occlusions, and resolution limits — while remaining physically 
-            grounded in what was actually seen.
+            Raw satellite feeds are obsolete. By deploying the LBVM's computer vision 
+            encoders directly into space-based data centres, we process Earth observation 
+            at the source. We extract the semantic structure of terrain, sending only the 
+            essential, pure intelligence down to the surface.
           </p>
         </div>
         <div class="theory-card" id="theory-card-2">
           <div class="theory-icon" aria-hidden="true">
             <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 4L14 10M14 18L14 24M4 14H10M18 14H24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="14" cy="14" r="5" stroke="currentColor" stroke-width="1.5"/><path d="M10 10L18 18M18 10L10 18" stroke="currentColor" stroke-width="0.8" opacity="0.3"/></svg>
           </div>
-          <h3>From orbit to action</h3>
+          <h3>Decoders on devices</h3>
           <p>
-            An autonomous vehicle does not need to launch a satellite — it needs to 
-            <em>think</em> like one. Guided synthetic imagery pre-trains spatial reasoning 
-            into AI models so that a robot in a warehouse, a drone over a farm, or a car 
-            on a highway understands the world from a perspective it has never physically seen.
+            An autonomous vehicle or mobile agent runs a lightweight terrestrial decoder that 
+            translates orbital latents into immediate spatial awareness. The device instantly 
+            understands its broader environment — providing the essential context missing 
+            from ground-level sensors alone.
           </p>
         </div>
         <div class="theory-card" id="theory-card-3">
@@ -213,15 +209,13 @@
   <section class="section architecture" id="architecture" aria-labelledby="arch-heading">
     <div class="section-inner">
       <div class="section-label">Architecture</div>
-      <h2 class="section-title" id="arch-heading">Real sensors guide. The LBVM synthesizes.<br>Devices on Earth act.</h2>
+      <h2 class="section-title" id="arch-heading">Encoders in space. Decoders on devices.<br>Deploy spatially aware AI.</h2>
       <p class="section-desc">
-        The Large Bio-Vision Model sits between orbital observation and terrestrial action. 
-        It ingests real observations from satellites, ground sensors, and connected cameras — 
-        learns the latent structure of the physical world — then generates guided synthetic 
-        imagery that any downstream AI system can train against, fine-tune on, or embed into 
-        its own decision loop. As we move toward deploying our own satellite constellation, 
-        this feedback loop between real observation and synthetic generation becomes the 
-        foundation for persistent, planetary-scale intelligence.
+        The legacy model of Earth observation — bouncing heavy image files through ground stations — 
+        is too slow for real-time AI. The Large Bio-Vision Model bridge operates across the divide: 
+        encoding spatial intelligence in orbital data centres and decoding it directly on edge devices. 
+        Once this neural link is established, terrestrial machines become exponentially smarter, 
+        fully conscious of the planetary context in which they are acting.
       </p>
     </div>
   </section>
