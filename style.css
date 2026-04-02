@@ -577,43 +577,6 @@ img {
   margin-right: auto;
 }
 
-.diagram-container {
-  position: relative;
-  max-width: 720px;
-  margin: 0 auto;
-  border-radius: 20px;
-  overflow: hidden;
-  border: 1px solid var(--border);
-  background: var(--bg-card);
-  opacity: 0;
-  transform: scale(0.95) translateY(20px);
-}
-
-.is-visible .diagram-container {
-  animation: diagram-in 0.8s var(--ease-out) 0.3s forwards;
-}
-
-@keyframes diagram-in {
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-.diagram-glow {
-  position: absolute;
-  inset: -2px;
-  background: linear-gradient(135deg, var(--accent-glow), transparent, var(--gold-dim));
-  border-radius: 22px;
-  z-index: -1;
-  filter: blur(1px);
-}
-
-.diagram-img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
 
 /* --- Thesis Statement (prose block) --- */
 .thesis {
