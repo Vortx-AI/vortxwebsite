@@ -442,4 +442,146 @@
       }
     });
   }
+
+  // ==========================================================
+  // FOOTER ORBITAL RADAR
+  // Animated satellite tracking radar with sweep and blips
+  // ==========================================================
+  const radarCanvas = document.getElementById('footer-radar');
+  if (radarCanvas) {
+    const rCtx = radarCanvas.getContext('2d');
+    const rDpr = Math.min(window.devicePixelRatio || 1, 2);
+    let rSize;
+
+    function resizeRadar() {
+      const rect = radarCanvas.getBoundingClientRect();
+      rSize = rect.width;
+      radarCanvas.width = rSize * rDpr;
+      radarCanvas.height = rSize * rDpr;
+      radarCanvas.style.width = rSize + 'px';
+      radarCanvas.style.height = rSize + 'px';
+      rCtx.setTransform(rDpr, 0, 0, rDpr, 0, 0);
+    }
+
+    // Satellite blips (fixed positions on the radar)
+    const blips = [
+      { angle: 0.8, dist: 0.35, pulseSpeed: 1.2, phase: 0 },
+      { angle: 2.1, dist: 0.7, pulseSpeed: 0.8, phase: 1.5 },
+      { angle: 3.9, dist: 0.55, pulseSpeed: 1.0, phase: 3.0 },
+      { angle: 5.2, dist: 0.82, pulseSpeed: 1.4, phase: 0.7 },
+      { angle: 1.4, dist: 0.9, pulseSpeed: 0.6, phase: 2.2 },
+    ];
+
+    let radarAnimId;
+    function drawRadar(time) {
+      const t = time * 0.001;
+      const cx = rSize / 2;
+      const cy = rSize / 2;
+      const maxR = rSize * 0.45;
+
+      rCtx.clearRect(0, 0, rSize, rSize);
+
+      // Concentric rings
+      for (let i = 1; i <= 4; i++) {
+        const r = maxR * (i / 4);
+        rCtx.beginPath();
+        rCtx.arc(cx, cy, r, 0, Math.PI * 2);
+        rCtx.strokeStyle = 'rgba(53, 187, 154, 0.08)';
+        rCtx.lineWidth = 1;
+        rCtx.stroke();
+      }
+
+      // Cross lines
+      rCtx.beginPath();
+      rCtx.moveTo(cx - maxR, cy);
+      rCtx.lineTo(cx + maxR, cy);
+      rCtx.moveTo(cx, cy - maxR);
+      rCtx.lineTo(cx, cy + maxR);
+      rCtx.strokeStyle = 'rgba(53, 187, 154, 0.05)';
+      rCtx.lineWidth = 1;
+      rCtx.stroke();
+
+      // Sweep arm (rotating)
+      const sweepAngle = t * 0.8;
+      const sweepX = cx + Math.cos(sweepAngle) * maxR;
+      const sweepY = cy + Math.sin(sweepAngle) * maxR;
+
+      // Sweep trail (fading cone)
+      const trailSpan = 0.8; // radians
+      const trailSteps = 20;
+      for (let i = 0; i < trailSteps; i++) {
+        const a = sweepAngle - (trailSpan * i / trailSteps);
+        const alpha = (1 - i / trailSteps) * 0.06;
+        rCtx.beginPath();
+        rCtx.moveTo(cx, cy);
+        rCtx.lineTo(cx + Math.cos(a) * maxR, cy + Math.sin(a) * maxR);
+        rCtx.strokeStyle = `rgba(53, 187, 154, ${alpha.toFixed(3)})`;
+        rCtx.lineWidth = 1;
+        rCtx.stroke();
+      }
+
+      // Sweep line (bright)
+      rCtx.beginPath();
+      rCtx.moveTo(cx, cy);
+      rCtx.lineTo(sweepX, sweepY);
+      rCtx.strokeStyle = 'rgba(53, 187, 154, 0.25)';
+      rCtx.lineWidth = 1.5;
+      rCtx.stroke();
+
+      // Center dot
+      rCtx.beginPath();
+      rCtx.arc(cx, cy, 2, 0, Math.PI * 2);
+      rCtx.fillStyle = 'rgba(53, 187, 154, 0.4)';
+      rCtx.fill();
+
+      // Satellite blips
+      for (const b of blips) {
+        const bx = cx + Math.cos(b.angle) * (maxR * b.dist);
+        const by = cy + Math.sin(b.angle) * (maxR * b.dist);
+
+        // Check if sweep just passed this blip
+        const angleDiff = ((sweepAngle % (Math.PI * 2)) - b.angle + Math.PI * 4) % (Math.PI * 2);
+        const freshness = angleDiff < 1.2 ? (1 - angleDiff / 1.2) : 0;
+
+        const pulse = Math.sin(t * b.pulseSpeed + b.phase) * 0.3 + 0.7;
+        const alpha = 0.15 + freshness * 0.6;
+
+        // Blip glow
+        if (freshness > 0.1) {
+          rCtx.beginPath();
+          rCtx.arc(bx, by, 6, 0, Math.PI * 2);
+          rCtx.fillStyle = `rgba(53, 187, 154, ${(freshness * 0.1).toFixed(3)})`;
+          rCtx.fill();
+        }
+
+        // Blip dot
+        rCtx.beginPath();
+        rCtx.arc(bx, by, 2 * pulse, 0, Math.PI * 2);
+        rCtx.fillStyle = `rgba(53, 187, 154, ${(alpha * pulse).toFixed(2)})`;
+        rCtx.fill();
+      }
+
+      // Outer ring glow
+      rCtx.beginPath();
+      rCtx.arc(cx, cy, maxR, 0, Math.PI * 2);
+      rCtx.strokeStyle = 'rgba(53, 187, 154, 0.12)';
+      rCtx.lineWidth = 1.5;
+      rCtx.stroke();
+
+      radarAnimId = requestAnimationFrame(drawRadar);
+    }
+
+    resizeRadar();
+    drawRadar(0);
+
+    window.addEventListener('resize', () => resizeRadar());
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        cancelAnimationFrame(radarAnimId);
+      } else {
+        radarAnimId = requestAnimationFrame(drawRadar);
+      }
+    });
+  }
 })();
