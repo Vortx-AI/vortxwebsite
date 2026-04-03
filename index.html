@@ -81,11 +81,21 @@
   </script>
 </head>
 <body>
+  <!-- Deep space canvas (star field + data beam) -->
+  <canvas id="space-canvas" class="space-canvas" aria-hidden="true"></canvas>
+
   <!-- Ambient background -->
   <div class="ambient-bg" aria-hidden="true">
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
     <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Shooting stars -->
+  <div class="shooting-stars" aria-hidden="true">
+    <div class="shooting-star ss-1"></div>
+    <div class="shooting-star ss-2"></div>
+    <div class="shooting-star ss-3"></div>
   </div>
 
   <!-- Navigation -->
@@ -145,10 +155,13 @@
     </div>
   </header>
 
+  <!-- Atmospheric layer transition -->
+  <div class="atmo-layer atmo-1" aria-hidden="true"></div>
+
   <!-- Thesis Section -->
   <section class="section thesis" id="thesis" aria-labelledby="thesis-heading">
     <div class="section-inner">
-      <div class="section-label">Thesis</div>
+      <div class="section-label"><span class="hud-bracket">[</span> Thesis <span class="hud-bracket">]</span></div>
       <h2 class="section-title" id="thesis-heading">Guided synthesis, not random generation.<br>Real observations in. Synthetic intelligence out.</h2>
       <div class="thesis-statement">
         <p>
@@ -236,7 +249,7 @@
   <!-- Architecture Diagram Section -->
   <section class="section architecture" id="architecture" aria-labelledby="arch-heading">
     <div class="section-inner">
-      <div class="section-label">Architecture</div>
+      <div class="section-label"><span class="hud-bracket">[</span> Architecture <span class="hud-bracket">]</span></div>
       <h2 class="section-title" id="arch-heading">Encoders in space. Decoders on devices.<br>Deploy spatially aware AI.</h2>
       <p class="section-desc">
         The legacy model of Earth observation — bouncing heavy image files through ground stations — 
@@ -248,10 +261,13 @@
     </div>
   </section>
 
+  <!-- Atmospheric layer transition -->
+  <div class="atmo-layer atmo-2" aria-hidden="true"></div>
+
   <!-- Frontier / Devices Section -->
   <section class="section frontier" id="frontier" aria-labelledby="frontier-heading">
     <div class="section-inner">
-      <div class="section-label">Frontier</div>
+      <div class="section-label"><span class="hud-bracket">[</span> Frontier <span class="hud-bracket">]</span></div>
       <h2 class="section-title" id="frontier-heading">Every device on Earth inherits orbital perspective</h2>
       <p class="section-desc">
         Guided synthetic satellite imagery is the training signal that gives downstream AI 
@@ -355,7 +371,7 @@
   <!-- How It Works — geo.qa -->
   <section class="section product" id="product" aria-labelledby="product-heading">
     <div class="section-inner">
-      <div class="section-label">Product</div>
+      <div class="section-label"><span class="hud-bracket">[</span> Product <span class="hud-bracket">]</span></div>
       <h2 class="section-title" id="product-heading">geo.qa — query the world in natural language</h2>
       <div class="product-grid">
         <div class="product-step">

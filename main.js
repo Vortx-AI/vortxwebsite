@@ -69,6 +69,50 @@
     });
   });
 
+  // ==========================================================
+  // ADAPTIVE CARDS — 3D tilt, cursor glow, gradient borders
+  // ==========================================================
+  const cards = document.querySelectorAll('.theory-card, .frontier-card, .product-step');
+
+  cards.forEach(card => {
+    // Inject inner glow element
+    const glow = document.createElement('div');
+    glow.className = 'card-glow';
+    card.appendChild(glow);
+
+    // Inject gradient border element (theory + product only)
+    if (card.classList.contains('theory-card') || card.classList.contains('product-step')) {
+      const border = document.createElement('div');
+      border.className = 'gradient-border';
+      card.appendChild(border);
+    }
+
+    // 3D tilt + cursor glow tracking
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      // Tilt angles (subtle — max 4 degrees)
+      const rotateY = ((x - centerX) / centerX) * 4;
+      const rotateX = ((centerY - y) / centerY) * 4;
+
+      card.style.transform = `perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+
+      // Update glow position
+      const glowX = ((x / rect.width) * 100).toFixed(1);
+      const glowY = ((y / rect.height) * 100).toFixed(1);
+      glow.style.setProperty('--glow-x', glowX + '%');
+      glow.style.setProperty('--glow-y', glowY + '%');
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
+
   // --- Particle Globe ---
   const canvas = document.getElementById('globe-canvas');
   if (!canvas) return;
@@ -224,4 +268,178 @@
       animId = requestAnimationFrame(draw);
     }
   });
+
+  // ==========================================================
+  // THE DESCENT — Deep Space Canvas
+  // Star field with parallax + vertical data transmission beam
+  // ==========================================================
+  const spaceCanvas = document.getElementById('space-canvas');
+  if (spaceCanvas) {
+    const sCtx = spaceCanvas.getContext('2d');
+    const sDpr = Math.min(window.devicePixelRatio || 1, 2);
+    let sW, sH;
+    const STAR_LAYERS = 3;
+    const stars = [[], [], []]; // 3 depth layers for parallax
+    const STAR_COUNTS = [80, 120, 60]; // back, mid, front
+    const PARALLAX_SPEEDS = [0.02, 0.05, 0.1]; // scroll multipliers
+    let scrollY = 0;
+    let docHeight = 1;
+
+    // Data beam particles
+    const beamParticles = [];
+    const BEAM_COUNT = 30;
+
+    function resizeSpace() {
+      sW = window.innerWidth;
+      sH = window.innerHeight;
+      spaceCanvas.width = sW * sDpr;
+      spaceCanvas.height = sH * sDpr;
+      spaceCanvas.style.width = sW + 'px';
+      spaceCanvas.style.height = sH + 'px';
+      sCtx.setTransform(sDpr, 0, 0, sDpr, 0, 0);
+    }
+
+    function createStars() {
+      for (let layer = 0; layer < STAR_LAYERS; layer++) {
+        stars[layer].length = 0;
+        for (let i = 0; i < STAR_COUNTS[layer]; i++) {
+          stars[layer].push({
+            x: Math.random() * sW,
+            y: Math.random() * sH * 3, // spread across 3x viewport for scroll room
+            size: layer === 0 ? Math.random() * 0.8 + 0.3
+                 : layer === 1 ? Math.random() * 1.2 + 0.5
+                 : Math.random() * 1.8 + 0.6,
+            baseAlpha: layer === 0 ? Math.random() * 0.3 + 0.1
+                      : layer === 1 ? Math.random() * 0.4 + 0.2
+                      : Math.random() * 0.5 + 0.3,
+            twinkleSpeed: Math.random() * 1.2 + 0.3,
+            phase: Math.random() * Math.PI * 2,
+            tint: Math.random(), // 0-0.6 cream, 0.6-0.82 gold, 0.82+ teal
+          });
+        }
+      }
+    }
+
+    function createBeamParticles() {
+      beamParticles.length = 0;
+      for (let i = 0; i < BEAM_COUNT; i++) {
+        beamParticles.push({
+          y: Math.random() * sH,
+          speed: Math.random() * 1.5 + 0.5,
+          alpha: Math.random() * 0.4 + 0.1,
+          size: Math.random() * 2 + 1,
+          xOffset: (Math.random() - 0.5) * 6,
+        });
+      }
+    }
+
+    let spaceAnimId;
+    function drawSpace(time) {
+      sCtx.clearRect(0, 0, sW, sH);
+      const t = time * 0.001;
+      scrollY = window.scrollY || window.pageYOffset;
+      docHeight = Math.max(document.body.scrollHeight - sH, 1);
+      const scrollProgress = scrollY / docHeight; // 0..1
+
+      // --- Draw star layers with parallax ---
+      for (let layer = 0; layer < STAR_LAYERS; layer++) {
+        const parallaxOffset = scrollY * PARALLAX_SPEEDS[layer];
+
+        for (const s of stars[layer]) {
+          const yPos = ((s.y - parallaxOffset) % (sH * 3) + sH * 3) % (sH * 3) - sH;
+          if (yPos < -10 || yPos > sH + 10) continue;
+
+          const flicker = Math.sin(t * s.twinkleSpeed + s.phase) * 0.35 + 0.65;
+          const alpha = s.baseAlpha * flicker;
+
+          let r, g, b;
+          if (s.tint < 0.6) { r = 243; g = 237; b = 211; }
+          else if (s.tint < 0.82) { r = 230; g = 173; b = 101; }
+          else { r = 53; g = 187; b = 154; }
+
+          sCtx.beginPath();
+          sCtx.arc(s.x, yPos, s.size, 0, Math.PI * 2);
+          sCtx.fillStyle = `rgba(${r},${g},${b},${alpha.toFixed(2)})`;
+          sCtx.fill();
+
+          // Glow halo for larger front-layer stars
+          if (layer === 2 && s.size > 1.5) {
+            sCtx.beginPath();
+            sCtx.arc(s.x, yPos, s.size * 3, 0, Math.PI * 2);
+            sCtx.fillStyle = `rgba(${r},${g},${b},${(alpha * 0.06).toFixed(3)})`;
+            sCtx.fill();
+          }
+        }
+      }
+
+      // --- Data Transmission Beam (vertical center line) ---
+      // Only visible after scrolling past hero
+      const beamOpacity = Math.min(scrollProgress * 3, 0.25);
+      if (beamOpacity > 0.01) {
+        const beamX = sW / 2;
+
+        // Core beam line
+        const beamGrad = sCtx.createLinearGradient(beamX, 0, beamX, sH);
+        beamGrad.addColorStop(0, `rgba(53, 187, 154, 0)`);
+        beamGrad.addColorStop(0.2, `rgba(53, 187, 154, ${(beamOpacity * 0.4).toFixed(3)})`);
+        beamGrad.addColorStop(0.5, `rgba(53, 187, 154, ${(beamOpacity * 0.6).toFixed(3)})`);
+        beamGrad.addColorStop(0.8, `rgba(230, 173, 101, ${(beamOpacity * 0.3).toFixed(3)})`);
+        beamGrad.addColorStop(1, `rgba(230, 173, 101, 0)`);
+
+        sCtx.beginPath();
+        sCtx.moveTo(beamX, 0);
+        sCtx.lineTo(beamX, sH);
+        sCtx.strokeStyle = beamGrad;
+        sCtx.lineWidth = 1;
+        sCtx.stroke();
+
+        // Beam glow
+        sCtx.beginPath();
+        sCtx.moveTo(beamX, 0);
+        sCtx.lineTo(beamX, sH);
+        sCtx.strokeStyle = `rgba(53, 187, 154, ${(beamOpacity * 0.08).toFixed(3)})`;
+        sCtx.lineWidth = 20;
+        sCtx.stroke();
+
+        // Beam particles flowing downward
+        for (const bp of beamParticles) {
+          bp.y += bp.speed;
+          if (bp.y > sH) {
+            bp.y = -10;
+            bp.speed = Math.random() * 1.5 + 0.5;
+          }
+
+          const pAlpha = bp.alpha * beamOpacity * 3;
+          sCtx.beginPath();
+          sCtx.arc(beamX + bp.xOffset, bp.y, bp.size, 0, Math.PI * 2);
+          sCtx.fillStyle = `rgba(53, 187, 154, ${pAlpha.toFixed(3)})`;
+          sCtx.fill();
+        }
+      }
+
+      spaceAnimId = requestAnimationFrame(drawSpace);
+    }
+
+    resizeSpace();
+    createStars();
+    createBeamParticles();
+    drawSpace(0);
+
+    let spaceResizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(spaceResizeTimer);
+      spaceResizeTimer = setTimeout(() => {
+        resizeSpace();
+        createStars();
+      }, 200);
+    });
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        cancelAnimationFrame(spaceAnimId);
+      } else {
+        spaceAnimId = requestAnimationFrame(drawSpace);
+      }
+    });
+  }
 })();
