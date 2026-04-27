@@ -72,7 +72,7 @@
   // ==========================================================
   // ADAPTIVE CARDS — 3D tilt, cursor glow, gradient borders
   // ==========================================================
-  const cards = document.querySelectorAll('.theory-card, .frontier-card, .product-step');
+  const cards = document.querySelectorAll('.theory-card, .frontier-card, .product-step, .product-card');
 
   cards.forEach(card => {
     // Inject inner glow element
@@ -81,7 +81,7 @@
     card.appendChild(glow);
 
     // Inject gradient border element (theory + product only)
-    if (card.classList.contains('theory-card') || card.classList.contains('product-step')) {
+    if (card.classList.contains('theory-card') || card.classList.contains('product-step') || card.classList.contains('product-card')) {
       const border = document.createElement('div');
       border.className = 'gradient-border';
       card.appendChild(border);

@@ -16,8 +16,8 @@
 
   <!-- Primary SEO -->
   <title>Vortx AI — Synthetic Satellite Intelligence for Earth</title>
-  <meta name="description" content="Vortx AI builds the Large Bio-Vision Model (LBVM) — generating guided synthetic satellite imagery from real Earth observations to train AI in robots, autonomous vehicles, drones, defense, and every intelligent device on the planet.">
-  <meta name="keywords" content="Vortx AI, synthetic satellite imagery, LBVM, Large Bio-Vision Model, geo.qa, world model, geospatial AI, satellite intelligence, JEPA, autonomous vehicles, robotics, defense AI, UAV, drone intelligence, Earth observation, synthetic data">
+  <meta name="description" content="Vortx AI builds the Large Bio-Vision Model (LBVM). Two products on top: geo.qa, the natural-language interface for human operators, and emem.dev, the cite-able signed memory layer for AI agents.">
+  <meta name="keywords" content="Vortx AI, synthetic satellite imagery, LBVM, Large Bio-Vision Model, geo.qa, emem.dev, AI agent memory, geospatial memory layer, world model, geospatial AI, satellite intelligence, JEPA, autonomous vehicles, robotics, defense AI, UAV, drone intelligence, Earth observation, synthetic data, signed geospatial data, agentic AI">
   <meta name="author" content="Vortx AI Private Limited">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://www.vortx.ai">
@@ -70,13 +70,24 @@
       "email": "avijeet@vortx.ai",
       "contactType": "General"
     },
-    "offers": {
-      "@type": "SoftwareApplication",
-      "name": "geo.qa",
-      "url": "https://geo.qa",
-      "applicationCategory": "Geospatial Intelligence",
-      "description": "Natural language interface to the Large Bio-Vision Model for querying any location on Earth."
-    }
+    "offers": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "geo.qa",
+        "url": "https://geo.qa",
+        "applicationCategory": "Geospatial Intelligence",
+        "audience": { "@type": "Audience", "audienceType": "Human operators, analysts, researchers" },
+        "description": "Natural-language interface to the Large Bio-Vision Model. For humans querying any location on Earth."
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "emem.dev",
+        "url": "https://emem.dev",
+        "applicationCategory": "Geospatial Memory Layer for AI Agents",
+        "audience": { "@type": "Audience", "audienceType": "AI agents and agentic frameworks" },
+        "description": "Cite-able, signed memory of every place on Earth. Read-side memory layer for AI agents — content-addressed, ed25519-signed responses; no API keys."
+      }
+    ]
   }
   </script>
 </head>
@@ -109,10 +120,17 @@
         <a href="#thesis" class="nav-link">Thesis</a>
         <a href="#architecture" class="nav-link">Architecture</a>
         <a href="#frontier" class="nav-link">Frontier</a>
-        <a href="https://geo.qa" class="nav-cta" id="nav-cta-product" target="_blank" rel="noopener" onclick="gtag('event', 'click_geo_qa', {'link_location': 'nav_bar'});">
-          geo.qa
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3.5 10.5L10.5 3.5M10.5 3.5H5M10.5 3.5V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
+        <a href="#products" class="nav-link">Products</a>
+        <div class="nav-cta-group" aria-label="Products">
+          <a href="https://geo.qa" class="nav-cta" id="nav-cta-product" target="_blank" rel="noopener" title="geo.qa — for humans" onclick="gtag('event', 'click_geo_qa', {'link_location': 'nav_bar'});">
+            geo.qa
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3.5 10.5L10.5 3.5M10.5 3.5H5M10.5 3.5V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="https://emem.dev" class="nav-cta nav-cta-gold" id="nav-cta-emem" target="_blank" rel="noopener" title="emem.dev — for AI agents" onclick="gtag('event', 'click_emem_dev', {'link_location': 'nav_bar'});">
+            emem.dev
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3.5 10.5L10.5 3.5M10.5 3.5H5M10.5 3.5V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
       </div>
       <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
         <span></span><span></span>
@@ -137,11 +155,25 @@
         equipping every robot, vehicle, and drone with the most spatially aware real-time 
         intelligence in the world.
       </p>
-      <div class="hero-actions" id="hero-actions">
-        <a href="https://geo.qa" class="btn btn-primary" id="cta-primary" target="_blank" rel="noopener" onclick="gtag('event', 'click_geo_qa', {'link_location': 'hero_section'});">
-          Try geo.qa
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="hero-products" id="hero-products" aria-label="Two products, two audiences">
+        <a href="https://geo.qa" class="hero-product hero-product-geo" id="cta-primary" target="_blank" rel="noopener" onclick="gtag('event', 'click_geo_qa', {'link_location': 'hero_section'});">
+          <span class="hero-product-audience">For humans</span>
+          <span class="hero-product-name">
+            geo.qa
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="hero-product-tag">Query Earth in natural language.</span>
         </a>
+        <a href="https://emem.dev" class="hero-product hero-product-emem" id="cta-primary-emem" target="_blank" rel="noopener" onclick="gtag('event', 'click_emem_dev', {'link_location': 'hero_section'});">
+          <span class="hero-product-audience">For AI agents</span>
+          <span class="hero-product-name">
+            emem.dev
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="hero-product-tag">Cite-able, signed memory of every place on Earth.</span>
+        </a>
+      </div>
+      <div class="hero-actions" id="hero-actions">
         <a href="#thesis" class="btn btn-ghost" id="cta-learn">
           Read the thesis
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3V13M8 13L13 8M8 13L3 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -364,27 +396,58 @@
     </div>
   </section>
 
-  <!-- How It Works — geo.qa -->
-  <section class="section product" id="product" aria-labelledby="product-heading">
+  <!-- Products — geo.qa for humans, emem.dev for AI agents -->
+  <section class="section products" id="products" aria-labelledby="products-heading">
     <div class="section-inner">
-      <div class="section-label"><span class="hud-bracket">[</span> Product <span class="hud-bracket">]</span></div>
-      <h2 class="section-title" id="product-heading">geo.qa — query the world in natural language</h2>
-      <div class="product-grid">
-        <div class="product-step">
-          <div class="step-number" aria-hidden="true">01</div>
-          <h3>Connect any sensor</h3>
-          <p>Satellites, CCTV, drones, mobile cameras, internal files, telematics, architectural layouts. Ingest through API or Model Context Protocol (MCP).</p>
-        </div>
-        <div class="product-step">
-          <div class="step-number" aria-hidden="true">02</div>
-          <h3>Ask in plain language</h3>
-          <p>No SQL. No GIS expertise. Ask "What changed in sector 7 this week?" or "Show me anomalies near the eastern perimeter" and the LBVM reasons over your data.</p>
-        </div>
-        <div class="product-step">
-          <div class="step-number" aria-hidden="true">03</div>
-          <h3>Get predictive intelligence</h3>
-          <p>The model doesn't just describe. It forecasts. JEPA-based prediction produces future-state estimates, anomaly alerts, and trajectory projections before events occur.</p>
-        </div>
+      <div class="section-label"><span class="hud-bracket">[</span> Products <span class="hud-bracket">]</span></div>
+      <h2 class="section-title" id="products-heading">Two products. Two audiences.<br>One world model.</h2>
+      <p class="section-desc">
+        Both products sit on top of the Large Bio-Vision Model. <strong>geo.qa</strong> is the
+        natural-language interface for human operators. <strong>emem.dev</strong> is the cite-able,
+        signed memory layer for AI agents. Same Earth, same model — two different consumers.
+      </p>
+      <div class="products-pair">
+        <article class="product-card product-card-geo">
+          <div class="product-card-head">
+            <span class="product-audience">For humans</span>
+            <h3 class="product-card-title">geo.qa</h3>
+          </div>
+          <p class="product-card-tagline">Query the world in natural language.</p>
+          <p class="product-card-desc">
+            For analysts, operators, and researchers. No SQL, no GIS expertise — ask
+            in plain language and the LBVM reasons over your sensors.
+          </p>
+          <ul class="product-card-bullets">
+            <li><strong>Connect any sensor</strong> — satellites, CCTV, drones, mobile, telematics. Ingest through API or MCP.</li>
+            <li><strong>Ask in plain language</strong> — "what changed in sector 7 this week?", "show me anomalies near the eastern perimeter".</li>
+            <li><strong>Predictive, not just descriptive</strong> — JEPA-based forecasts, anomaly alerts, trajectory projections.</li>
+          </ul>
+          <a href="https://geo.qa" class="btn btn-primary" target="_blank" rel="noopener" onclick="gtag('event', 'click_geo_qa', {'link_location': 'products_section'});">
+            Open geo.qa
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </article>
+        <article class="product-card product-card-emem">
+          <div class="product-card-head">
+            <span class="product-audience product-audience-gold">For AI agents</span>
+            <h3 class="product-card-title">emem.dev</h3>
+          </div>
+          <p class="product-card-tagline">Cite-able, signed memory of every place on Earth.</p>
+          <p class="product-card-desc">
+            For agentic frameworks and autonomous AI. A read-side memory layer where every
+            response is content-addressed and cryptographically signed — agents can cite
+            verifiable spatial facts.
+          </p>
+          <ul class="product-card-bullets">
+            <li><strong>Zero-auth access</strong> — no API keys; pure HTTP-range materializers stream data on demand.</li>
+            <li><strong>Verifiable answers</strong> — every response carries a blake3 content hash and ed25519 signature, ready to cite offline.</li>
+            <li><strong>Canonical voxels</strong> — 1792-D per cell across Sentinel-1/2, MODIS, DEM, weather, indices, and foundation embeddings.</li>
+          </ul>
+          <a href="https://emem.dev" class="btn btn-primary btn-gold" target="_blank" rel="noopener" onclick="gtag('event', 'click_emem_dev', {'link_location': 'products_section'});">
+            Open emem.dev
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </article>
       </div>
     </div>
   </section>
@@ -396,11 +459,15 @@
         <div class="cta-logo" aria-hidden="true">
           <img src="assets/vortx-logo-200.gif" alt="" width="120" height="120" loading="lazy">
         </div>
-        <h2 id="cta-heading">The view from above changes everything below.</h2>
-        <p>geo.qa is the interface to the Large Bio-Vision Model. Connect real sensors. Generate guided synthetic imagery. Train ground-level AI. Query any place on Earth.</p>
+        <h2 id="cta-heading">One world model. Two ways to use it.</h2>
+        <p><strong>geo.qa</strong> for the humans on the ground. <strong>emem.dev</strong> for the AI agents in the loop. Both are interfaces to the Large Bio-Vision Model — connect real sensors, query any place on Earth, and let machines reason over space.</p>
         <div class="cta-actions">
           <a href="https://geo.qa" class="btn btn-primary btn-lg" id="cta-bottom" target="_blank" rel="noopener" onclick="gtag('event', 'click_geo_qa', {'link_location': 'bottom_cta'});">
             Open geo.qa
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4.5 13.5L13.5 4.5M13.5 4.5H7M13.5 4.5V11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="https://emem.dev" class="btn btn-primary btn-gold btn-lg" id="cta-bottom-emem" target="_blank" rel="noopener" onclick="gtag('event', 'click_emem_dev', {'link_location': 'bottom_cta'});">
+            Open emem.dev
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4.5 13.5L13.5 4.5M13.5 4.5H7M13.5 4.5V11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
           <a href="mailto:avijeet@vortx.ai" class="btn btn-ghost btn-lg" id="cta-contact">
@@ -431,9 +498,10 @@
               <a href="#frontier">Frontier</a>
             </div>
             <div class="footer-col">
-              <h4>Product</h4>
-              <a href="https://geo.qa" target="_blank" rel="noopener" onclick="gtag('event', 'click_geo_qa', {'link_location': 'footer'});">geo.qa</a>
-              <a href="#product">How it works</a>
+              <h4>Products</h4>
+              <a href="https://geo.qa" target="_blank" rel="noopener" onclick="gtag('event', 'click_geo_qa', {'link_location': 'footer'});">geo.qa <span class="footer-aud">— for humans</span></a>
+              <a href="https://emem.dev" target="_blank" rel="noopener" onclick="gtag('event', 'click_emem_dev', {'link_location': 'footer'});">emem.dev <span class="footer-aud">— for AI agents</span></a>
+              <a href="#products">How they work</a>
             </div>
             <div class="footer-col">
               <h4>Company</h4>
