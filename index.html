@@ -16,15 +16,15 @@
 
   <!-- Primary SEO -->
   <title>Vortx AI · Earth memory for production AI</title>
-  <meta name="description" content="Vortx builds the Earth memory layer for production AI. Encoders run wherever cameras live: orbit, drones, vehicles, robots, fixed sensors. Two decoders sit on top. emem.dev is open and public. geo.qa is private to your tenancy. Your agents cite, they don't invent.">
-  <meta name="keywords" content="Vortx AI, Earth memory, emem, emem.dev, geo.qa, AI agent grounding, signed geospatial memory, ed25519, blake3, content-addressed memory, MCP, JEPA, world model, physical AI, robotics grounding, satellite, drone, vehicle perception, LBVM, agentic AI, context graph">
+  <meta name="description" content="Vortx puts the encoder for Earth observation into orbital data-centre payloads, so what flies down to Earth is a latent vector rather than raw imagery. Two ground decoders turn those latents into queryable Earth memory that AI agents can cite: emem.dev is the open public protocol, geo.qa is the private enterprise tenancy.">
+  <meta name="keywords" content="Vortx AI, encoders in orbit, orbital data centre, space data centre, satellite latents, synthetic satellite imagery, Earth memory, emem, emem.dev, geo.qa, AI agent grounding, signed geospatial memory, ed25519, blake3, content-addressed memory, MCP, JEPA, world model, physical AI, robotics grounding, drone perception, LBVM, agentic AI, context graph">
   <meta name="author" content="Vortx AI Private Limited">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://www.vortx.ai">
 
   <!-- Open Graph -->
   <meta property="og:title" content="Vortx AI · Earth memory for production AI">
-  <meta property="og:description" content="One architecture, two decoders. emem.dev is open and public, signed and free. geo.qa is private to your tenancy. The agents on top cite, they don't invent.">
+  <meta property="og:description" content="Encoders in orbit, decoders on the ground. We put the encoder for Earth observation onto space-based data-centre payloads, so what flies down isn't imagery but a latent vector. emem.dev (open) and geo.qa (private) decode it on Earth.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.vortx.ai">
   <meta property="og:image" content="https://www.vortx.ai/assets/og-logo.png">
@@ -36,7 +36,7 @@
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Vortx AI · Earth memory for production AI">
-  <meta name="twitter:description" content="One architecture, two decoders. emem.dev open and public. geo.qa private to your tenancy. Your agents cite the world, they don't invent it.">
+  <meta name="twitter:description" content="We put the encoder for Earth observation into orbit. What flies down is a latent, not imagery. emem.dev (open) and geo.qa (private) are the ground decoders that turn those latents into Earth memory AI agents can cite.">
   <meta name="twitter:image" content="https://www.vortx.ai/assets/og-logo.png">
 
   <!-- Favicon & Icons -->
@@ -60,7 +60,7 @@
     "legalName": "Vortx AI Private Limited",
     "url": "https://www.vortx.ai",
     "logo": "https://www.vortx.ai/assets/og-logo.png",
-    "description": "Vortx builds the Earth memory layer for production AI. One architecture, two decoders. emem.dev is the open, public, signed Earth memory protocol. geo.qa is the private tenancy where teams form their own multi-modal Earth memory their agents can cite.",
+    "description": "Vortx puts the encoder for Earth observation into orbital data-centre payloads, so what flies down to Earth is a latent vector rather than raw imagery. Two ground decoders turn those latents back into queryable Earth memory that AI agents can cite: emem.dev is the open public protocol, geo.qa is the private enterprise tenancy where customers add their own drones, vehicle cameras, and sensors to the orbital feed.",
     "foundingDate": "2024",
     "sameAs": [
       "https://github.com/Vortx-AI"
@@ -148,14 +148,15 @@
         <span class="hero-accent">Act on Earth.</span>
       </h1>
       <p class="hero-subtitle" id="hero-subtitle">
-        We've spent the last couple of years on a fairly specific problem: AI agents
-        running inside large companies are routinely answering questions about specific
-        places without any real information on those places, and we don't think that
-        gets solved by training a bigger model. It gets solved by giving the model a
-        memory of the real world that it can actually cite. <strong>emem.dev</strong>
-        is the open version of that memory, free and on GitHub. <strong>geo.qa</strong>
-        is the enterprise version, where customers form a private one over their own
-        sensors and operations.
+        Most of what gets called "synthetic satellite imagery" is really a latent vector,
+        which is what an encoder produces when it looks at the world. Our bet is that
+        this encoder belongs in orbit, on space-based data-centre payloads, instead of
+        on the ground. What flies down to Earth isn't an image, it's the latent
+        representation of the cells the lens covered. Two decoders on the ground turn
+        those latents back into queryable Earth memory that AI agents can cite.
+        <strong>emem.dev</strong> is the open decoder, on GitHub today. <strong>geo.qa</strong>
+        is the private one, where enterprise customers add their own drones, vehicle
+        cams, and sensors to the same stack.
       </p>
       <div class="hero-products" id="hero-products" aria-label="Two decoders, one architecture">
         <a href="https://emem.dev" class="hero-product hero-product-emem" id="cta-primary-emem" target="_blank" rel="noopener" onclick="gtag('event', 'click_emem_dev', {'link_location': 'hero_section'});">
@@ -217,14 +218,18 @@
           receipt you can verify without us being in the loop.
         </p>
         <p>
-          Architecturally there's one system underneath. Product-wise there are two.
-          <em>Encoders</em> sit at the source, wherever a useful lens already does,
-          from orbit down to a fixed camera in a warehouse, and turn what they see
-          into compact semantic representations that travel cheap. Two <em>decoders</em>
-          sit on the read side. <strong>emem.dev</strong> is the open one; anyone can
-          run a node, anyone can read. <strong>geo.qa</strong> is the private one,
-          where a customer's own modalities form a memory only their tenancy can see.
-          Most teams use both.
+          Architecturally there's one system underneath. Product-wise there are two,
+          plus the place where the whole thing starts: in orbit. The encoder we care
+          most about runs on space-based data-centre payloads, so a Sentinel-class
+          observation gets compressed into its latent representation before it ever
+          touches a ground station, and what comes down to Earth is the latent itself,
+          not the imagery. The same encoder architecture is happy to run on drones,
+          vehicle cameras, robot cameras, and fixed CCTV; we treat space as the lead
+          case because that's where the old bandwidth model actually breaks down.
+          On the read side there are two decoders. <strong>emem.dev</strong> is the
+          open one (anyone can run a node, anyone can read). <strong>geo.qa</strong>
+          is the private one, where a customer's own modalities form a memory only
+          their tenancy can see. Most teams use both.
         </p>
       </div>
       <div class="theory-grid">
@@ -239,15 +244,18 @@
               <path d="M16 12L20 8" stroke="currentColor" stroke-width="1.5"/>
             </svg>
           </div>
-          <h3>Encoders, basically anywhere there's a lens</h3>
+          <h3>Encoders in orbit, and a few other places</h3>
           <p>
-            We started in orbit because that's where the original satellite-imagery
-            work lived, but the encoder doesn't really care where the lens is. It runs
-            today on Sentinel-2 tiles, drone passes over pipeline corridors, vehicle
-            dashcam feeds, fixed cameras inside distribution centres. Whatever a lens
-            sees, the encoder turns into a compact semantic vector that's cheap to move
-            and small enough to actually transmit from a satellite without dragging
-            the imagery through a ground station.
+            Our actual technical wedge is at the satellite layer. We put the encoder
+            onto orbital data-centre payloads, so the inferencing happens in space
+            and the only thing that flies down is the latent vector for what the
+            lens covered. That latent is typically two or three orders of magnitude
+            smaller than the raw imagery would have been, which is the whole point:
+            ground-station bandwidth stops being the bottleneck on real-time Earth
+            observation. The same encoder also runs on a drone, a vehicle dashcam,
+            a robot rig, or a fixed camera in a warehouse, because it's lens-agnostic.
+            But space is the case that breaks the old model of bouncing pixels through
+            ground stations, and that's the one we lead with.
           </p>
         </div>
         <div class="theory-card" id="theory-card-2">
@@ -298,17 +306,20 @@
   <section class="section architecture" id="architecture" aria-labelledby="arch-heading">
     <div class="section-inner">
       <div class="section-label"><span class="hud-bracket">[</span> Architecture <span class="hud-bracket">]</span></div>
-      <h2 class="section-title" id="arch-heading">A single algebra: <code>Cell × Band × Tslot → Fact</code></h2>
+      <h2 class="section-title" id="arch-heading">Encoders in space. Decoders on the ground.</h2>
       <p class="section-desc">
-        The boring version is that every spot on Earth gets a stable address called a
-        cell64 (about ten metres on a side), and any observation about that spot lives
-        at the address as a fact, with metadata that says what band it's in, what time
-        it covers, what value it has, and what signed receipt it was issued under. Both
-        emem.dev and your geo.qa tenancy use the same call shape to read this. So the
-        boundary between public and private is just a question of where the data sits,
-        not a different protocol. An agent can pull elevation from emem.dev, pull
-        yesterday's drone overflight from your private memory, and cite both in one
-        answer.
+        The pipeline is short and worth saying out loud. The encoder sits at the
+        source. For the satellite layer specifically, that means on the orbital
+        data-centre payload itself, and what travels down to Earth isn't imagery
+        but a latent vector for whatever cells the lens covered. The decoder turns
+        that latent into facts. Every spot on Earth gets a stable address called a
+        cell64 (about ten metres on a side), and any observation about that spot
+        lives at the address as a fact, with metadata for what band it's in, what
+        time it covers, what value it has, and what signed receipt it was issued
+        under. The algebra is <code>Cell × Band × Tslot → Fact</code>. Both emem.dev
+        and a geo.qa tenancy use the same call shape to read this, so an agent can
+        pull elevation from emem.dev, pull yesterday's drone overflight from your
+        private memory, and cite both in a single answer.
       </p>
     </div>
   </section>
