@@ -148,15 +148,11 @@
         <span class="hero-accent">Act on Earth.</span>
       </h1>
       <p class="hero-subtitle" id="hero-subtitle">
-        Most of what gets called "synthetic satellite imagery" is really a latent vector,
-        which is what an encoder produces when it looks at the world. Our bet is that
-        this encoder belongs in orbit, on space-based data-centre payloads, instead of
-        on the ground. What flies down to Earth isn't an image, it's the latent
-        representation of the cells the lens covered. Two decoders on the ground turn
-        those latents back into queryable Earth memory that AI agents can cite.
-        <strong>emem.dev</strong> is the open decoder, on GitHub today. <strong>geo.qa</strong>
-        is the private one, where enterprise customers add their own drones, vehicle
-        cams, and sensors to the same stack.
+        We put the encoder for Earth observation into orbit, on space-based data-centre
+        payloads. What flies down isn't imagery, it's the latent vector for what the
+        lens covered. Two ground decoders turn those latents into Earth memory AI
+        agents can cite. <strong>emem.dev</strong> is the open one. <strong>geo.qa</strong>
+        is the private one for enterprises.
       </p>
       <div class="hero-products" id="hero-products" aria-label="Two decoders, one architecture">
         <a href="https://emem.dev" class="hero-product hero-product-emem" id="cta-primary-emem" target="_blank" rel="noopener" onclick="gtag('event', 'click_emem_dev', {'link_location': 'hero_section'});">
@@ -200,36 +196,22 @@
       <h2 class="section-title" id="thesis-heading">Why we built this</h2>
       <div class="thesis-statement">
         <p>
-          If you've worked with an AI agent in production, you've probably noticed it
-          will confidently answer questions about specific physical places it has no
-          real information on. Has this address flooded recently. What's the air quality
-          at this stadium right now. Did this farm get rain last week. The agent picks
-          something up from a static dataset, paraphrases it, serves it as live truth.
-          Sometimes that's fine. A lot of the time it isn't, and there's no way for the
-          person on the other end to tell which is which.
+          If you've worked with an AI agent in production, you've probably noticed
+          it will confidently answer questions about specific places it has no real
+          information on. Has this address flooded recently. Did this farm get rain
+          last week. The agent picks something up from a static dataset and serves
+          it as live truth. Our take, after time with operators, is that this is a
+          memory problem, not a model problem. So we built the memory.
         </p>
         <p>
-          Our take, after some time spent in the weeds with operators, is that this
-          isn't really a model problem. It's a memory problem. The agent doesn't have
-          a place to look things up that it can trust, and it can't show its work even
-          if it wanted to. So we built that place. The unromantic engineering version
-          is this: every place on Earth gets a stable address, every observation about
-          that place becomes a fact at the address, and every fact carries a cryptographic
-          receipt you can verify without us being in the loop.
-        </p>
-        <p>
-          Architecturally there's one system underneath. Product-wise there are two,
-          plus the place where the whole thing starts: in orbit. The encoder we care
-          most about runs on space-based data-centre payloads, so a Sentinel-class
-          observation gets compressed into its latent representation before it ever
-          touches a ground station, and what comes down to Earth is the latent itself,
-          not the imagery. The same encoder architecture is happy to run on drones,
-          vehicle cameras, robot cameras, and fixed CCTV; we treat space as the lead
-          case because that's where the old bandwidth model actually breaks down.
-          On the read side there are two decoders. <strong>emem.dev</strong> is the
-          open one (anyone can run a node, anyone can read). <strong>geo.qa</strong>
-          is the private one, where a customer's own modalities form a memory only
-          their tenancy can see. Most teams use both.
+          The whole thing starts in orbit. The encoder we care most about runs on
+          space-based data-centre payloads, so a Sentinel-class observation gets
+          compressed into its latent representation before it touches a ground
+          station, and what comes down is the latent itself. The same encoder also
+          runs on drones, vehicle cameras, and fixed CCTV, but space is where the
+          old bandwidth model breaks. On the read side, two decoders.
+          <strong>emem.dev</strong> is the open one. <strong>geo.qa</strong> is the
+          private one. Most teams use both.
         </p>
       </div>
       <div class="theory-grid">
@@ -246,16 +228,11 @@
           </div>
           <h3>Encoders in orbit, and a few other places</h3>
           <p>
-            Our actual technical wedge is at the satellite layer. We put the encoder
-            onto orbital data-centre payloads, so the inferencing happens in space
-            and the only thing that flies down is the latent vector for what the
-            lens covered. That latent is typically two or three orders of magnitude
-            smaller than the raw imagery would have been, which is the whole point:
-            ground-station bandwidth stops being the bottleneck on real-time Earth
-            observation. The same encoder also runs on a drone, a vehicle dashcam,
-            a robot rig, or a fixed camera in a warehouse, because it's lens-agnostic.
-            But space is the case that breaks the old model of bouncing pixels through
-            ground stations, and that's the one we lead with.
+            Our wedge is the satellite layer. The encoder runs on orbital data-centre
+            payloads, so inferencing happens in space and what flies down is a latent
+            vector that's two or three orders of magnitude smaller than raw imagery
+            would be. The same encoder also runs on drones, dashcams, and fixed
+            cameras, but space is the case that breaks the old ground-station model.
           </p>
         </div>
         <div class="theory-card" id="theory-card-2">
@@ -267,15 +244,13 @@
               <path d="M14 6L14 10M14 18L14 22M6 14H10M18 14H22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.6" class="anim-orbit-reverse"/>
             </svg>
           </div>
-          <h3>The choice between the two products is mostly about who owns the memory</h3>
+          <h3>Two products, split by who owns the memory</h3>
           <p>
-            <strong>emem.dev</strong> is for the open layer of Earth memory anyone
-            should be able to read and verify, the way you'd query OpenStreetMap or
-            pull a Sentinel granule. <strong>geo.qa</strong> is for the layer that
-            shouldn't be public, because it's an operator's own cameras, drones,
-            files, and sensors. We made them speak the same protocol on purpose, so
-            an agent can stitch a public fact and a private one together in a single
-            answer without caring which is which.
+            <strong>emem.dev</strong> is the open layer, the kind anyone should be
+            able to read and verify, like querying OpenStreetMap. <strong>geo.qa</strong>
+            is the private one, your own cameras and drones and files. They speak
+            the same protocol on purpose, so an agent can stitch a public fact and
+            a private one into a single answer.
           </p>
         </div>
         <div class="theory-card" id="theory-card-3">
@@ -288,14 +263,13 @@
               <circle cx="14" cy="14" r="2" fill="currentColor" class="anim-pulse-fast"/>
             </svg>
           </div>
-          <h3>The receipts are the part that actually matters</h3>
+          <h3>Receipts are the part that actually matters</h3>
           <p>
-            Every fact in the system carries an ed25519 signature and a blake3 content
-            hash. That sounds like crypto theatre at first; in practice it has a very
-            mundane effect, which is that an agent quoting a fact is also quoting a
-            receipt anyone can re-pull and verify without us being in the loop. That's
-            the property that turns Earth memory from a closed product into something
-            an agent can actually cite when a person on the other end pushes back.
+            Every fact carries an ed25519 signature and a blake3 content hash. Sounds
+            like crypto theatre, but the practical effect is that an agent quoting a
+            fact is also quoting a receipt anyone can re-pull and verify offline.
+            That's what turns Earth memory into infrastructure agents can cite when
+            someone pushes back.
           </p>
         </div>
       </div>
@@ -308,18 +282,14 @@
       <div class="section-label"><span class="hud-bracket">[</span> Architecture <span class="hud-bracket">]</span></div>
       <h2 class="section-title" id="arch-heading">Encoders in space. Decoders on the ground.</h2>
       <p class="section-desc">
-        The pipeline is short and worth saying out loud. The encoder sits at the
-        source. For the satellite layer specifically, that means on the orbital
-        data-centre payload itself, and what travels down to Earth isn't imagery
-        but a latent vector for whatever cells the lens covered. The decoder turns
-        that latent into facts. Every spot on Earth gets a stable address called a
-        cell64 (about ten metres on a side), and any observation about that spot
-        lives at the address as a fact, with metadata for what band it's in, what
-        time it covers, what value it has, and what signed receipt it was issued
-        under. The algebra is <code>Cell × Band × Tslot → Fact</code>. Both emem.dev
-        and a geo.qa tenancy use the same call shape to read this, so an agent can
-        pull elevation from emem.dev, pull yesterday's drone overflight from your
-        private memory, and cite both in a single answer.
+        The encoder runs at the source. For the satellite layer that's on the
+        orbital data-centre payload itself, and what travels down is a latent
+        vector, not imagery. The decoder turns that latent into facts. Every spot
+        on Earth gets a stable address (a cell64, about ten metres on a side), and
+        any fact at that address carries metadata: band, time, value, signed
+        receipt. The algebra is <code>Cell × Band × Tslot → Fact</code>. emem.dev
+        and a geo.qa tenancy use the same call shape, so an agent can read both
+        in a single answer.
       </p>
     </div>
   </section>
@@ -331,12 +301,10 @@
   <section class="section frontier" id="frontier" aria-labelledby="frontier-heading">
     <div class="section-inner">
       <div class="section-label"><span class="hud-bracket">[</span> Frontier <span class="hud-bracket">]</span></div>
-      <h2 class="section-title" id="frontier-heading">Where this actually shows up</h2>
+      <h2 class="section-title" id="frontier-heading">Where this shows up</h2>
       <p class="section-desc">
-        These are the surfaces we keep ending up on with operators. Honestly the line
-        between "this thing is feeding the encoder" and "this thing is reading the
-        decoder" is fuzzier than the diagram suggests; most of these are doing both at
-        once.
+        Surfaces we keep ending up on with operators. Most are feeding the encoder
+        and reading the decoder at the same time.
       </p>
       <div class="frontier-grid">
         <article class="frontier-card" id="frontier-card-1">
@@ -348,7 +316,7 @@
             </svg>
           </div>
           <h3>Autonomous vehicles</h3>
-          <p>A modern AV is already carrying somewhere between six and ten cameras and a couple of LIDAR units, all of which can be writing to the memory while the car is also reading from neighbouring cells to know what's around the corner before seeing it. The cite-the-receipt part matters here mostly because a decision that fails an audit later needs to be able to point at what the car knew, and when.</p>
+          <p>The AV's cameras write to the memory; the car reads from neighbouring cells to know what's around the corner before it sees it. Receipts matter when a decision needs an audit trail.</p>
         </article>
         <article class="frontier-card" id="frontier-card-2">
           <div class="frontier-icon" aria-hidden="true">
@@ -359,7 +327,7 @@
             </svg>
           </div>
           <h3>Robotics</h3>
-          <p>The interesting case in robotics is the fleet, not the individual machine. One delivery bot or warehouse arm doesn't need much memory; a fleet that's writing what it sees and reading what its peers wrote five minutes ago effectively shares a single understanding of the building it operates in, and that understanding gets richer every shift.</p>
+          <p>The fleet is the interesting unit, not the bot. A fleet that writes what it sees and reads what peers wrote five minutes ago shares one understanding of the building it works in.</p>
         </article>
         <article class="frontier-card" id="frontier-card-3">
           <div class="frontier-icon" aria-hidden="true">
@@ -371,7 +339,7 @@
             </svg>
           </div>
           <h3>UAVs &amp; drones</h3>
-          <p>This is where most of our early enterprise traffic comes from. Operators flying repeat passes over a pipeline corridor or a farm grid have a real change-detection problem to solve, and "did anything change in sector seven this week" turns out to be exactly the kind of question that goes from impossible to trivial once each overflight is writing signed cells the next agent can re-read.</p>
+          <p>Where most of our early enterprise traffic comes from. Repeat passes over a pipeline corridor or farm grid write signed cells; the next agent reading them gets real, citable change detection.</p>
         </article>
         <article class="frontier-card" id="frontier-card-4">
           <div class="frontier-icon" aria-hidden="true">
@@ -382,7 +350,7 @@
             </svg>
           </div>
           <h3>Aviation</h3>
-          <p>For approach planning and corridor awareness, especially in GPS-denied or low-visibility conditions, an aircraft can read the terrain memory the same way it reads a METAR. We're not pretending this replaces certified avionics; it's a layer underneath, the way a moving map is.</p>
+          <p>Approach planning and corridor awareness, including in GPS-denied conditions. An aircraft reads the terrain memory the way it reads a METAR. Not certified avionics; a layer underneath, like a moving map.</p>
         </article>
         <article class="frontier-card" id="frontier-card-5">
           <div class="frontier-icon" aria-hidden="true">
@@ -393,7 +361,7 @@
             </svg>
           </div>
           <h3>Defense &amp; security</h3>
-          <p>The pattern here is persistent change detection over installations and perimeters, where the private tenancy of geo.qa is non-negotiable because classified context can't leave the boundary. emem.dev's public cells fill in the open-source layer of the world underneath, which is sometimes useful and sometimes ignored, depending on the customer.</p>
+          <p>Persistent change detection over installations and perimeters. geo.qa's private tenancy is non-negotiable here; classified context never leaves the boundary. emem.dev fills in the open-source layer underneath when useful.</p>
         </article>
         <article class="frontier-card" id="frontier-card-6">
           <div class="frontier-icon" aria-hidden="true">
@@ -404,7 +372,7 @@
             </svg>
           </div>
           <h3>Mobile &amp; edge</h3>
-          <p>A phone with an MCP client can do most of what we'd want a small device to do here, both as an encoder source for whatever it's pointed at and as a reader of the surrounding memory. We're keeping a close eye on what happens when this gets distilled into something a couple of orders of magnitude smaller, but for now we mostly let teams build their own edge clients.</p>
+          <p>A phone with an MCP client is enough to be both an encoder source and a reader of the surrounding memory. Teams mostly build their own edge clients for now.</p>
         </article>
         <article class="frontier-card" id="frontier-card-7">
           <div class="frontier-icon" aria-hidden="true">
@@ -415,7 +383,7 @@
             </svg>
           </div>
           <h3>Industrial &amp; factories</h3>
-          <p>On the floor, fixed cameras can feed the encoder while production-side agents read back the decoder before they make a call. The honest thing to say is that this overlaps with what a good MES already does, and we're most useful when the operator wants a memory layer that lives across multiple sites instead of inside one.</p>
+          <p>Fixed cameras feed the encoder; production agents read the decoder. We're most useful when the operator wants a memory layer that lives across multiple sites, not inside one.</p>
         </article>
         <article class="frontier-card" id="frontier-card-8">
           <div class="frontier-icon" aria-hidden="true">
@@ -426,7 +394,7 @@
             </svg>
           </div>
           <h3>Agriculture &amp; environment</h3>
-          <p>The public side of emem.dev covers most of what an environmental analyst would want already (crop stress, evapotranspiration, deforestation, mangrove change, soil moisture proxies), so the interesting move for an actual ag operator is layering their own ground truth on top through geo.qa, and letting agents reason across both at once.</p>
+          <p>emem.dev covers most of what an environmental analyst wants (crop stress, ET, deforestation, soil moisture). The move for an ag operator is layering their own ground truth on top through geo.qa.</p>
         </article>
       </div>
     </div>
@@ -436,12 +404,10 @@
   <section class="section products" id="products" aria-labelledby="products-heading">
     <div class="section-inner">
       <div class="section-label"><span class="hud-bracket">[</span> Products <span class="hud-bracket">]</span></div>
-      <h2 class="section-title" id="products-heading">The two products in detail</h2>
+      <h2 class="section-title" id="products-heading">The two products</h2>
       <p class="section-desc">
-        The split is mostly about ownership and who gets to read. Both products serve
-        agents and humans equally; the audience question we used to lead with turned
-        out to be the wrong frame. Most of our enterprise customers run both: the
-        public layer underneath, their private one on top.
+        Same protocol underneath, split by who owns the memory. Most enterprise
+        customers run both.
       </p>
       <div class="products-pair">
         <article class="product-card product-card-emem">
@@ -451,16 +417,14 @@
           </div>
           <p class="product-card-tagline">The open Earth memory protocol.</p>
           <p class="product-card-desc">
-            emem.dev is what we wish had existed when we started: a public, signed,
-            content-addressed layer of Earth memory that any agent can read without
-            negotiating an API contract first. The whole thing is Apache-2.0 on GitHub.
-            Run a node yourself if you want; the receipts are still verifiable when
-            we're not in the loop.
+            A public, signed, content-addressed layer of Earth memory any agent can
+            read without an API contract. Apache-2.0 on GitHub. Run a node yourself;
+            the receipts are still verifiable.
           </p>
           <ul class="product-card-bullets">
-            <li><strong>No keys, no accounts.</strong> The read endpoints (<code>/v1/locate</code>, <code>/v1/recall</code>, <code>/v1/diff</code>) take plain HTTP. There's also an MCP server at <code>emem.dev/mcp</code> that any modern agent client picks up automatically.</li>
-            <li><strong>Verifiable offline.</strong> Recompute blake3 over the canonical CBOR, verify the ed25519 signature against the responder's public key, you're done. No round-trip required to trust an answer someone hands you.</li>
-            <li><strong>34 bands across the open-data subset.</strong> Sentinel-1/2, MODIS, Copernicus DEM, JRC water, Hansen forest, plus foundation embeddings from Tessera, Prithvi, and Galileo. About 1792 dimensions per cell once everything's stacked.</li>
+            <li><strong>No keys, no accounts.</strong> Plain HTTP at <code>/v1/locate</code>, <code>/v1/recall</code>, <code>/v1/diff</code>. MCP server at <code>emem.dev/mcp</code>.</li>
+            <li><strong>Verifiable offline.</strong> blake3 over the canonical CBOR, ed25519 against the responder's pubkey, done.</li>
+            <li><strong>34 bands, ~1792-D voxels.</strong> Sentinel-1/2, MODIS, Copernicus DEM, JRC water, Hansen forest, plus Tessera, Prithvi, Galileo embeddings.</li>
           </ul>
           <a href="https://emem.dev" class="btn btn-primary btn-gold" target="_blank" rel="noopener" onclick="gtag('event', 'click_emem_dev', {'link_location': 'products_section'});">
             Open emem.dev
@@ -474,17 +438,15 @@
           </div>
           <p class="product-card-tagline">An Earth memory that's yours, on your data.</p>
           <p class="product-card-desc">
-            geo.qa is what we sell to enterprise customers whose AI has to actually be
-            right about specific places and times: pipeline operators, airports,
-            insurance carriers, utilities, defense. The same protocol underneath, but
-            now the cells are fed by your cameras, your drones, your satellites, your
-            files, your sensors, and the whole thing lives inside a tenancy only your
-            agents can read. emem.dev is pre-wired so the public layer just works.
+            For enterprise customers whose AI has to be right about specific places:
+            pipelines, airports, insurance, utilities, defense. Same protocol, fed by
+            your sensors, in a tenancy only your agents can read. emem.dev is
+            pre-wired underneath.
           </p>
           <ul class="product-card-bullets">
-            <li><strong>Twelve modalities, one fused memory.</strong> Cameras, drones, satellites, sensors, files, OSM, MCP, plus the rest. We register CCTV by lat/lon/heading/pitch/FOV, run SAM3 segmentation on demand, and fuse everything into 1024-dimensional vectors.</li>
-            <li><strong>Where it lives.</strong> Persisted in PostgreSQL with a Vespa 1024-D vector index for retrieval, scoped to your tenancy. Six ingest pipelines, one destination. The vector breakdown if you care: visual 512, semantic 384, spatial 128, geo 128, temporal 64, overlay 64.</li>
-            <li><strong>The tenancy boundary is real.</strong> Per-org filesystem scoping plus a query-layer organisation filter on every read. Nothing your team writes ever leaks outward into the public emem.dev registry. The boundary is enforced in the codebase, not in marketing copy.</li>
+            <li><strong>Twelve modalities in.</strong> Cameras, drones, satellites, sensors, files, OSM, MCP. CCTV registered by lat/lon/heading/pitch/FOV, SAM3 segmentation on demand.</li>
+            <li><strong>1024-D fused memory.</strong> Visual 512, semantic 384, spatial 128, geo 128, temporal 64, overlay 64. PostgreSQL plus Vespa, scoped to your tenancy.</li>
+            <li><strong>Hard tenancy boundary.</strong> Per-org filesystem scoping, query-layer org filter on every read. Enforced in the codebase, not in marketing copy.</li>
           </ul>
           <a href="https://geo.qa" class="btn btn-primary" target="_blank" rel="noopener" onclick="gtag('event', 'click_geo_qa', {'link_location': 'products_section'});">
             Open geo.qa
@@ -532,6 +494,10 @@
               <span class="logo-text">vortx<span class="logo-dot">.ai</span></span>
             </a>
             <p class="footer-tagline">Earth memory for the agents your<br>customers are about to depend on.</p>
+            <p class="footer-creds" aria-label="Programs and accelerators">
+              <span class="footer-creds-label">Programs</span>
+              Seraphim Space Mission 15 · NVIDIA Inception · AWS Space Accelerator
+            </p>
           </div>
           <div class="footer-links">
             <div class="footer-col">
