@@ -491,7 +491,7 @@
             </a>
             <p class="footer-tagline">Earth memory for the agents your<br>customers are about to depend on.</p>
             <p class="footer-creds" aria-label="Programs and accelerators">
-              <span class="footer-creds-label">Programs</span>
+              <span class="footer-creds-label">Proudly a part of</span>
               <span class="footer-creds-item">Seraphim Space Mission 15</span>
               <span class="footer-creds-sep">·</span>
               <span class="footer-creds-item">NVIDIA Inception</span>
@@ -530,7 +530,60 @@
           </div>
         </div>
         <div class="footer-right" aria-hidden="true">
-          <canvas id="footer-radar" class="footer-radar"></canvas>
+          <svg class="footer-map" viewBox="0 0 360 180" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+            <!-- Latitude / longitude grid -->
+            <g class="map-grid">
+              <line x1="0" y1="30" x2="360" y2="30"/>
+              <line x1="0" y1="60" x2="360" y2="60"/>
+              <line x1="0" y1="120" x2="360" y2="120"/>
+              <line x1="0" y1="150" x2="360" y2="150"/>
+              <line x1="60" y1="0" x2="60" y2="180"/>
+              <line x1="120" y1="0" x2="120" y2="180"/>
+              <line x1="180" y1="0" x2="180" y2="180"/>
+              <line x1="240" y1="0" x2="240" y2="180"/>
+              <line x1="300" y1="0" x2="300" y2="180"/>
+            </g>
+
+            <!-- Equator -->
+            <line class="map-equator" x1="0" y1="90" x2="360" y2="90"/>
+
+            <!-- Continents (stylised) -->
+            <g class="map-continents">
+              <ellipse class="map-continent" cx="155" cy="22" rx="9" ry="6"/>
+              <ellipse class="map-continent" cx="75" cy="48" rx="24" ry="20"/>
+              <ellipse class="map-continent" cx="115" cy="115" rx="13" ry="24"/>
+              <ellipse class="map-continent" cx="190" cy="45" rx="14" ry="9"/>
+              <ellipse class="map-continent" cx="200" cy="100" rx="18" ry="25"/>
+              <ellipse class="map-continent" cx="255" cy="55" rx="40" ry="22"/>
+              <ellipse class="map-continent" cx="247" cy="88" rx="9" ry="14"/>
+              <ellipse class="map-continent" cx="290" cy="105" rx="16" ry="6"/>
+              <ellipse class="map-continent" cx="312" cy="128" rx="14" ry="8"/>
+            </g>
+
+            <!-- Accelerator HQs: AWS Seattle, NVIDIA Santa Clara, Seraphim London, Sisu Helsinki -->
+            <g class="map-pins">
+              <g class="map-pin">
+                <title>AWS Space Accelerator · Seattle</title>
+                <circle class="map-pin-pulse" cx="58" cy="42" style="animation-delay: 0s"/>
+                <circle class="map-pin-core" cx="58" cy="42" r="3"/>
+              </g>
+              <g class="map-pin">
+                <title>NVIDIA Inception · Santa Clara</title>
+                <circle class="map-pin-pulse" cx="58" cy="53" style="animation-delay: 0.7s"/>
+                <circle class="map-pin-core" cx="58" cy="53" r="3"/>
+              </g>
+              <g class="map-pin">
+                <title>Seraphim Space Mission 15 · London</title>
+                <circle class="map-pin-pulse" cx="180" cy="39" style="animation-delay: 1.4s"/>
+                <circle class="map-pin-core" cx="180" cy="39" r="3"/>
+              </g>
+              <g class="map-pin">
+                <title>Sisu Launchpad · Helsinki</title>
+                <circle class="map-pin-pulse" cx="205" cy="30" style="animation-delay: 2.1s"/>
+                <circle class="map-pin-core" cx="205" cy="30" r="3"/>
+              </g>
+            </g>
+          </svg>
         </div>
       </div>
       <div class="footer-bottom">

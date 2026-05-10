@@ -986,6 +986,57 @@ img {
   opacity: 0.7;
 }
 
+/* Footer world map (replaces radar) */
+.footer-map {
+  width: 280px;
+  height: auto;
+  display: block;
+}
+
+.footer-map .map-grid line {
+  stroke: var(--accent);
+  stroke-opacity: 0.09;
+  stroke-width: 0.3;
+}
+
+.footer-map .map-equator {
+  stroke: var(--accent);
+  stroke-opacity: 0.18;
+  stroke-width: 0.4;
+}
+
+.footer-map .map-continent {
+  fill: var(--accent);
+  fill-opacity: 0.14;
+  stroke: var(--accent);
+  stroke-opacity: 0.45;
+  stroke-width: 0.4;
+}
+
+.footer-map .map-pin-core {
+  fill: var(--accent-bright);
+  filter: drop-shadow(0 0 2.5px rgba(53, 187, 154, 1)) drop-shadow(0 0 5px rgba(53, 187, 154, 0.5));
+}
+
+.footer-map .map-pin-pulse {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 0.9;
+  animation: footer-map-pulse 2.8s ease-out infinite;
+}
+
+@keyframes footer-map-pulse {
+  0%   { r: 3;  opacity: 1;   stroke-width: 1.2; }
+  100% { r: 12; opacity: 0;   stroke-width: 0.3; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-map .map-pin-pulse {
+    animation: none;
+    opacity: 0;
+  }
+}
+
 .footer-bottom {
   border-top: 1px solid var(--border);
   padding-top: 24px;
@@ -1123,6 +1174,10 @@ img {
   .footer-radar {
     width: 180px;
     height: 180px;
+  }
+
+  .footer-map {
+    width: 200px;
   }
 }
 
