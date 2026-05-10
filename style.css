@@ -920,24 +920,29 @@ img {
 }
 
 .footer-creds {
-  margin-top: 18px;
+  margin-top: 16px;
   font-size: 11.5px;
-  line-height: 1.55;
+  line-height: 1.7;
   color: var(--text-muted);
-  opacity: 0.62;
-  letter-spacing: 0.01em;
-  max-width: 38ch;
+  opacity: 0.72;
 }
 
 .footer-creds-label {
-  display: inline-block;
-  margin-right: 10px;
   text-transform: uppercase;
   letter-spacing: 0.14em;
   font-size: 10px;
   font-weight: 600;
-  color: var(--text-muted);
-  opacity: 0.85;
+  margin-right: 12px;
+}
+
+.footer-creds-item {
+  white-space: nowrap;
+}
+
+.footer-creds-sep {
+  display: inline-block;
+  margin: 0 4px;
+  opacity: 0.55;
 }
 
 .footer-links {
