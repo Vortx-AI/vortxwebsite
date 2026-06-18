@@ -7,37 +7,37 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-D71W1Q8YRZ');
   </script>
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#faf8f2">
 
   <!-- Primary SEO -->
-  <title>Vortx AI · Earth memory for production AI</title>
-  <meta name="description" content="Vortx puts the encoder for Earth observation into orbital data-centre payloads, so what flies down to Earth is a latent vector rather than raw imagery. Two ground decoders turn those latents into queryable Earth memory that AI agents can cite: emem.dev is the open public protocol, geo.qa is the private enterprise tenancy.">
-  <meta name="keywords" content="Vortx AI, encoders in orbit, orbital data centre, space data centre, satellite latents, synthetic satellite imagery, Earth memory, emem, emem.dev, geo.qa, AI agent grounding, signed geospatial memory, ed25519, blake3, content-addressed memory, MCP, JEPA, world model, physical AI, robotics grounding, drone perception, LBVM, agentic AI, context graph">
+  <title>Vortx AI · One verifiable memory of Earth for AI agents</title>
+  <meta name="description" content="Vortx is a spatial AI lab. We turn every way of watching Earth — satellites, drones, vehicle cameras, robots, CCTV and sensors — into signed memory an AI agent can quote and anyone can re-check. emem.dev is the open layer; geo.qa is the private one.">
+  <meta name="keywords" content="Vortx AI, spatial AI, Earth memory, verifiable Earth intelligence, AI agent grounding, emem, emem.dev, geo.qa, signed geospatial memory, ed25519, blake3, content-addressed, MCP, satellite intelligence, TerraGround, open source earth observation">
   <meta name="author" content="Vortx AI Private Limited">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://www.vortx.ai">
+  <link rel="canonical" href="https://vortx.ai">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Vortx AI · Earth memory for production AI">
-  <meta property="og:description" content="Encoders in orbit, decoders on the ground. We put the encoder for Earth observation onto space-based data-centre payloads, so what flies down isn't imagery but a latent vector. emem.dev (open) and geo.qa (private) decode it on Earth.">
+  <meta property="og:title" content="Vortx AI · One verifiable memory of Earth for AI agents">
+  <meta property="og:description" content="Every sensor watching Earth, in one memory agents can verify. emem.dev is the open layer; geo.qa is the private one. Read a real signed fact in seconds.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://www.vortx.ai">
-  <meta property="og:image" content="https://www.vortx.ai/assets/og-logo.png">
-  <meta property="og:image:width" content="512">
-  <meta property="og:image:height" content="512">
+  <meta property="og:url" content="https://vortx.ai">
+  <meta property="og:image" content="https://vortx.ai/assets/og-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
   <meta property="og:site_name" content="Vortx AI">
   <meta property="og:locale" content="en_US">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Vortx AI · Earth memory for production AI">
-  <meta name="twitter:description" content="We put the encoder for Earth observation into orbit. What flies down is a latent, not imagery. emem.dev (open) and geo.qa (private) are the ground decoders that turn those latents into Earth memory AI agents can cite.">
-  <meta name="twitter:image" content="https://www.vortx.ai/assets/og-logo.png">
+  <meta name="twitter:title" content="Vortx AI · One verifiable memory of Earth for AI agents">
+  <meta name="twitter:description" content="Every sensor watching Earth, in one memory agents can verify. Read a real signed fact in seconds.">
+  <meta name="twitter:image" content="https://vortx.ai/assets/og-card.png">
 
   <!-- Favicon & Icons -->
   <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -46,535 +46,659 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <!-- Styles -->
   <link rel="stylesheet" href="style.css">
 
-  <!-- Structured Data (JSON-LD) -->
+  <!-- Structured data: the Vortx entity graph -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "Vortx AI",
     "legalName": "Vortx AI Private Limited",
-    "url": "https://www.vortx.ai",
-    "logo": "https://www.vortx.ai/assets/og-logo.png",
-    "description": "Vortx puts the encoder for Earth observation into orbital data-centre payloads, so what flies down to Earth is a latent vector rather than raw imagery. Two ground decoders turn those latents back into queryable Earth memory that AI agents can cite: emem.dev is the open public protocol, geo.qa is the private enterprise tenancy where customers add their own drones, vehicle cameras, and sensors to the orbital feed.",
+    "url": "https://vortx.ai",
+    "logo": "https://vortx.ai/assets/og-logo.png",
+    "description": "Vortx is a spatial AI lab building one verifiable memory of Earth that AI agents can cite. It unifies satellites, drones, vehicle cameras, robots, CCTV and sensors into signed, content-addressed records.",
     "foundingDate": "2024",
     "sameAs": [
-      "https://github.com/Vortx-AI"
+      "https://github.com/Vortx-AI",
+      "https://github.com/Vortx-AI/emem",
+      "https://huggingface.co/avijeetsingh1608",
+      "https://emem.dev",
+      "https://geo.qa",
+      "https://zenodo.org/records/20706893",
+      "https://zenodo.org/records/20706317"
     ],
     "contactPoint": {
       "@type": "ContactPoint",
       "email": "avijeet@vortx.ai",
       "contactType": "General"
-    },
-    "offers": [
-      {
-        "@type": "SoftwareApplication",
-        "name": "emem.dev",
-        "url": "https://emem.dev",
-        "applicationCategory": "Earth Memory Protocol",
-        "description": "Open, public Earth memory protocol. Apache-2.0. Every read is ed25519-signed and content-addressed via blake3. No API keys, no accounts. The shared layer any agent can read and verify."
-      },
-      {
-        "@type": "SoftwareApplication",
-        "name": "geo.qa",
-        "url": "https://geo.qa",
-        "applicationCategory": "Private Earth Memory for Production AI",
-        "description": "Private Earth memory for production AI. Twelve modalities (cameras, drones, satellites, sensors, files, OSM, MCP) fuse into a 1024-dimensional memory inside your tenancy. Owned by you. Cited by your agents."
-      }
-    ]
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Vortx AI",
+    "url": "https://vortx.ai",
+    "publisher": { "@type": "Organization", "name": "Vortx AI" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "emem.dev",
+    "url": "https://emem.dev",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Web, Linux, Docker",
+    "license": "https://www.apache.org/licenses/LICENSE-2.0",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "description": "The open Earth memory protocol. A public, ed25519-signed, content-addressed layer of Earth memory any agent can read. No keys, no accounts.",
+    "publisher": { "@type": "Organization", "name": "Vortx AI" },
+    "sameAs": ["https://github.com/Vortx-AI/emem"]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "geo.qa",
+    "url": "https://geo.qa",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web",
+    "description": "Private, defense-grade Earth memory. Your own cameras, drones, satellites and sensors fused into a memory only your agents can read, on the same protocol as emem.dev.",
+    "publisher": { "@type": "Organization", "name": "Vortx AI" }
   }
   </script>
 </head>
 <body>
-  <!-- Deep space canvas (star field + data beam) -->
-  <canvas id="space-canvas" class="space-canvas" aria-hidden="true"></canvas>
-
-  <!-- Ambient background -->
-  <div class="ambient-bg" aria-hidden="true">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
-  </div>
-
-  <!-- Shooting stars -->
-  <div class="shooting-stars" aria-hidden="true">
-    <div class="shooting-star ss-1"></div>
-    <div class="shooting-star ss-2"></div>
-    <div class="shooting-star ss-3"></div>
-  </div>
+  <div class="blueprint" aria-hidden="true"></div>
+  <a href="#main" class="skip-link">Skip to content</a>
 
   <!-- Navigation -->
-  <nav class="nav" id="nav" aria-label="Primary navigation">
-    <div class="nav-inner">
-      <a href="#" class="logo" id="logo" aria-label="Vortx AI home">
-        <img src="assets/vortx-logo-36.gif" alt="Vortx AI" class="logo-gif" width="36" height="36" loading="eager">
-        <span class="logo-text">vortx<span class="logo-dot">.ai</span></span>
+  <header class="site-nav" id="nav">
+    <div class="wrap nav-row">
+      <a href="/" class="brand" aria-label="Vortx AI home">
+        <img src="assets/vortx-logo-36.gif" alt="" class="brand-mark" width="34" height="34" loading="eager">
+        <span class="brand-text">vortx<span class="brand-dot">.ai</span></span>
       </a>
-      <div class="nav-links" id="nav-links">
+      <nav class="nav-menu" id="nav-menu" aria-label="Primary">
         <a href="#thesis" class="nav-link">Thesis</a>
-        <a href="#architecture" class="nav-link">Architecture</a>
-        <a href="#frontier" class="nav-link">Frontier</a>
+        <a href="#how" class="nav-link">How it works</a>
+        <a href="#verify" class="nav-link">Proof</a>
         <a href="#products" class="nav-link">Products</a>
-        <div class="nav-cta-group" aria-label="Products">
-          <a href="https://emem.dev" class="nav-cta nav-cta-gold" id="nav-cta-emem" target="_blank" rel="noopener" title="emem.dev: open Earth memory protocol" onclick="gtag('event', 'click_emem_dev', {'link_location': 'nav_bar'});">
-            emem.dev
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3.5 10.5L10.5 3.5M10.5 3.5H5M10.5 3.5V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-          <a href="https://geo.qa" class="nav-cta" id="nav-cta-product" target="_blank" rel="noopener" title="geo.qa: private Earth memory for your tenancy" onclick="gtag('event', 'click_geo_qa', {'link_location': 'nav_bar'});">
-            geo.qa
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3.5 10.5L10.5 3.5M10.5 3.5H5M10.5 3.5V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-        </div>
+        <a href="/research/" class="nav-link">Research</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="#verify" class="btn btn-primary btn-sm">See a signed fact</a>
       </div>
-      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+      <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu">
         <span></span><span></span>
       </button>
     </div>
-  </nav>
-
-  <!-- Hero Section -->
-  <header class="hero" id="hero">
-    <div class="hero-content">
-      <h1 class="hero-title" id="hero-title">
-        <span style="white-space: nowrap;">Observe from orbit.</span><br>
-        <span class="hero-accent">Act on Earth.</span>
-      </h1>
-      <p class="hero-subtitle" id="hero-subtitle">
-        We put the encoder for Earth observation into orbit, on space-based data-centre
-        payloads. What flies down isn't imagery, it's the latent vector for what the
-        lens covered. Two ground decoders turn those latents into Earth memory AI
-        agents can cite. <strong>emem.dev</strong> is the open one. <strong>geo.qa</strong>
-        is the private one for enterprises.
-      </p>
-      <div class="hero-products" id="hero-products" aria-label="Two decoders, one architecture">
-        <a href="https://emem.dev" class="hero-product hero-product-emem" id="cta-primary-emem" target="_blank" rel="noopener" onclick="gtag('event', 'click_emem_dev', {'link_location': 'hero_section'});">
-          <span class="hero-product-audience">Public · Apache-2.0</span>
-          <span class="hero-product-name">
-            emem.dev
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </span>
-          <span class="hero-product-tag">Open Earth memory protocol. Signed, free, no keys.</span>
-        </a>
-        <a href="https://geo.qa" class="hero-product hero-product-geo" id="cta-primary" target="_blank" rel="noopener" onclick="gtag('event', 'click_geo_qa', {'link_location': 'hero_section'});">
-          <span class="hero-product-audience">Private · Your tenancy</span>
-          <span class="hero-product-name">
-            geo.qa
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </span>
-          <span class="hero-product-tag">Twelve modalities, fused into a memory you own.</span>
-        </a>
-      </div>
-      <div class="hero-actions" id="hero-actions">
-        <a href="#thesis" class="btn btn-ghost" id="cta-learn">
-          Why we built this
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3V13M8 13L13 8M8 13L3 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-      </div>
-    </div>
-    <div class="hero-visual" id="hero-visual">
-      <div class="globe-container">
-        <canvas id="globe-canvas" aria-label="Interactive particle globe representing Earth observation from orbit" role="img"></canvas>
-      </div>
-    </div>
   </header>
 
-  <!-- Atmospheric layer transition -->
-  <div class="atmo-layer atmo-1" aria-hidden="true"></div>
+  <main id="main">
 
-  <!-- Thesis Section -->
-  <section class="section thesis" id="thesis" aria-labelledby="thesis-heading">
-    <div class="section-inner">
-      <div class="section-label"><span class="hud-bracket">[</span> Thesis <span class="hud-bracket">]</span></div>
-      <h2 class="section-title" id="thesis-heading">Why we built this</h2>
-      <div class="thesis-statement">
-        <p>
-          If you've worked with an AI agent in production, you've probably noticed
-          it will confidently answer questions about specific places it has no real
-          information on. Has this address flooded recently. Did this farm get rain
-          last week. The agent picks something up from a static dataset and serves
-          it as live truth. Our take, after time with operators, is that this is a
-          memory problem, not a model problem. So we built the memory.
-        </p>
-        <p>
-          The whole thing starts in orbit. The encoder we care most about runs on
-          space-based data-centre payloads, so a Sentinel-class observation gets
-          compressed into its latent representation before it touches a ground
-          station, and what comes down is the latent itself. The same encoder also
-          runs on drones, vehicle cameras, and fixed CCTV, but space is where the
-          old bandwidth model breaks. On the read side, two decoders.
-          <strong>emem.dev</strong> is the open one. <strong>geo.qa</strong> is the
-          private one. Most teams use both.
-        </p>
-      </div>
-      <div class="theory-grid">
-        <div class="theory-card" id="theory-card-1">
-          <div class="theory-icon" aria-hidden="true">
-            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-              <!-- Orbit and Nodes -->
-              <circle cx="14" cy="14" r="10" stroke="currentColor" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.6" class="anim-orbit"/>
-              <circle cx="14" cy="14" r="14" stroke="currentColor" stroke-width="0.8" opacity="0.3" class="anim-orbit-reverse"/>
-              <circle cx="14" cy="14" r="4" stroke="currentColor" stroke-width="1.5"/>
-              <circle cx="21" cy="7" r="2" fill="currentColor" opacity="0.8" class="anim-pulse"/>
-              <path d="M16 12L20 8" stroke="currentColor" stroke-width="1.5"/>
-            </svg>
+    <!-- Scene 1 — Hero: a real place, lit up -->
+    <section class="section hero" id="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <h1 class="hero-title">Every sensor watching Earth, in <span class="accent">one memory agents can verify.</span></h1>
+          <p class="hero-sub">
+            We turn every way of watching Earth into one signed memory your agents
+            can quote, and anyone can re-check. <b>emem.dev</b> is open.
+            <b>geo.qa</b> is private.
+          </p>
+          <div class="hero-cta">
+            <a href="#verify" class="btn btn-primary btn-lg">
+              See a signed fact
+              <svg class="arrow" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a href="#thesis" class="btn btn-ghost btn-lg">Read the thesis</a>
           </div>
-          <h3>Encoders in orbit, and a few other places</h3>
+        </div>
+
+        <div class="hero-stage" aria-label="Earth seen from orbit, with one signed reading pulled from the surface" role="img">
+          <svg class="orbital" viewBox="0 0 560 560" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <radialGradient id="earthBody" cx="64%" cy="28%" r="86%">
+                <stop offset="0%" stop-color="#a6ead0"/>
+                <stop offset="36%" stop-color="#42b492"/>
+                <stop offset="76%" stop-color="#1a7d63"/>
+                <stop offset="100%" stop-color="#0c5846"/>
+              </radialGradient>
+              <radialGradient id="atmo" cx="50%" cy="50%" r="50%">
+                <stop offset="80%" stop-color="#35bb9a" stop-opacity="0"/>
+                <stop offset="94%" stop-color="#69ddca" stop-opacity="0.5"/>
+                <stop offset="100%" stop-color="#9bead8" stop-opacity="0"/>
+              </radialGradient>
+              <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#f2c47e" stop-opacity="0.5"/>
+                <stop offset="100%" stop-color="#f2c47e" stop-opacity="0"/>
+              </radialGradient>
+              <linearGradient id="beamGrad" x1="0.5" y1="0" x2="0.5" y2="1">
+                <stop offset="0%" stop-color="#35bb9a" stop-opacity="0.5"/>
+                <stop offset="100%" stop-color="#35bb9a" stop-opacity="0.03"/>
+              </linearGradient>
+              <linearGradient id="orbitGrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#35bb9a" stop-opacity="0"/>
+                <stop offset="48%" stop-color="#35bb9a" stop-opacity="0.85"/>
+                <stop offset="100%" stop-color="#e0a24a" stop-opacity="0.55"/>
+              </linearGradient>
+              <radialGradient id="cellGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#b6f7e2" stop-opacity="0.95"/>
+                <stop offset="100%" stop-color="#b6f7e2" stop-opacity="0"/>
+              </radialGradient>
+              <clipPath id="earthClip"><circle cx="280" cy="770" r="470"/></clipPath>
+              <filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="10"/></filter>
+              <filter id="soft2" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5"/></filter>
+            </defs>
+
+            <!-- sun lighting the scene -->
+            <circle cx="476" cy="46" r="320" fill="url(#sunGlow)"/>
+            <!-- faint particles in space -->
+            <g fill="#1a7d63" opacity="0.16">
+              <circle cx="92" cy="92" r="1.6"/><circle cx="182" cy="52" r="1.1"/><circle cx="486" cy="78" r="1.4"/>
+              <circle cx="516" cy="206" r="1.5"/><circle cx="58" cy="214" r="1.1"/><circle cx="360" cy="44" r="1"/>
+            </g>
+            <g fill="#e0a24a" opacity="0.28"><circle cx="436" cy="120" r="1.5"/><circle cx="120" cy="158" r="1.2"/></g>
+
+            <!-- atmosphere halo over the limb -->
+            <circle cx="280" cy="770" r="498" fill="url(#atmo)"/>
+            <circle cx="280" cy="770" r="472" fill="none" stroke="#7fe6c8" stroke-width="7" opacity="0.45" filter="url(#soft)"/>
+
+            <!-- Earth -->
+            <circle cx="280" cy="770" r="470" fill="url(#earthBody)"/>
+            <g clip-path="url(#earthClip)">
+              <path d="M70 360 q60 -50 150 -34 q70 12 120 -8 q60 -24 120 -6 q-30 72 -150 86 q-130 16 -240 30 z" fill="#0f6e57" opacity="0.42"/>
+              <path d="M330 478 q70 -30 150 -8 q40 50 -30 96 q-110 30 -160 -20 q-20 -44 40 -68 z" fill="#0f6e57" opacity="0.38"/>
+              <path d="M120 530 q80 -16 130 18 q-10 60 -100 70 q-60 0 -70 -50 z" fill="#13795f" opacity="0.4"/>
+              <g fill="none" stroke="#bff0dd" stroke-opacity="0.2" stroke-width="1.2">
+                <path d="M28 470 q252 -118 504 0"/>
+                <path d="M56 558 q224 -150 448 0"/>
+                <path d="M28 470 q124 92 124 470"/>
+                <path d="M532 470 q-124 92 -124 470"/>
+                <path d="M280 300 v470"/>
+              </g>
+              <ellipse cx="450" cy="700" rx="270" ry="270" fill="#0a4a3a" opacity="0.16"/>
+            </g>
+
+            <!-- orbital path -->
+            <path d="M36 252 q244 -182 506 -44" fill="none" stroke="url(#orbitGrad)" stroke-width="2"/>
+
+            <!-- beam pulling one reading off the surface -->
+            <path d="M450 176 L300 376 L348 388 L468 184 Z" fill="url(#beamGrad)" filter="url(#soft2)"/>
+            <line class="beam" x1="450" y1="176" x2="324" y2="378" stroke="#aef5df" stroke-width="1.4" opacity="0.7"/>
+
+            <!-- the signed reading, glowing on the surface -->
+            <g class="active-cell">
+              <circle cx="324" cy="378" r="36" fill="url(#cellGlow)"/>
+              <rect x="307" y="361" width="34" height="34" rx="8" fill="none" stroke="#eafff7" stroke-width="2"/>
+              <rect x="315" y="369" width="18" height="18" rx="4" fill="#b6f7e2"/>
+            </g>
+
+            <!-- other sensors on the surface -->
+            <g class="sensor sensor-2"><circle cx="180" cy="436" r="4.5" fill="#eafff7"/><circle cx="180" cy="436" r="11" fill="none" stroke="#eafff7" stroke-width="1.3" opacity="0.5"/></g>
+            <g class="sensor sensor-3"><circle cx="436" cy="452" r="4.5" fill="#eafff7"/><circle cx="436" cy="452" r="11" fill="none" stroke="#eafff7" stroke-width="1.3" opacity="0.5"/></g>
+
+            <!-- satellite on the orbit -->
+            <g class="satellite" transform="translate(450 176)">
+              <rect x="-7" y="-9" width="14" height="18" rx="3" fill="var(--ink)"/>
+              <rect x="-23" y="-5" width="13" height="10" rx="2" fill="var(--teal)"/>
+              <rect x="10" y="-5" width="13" height="10" rx="2" fill="var(--teal)"/>
+              <circle cx="0" cy="0" r="3.4" fill="#b6f7e2"/>
+              <circle cx="0" cy="0" r="15" fill="none" stroke="var(--teal)" stroke-width="1" opacity="0.35"/>
+            </g>
+          </svg>
+          <div class="hero-chip">
+            <span class="mono">Bengaluru · live from emem</span>
+            <span class="ok">signed
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Audience lanes -->
+    <section class="section" id="lanes" aria-label="Where to start">
+      <div class="wrap">
+        <div class="statstrip reveal" style="margin-bottom:46px;">
+          <div class="stat"><div class="stat-num">Every 10 m</div><div class="stat-label">of Earth, addressable</div></div>
+          <div class="stat"><div class="stat-num">Orbit&nbsp;→&nbsp;street</div><div class="stat-label">every kind of sensor</div></div>
+          <div class="stat"><div class="stat-num">Signed</div><div class="stat-label">every fact, checkable</div></div>
+          <div class="stat"><div class="stat-num">Open</div><div class="stat-label">free, and open source</div></div>
+          <div class="stat"><div class="stat-num">For agents</div><div class="stat-label">a memory AI can cite</div></div>
+        </div>
+        <div class="lanes">
+          <a class="lane lane-emem reveal" href="/emem/">
+            <span class="lane-kicker">For developers · open</span>
+            <span class="lane-title">emem.dev</span>
+            <span class="lane-desc">The open Earth memory protocol. Read a signed fact in seconds. No keys, no account.</span>
+            <span class="lane-link">Explore emem
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </a>
+          <a class="lane lane-geo reveal reveal-d1" href="/geo-qa/">
+            <span class="lane-kicker">For enterprise &amp; defense · private</span>
+            <span class="lane-title">geo.qa</span>
+            <span class="lane-desc">Geographical question answering on your own data, in a tenancy only your agents can read.</span>
+            <span class="lane-link">See geo.qa
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </a>
+          <a class="lane lane-soon reveal reveal-d2" href="/eudr/">
+            <span class="lane-kicker">In testing · for everyone</span>
+            <span class="lane-title">Consumer apps <span class="tag-soon">soon</span></span>
+            <span class="lane-desc">eudr.dev and propcheck.dev bring verifiable Earth intelligence straight to people.</span>
+            <span class="lane-link">Join the waitlist
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scene 2 — Thesis -->
+    <section class="section section--tint" id="thesis" aria-labelledby="thesis-h">
+      <div class="wrap">
+        <div class="thesis-text reveal" style="max-width:920px;margin-inline:auto;text-align:center;">
+          <h2 class="section-title" id="thesis-h" style="margin-bottom:30px;">An agent is only as good as <em>what it remembers.</em></h2>
           <p>
-            Our wedge is the satellite layer. The encoder runs on orbital data-centre
-            payloads, so inferencing happens in space and what flies down is a latent
-            vector that's two or three orders of magnitude smaller than raw imagery
-            would be. The same encoder also runs on drones, dashcams, and fixed
-            cameras, but space is the case that breaks the old ground-station model.
+            Put an agent in production and you'll watch it answer, with full
+            confidence, about a place it knows nothing real about. Did this address
+            flood. Did this farm get rain. It reaches for a bigger model; we think
+            the gap is memory.
           </p>
-        </div>
-        <div class="theory-card" id="theory-card-2">
-          <div class="theory-icon" aria-hidden="true">
-            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-              <!-- HUD Target Box -->
-              <path d="M8 4H4V8M20 4H24V8M8 24H4V20M20 24H24V20" stroke="currentColor" stroke-width="1.5" class="anim-pulse"/>
-              <circle cx="14" cy="14" r="3" fill="currentColor" opacity="0.8" class="anim-pulse-fast"/>
-              <path d="M14 6L14 10M14 18L14 22M6 14H10M18 14H22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.6" class="anim-orbit-reverse"/>
-            </svg>
-          </div>
-          <h3>Two products, split by who owns the memory</h3>
-          <p>
-            <strong>emem.dev</strong> is the open layer, the kind anyone should be
-            able to read and verify, like querying OpenStreetMap. <strong>geo.qa</strong>
-            is the private one, your own cameras and drones and files. They speak
-            the same protocol on purpose, so an agent can stitch a public fact and
-            a private one into a single answer.
-          </p>
-        </div>
-        <div class="theory-card" id="theory-card-3">
-          <div class="theory-icon" aria-hidden="true">
-            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-              <!-- Neural Grid -->
-              <path d="M4 14L14 4L24 14L14 24L4 14Z" stroke="currentColor" stroke-width="1.5"/>
-              <path d="M4 14H24M14 4V24" stroke="currentColor" stroke-width="1" opacity="0.4"/>
-              <circle cx="14" cy="14" r="5" fill="currentColor" opacity="0.3" class="anim-pulse"/>
-              <circle cx="14" cy="14" r="2" fill="currentColor" class="anim-pulse-fast"/>
-            </svg>
-          </div>
-          <h3>Receipts are the part that actually matters</h3>
-          <p>
-            Every fact carries an ed25519 signature and a blake3 content hash. Sounds
-            like crypto theatre, but the practical effect is that an agent quoting a
-            fact is also quoting a receipt anyone can re-pull and verify offline.
-            That's what turns Earth memory into infrastructure agents can cite when
-            someone pushes back.
+          <p class="thesis-foot" style="margin-top:20px;">
+            So we built the memory: one signed record of Earth, starting wherever a
+            sensor already sits.
           </p>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Architecture Diagram Section -->
-  <section class="section architecture" id="architecture" aria-labelledby="arch-heading">
-    <div class="section-inner">
-      <div class="section-label"><span class="hud-bracket">[</span> Architecture <span class="hud-bracket">]</span></div>
-      <h2 class="section-title" id="arch-heading">Encoders in space. Decoders on the ground.</h2>
-      <p class="section-desc">
-        The encoder runs at the source. For the satellite layer that's on the
-        orbital data-centre payload itself, and what travels down is a latent
-        vector, not imagery. The decoder turns that latent into facts. Every spot
-        on Earth gets a stable address (a cell64, about ten metres on a side), and
-        any fact at that address carries metadata: band, time, value, signed
-        receipt. The algebra is <code>Cell × Band × Tslot → Fact</code>. emem.dev
-        and a geo.qa tenancy use the same call shape, so an agent can read both
-        in a single answer.
-      </p>
-    </div>
-  </section>
-
-  <!-- Atmospheric layer transition -->
-  <div class="atmo-layer atmo-2" aria-hidden="true"></div>
-
-  <!-- Frontier / Devices Section -->
-  <section class="section frontier" id="frontier" aria-labelledby="frontier-heading">
-    <div class="section-inner">
-      <div class="section-label"><span class="hud-bracket">[</span> Frontier <span class="hud-bracket">]</span></div>
-      <h2 class="section-title" id="frontier-heading">Where this shows up</h2>
-      <p class="section-desc">
-        Surfaces we keep ending up on with operators. Most are feeding the encoder
-        and reading the decoder at the same time.
-      </p>
-      <div class="frontier-grid">
-        <article class="frontier-card" id="frontier-card-1">
-          <div class="frontier-icon" aria-hidden="true">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-              <path d="M16 4V8M16 24V28M4 16H8M24 16H28" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-              <ellipse cx="16" cy="16" rx="6" ry="12" stroke="currentColor" stroke-width="1.2" transform="rotate(45 16 16)" opacity="0.6" class="anim-pendulum"/>
-              <circle cx="16" cy="16" r="2" fill="currentColor" class="anim-pulse-fast"/>
-            </svg>
-          </div>
-          <h3>Autonomous vehicles</h3>
-          <p>The AV's cameras write to the memory; the car reads from neighbouring cells to know what's around the corner before it sees it. Receipts matter when a decision needs an audit trail.</p>
-        </article>
-        <article class="frontier-card" id="frontier-card-2">
-          <div class="frontier-icon" aria-hidden="true">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-              <path d="M16 6L24 11V21L16 26L8 21V11L16 6Z" stroke="currentColor" stroke-width="1.5"/>
-              <circle cx="16" cy="16" r="4" stroke="currentColor" stroke-width="1" stroke-dasharray="2 2" class="anim-orbit"/>
-              <path d="M16 16L24 11M16 16V26M16 16L8 11" stroke="currentColor" stroke-width="1.2" opacity="0.5"/>
-            </svg>
-          </div>
-          <h3>Robotics</h3>
-          <p>The fleet is the interesting unit, not the bot. A fleet that writes what it sees and reads what peers wrote five minutes ago shares one understanding of the building it works in.</p>
-        </article>
-        <article class="frontier-card" id="frontier-card-3">
-          <div class="frontier-icon" aria-hidden="true">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-              <path d="M4 16C4 22.6274 9.37258 28 16 28C22.6274 28 28 22.6274 28 16" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.5" class="anim-orbit-reverse"/>
-              <path d="M16 16L24 8" stroke="currentColor" stroke-width="1.5"/>
-              <circle cx="24" cy="8" r="2" fill="currentColor" class="anim-pulse"/>
-              <circle cx="16" cy="16" r="3" stroke="currentColor" stroke-width="1.5"/>
-            </svg>
-          </div>
-          <h3>UAVs &amp; drones</h3>
-          <p>Where most of our early enterprise traffic comes from. Repeat passes over a pipeline corridor or farm grid write signed cells; the next agent reading them gets real, citable change detection.</p>
-        </article>
-        <article class="frontier-card" id="frontier-card-4">
-          <div class="frontier-icon" aria-hidden="true">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-              <path d="M4 16C4 16 11 8 16 8C21 8 28 16 28 16C28 16 21 24 16 24C11 24 4 16 4 16Z" stroke="currentColor" stroke-width="1.5"/>
-              <circle cx="16" cy="16" r="4" stroke="currentColor" stroke-width="1.2" opacity="0.6" class="anim-pulse-fast"/>
-              <path d="M16 6V26" stroke="currentColor" stroke-width="1" stroke-dasharray="2 2" opacity="0.5" class="anim-scan-v"/>
-            </svg>
-          </div>
-          <h3>Aviation</h3>
-          <p>Approach planning and corridor awareness, including in GPS-denied conditions. An aircraft reads the terrain memory the way it reads a METAR. Not certified avionics; a layer underneath, like a moving map.</p>
-        </article>
-        <article class="frontier-card" id="frontier-card-5">
-          <div class="frontier-icon" aria-hidden="true">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-              <path d="M16 4V12M16 20V28M8 16H24" stroke="currentColor" stroke-width="1.5"/>
-              <rect x="12" y="12" width="8" height="8" stroke="currentColor" stroke-width="1.5" transform="rotate(45 16 16)" class="anim-orbit"/>
-              <path d="M6 6L10 10M26 26L22 22" stroke="currentColor" stroke-width="1" opacity="0.5"/>
-            </svg>
-          </div>
-          <h3>Defense &amp; security</h3>
-          <p>Persistent change detection over installations and perimeters. geo.qa's private tenancy is non-negotiable here; classified context never leaves the boundary. emem.dev fills in the open-source layer underneath when useful.</p>
-        </article>
-        <article class="frontier-card" id="frontier-card-6">
-          <div class="frontier-icon" aria-hidden="true">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-              <path d="M12 20H8V12H12M20 12H24V20H20" stroke="currentColor" stroke-width="1.5"/>
-              <circle cx="16" cy="16" r="6" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 3" class="anim-orbit"/>
-              <circle cx="16" cy="16" r="2" fill="currentColor" class="anim-pulse"/>
-            </svg>
-          </div>
-          <h3>Mobile &amp; edge</h3>
-          <p>A phone with an MCP client is enough to be both an encoder source and a reader of the surrounding memory. Teams mostly build their own edge clients for now.</p>
-        </article>
-        <article class="frontier-card" id="frontier-card-7">
-          <div class="frontier-icon" aria-hidden="true">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-              <path d="M6 22L12 16L18 20L26 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M6 14L14 8L20 12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.4" class="anim-scan-h"/>
-              <circle cx="26" cy="12" r="2" fill="currentColor" class="anim-pulse-fast"/>
-            </svg>
-          </div>
-          <h3>Industrial &amp; factories</h3>
-          <p>Fixed cameras feed the encoder; production agents read the decoder. We're most useful when the operator wants a memory layer that lives across multiple sites, not inside one.</p>
-        </article>
-        <article class="frontier-card" id="frontier-card-8">
-          <div class="frontier-icon" aria-hidden="true">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-              <path d="M4 24C10 24 12 18 16 18C20 18 22 12 28 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-              <path d="M4 18C10 18 12 12 16 12C20 12 22 6 28 6" stroke="currentColor" stroke-width="1.2" opacity="0.4" stroke-linecap="round" class="anim-scan-v"/>
-              <circle cx="16" cy="18" r="2" fill="currentColor" class="anim-pulse"/>
-            </svg>
-          </div>
-          <h3>Agriculture &amp; environment</h3>
-          <p>emem.dev covers most of what an environmental analyst wants (crop stress, ET, deforestation, soil moisture). The move for an ag operator is layering their own ground truth on top through geo.qa.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- Products: emem.dev (public, open) and geo.qa (private, tenanted) -->
-  <section class="section products" id="products" aria-labelledby="products-heading">
-    <div class="section-inner">
-      <div class="section-label"><span class="hud-bracket">[</span> Products <span class="hud-bracket">]</span></div>
-      <h2 class="section-title" id="products-heading">The two products</h2>
-      <p class="section-desc">
-        Same protocol underneath, split by who owns the memory. Most enterprise
-        customers run both.
-      </p>
-      <div class="products-pair">
-        <article class="product-card product-card-emem">
-          <div class="product-card-head">
-            <span class="product-audience product-audience-gold">Public · Apache-2.0</span>
-            <h3 class="product-card-title">emem.dev</h3>
-          </div>
-          <p class="product-card-tagline">The open Earth memory protocol.</p>
-          <p class="product-card-desc">
-            A public, signed, content-addressed layer of Earth memory any agent can
-            read without an API contract. Apache-2.0 on GitHub. Run a node yourself;
-            the receipts are still verifiable.
-          </p>
-          <ul class="product-card-bullets">
-            <li><strong>No keys, no accounts.</strong> Plain HTTP at <code>/v1/locate</code>, <code>/v1/recall</code>, <code>/v1/diff</code>. MCP server at <code>emem.dev/mcp</code>.</li>
-            <li><strong>Verifiable offline.</strong> blake3 over the canonical CBOR, ed25519 against the responder's pubkey, done.</li>
-            <li><strong>34 bands, ~1792-D voxels.</strong> Sentinel-1/2, MODIS, Copernicus DEM, JRC water, Hansen forest, plus Tessera, Prithvi, Galileo embeddings.</li>
-          </ul>
-          <a href="https://emem.dev" class="btn btn-primary btn-gold" target="_blank" rel="noopener" onclick="gtag('event', 'click_emem_dev', {'link_location': 'products_section'});">
-            Open emem.dev
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-        </article>
-        <article class="product-card product-card-geo">
-          <div class="product-card-head">
-            <span class="product-audience">Private · Your tenancy</span>
-            <h3 class="product-card-title">geo.qa</h3>
-          </div>
-          <p class="product-card-tagline">An Earth memory that's yours, on your data.</p>
-          <p class="product-card-desc">
-            For enterprise customers whose AI has to be right about specific places:
-            pipelines, airports, insurance, utilities, defense. Same protocol, fed by
-            your sensors, in a tenancy only your agents can read. emem.dev is
-            pre-wired underneath.
-          </p>
-          <ul class="product-card-bullets">
-            <li><strong>Twelve modalities in.</strong> Cameras, drones, satellites, sensors, files, OSM, MCP. CCTV registered by lat/lon/heading/pitch/FOV, SAM3 segmentation on demand.</li>
-            <li><strong>1024-D fused memory.</strong> Visual 512, semantic 384, spatial 128, geo 128, temporal 64, overlay 64. PostgreSQL plus Vespa, scoped to your tenancy.</li>
-            <li><strong>Hard tenancy boundary.</strong> Per-org filesystem scoping, query-layer org filter on every read. Enforced in the codebase, not in marketing copy.</li>
-          </ul>
-          <a href="https://geo.qa" class="btn btn-primary" target="_blank" rel="noopener" onclick="gtag('event', 'click_geo_qa', {'link_location': 'products_section'});">
-            Open geo.qa
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA Section -->
-  <section class="section cta-section" id="cta-section" aria-labelledby="cta-heading">
-    <div class="section-inner">
-      <div class="cta-box" id="cta-box">
-        <div class="cta-logo" aria-hidden="true">
-          <img src="assets/vortx-logo-200.gif" alt="" width="120" height="120" loading="lazy">
+    <!-- Scene 3 — How it works: Watch / Remember / Prove -->
+    <section class="section" id="how" aria-labelledby="how-h">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <h2 class="section-title" id="how-h">From a sensor to a fact your agent can <em>cite.</em></h2>
+          <p class="section-lead">Watch the world, remember it as a signed record, let anyone prove it.</p>
         </div>
-        <h2 id="cta-heading">Have a look, or get in touch.</h2>
-        <p>The fastest way to see what we mean is to read a signed cell from emem.dev (it's free, no signup, takes about ten seconds with curl). If you've got a real production problem on the geo.qa side (a fleet, a corridor, a portfolio of sites) we're happiest in a conversation, so drop us a note.</p>
-        <div class="cta-actions">
-          <a href="https://emem.dev" class="btn btn-primary btn-gold btn-lg" id="cta-bottom-emem" target="_blank" rel="noopener" onclick="gtag('event', 'click_emem_dev', {'link_location': 'bottom_cta'});">
-            Open emem.dev
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4.5 13.5L13.5 4.5M13.5 4.5H7M13.5 4.5V11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-          <a href="https://geo.qa" class="btn btn-primary btn-lg" id="cta-bottom" target="_blank" rel="noopener" onclick="gtag('event', 'click_geo_qa', {'link_location': 'bottom_cta'});">
-            Open geo.qa
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4.5 13.5L13.5 4.5M13.5 4.5H7M13.5 4.5V11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-          <a href="mailto:avijeet@vortx.ai" class="btn btn-ghost btn-lg" id="cta-contact">
-            Talk to us
-          </a>
+
+        <div class="how-steps">
+          <div class="step reveal">
+            <div class="step-top">
+              <span class="step-num">01</span>
+              <span class="step-verb">Watch</span>
+              <span class="step-icon" aria-hidden="true">
+                <svg viewBox="0 0 28 28" fill="none"><path d="M2 14s5-8 12-8 12 8 12 8-5 8-12 8S2 14 2 14Z" stroke="currentColor" stroke-width="1.6"/><circle cx="14" cy="14" r="3.4" fill="currentColor"/></svg>
+              </span>
+            </div>
+            <p>Wherever a sensor already lives — satellites, drones, vehicle cameras, robots, fixed cameras — the world gets read right where it happens.</p>
+          </div>
+          <div class="step reveal reveal-d1">
+            <div class="step-top">
+              <span class="step-num">02</span>
+              <span class="step-verb">Remember</span>
+              <span class="step-icon" aria-hidden="true">
+                <svg viewBox="0 0 28 28" fill="none"><rect x="3" y="3" width="22" height="22" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M3 10h22M3 18h22M10 3v22M18 3v22" stroke="currentColor" stroke-width="1" opacity="0.5"/><rect x="10" y="10" width="8" height="8" fill="currentColor" opacity="0.85"/></svg>
+              </span>
+            </div>
+            <p>Every observation becomes a small, signed record, pinned to a patch of Earth about ten metres across — so any agent can find it again, and trust it.</p>
+          </div>
+          <div class="step reveal reveal-d2">
+            <div class="step-top">
+              <span class="step-num">03</span>
+              <span class="step-verb">Prove</span>
+              <span class="step-icon" aria-hidden="true">
+                <svg viewBox="0 0 28 28" fill="none"><path d="M14 2l10 4v7c0 6-4.4 10.4-10 13C8.4 23.4 4 19 4 13V6l10-4Z" stroke="currentColor" stroke-width="1.6"/><path d="M9.5 13.5l3 3 6-6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+            <p>Each fact carries proof of where it came from. An agent that quotes it hands you a receipt you can re-check yourself, offline.</p>
+          </div>
+        </div>
+
+        <div class="flow reveal reveal-d1" aria-hidden="true">
+          <svg viewBox="0 0 920 240" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="flowGrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#35bb9a"/>
+                <stop offset="70%" stop-color="#15a07e"/>
+                <stop offset="100%" stop-color="#e0a24a"/>
+              </linearGradient>
+              <radialGradient id="cellGlow2" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#b6f7e2" stop-opacity="0.9"/>
+                <stop offset="100%" stop-color="#b6f7e2" stop-opacity="0"/>
+              </radialGradient>
+              <filter id="nd" x="-50%" y="-50%" width="200%" height="200%">
+                <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#16221d" flood-opacity="0.12"/>
+              </filter>
+            </defs>
+
+            <!-- horizon -->
+            <path d="M-20 214 Q 460 168 940 214" fill="none" stroke="var(--teal)" stroke-opacity="0.18" stroke-width="1.4"/>
+
+            <!-- connector: orbit down to the ground -->
+            <path d="M95 66 C 200 168, 280 150, 350 150 C 470 150, 505 138, 575 140 C 705 143, 762 150, 830 150" fill="none" stroke="url(#flowGrad)" stroke-width="2.5" opacity="0.85"/>
+            <path class="flow-line" d="M95 66 C 200 168, 280 150, 350 150 C 470 150, 505 138, 575 140 C 705 143, 762 150, 830 150" fill="none" stroke="#aef5df" stroke-width="2"/>
+
+            <text x="215" y="116" text-anchor="middle" class="flow-label">watch</text>
+            <text x="462" y="118" text-anchor="middle" class="flow-label">remember</text>
+            <text x="702" y="120" text-anchor="middle" class="flow-label">prove</text>
+
+            <!-- a sensor (satellite) -->
+            <g filter="url(#nd)"><circle cx="95" cy="60" r="30" fill="var(--surface)"/></g>
+            <g transform="translate(95 60)">
+              <rect x="-7" y="-9" width="14" height="18" rx="3" fill="var(--ink)"/>
+              <rect x="-22" y="-5" width="12" height="10" rx="2" fill="var(--teal)"/>
+              <rect x="10" y="-5" width="12" height="10" rx="2" fill="var(--teal)"/>
+              <circle r="3" fill="#b6f7e2"/>
+            </g>
+            <text x="95" y="118" text-anchor="middle" class="flow-cap">a sensor</text>
+
+            <!-- a cell of Earth -->
+            <circle cx="350" cy="150" r="40" fill="url(#cellGlow2)" class="active-cell"/>
+            <g filter="url(#nd)"><rect x="324" y="124" width="52" height="52" rx="12" fill="var(--surface)" stroke="var(--teal)" stroke-width="1.6"/></g>
+            <rect x="336" y="136" width="28" height="28" rx="6" fill="var(--teal)" opacity="0.9"/>
+            <text x="350" y="208" text-anchor="middle" class="flow-cap">a cell of Earth</text>
+
+            <!-- signed receipt -->
+            <g filter="url(#nd)"><rect x="545" y="108" width="60" height="66" rx="10" fill="var(--ink)"/></g>
+            <path d="M558 126H592 M558 138H592 M558 150H580" stroke="#7f9387" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="575" cy="158" r="8" fill="none" stroke="#6fe3bf" stroke-width="2"/>
+            <path d="M571 158l3 3 5-6" stroke="#6fe3bf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <text x="575" y="200" text-anchor="middle" class="flow-cap">signed</text>
+
+            <!-- your agent -->
+            <g filter="url(#nd)"><circle cx="830" cy="150" r="30" fill="var(--surface)"/></g>
+            <g transform="translate(830 150)">
+              <rect x="-13" y="-11" width="26" height="20" rx="6" fill="none" stroke="var(--ink)" stroke-width="1.8"/>
+              <circle cx="-5" cy="-1" r="2.3" fill="var(--ink)"/><circle cx="5" cy="-1" r="2.3" fill="var(--ink)"/>
+              <path d="M0 -11V-17" stroke="var(--ink)" stroke-width="1.8" stroke-linecap="round"/><circle cx="0" cy="-19" r="2.4" fill="var(--teal)"/>
+            </g>
+            <text x="830" y="208" text-anchor="middle" class="flow-cap">your agent</text>
+          </svg>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <!-- Scene 4 — Proof: the live verify widget -->
+    <section class="section section--sky" id="verify" aria-labelledby="verify-h">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <h2 class="section-title" id="verify-h">Pick any place on Earth. <em>Check the answer yourself.</em></h2>
+          <p class="section-lead">Real, signed readings from emem. The same query everywhere; the value just tells you what's on the ground.</p>
+        </div>
+
+        <div class="place-chips reveal reveal-d1" role="group" aria-label="Pick a place on Earth">
+          <button class="chip active" aria-pressed="true" data-place="Bengaluru, India" data-cell="defi.zb493.zezo.zcb35" data-val="0.72" data-read="healthy vegetation" data-cap="2026-06-16" data-cid="2vgxouk…j5ojla" data-cidfull="2vgxoukcscjvanuh3yiurqc3xpocbvjwozuygcobq2t6gyj5ojla" data-conf="0.95"><span class="chip-dot"></span>Bengaluru</button>
+          <button class="chip" aria-pressed="false" data-place="Amazon rainforest, Brazil" data-cell="defi.zb3dc.puzU.nuzU" data-val="0.71" data-read="dense forest canopy" data-cap="2026-03-27" data-cid="u36sepo…kbpaia" data-cidfull="u36seportwjmkmfhlml7n45vxjsjl5lgx4nowdhfi4bwvakbpaia" data-conf="0.90"><span class="chip-dot"></span>Amazon</button>
+          <button class="chip" aria-pressed="false" data-place="Sahara Desert (23.5°N, 12°E)" data-cell="defi.zb50b.pIvO.geqO" data-val="0.07" data-read="bare desert" data-cap="2026-06-17" data-cid="gqahgsk…425kjq" data-cidfull="gqahgskrj5rbe3cmxvragkikaliddu5ybpgsajsiy3hheq425kjq" data-conf="0.95"><span class="chip-dot"></span>Sahara</button>
+          <button class="chip" aria-pressed="false" data-place="Des Moines, Iowa" data-cell="defi.zb5d9.heqe.pazi" data-val="0.01" data-read="cropland, between seasons" data-cap="2026-05-03" data-cid="4fz2osb…d6wwpa" data-cidfull="4fz2osbqxpy2qscopxcvzjrtpthrlzyicl6dboid5jx7ikd6wwpa" data-conf="0.90"><span class="chip-dot"></span>Iowa farmland</button>
+          <button class="chip" aria-pressed="false" data-place="Manhattan, New York" data-cell="defi.zb5cf.zbc12.zd8d6" data-val="-0.09" data-read="built-up and water" data-cap="2025-11-02" data-cid="rby2p3f…iil5ua" data-cidfull="rby2p3f5qleti3x2vwahx44eauhjqfvx3535ngcnwjz3ctiil5ua" data-conf="0.90"><span class="chip-dot"></span>Manhattan</button>
+        </div>
+
+        <div class="verify-grid">
+          <div class="receipt reveal" role="figure" aria-label="A real signed fact from emem">
+            <div class="receipt-head">
+              <span class="dot-row" aria-hidden="true"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span>
+              <span class="signed">signed
+                <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+            <div class="receipt-rows">
+              <div class="r-row"><span class="r-key">place</span><span class="r-val" id="r-place">Bengaluru, India</span></div>
+              <div class="r-row"><span class="r-key">we see</span><span class="r-val" id="r-read">healthy vegetation</span></div>
+              <div class="r-row"><span class="r-key">index</span><span class="r-val"><span class="tealv" id="r-val">0.72</span>&nbsp;<span class="rd">greenness, by satellite</span></span></div>
+              <div class="r-row"><span class="r-key">measured</span><span class="r-val" id="r-cap">2026-06-16</span></div>
+              <div class="r-row"><span class="r-key">proof</span><span class="r-val hi" id="r-cid">2vgxouk…j5ojla</span></div>
+            </div>
+            <div class="receipt-foot">signed, and yours to re-check — no account needed</div>
+          </div>
+
+          <div class="reveal reveal-d1">
+            <p class="section-lead" style="margin-top:0;">The same question, anywhere on Earth, answered from live satellite data and signed so anyone can check it. No account, no catch.</p>
+            <div class="verify-actions">
+              <a href="https://emem.dev/v1/facts/2vgxoukcscjvanuh3yiurqc3xpocbvjwozuygcobq2t6gyj5ojla" id="open-fact" class="btn btn-primary" target="_blank" rel="noopener" onclick="gtag('event','open_fact',{'link_location':'verify_widget'});">
+                See this fact
+                <svg class="arrow" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+              <a href="/emem/" class="btn btn-ghost">Run it yourself</a>
+            </div>
+            <p class="verify-note">A fact your agent cites is one you can re-check yourself, with no need to take our word for it.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Where it pays off -->
+    <section class="section" id="usecases" aria-labelledby="usecases-h">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <h2 class="section-title" id="usecases-h">Where being wrong is <em>expensive.</em></h2>
+          <p class="section-lead">A checkable fact earns its keep exactly where a confident guess costs the most.</p>
+        </div>
+        <div class="usecases">
+          <div class="usecase reveal">
+            <div class="usecase-who">Insurance &amp; risk</div>
+            <div class="usecase-q">Did this place actually flood?</div>
+            <p class="usecase-a">Pay or deny on a signed flood and rainfall record, with the receipt attached to the claim, instead of a model that only sounds confident.</p>
+          </div>
+          <div class="usecase reveal reveal-d1">
+            <div class="usecase-who">Lending &amp; property</div>
+            <div class="usecase-q">What is this address exposed to?</div>
+            <p class="usecase-a">Flood, heat and land change for one parcel, each line traceable to a dated observation an underwriter can stand behind.</p>
+          </div>
+          <div class="usecase reveal">
+            <div class="usecase-who">Supply chain</div>
+            <div class="usecase-q">Was this plot cleared before we sourced from it?</div>
+            <p class="usecase-a">Check a parcel against the forest record for an EUDR file, and hand an auditor a receipt rather than an assurance.</p>
+          </div>
+          <div class="usecase reveal reveal-d1">
+            <div class="usecase-who">Defense &amp; critical infrastructure</div>
+            <div class="usecase-q">What changed along this perimeter?</div>
+            <p class="usecase-a">Signed change detection over sites and corridors, inside a private tenancy your agents read and outsiders never touch.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scene 5 — Products -->
+    <section class="section" id="products" aria-labelledby="products-h">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <h2 class="section-title" id="products-h">One protocol. <em>Two doors.</em></h2>
+          <p class="section-lead">Read the public layer, write your private one, cite both in a single answer.</p>
+        </div>
+
+        <div class="products-pair">
+          <article class="product product-emem reveal">
+            <span class="product-kicker">Open · Apache-2.0</span>
+            <h3 class="product-name">emem.dev</h3>
+            <p class="product-tagline">The open Earth memory protocol.</p>
+            <p class="product-desc">A public, signed layer of Earth memory any agent can read without an API contract. Run it yourself; the receipts still check out.</p>
+            <ul class="product-bullets">
+              <li><b>Free and open.</b> Read it without a key, an account, or a contract.</li>
+              <li><b>Checkable offline.</b> Every fact is signed, so you never have to trust the server.</li>
+              <li><b>Built on public satellite data.</b> Open for anyone to read, run, or build on.</li>
+            </ul>
+            <a href="https://emem.dev" class="btn btn-gold" target="_blank" rel="noopener" onclick="gtag('event','click_emem_dev',{'link_location':'products_section'});">
+              Open emem.dev
+              <svg class="arrow" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </article>
+
+          <article class="product product-geo reveal reveal-d1">
+            <span class="product-kicker">Private · Your tenancy</span>
+            <h3 class="product-name">geo.qa</h3>
+            <p class="product-tagline">Earth memory that's yours, on your data.</p>
+            <p class="product-desc">For teams whose AI has to be right about specific places — pipelines, airports, ports, borders, fleets. The same protocol, fed by your own sensors, in a tenancy only your agents can read.</p>
+            <ul class="product-bullets">
+              <li><b>Your sensors, fused.</b> Cameras, drones, satellites, sensors, files and maps, registered by location and view and segmented on demand.</li>
+              <li><b>A boundary that holds.</b> Per-organisation scoping enforced in the code, on every read, not in a brochure.</li>
+              <li><b>emem underneath.</b> Read the public layer, write your private one, cite both in one answer.</li>
+            </ul>
+            <a href="https://geo.qa" class="btn btn-primary" target="_blank" rel="noopener" onclick="gtag('event','click_geo_qa',{'link_location':'products_section'});">
+              Open geo.qa
+              <svg class="arrow" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </article>
+        </div>
+
+        <!-- coming soon rail -->
+        <div class="section-head reveal" style="margin-top:76px;margin-bottom:26px;">
+          <h3 class="section-title" style="font-size:clamp(24px,3.2vw,36px);">Two more, <em>in testing.</em></h3>
+        </div>
+        <div class="soon-rail">
+          <div class="soon-card reveal">
+            <span class="soon-mark">eudr<span style="color:var(--gold)">.dev</span></span>
+            <div class="soon-body">
+              <h4>Deforestation-free sourcing <span class="tag-soon">soon</span></h4>
+              <p>Check a supply plot against the EUDR using public satellite records, with a receipt you can hand to an auditor. In testing with early users.</p>
+            </div>
+          </div>
+          <div class="soon-card reveal reveal-d1">
+            <span class="soon-mark">propcheck<span style="color:var(--gold)">.dev</span></span>
+            <div class="soon-body">
+              <h4>A property's real history <span class="tag-soon">soon</span></h4>
+              <p>The climate and risk record of an address — flood, heat, land change — pulled from verifiable Earth data. In testing.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Coda -->
+    <section class="section section--tint" id="coda">
+      <div class="wrap">
+        <div class="coda reveal">
+          <p style="font-size:clamp(28px,4.2vw,50px);line-height:1.04;letter-spacing:-0.015em;">One trustworthy memory of Earth, for the agents the world is <em>about to depend on.</em></p>
+          <p>We build it in the open, and ship only what we can sign.</p>
+          <div class="btnrow" style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:32px;">
+            <a href="#verify" class="btn btn-primary btn-lg">See a signed fact</a>
+            <a href="https://github.com/Vortx-AI/emem" class="btn btn-gold btn-lg" target="_blank" rel="noopener" onclick="gtag('event','click_emem_dev',{'link_location':'coda_github'});">Star emem on GitHub</a>
+            <a href="mailto:avijeet@vortx.ai" class="btn btn-ghost btn-lg">Talk to us</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Open research band -->
+    <section class="section" id="research" aria-labelledby="research-h">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <h2 class="section-title" id="research-h">Read the <em>work.</em></h2>
+          <p class="section-lead">The papers and models behind the protocol are public, and checkable the same way a fact is.</p>
+        </div>
+        <div class="research-list">
+          <div class="res-item reveal">
+            <span class="res-date">2026-06-15</span>
+            <span class="res-tag paper">Paper</span>
+            <span class="res-title"><a href="https://zenodo.org/records/20706317" target="_blank" rel="noopener">emem: A Content-Addressed, Verifiable Earth-Memory Protocol for AI Agents over Foundation-Model Embeddings <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></span>
+          </div>
+          <div class="res-item reveal reveal-d2">
+            <span class="res-date">model</span>
+            <span class="res-tag model">Model</span>
+            <span class="res-title"><a href="https://huggingface.co/avijeetsingh1608/TerraGround-Gemma-4-12B-LoRA" target="_blank" rel="noopener">TerraGround-Gemma-4-12B-LoRA <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></span>
+          </div>
+          <div class="res-item reveal reveal-d2">
+            <span class="res-date">model</span>
+            <span class="res-tag model">Model</span>
+            <span class="res-title"><a href="https://huggingface.co/avijeetsingh1608/TerraGround-Gemma-4-E2B-LoRA" target="_blank" rel="noopener">TerraGround-Gemma-4-E2B-LoRA <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></span>
+          </div>
+          <div class="res-item reveal reveal-d3">
+            <span class="res-date">code</span>
+            <span class="res-tag oss">Open source</span>
+            <span class="res-title"><a href="https://github.com/Vortx-AI/emem" target="_blank" rel="noopener">github.com/Vortx-AI/emem — Apache-2.0 <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></span>
+          </div>
+        </div>
+        <p style="margin-top:22px;"><a href="/research/" class="btn btn-quiet">See all research →</a></p>
+      </div>
+    </section>
+
+    <!-- Backed by -->
+    <section class="section section--tint" id="backed">
+      <div class="wrap backed reveal">
+        <div class="backed-label">Proudly a part of</div>
+        <div class="backed-logos">
+          <span class="backed-item">Seraphim Space · Mission 15</span>
+          <span class="backed-item">NVIDIA Inception</span>
+          <span class="backed-item">AWS Space Accelerator</span>
+          <span class="backed-item">Sisu Launchpad</span>
+          <span class="backed-item">Qatar Development Bank Accelerator</span>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <!-- Footer -->
-  <footer class="footer" id="footer">
-    <div class="footer-inner">
+  <footer class="site-footer">
+    <div class="wrap">
       <div class="footer-grid">
-        <div class="footer-left">
-          <div class="footer-brand">
-            <a href="#" class="logo" aria-label="Vortx AI home">
-              <img src="assets/vortx-logo-36.gif" alt="Vortx AI" class="logo-gif" width="36" height="36" loading="lazy">
-              <span class="logo-text">vortx<span class="logo-dot">.ai</span></span>
-            </a>
-            <p class="footer-tagline">Earth memory for the agents your<br>customers are about to depend on.</p>
-            <p class="footer-creds" aria-label="Programs and accelerators">
-              <span class="footer-creds-label">Proudly a part of</span>
-              <span class="footer-creds-item">Seraphim Space Mission 15</span>
-              <span class="footer-creds-sep">·</span>
-              <span class="footer-creds-item">NVIDIA Inception</span>
-              <span class="footer-creds-sep">·</span>
-              <span class="footer-creds-item">AWS Space Accelerator</span>
-              <span class="footer-creds-sep">·</span>
-              <span class="footer-creds-item">Sisu Launchpad</span>
-              <span class="footer-creds-sep">·</span>
-              <span class="footer-creds-item">Qatar Development Bank Accelerator</span>
-            </p>
-          </div>
-          <div class="footer-links">
+        <div class="footer-brand">
+          <a href="/" class="brand" aria-label="Vortx AI home">
+            <img src="assets/vortx-logo-36.gif" alt="" class="brand-mark" width="34" height="34" loading="lazy">
+            <span class="brand-text">vortx<span class="brand-dot">.ai</span></span>
+          </a>
+          <p class="footer-tagline">One verifiable memory of Earth, for the agents your customers are about to depend on.</p>
+          <div class="footer-cols">
             <div class="footer-col">
-              <h4>Research</h4>
+              <h4>Explore</h4>
               <a href="#thesis">Thesis</a>
-              <a href="#architecture">Architecture</a>
-              <a href="#frontier">Frontier</a>
+              <a href="#how">How it works</a>
+              <a href="#verify">Proof</a>
+              <a href="/spatial-ai/">What is spatial AI?</a>
             </div>
             <div class="footer-col">
               <h4>Products</h4>
-              <a href="https://emem.dev" target="_blank" rel="noopener" onclick="gtag('event', 'click_emem_dev', {'link_location': 'footer'});">emem.dev <span class="footer-aud">· public</span></a>
-              <a href="https://geo.qa" target="_blank" rel="noopener" onclick="gtag('event', 'click_geo_qa', {'link_location': 'footer'});">geo.qa <span class="footer-aud">· private</span></a>
-              <a href="#products">How they fit together</a>
+              <a href="https://emem.dev" target="_blank" rel="noopener" onclick="gtag('event','click_emem_dev',{'link_location':'footer'});">emem.dev <span class="footer-aud">· open</span></a>
+              <a href="https://geo.qa" target="_blank" rel="noopener" onclick="gtag('event','click_geo_qa',{'link_location':'footer'});">geo.qa <span class="footer-aud">· private</span></a>
+              <a href="/eudr/">eudr.dev <span class="footer-aud">· soon</span></a>
+              <a href="/propcheck/">propcheck.dev <span class="footer-aud">· soon</span></a>
+            </div>
+            <div class="footer-col">
+              <h4>Lab</h4>
+              <a href="/research/">Research</a>
+              <a href="/log/">Log</a>
+              <a href="/trust/">Trust &amp; security</a>
+              <a href="https://github.com/Vortx-AI" target="_blank" rel="noopener">GitHub</a>
+              <a href="https://huggingface.co/avijeetsingh1608" target="_blank" rel="noopener">Hugging Face</a>
             </div>
             <div class="footer-col">
               <h4>Company</h4>
-              <a href="https://github.com/Vortx-AI" target="_blank" rel="noopener">GitHub</a>
               <a href="mailto:avijeet@vortx.ai">avijeet@vortx.ai</a>
-            </div>
-            <div class="footer-col">
-              <h4>Legal</h4>
               <a href="/terms">Terms</a>
               <a href="/privacy">Privacy</a>
               <a href="https://merchant.razorpay.com/policy/RxszPvkxcI83lo/refund" target="_blank" rel="noopener">Refunds</a>
               <a href="https://merchant.razorpay.com/policy/RxszPvkxcI83lo/shipping" target="_blank" rel="noopener">Shipping</a>
-              <a href="https://merchant.razorpay.com/policy/RxszPvkxcI83lo/contact_us" target="_blank" rel="noopener">Contact</a>
             </div>
           </div>
         </div>
         <div class="footer-right" aria-hidden="true">
           <div class="footer-map">
-            <!-- Real world map (continent paths) loaded as CSS mask of accent color -->
             <div class="footer-map-land"></div>
-            <!-- Pin overlay using the same viewBox as the underlying world map -->
             <svg class="footer-map-pins" viewBox="0 0 950 620" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
               <g class="map-pins">
-                <g class="map-pin">
-                  <title>AWS Space Accelerator · Seattle</title>
-                  <circle class="map-pin-pulse" cx="152" cy="180" style="animation-delay: 0s"/>
-                  <circle class="map-pin-core" cx="152" cy="180" r="14"/>
-                </g>
-                <g class="map-pin">
-                  <title>NVIDIA Inception · Santa Clara</title>
-                  <circle class="map-pin-pulse" cx="155" cy="222" style="animation-delay: 0.45s"/>
-                  <circle class="map-pin-core" cx="155" cy="222" r="14"/>
-                </g>
-                <g class="map-pin">
-                  <title>Seraphim Space Mission 15 · London</title>
-                  <circle class="map-pin-pulse" cx="472" cy="175" style="animation-delay: 0.9s"/>
-                  <circle class="map-pin-core" cx="472" cy="175" r="14"/>
-                </g>
-                <g class="map-pin">
-                  <title>Sisu Launchpad · Helsinki</title>
-                  <circle class="map-pin-pulse" cx="538" cy="132" style="animation-delay: 1.35s"/>
-                  <circle class="map-pin-core" cx="538" cy="132" r="14"/>
-                </g>
-                <g class="map-pin">
-                  <title>Qatar Development Bank Accelerator · Doha</title>
-                  <circle class="map-pin-pulse" cx="610" cy="282" style="animation-delay: 1.8s"/>
-                  <circle class="map-pin-core" cx="610" cy="282" r="14"/>
-                </g>
-                <g class="map-pin map-pin-vortx">
-                  <title>Vortx AI · Bangalore (HQ)</title>
-                  <circle class="map-pin-pulse" cx="682" cy="340" style="animation-delay: 2.25s"/>
-                  <circle class="map-pin-core" cx="682" cy="340" r="16"/>
-                </g>
+                <g class="map-pin"><title>AWS Space Accelerator · Seattle</title><circle class="map-pin-pulse" cx="152" cy="180" style="animation-delay:0s"/><circle class="map-pin-core" cx="152" cy="180" r="9"/></g>
+                <g class="map-pin"><title>NVIDIA Inception · Santa Clara</title><circle class="map-pin-pulse" cx="155" cy="222" style="animation-delay:.45s"/><circle class="map-pin-core" cx="155" cy="222" r="9"/></g>
+                <g class="map-pin"><title>Seraphim Space Mission 15 · London</title><circle class="map-pin-pulse" cx="472" cy="175" style="animation-delay:.9s"/><circle class="map-pin-core" cx="472" cy="175" r="9"/></g>
+                <g class="map-pin"><title>Sisu Launchpad · Helsinki</title><circle class="map-pin-pulse" cx="538" cy="132" style="animation-delay:1.35s"/><circle class="map-pin-core" cx="538" cy="132" r="9"/></g>
+                <g class="map-pin"><title>Qatar Development Bank Accelerator · Doha</title><circle class="map-pin-pulse" cx="610" cy="282" style="animation-delay:1.8s"/><circle class="map-pin-core" cx="610" cy="282" r="9"/></g>
+                <g class="map-pin map-pin-vortx"><title>Vortx AI · Bengaluru (HQ)</title><circle class="map-pin-pulse" cx="682" cy="340" style="animation-delay:2.25s"/><circle class="map-pin-core" cx="682" cy="340" r="11"/></g>
               </g>
             </svg>
           </div>
         </div>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2026 Vortx AI Private Limited. All rights reserved.</p>
+        <p>&copy; 2026 Vortx AI Private Limited. Made on Earth, for Earth.</p>
+        <p><a href="/contact">Contact</a> · CIN U72200JH2024PTC023101</p>
       </div>
     </div>
   </footer>

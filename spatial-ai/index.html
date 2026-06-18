@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-D71W1Q8YRZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-D71W1Q8YRZ');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#faf8f2">
+  <title>What is spatial AI? And what is Earth memory? | Vortx AI</title>
+  <meta name="description" content="Plain definitions of spatial AI, Earth memory, and AI agent grounding — and how a fact gets signed so an agent can cite it and anyone can re-check it. Field notes from Vortx, a spatial AI lab.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://vortx.ai/spatial-ai/">
+
+  <meta property="og:title" content="What is spatial AI? And what is Earth memory?">
+  <meta property="og:description" content="Plain definitions of spatial AI, Earth memory, and AI agent grounding, from a spatial AI lab.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://vortx.ai/spatial-ai/">
+  <meta property="og:image" content="https://vortx.ai/assets/og-card.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Vortx AI", "item": "https://vortx.ai" },
+      { "@type": "ListItem", "position": 2, "name": "What is spatial AI?", "item": "https://vortx.ai/spatial-ai/" }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <div class="blueprint" aria-hidden="true"></div>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <header class="site-nav" id="nav">
+    <div class="wrap nav-row">
+      <a href="/" class="brand" aria-label="Vortx AI home">
+        <img src="/assets/vortx-logo-36.gif" alt="" class="brand-mark" width="34" height="34" loading="eager">
+        <span class="brand-text">vortx<span class="brand-dot">.ai</span></span>
+      </a>
+      <nav class="nav-menu" id="nav-menu" aria-label="Primary">
+        <a href="/#thesis" class="nav-link">Thesis</a>
+        <a href="/#how" class="nav-link">How it works</a>
+        <a href="/#verify" class="nav-link">Proof</a>
+        <a href="/#products" class="nav-link">Products</a>
+        <a href="/research/" class="nav-link">Research</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="/#verify" class="btn btn-primary btn-sm">See a signed fact</a>
+      </div>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu"><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="section page-hero">
+      <div class="wrap">
+        <div class="breadcrumb"><a href="/">Vortx</a><span>/</span>Spatial AI</div>
+        <h1 class="hero-title">Spatial AI, <em>in plain words.</em></h1>
+        <p class="hero-sub">A few terms come up a lot around here. Here's what we mean by them, with no jargon and nothing oversold.</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0;">
+      <div class="wrap" style="max-width:820px;">
+
+        <div class="qa-item reveal">
+          <h2 class="qa-q">What is spatial AI?</h2>
+          <div class="qa-a">
+            <p class="lead-def">Spatial AI is artificial intelligence that reasons about real places: where things are, how they change over time, and what is true on the ground right now.</p>
+            <p>A general language model can describe the idea of a place. A spatial AI system can answer about a specific one, like this field or this address, because it's connected to observations of that place rather than to text written about it. Vortx is a spatial AI lab: we build the layer that holds those observations and hands them to an agent in a form it can use and cite.</p>
+          </div>
+        </div>
+
+        <div class="qa-item reveal">
+          <h2 class="qa-q">What is Earth memory?</h2>
+          <div class="qa-a">
+            <p class="lead-def">Earth memory is a record of what has been observed at each place on Earth, stored so an AI agent can recall it later and prove where it came from.</p>
+            <p>Every spot on Earth gets a stable address about ten metres across. Each observation at that address — a vegetation reading, a water level, a change since last month — is stored as a small fact with its time, its source, and a signature. An agent asks by place and gets the fact back, along with the receipt. The open version is <a href="/emem/">emem.dev</a>; the private version is <a href="/geo-qa/">geo.qa</a>.</p>
+          </div>
+        </div>
+
+        <div class="qa-item reveal">
+          <h2 class="qa-q">What is AI agent grounding?</h2>
+          <div class="qa-a">
+            <p class="lead-def">Grounding is giving an AI agent a checkable source for what it says about the world, instead of letting it answer from memory or guesswork.</p>
+            <p>An ungrounded agent will state that an address is low flood risk because the sentence sounds right. A grounded one points to a signed observation of that place and a date. The difference matters most where being wrong is expensive: insurance, lending, logistics, defense. That is also where a stale dataset served as live truth does the most harm.</p>
+          </div>
+        </div>
+
+        <div class="qa-item reveal">
+          <h2 class="qa-q">How does a fact get verified?</h2>
+          <div class="qa-a">
+            <p class="lead-def">Each fact carries an ed25519 signature and a blake3 content hash. Anyone can recompute the hash and check the signature offline, without trusting the server that served it.</p>
+            <p>The hash is taken over the fact itself, so the address you ask for and the answer you get are bound together. Change either, and the hash stops matching. The signature ties the fact to the responder that produced it. Put together, an agent that quotes a fact is also handing you a receipt you can re-pull and check yourself. You can try it on the <a href="/#verify">home page</a>.</p>
+          </div>
+        </div>
+
+        <div class="qa-item reveal">
+          <h2 class="qa-q">How is this different from satellite imagery or a map?</h2>
+          <div class="qa-a">
+            <p class="lead-def">Imagery and maps show a place to a person. Earth memory gives an agent a signed answer about that place that it can cite.</p>
+            <p>You don't query a satellite photo; you look at it. A map tells you what is where, not what changed last week or whether a reading can be trusted. Earth memory sits a layer underneath: it turns observations from many sources — satellites, drones, vehicle cameras, fixed sensors — into facts an agent can ask for by place and time, and verify. That's the part that was missing.</p>
+          </div>
+        </div>
+
+        <div style="margin-top:40px;" class="reveal">
+          <a href="/#verify" class="btn btn-primary btn-lg">See a signed fact
+            <svg class="arrow" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="/emem/" class="btn btn-quiet" style="margin-left:14px;">Read about emem →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="/" class="brand" aria-label="Vortx AI home">
+            <img src="/assets/vortx-logo-36.gif" alt="" class="brand-mark" width="34" height="34" loading="lazy">
+            <span class="brand-text">vortx<span class="brand-dot">.ai</span></span>
+          </a>
+          <p class="footer-tagline">One verifiable memory of Earth, for the agents your customers are about to depend on.</p>
+          <div class="footer-cols">
+            <div class="footer-col">
+              <h4>Explore</h4>
+              <a href="/#thesis">Thesis</a>
+              <a href="/#how">How it works</a>
+              <a href="/#verify">Proof</a>
+              <a href="/spatial-ai/">What is spatial AI?</a>
+            </div>
+            <div class="footer-col">
+              <h4>Products</h4>
+              <a href="https://emem.dev" target="_blank" rel="noopener">emem.dev <span class="footer-aud">· open</span></a>
+              <a href="https://geo.qa" target="_blank" rel="noopener">geo.qa <span class="footer-aud">· private</span></a>
+              <a href="/eudr/">eudr.dev <span class="footer-aud">· soon</span></a>
+              <a href="/propcheck/">propcheck.dev <span class="footer-aud">· soon</span></a>
+            </div>
+            <div class="footer-col">
+              <h4>Lab</h4>
+              <a href="/research/">Research</a>
+              <a href="/log/">Log</a>
+              <a href="/trust/">Trust &amp; security</a>
+              <a href="https://github.com/Vortx-AI" target="_blank" rel="noopener">GitHub</a>
+              <a href="https://huggingface.co/avijeetsingh1608" target="_blank" rel="noopener">Hugging Face</a>
+            </div>
+            <div class="footer-col">
+              <h4>Company</h4>
+              <a href="mailto:avijeet@vortx.ai">avijeet@vortx.ai</a>
+              <a href="/terms">Terms</a>
+              <a href="/privacy">Privacy</a>
+              <a href="https://merchant.razorpay.com/policy/RxszPvkxcI83lo/refund" target="_blank" rel="noopener">Refunds</a>
+              <a href="https://merchant.razorpay.com/policy/RxszPvkxcI83lo/shipping" target="_blank" rel="noopener">Shipping</a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-right" aria-hidden="true">
+          <div class="footer-map">
+            <div class="footer-map-land"></div>
+            <svg class="footer-map-pins" viewBox="0 0 950 620" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+              <g class="map-pins">
+                <g class="map-pin"><title>AWS Space Accelerator · Seattle</title><circle class="map-pin-pulse" cx="152" cy="180" style="animation-delay:0s"/><circle class="map-pin-core" cx="152" cy="180" r="9"/></g>
+                <g class="map-pin"><title>NVIDIA Inception · Santa Clara</title><circle class="map-pin-pulse" cx="155" cy="222" style="animation-delay:.45s"/><circle class="map-pin-core" cx="155" cy="222" r="9"/></g>
+                <g class="map-pin"><title>Seraphim Space Mission 15 · London</title><circle class="map-pin-pulse" cx="472" cy="175" style="animation-delay:.9s"/><circle class="map-pin-core" cx="472" cy="175" r="9"/></g>
+                <g class="map-pin"><title>Sisu Launchpad · Helsinki</title><circle class="map-pin-pulse" cx="538" cy="132" style="animation-delay:1.35s"/><circle class="map-pin-core" cx="538" cy="132" r="9"/></g>
+                <g class="map-pin"><title>Qatar Development Bank Accelerator · Doha</title><circle class="map-pin-pulse" cx="610" cy="282" style="animation-delay:1.8s"/><circle class="map-pin-core" cx="610" cy="282" r="9"/></g>
+                <g class="map-pin map-pin-vortx"><title>Vortx AI · Bengaluru (HQ)</title><circle class="map-pin-pulse" cx="682" cy="340" style="animation-delay:2.25s"/><circle class="map-pin-core" cx="682" cy="340" r="11"/></g>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Vortx AI Private Limited. Made on Earth, for Earth.</p>
+        <p><a href="/contact">Contact</a> · CIN U72200JH2024PTC023101</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="earthBody" cx="64%" cy="28%" r="86%">
+      <stop offset="0%" stop-color="#a6ead0"/>
+      <stop offset="36%" stop-color="#42b492"/>
+      <stop offset="76%" stop-color="#1a7d63"/>
+      <stop offset="100%" stop-color="#0c5846"/>
+    </radialGradient>
+    <radialGradient id="atmo" cx="50%" cy="50%" r="50%">
+      <stop offset="80%" stop-color="#35bb9a" stop-opacity="0"/>
+      <stop offset="94%" stop-color="#69ddca" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#9bead8" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f2c47e" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#f2c47e" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="beamGrad" x1="0.5" y1="0" x2="0.5" y2="1">
+      <stop offset="0%" stop-color="#35bb9a" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#35bb9a" stop-opacity="0.03"/>
+    </linearGradient>
+    <linearGradient id="orbitGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#35bb9a" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#35bb9a" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#e0a24a" stop-opacity="0.55"/>
+    </linearGradient>
+    <radialGradient id="cellGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#b6f7e2" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#b6f7e2" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="earthClip"><circle cx="1010" cy="900" r="470"/></clipPath>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="10"/></filter>
+  </defs>
+
+  <!-- paper -->
+  <rect width="1200" height="630" fill="#faf8f2"/>
+  <!-- faint blueprint grid -->
+  <g stroke="#16221d" stroke-opacity="0.04" stroke-width="1">
+    <path d="M72 0V630 M192 0V630 M312 0V630 M432 0V630 M552 0V630"/>
+    <path d="M0 120H1200 M0 240H1200 M0 360H1200 M0 480H1200"/>
+  </g>
+
+  <!-- sun -->
+  <circle cx="1060" cy="60" r="340" fill="url(#sunGlow)"/>
+
+  <!-- atmosphere + Earth (bottom right) -->
+  <circle cx="1010" cy="900" r="500" fill="url(#atmo)"/>
+  <circle cx="1010" cy="900" r="474" fill="none" stroke="#7fe6c8" stroke-width="8" opacity="0.45" filter="url(#soft)"/>
+  <circle cx="1010" cy="900" r="470" fill="url(#earthBody)"/>
+  <g clip-path="url(#earthClip)">
+    <path d="M640 520 q120 -50 230 -20 q120 30 210 -10 q-30 90 -200 110 q-180 18 -300 30 z" fill="#0f6e57" opacity="0.4"/>
+    <path d="M860 660 q120 -30 230 0 q20 70 -70 120 q-150 30 -210 -30 q-20 -50 50 -90 z" fill="#0f6e57" opacity="0.36"/>
+    <g fill="none" stroke="#bff0dd" stroke-opacity="0.2" stroke-width="1.4">
+      <path d="M560 600 q450 -130 900 0"/>
+      <path d="M600 700 q410 -150 820 0"/>
+      <path d="M560 600 q150 100 150 600"/>
+      <path d="M1010 430 v600"/>
+    </g>
+  </g>
+
+  <!-- orbit + satellite + beam + signed cell -->
+  <path d="M620 300 q230 -150 470 -10" fill="none" stroke="url(#orbitGrad)" stroke-width="2.5"/>
+  <path d="M1010 196 L880 392 L922 404 L1040 206 Z" fill="url(#beamGrad)"/>
+  <g>
+    <circle cx="900" cy="392" r="34" fill="url(#cellGlow)"/>
+    <rect x="884" y="376" width="32" height="32" rx="7" fill="none" stroke="#eafff7" stroke-width="2.4"/>
+    <rect x="891" y="383" width="18" height="18" rx="4" fill="#b6f7e2"/>
+  </g>
+  <g transform="translate(1010 196)">
+    <rect x="-8" y="-10" width="16" height="20" rx="3" fill="#16221d"/>
+    <rect x="-25" y="-6" width="14" height="12" rx="2" fill="#0b8f6e"/>
+    <rect x="11" y="-6" width="14" height="12" rx="2" fill="#0b8f6e"/>
+    <circle cx="0" cy="0" r="4" fill="#b6f7e2"/>
+  </g>
+
+  <!-- wordmark -->
+  <text x="80" y="118" font-family="Helvetica, Arial, sans-serif" font-size="30" font-weight="700" fill="#16221d" letter-spacing="-0.5">vortx<tspan fill="#0b8f6e">.ai</tspan></text>
+
+  <!-- headline -->
+  <g font-family="Georgia, 'Times New Roman', serif" fill="#16221d">
+    <text x="78" y="262" font-size="62" font-weight="500" letter-spacing="-1">Every sensor</text>
+    <text x="78" y="330" font-size="62" font-weight="500" letter-spacing="-1">watching Earth, in</text>
+    <text x="78" y="398" font-size="62" font-weight="500" font-style="italic" fill="#0b8f6e">one memory agents</text>
+    <text x="78" y="466" font-size="62" font-weight="500" font-style="italic" fill="#0b8f6e">can verify.</text>
+  </g>
+
+  <!-- tagline -->
+  <text x="80" y="548" font-family="Helvetica, Arial, sans-serif" font-size="24" fill="#45554c">A spatial AI lab. Read a real signed fact at vortx.ai</text>
+</svg>

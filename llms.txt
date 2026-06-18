@@ -1,0 +1,30 @@
+# Vortx AI
+
+> Vortx is a spatial AI lab building one verifiable memory of Earth that AI agents can cite. It turns every way of watching Earth — satellites, drones, vehicle cameras, robots, CCTV and sensors — into signed, content-addressed facts an agent can quote and anyone can re-check offline. Principles: open source, verifiable, shared intelligence.
+
+Each fact is signed with ed25519 and addressed by a blake3 hash of the fact itself, so verification needs no account and no trust in the server. The shape of a fact is: Cell × Band × Time → Fact, where a Cell is a stable ~10 m address on Earth.
+
+## Products
+- [emem.dev](https://emem.dev): the open Earth memory protocol. Apache-2.0, public, signed, no keys. HTTP at /v1/locate, /v1/recall, /v1/diff; MCP server at emem.dev/mcp. Source: https://github.com/Vortx-AI/emem
+- [geo.qa](https://geo.qa): private, defense-grade Earth memory in your own tenancy, on the same protocol. Boundary enforced per organisation in code.
+- [eudr.dev](https://vortx.ai/eudr/): consumer product, in testing — deforestation-free sourcing checks under the EU Deforestation Regulation, with a verifiable receipt.
+- [propcheck.dev](https://vortx.ai/propcheck/): consumer product, in testing — a property's climate and risk history from verifiable Earth data.
+
+## Pages
+- [Home](https://vortx.ai/): the thesis, how it works (Watch / Remember / Prove), and a live signed fact you can pull yourself.
+- [emem.dev](https://vortx.ai/emem/): how to read and verify a fact in three HTTP calls.
+- [geo.qa](https://vortx.ai/geo-qa/): the private tenancy for enterprise and defense.
+- [What is spatial AI?](https://vortx.ai/spatial-ai/): plain definitions of spatial AI, Earth memory, AI agent grounding, and verification.
+- [Trust & security](https://vortx.ai/trust/): how verification works and how the tenancy boundary is enforced.
+- [Log](https://vortx.ai/log/): a short, dated record of what the lab has shipped.
+
+## Research
+- Paper (Zenodo, 2026-06-15): emem: A Content-Addressed, Verifiable Earth-Memory Protocol for AI Agents over Foundation-Model Embeddings — https://zenodo.org/records/20706317 (DOI 10.5281/zenodo.20706317)
+- Paper (Zenodo, 2026-06-15): emem: A research on Content-Addressed, Verifiable Earth-Memory Protocol for AI Agents over Foundation-Model Embeddings — https://zenodo.org/records/20706893 (DOI 10.5281/zenodo.20706893)
+- Model: TerraGround-Gemma-4-12B-LoRA — https://huggingface.co/avijeetsingh1608/TerraGround-Gemma-4-12B-LoRA
+- Model: TerraGround-Gemma-4-E2B-LoRA — https://huggingface.co/avijeetsingh1608/TerraGround-Gemma-4-E2B-LoRA
+
+## Contact
+- Email: avijeet@vortx.ai
+- GitHub: https://github.com/Vortx-AI
+- Hugging Face: https://huggingface.co/avijeetsingh1608
