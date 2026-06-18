@@ -524,6 +524,27 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .flow-cap { font-family: var(--font-body); font-size: 12.5px; fill: var(--ink-faint); }
 .flow .flow-line { stroke-dasharray: 5 9; animation: dash-flow 1.3s linear infinite; }
 
+/* --- Hero scene motion (CSS-only, reduced-motion safe) --- */
+@keyframes hero-stream { to { stroke-dashoffset: -260; } }
+@keyframes hero-node { 0%, 100% { opacity: 0; } 50% { opacity: 0.85; } }
+@keyframes hero-spark { 0%, 100% { opacity: 0.15; } 50% { opacity: 1; } }
+@keyframes hero-cell { 0%, 100% { opacity: 0.45; } 50% { opacity: 1; } }
+@keyframes hero-sat { 0%, 100% { transform: translateY(-3px); } 50% { transform: translateY(3px); } }
+.orbital .stream { fill: none; stroke: #15bd91; stroke-width: 2.2; stroke-linecap: round; stroke-dasharray: 2 11; animation: hero-stream 2.8s linear infinite; }
+.orbital .stream.gold { stroke: #e0a24a; }
+.orbital .stream.down { stroke: #aef5df; animation-duration: 2s; }
+.orbital .node-glow { animation: hero-node 3.8s ease-in-out infinite; }
+.orbital .spark { animation: hero-spark 3.6s ease-in-out infinite; }
+.orbital .cell-pulse { animation: hero-cell 3s ease-in-out infinite; }
+.orbital .sat-bob { animation: hero-sat 6s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes scan-sweep { 0% { transform: translateX(0); opacity: 0; } 12% { opacity: 1; } 85% { opacity: 1; } 100% { transform: translateX(300px); opacity: 0; } }
+.orbital .scan { animation: scan-sweep 6s linear infinite; }
+@keyframes ground-pulse { 0%, 100% { opacity: 0.18; } 50% { opacity: 0.95; } }
+@keyframes net-pulse { 0%, 100% { opacity: 0.16; } 50% { opacity: 0.46; } }
+/* cells light with the scan (the satellite's 10 m product); devices pulse on their own (agents using the shared memory, not resolved by the satellite) */
+.orbital .gcell { animation: ground-pulse 6s ease-in-out infinite; }
+.orbital .gdev { animation: net-pulse 4.4s ease-in-out infinite; }
+
 /* --- Verify widget (the centrepiece) -------------------------- */
 .verify-grid {
   display: grid;

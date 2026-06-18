@@ -131,4 +131,14 @@
     }
     chips.forEach(function (c) { c.addEventListener('click', function () { choose(c); }); });
   })();
+
+  // --- Hero scene: pause its motion for reduced-motion and hidden tabs ---
+  (function () {
+    var hero = document.querySelector('.orbital');
+    if (!hero || !hero.pauseAnimations) return;
+    if (reduceMotion) { hero.pauseAnimations(); return; }
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) hero.pauseAnimations(); else hero.unpauseAnimations();
+    });
+  })();
 })();
