@@ -124,10 +124,6 @@
       var d = c.dataset;
       set('r-place', d.place); set('r-cell', d.cell); set('r-val', d.val);
       set('r-read', d.read); set('r-cap', d.cap); set('r-cid', d.cid); set('r-conf', d.conf);
-      var cell = document.getElementById('curl-cell'); if (cell) cell.textContent = d.cell;
-      var cmd = "curl -s https://emem.dev/v1/recall -H 'content-type: application/json' -d '{\"cell\":\"" + d.cell + "\",\"bands\":[\"indices.ndvi\"]}'";
-      var cb = document.getElementById('curl-copy'); if (cb) cb.setAttribute('data-copy', cmd);
-      var of = document.getElementById('open-fact'); if (of) of.setAttribute('href', 'https://emem.dev/v1/facts/' + d.cidfull);
     }
     chips.forEach(function (c) { c.addEventListener('click', function () { choose(c); }); });
   })();
