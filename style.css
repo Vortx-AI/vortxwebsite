@@ -571,6 +571,10 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .pl-icon { width: 15px; height: 15px; }
 #pull-live.pl-spin .pl-icon { animation: spin 0.9s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
+.r-proof { cursor: pointer; text-decoration: none; }
+.r-proof::after { content: " \2197"; opacity: 0.55; font-size: 0.88em; }
+.r-proof:hover { text-decoration: underline; text-underline-offset: 2px; }
+.r-proof.copied::after { content: " copied \2713"; color: #6fe3bf; opacity: 1; }
 
 /* --- Verify widget (the centrepiece) -------------------------- */
 .verify-grid {
