@@ -545,6 +545,33 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .orbital .gcell { animation: ground-pulse 6s ease-in-out infinite; }
 .orbital .gdev { animation: net-pulse 4.4s ease-in-out infinite; }
 
+/* --- Verify "space card": live fetch from emem --- */
+.receipt::before { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(120% 70% at 88% -10%, rgba(53,187,154,0.16), transparent 60%),
+    radial-gradient(1px 1px at 22% 30%, rgba(233,239,233,0.5), transparent),
+    radial-gradient(1px 1px at 68% 18%, rgba(233,239,233,0.35), transparent),
+    radial-gradient(1px 1px at 84% 62%, rgba(233,239,233,0.3), transparent),
+    radial-gradient(1px 1px at 40% 78%, rgba(233,239,233,0.28), transparent); }
+.receipt-head, .receipt-rows, .receipt-foot { position: relative; z-index: 1; }
+.r-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; letter-spacing: 0.04em; padding: 2px 9px; border-radius: var(--r-pill); transition: color 0.3s var(--ease), background 0.3s var(--ease); }
+.r-badge-dot { width: 7px; height: 7px; border-radius: 50%; flex: none; }
+.r-badge.is-signed { color: #9fd9c6; } .r-badge.is-signed .r-badge-dot { background: #6fe3bf; }
+.r-badge.is-fetching { color: #f0c178; } .r-badge.is-fetching .r-badge-dot { background: #f0c178; animation: live-blink 0.7s steps(2) infinite; }
+.r-badge.is-verified { color: #6fe3bf; background: rgba(111,227,191,0.12); } .r-badge.is-verified .r-badge-dot { background: #6fe3bf; animation: live-ping 1.8s ease-out infinite; }
+.r-badge.is-offline { color: #c9a98f; } .r-badge.is-offline .r-badge-dot { background: #c9a98f; }
+@keyframes live-blink { 50% { opacity: 0.25; } }
+@keyframes live-ping { 0% { box-shadow: 0 0 0 0 rgba(111,227,191,0.55); } 100% { box-shadow: 0 0 0 7px rgba(111,227,191,0); } }
+.receipt.fetching::after { content: ""; position: absolute; left: 0; right: 0; top: -32%; height: 32%; z-index: 2; pointer-events: none;
+  background: linear-gradient(180deg, transparent, rgba(111,227,191,0.20), transparent); animation: card-scan 1.05s linear infinite; }
+@keyframes card-scan { to { top: 100%; } }
+.receipt.verified { box-shadow: var(--shadow-lg), inset 0 0 0 1px rgba(111,227,191,0.45), 0 0 38px rgba(21,189,145,0.18); }
+.r-val.flash { animation: val-flash 0.9s var(--ease); }
+@keyframes val-flash { 0% { color: #eafff7; } 100% { color: inherit; } }
+.pl-icon { width: 15px; height: 15px; }
+#pull-live.pl-spin .pl-icon { animation: spin 0.9s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
 /* --- Verify widget (the centrepiece) -------------------------- */
 .verify-grid {
   display: grid;

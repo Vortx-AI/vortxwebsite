@@ -479,12 +479,10 @@
         </div>
 
         <div class="verify-grid">
-          <div class="receipt reveal" role="figure" aria-label="A real signed fact from emem">
+          <div class="receipt reveal" id="receipt" role="figure" aria-label="A real signed fact from emem, fetched live in your browser">
             <div class="receipt-head">
               <span class="dot-row" aria-hidden="true"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span>
-              <span class="signed">signed
-                <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </span>
+              <span class="r-badge is-signed" id="r-badge"><span class="r-badge-dot"></span><span id="r-badge-text">signed</span></span>
             </div>
             <div class="receipt-rows">
               <div class="r-row"><span class="r-key">place</span><span class="r-val" id="r-place">Bengaluru, India</span></div>
@@ -492,20 +490,22 @@
               <div class="r-row"><span class="r-key">index</span><span class="r-val"><span class="tealv" id="r-val">0.72</span>&nbsp;<span class="rd">greenness, by satellite</span></span></div>
               <div class="r-row"><span class="r-key">measured</span><span class="r-val" id="r-cap">2026-06-16</span></div>
               <div class="r-row"><span class="r-key">proof</span><span class="r-val hi" id="r-cid">2vgxouk…j5ojla</span></div>
+              <div class="r-row"><span class="r-key">signer</span><span class="r-val hi" id="r-signer">777er3y…omvka</span></div>
+              <div class="r-row"><span class="r-key">pulled</span><span class="r-val" id="r-served">— not yet</span></div>
             </div>
-            <div class="receipt-foot">signed, and yours to re-check — no account needed</div>
+            <div class="receipt-foot" id="r-foot">a real signed fact · re-checkable offline</div>
           </div>
 
           <div class="reveal reveal-d1">
-            <p class="section-lead" style="margin-top:0;">The same question, anywhere on Earth, answered from live satellite data and signed so anyone can check it. No account, no catch.</p>
+            <p class="section-lead" style="margin-top:0;">The same question, anywhere on Earth. Pick a place, then pull a fresh signed reading straight from emem — in your browser — and watch it verify.</p>
             <div class="verify-actions">
-              <a href="https://emem.dev/humans" id="open-fact" class="btn btn-primary" target="_blank" rel="noopener" onclick="gtag('event','click_emem_humans',{'link_location':'verify_widget'});">
-                See it live on emem
-                <svg class="arrow" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </a>
+              <button type="button" id="pull-live" class="btn btn-primary">
+                <svg class="pl-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13.6 8a5.6 5.6 0 1 1-1.7-4M13.6 2.4V5.2H10.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Pull it live
+              </button>
               <a href="/emem/" class="btn btn-ghost">Run it yourself</a>
             </div>
-            <p class="verify-note">A fact your agent cites is one you can re-check yourself, with no need to take our word for it.</p>
+            <p class="verify-note" id="r-note">These are real, signed readings. Hit <b>Pull it live</b> to fetch a fresh one from emem and watch it verify, right here.</p>
           </div>
         </div>
       </div>

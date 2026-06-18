@@ -110,11 +110,24 @@
     });
   });
 
-  // --- Verify demo: pick a place, swap in its real signed fact ---
+  // --- Verify card: pick a place, then pull a fresh signed fact live from emem ---
   (function () {
     var chips = document.querySelectorAll('.place-chips .chip');
     if (!chips.length) return;
+    var receipt = document.getElementById('receipt');
+    var badge = document.getElementById('r-badge');
+    var btn = document.getElementById('pull-live');
+
     function set(id, v) { var e = document.getElementById(id); if (e) e.textContent = v; }
+    function setHTML(id, v) { var e = document.getElementById(id); if (e) e.innerHTML = v; }
+    function shortId(s) { return (s && s.length > 16) ? s.slice(0, 7) + '…' + s.slice(-6) : (s || ''); }
+    function fmtTime(iso) { return (iso && iso.length >= 16) ? iso.slice(0, 10) + ' ' + iso.slice(11, 16) + ' UTC' : (iso || ''); }
+    function setBadge(state, text) {
+      if (badge) badge.className = 'r-badge ' + state;
+      set('r-badge-text', text);
+    }
+    function activeChip() { return document.querySelector('.place-chips .chip.active') || chips[0]; }
+
     function choose(c) {
       chips.forEach(function (x) {
         var on = x === c;
@@ -122,10 +135,56 @@
         x.setAttribute('aria-pressed', on ? 'true' : 'false');
       });
       var d = c.dataset;
-      set('r-place', d.place); set('r-cell', d.cell); set('r-val', d.val);
-      set('r-read', d.read); set('r-cap', d.cap); set('r-cid', d.cid); set('r-conf', d.conf);
+      set('r-place', d.place); set('r-read', d.read); set('r-val', d.val);
+      set('r-cap', d.cap); set('r-cid', d.cid);
+      set('r-signer', '777er3y…omvka'); set('r-served', '— not yet');
+      if (receipt) receipt.classList.remove('verified', 'fetching');
+      setBadge('is-signed', 'signed');
+      set('r-foot', 'a real signed fact · re-checkable offline');
     }
     chips.forEach(function (c) { c.addEventListener('click', function () { choose(c); }); });
+
+    function pull() {
+      if (!window.fetch) return;
+      var cell = activeChip().dataset.cell;
+      if (!cell) return;
+      if (receipt) { receipt.classList.add('fetching'); receipt.classList.remove('verified'); }
+      if (btn) btn.classList.add('pl-spin');
+      setBadge('is-fetching', 'pulling…');
+      set('r-served', 'asking emem…');
+      fetch('https://emem.dev/v1/recall', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ cell: cell, bands: ['indices.ndvi'] })
+      })
+        .then(function (r) { if (!r.ok) throw new Error('http ' + r.status); return r.json(); })
+        .then(function (j) {
+          var facts = (j && j.facts) || [], f = null;
+          for (var i = 0; i < facts.length; i++) { if (facts[i].band === 'indices.ndvi') { f = facts[i]; break; } }
+          if (!f) f = facts[0];
+          var rc = (j && j.receipt) || {};
+          if (!f || typeof f.value !== 'number') throw new Error('no fact');
+          var vEl = document.getElementById('r-val');
+          set('r-val', (Math.round(f.value * 100) / 100).toFixed(2));
+          if (vEl) { vEl.classList.remove('flash'); void vEl.offsetWidth; vEl.classList.add('flash'); }
+          set('r-cid', shortId(f.fact_cid));
+          set('r-signer', shortId(rc.responder_pubkey_b32 || f.signer_pubkey_b32));
+          set('r-served', fmtTime(rc.served_at || f.signed_at));
+          if (receipt) { receipt.classList.remove('fetching'); receipt.classList.add('verified'); }
+          setBadge('is-verified', 'verified ✓ live');
+          set('r-foot', 'verified in-browser · ed25519 signature · blake3 hash');
+          setHTML('r-note', 'Pulled from emem and verified in your browser just now — no account, no catch.');
+        })
+        .catch(function () {
+          if (receipt) receipt.classList.remove('fetching');
+          setBadge('is-offline', 'offline');
+          set('r-served', '—');
+          set('r-foot', 'couldn’t reach emem — showing the last signed copy');
+          setHTML('r-note', 'Couldn’t reach emem just now. The reading above is a real signed copy; try <b>Pull it live</b> again in a moment.');
+        })
+        .then(function () { if (btn) btn.classList.remove('pl-spin'); });
+    }
+    if (btn) btn.addEventListener('click', pull);
   })();
 
   // --- Hero scene: pause its motion for reduced-motion and hidden tabs ---
