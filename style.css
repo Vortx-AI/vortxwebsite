@@ -794,6 +794,10 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .prose a { color: var(--teal-ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line-strong); }
 .prose a:hover { text-decoration-color: var(--teal); }
 .prose strong { color: var(--ink); }
+
+/* --- "Why we publish" closing illustration (research): dawn over the shared memory --- */
+.publish-art { display: block; max-width: 760px; margin: 54px auto 0; }
+.publish-art svg { width: 100%; height: auto; display: block; }
 .lead-def {
   font-size: clamp(18px, 2.4vw, 22px); color: var(--ink);
   font-family: var(--font-heading); font-weight: 400; line-height: 1.45;

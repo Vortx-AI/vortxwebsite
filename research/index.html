@@ -165,6 +165,161 @@
           <p>The whole protocol rests on one idea: a fact you cite is a fact you can check. That only holds if the method is in the open too. So the design is written up, the models are downloadable, and the code is readable. If something here is wrong, it can be found and corrected — which is the point.</p>
           <p>The papers are authored by Jaya Kumari and Avijeet Kumar Singh, published on Zenodo under a Creative Commons licence. The models are LoRA fine-tunes of Gemma for grounding a language model in Earth observation. The protocol itself is <a href="/emem/">emem</a>.</p>
         </div>
+
+        <figure class="publish-art reveal reveal-d1" aria-hidden="true">
+          <svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" role="img">
+            <title>Dawn over a shared memory of Earth</title>
+            <desc>One verified memory of Earth rises like a sunrise; its open light streams upward into a gentle arc of AI agents that check each fact with one another.</desc>
+            <defs>
+              <radialGradient id="paDawn" cx="50%" cy="100%" r="95%">
+                <stop offset="0%" stop-color="#e0a24a" stop-opacity=".5"/>
+                <stop offset="34%" stop-color="#e0a24a" stop-opacity=".22"/>
+                <stop offset="64%" stop-color="#b26b17" stop-opacity=".07"/>
+                <stop offset="100%" stop-color="#b26b17" stop-opacity="0"/>
+              </radialGradient>
+              <radialGradient id="paEarth" cx="50%" cy="32%" r="74%">
+                <stop offset="0%" stop-color="#15bd91"/>
+                <stop offset="55%" stop-color="#0b8f6e"/>
+                <stop offset="100%" stop-color="#07644e"/>
+              </radialGradient>
+              <radialGradient id="paHalo" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#e0a24a" stop-opacity=".5"/>
+                <stop offset="70%" stop-color="#e0a24a" stop-opacity=".1"/>
+                <stop offset="100%" stop-color="#e0a24a" stop-opacity="0"/>
+              </radialGradient>
+              <linearGradient id="paBeam" x1="0" y1="1" x2="0" y2="0">
+                <stop offset="0%" stop-color="#b26b17" stop-opacity=".85"/>
+                <stop offset="55%" stop-color="#e0a24a" stop-opacity=".45"/>
+                <stop offset="100%" stop-color="#e0a24a" stop-opacity="0"/>
+              </linearGradient>
+              <filter id="paSoft" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="2.2"/></filter>
+              <style>
+                .publish-art .pa-glow{fill:url(#paDawn);transform-box:fill-box;transform-origin:center bottom;animation:paBreathe 7.5s ease-in-out infinite}
+                .publish-art .pa-earth-g{animation:paRise 7s ease-in-out infinite}
+                .publish-art .pa-beam{fill:none;stroke:url(#paBeam);stroke-width:2.2;stroke-linecap:round;stroke-dasharray:7 10;animation:paFlow 3.8s linear infinite}
+                .publish-art .pa-b2{animation-duration:4.6s;animation-delay:-.7s}
+                .publish-art .pa-b3{animation-duration:4.1s;animation-delay:-1.5s}
+                .publish-art .pa-b4{animation-duration:4.9s;animation-delay:-2.2s}
+                .publish-art .pa-b5{animation-duration:3.9s;animation-delay:-1s}
+                .publish-art .pa-b6{animation-duration:5.1s;animation-delay:-2.8s}
+                @keyframes paFlow{to{stroke-dashoffset:-34}}
+                .publish-art .pa-link{fill:none;stroke:#15bd91;stroke-width:1.5;stroke-linecap:round;stroke-dasharray:4 7;opacity:.6;animation:paHs 3.2s ease-in-out infinite}
+                .publish-art .pa-l2{animation-delay:.6s;animation-duration:3.6s}
+                .publish-art .pa-l3{animation-delay:1.1s;animation-duration:3.1s}
+                .publish-art .pa-l4{animation-delay:.8s;animation-duration:3.8s}
+                .publish-art .pa-l5{animation-delay:.3s}
+                .publish-art .pa-l6{animation-delay:1.4s;animation-duration:4.4s;opacity:.4}
+                @keyframes paHs{0%,100%{stroke-dashoffset:0;opacity:.3}50%{stroke-dashoffset:-22;opacity:.85}}
+                .publish-art .pa-flash{transform-box:fill-box;transform-origin:center;animation:paFlash 3.2s ease-in-out infinite}
+                .publish-art .pa-f2{animation-delay:.6s}.publish-art .pa-f3{animation-delay:1.1s}.publish-art .pa-f4{animation-delay:.8s}.publish-art .pa-f5{animation-delay:.3s}
+                @keyframes paFlash{0%,100%{opacity:0;transform:scale(.3)}45%,60%{opacity:.85;transform:scale(1)}}
+                .publish-art .pa-node{transform-box:fill-box;transform-origin:center;animation:paBloom 4.4s ease-in-out infinite}
+                .publish-art .pa-n2{animation-delay:.5s}.publish-art .pa-n3{animation-delay:1s}.publish-art .pa-n4{animation-delay:1.5s}.publish-art .pa-n5{animation-delay:.8s}.publish-art .pa-n6{animation-delay:.3s}.publish-art .pa-n7{animation-delay:1.2s}.publish-art .pa-n8{animation-delay:.6s}
+                @keyframes paBloom{0%,100%{transform:scale(.94);opacity:.9}50%{transform:scale(1.05);opacity:1}}
+                .publish-art .pa-cell{fill:#15bd91;opacity:0;animation:paCell 5.5s ease-in-out infinite}
+                .publish-art .pa-c2{animation-delay:1.7s}.publish-art .pa-c3{animation-delay:3.2s}.publish-art .pa-c4{animation-delay:.9s}
+                @keyframes paCell{0%,100%{opacity:0}42%,57%{opacity:.8}}
+                .publish-art .pa-spark{animation:paTw 4.8s ease-in-out infinite}
+                .publish-art .pa-s2{animation-delay:1.6s}.publish-art .pa-s3{animation-delay:2.7s}.publish-art .pa-s4{animation-delay:.8s}
+                @keyframes paTw{0%,100%{opacity:.18}50%{opacity:.7}}
+                @keyframes paBreathe{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.05);opacity:1}}
+                @keyframes paRise{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+                @media (prefers-reduced-motion:reduce){
+                  .publish-art *{animation:none!important}
+                  .publish-art .pa-cell{opacity:.5}
+                  .publish-art .pa-flash{opacity:.8;transform:scale(1)}
+                  .publish-art .pa-beam,.publish-art .pa-link{stroke-dashoffset:0}
+                }
+              </style>
+            </defs>
+
+            <ellipse class="pa-glow" cx="440" cy="300" rx="430" ry="240"/>
+
+            <circle class="pa-spark" cx="118" cy="54" r="2" fill="#e0a24a"/>
+            <circle class="pa-spark pa-s2" cx="756" cy="46" r="2.2" fill="#e0a24a"/>
+            <circle class="pa-spark pa-s3" cx="430" cy="32" r="1.8" fill="#0b8f6e"/>
+            <circle class="pa-spark pa-s4" cx="652" cy="66" r="1.6" fill="#e0a24a"/>
+
+            <!-- ONE shared memory: a sunlit Earth rising at the base -->
+            <g class="pa-earth-g">
+              <circle cx="440" cy="332" r="150" fill="url(#paHalo)" opacity=".6"/>
+              <circle cx="440" cy="332" r="118" fill="url(#paEarth)"/>
+              <path d="M346 252 q94 30 188 0" stroke="#15bd91" stroke-width="2" fill="none" opacity=".45"/>
+              <path d="M332 284 q108 34 216 0" stroke="#07644e" stroke-width="2.4" fill="none" opacity=".4"/>
+              <path d="M440 216 q-26 42 0 84" stroke="#15bd91" stroke-width="1.6" fill="none" opacity=".3"/>
+              <rect class="pa-cell" x="404" y="246" width="13" height="13" rx="2"/>
+              <rect class="pa-cell pa-c2" x="448" y="254" width="13" height="13" rx="2"/>
+              <rect class="pa-cell pa-c3" x="424" y="264" width="13" height="13" rx="2"/>
+              <rect class="pa-cell pa-c4" x="466" y="242" width="13" height="13" rx="2"/>
+              <circle cx="440" cy="274" r="13" fill="#e0a24a" opacity=".4" filter="url(#paSoft)"/>
+              <circle cx="440" cy="274" r="6" fill="#e0a24a"/>
+              <circle cx="440" cy="274" r="2.4" fill="#f1eee3"/>
+            </g>
+
+            <!-- gold beams: one open memory shared OUT and UP to many -->
+            <path class="pa-beam" d="M440 274 C418 206 250 172 152 152"/>
+            <path class="pa-beam pa-b2" d="M440 274 C426 202 322 148 268 116"/>
+            <path class="pa-beam pa-b3" d="M440 274 C434 196 408 138 398 96"/>
+            <path class="pa-beam pa-b4" d="M440 274 C448 196 472 146 482 104"/>
+            <path class="pa-beam pa-b5" d="M440 274 C456 202 558 148 606 120"/>
+            <path class="pa-beam pa-b6" d="M440 274 C460 206 690 172 726 150"/>
+
+            <!-- teal handshakes: agents checking facts with one another -->
+            <path class="pa-link" d="M152 152 C212 124 234 118 268 116"/>
+            <path class="pa-link pa-l2" d="M268 116 C322 100 362 96 398 96"/>
+            <path class="pa-link pa-l3" d="M398 96 C430 92 458 98 482 104"/>
+            <path class="pa-link pa-l4" d="M482 104 C532 108 568 114 606 120"/>
+            <path class="pa-link pa-l5" d="M606 120 C662 126 692 138 726 150"/>
+            <path class="pa-link pa-l6" d="M268 116 C372 152 540 150 606 120"/>
+
+            <!-- a verified fact confirmed at each meeting point -->
+            <circle class="pa-flash" cx="230" cy="118" r="6" fill="#15bd91" filter="url(#paSoft)"/>
+            <circle class="pa-flash pa-f2" cx="352" cy="97" r="6" fill="#15bd91" filter="url(#paSoft)"/>
+            <circle class="pa-flash pa-f3" cx="440" cy="96" r="6.5" fill="#15bd91" filter="url(#paSoft)"/>
+            <circle class="pa-flash pa-f4" cx="562" cy="112" r="6" fill="#15bd91" filter="url(#paSoft)"/>
+            <circle class="pa-flash pa-f5" cx="668" cy="128" r="6" fill="#15bd91" filter="url(#paSoft)"/>
+
+            <!-- the agents: a thriving arc, each a different kind of system on Earth -->
+            <g transform="translate(336 152)"><g class="pa-node pa-n7"><circle r="12" fill="url(#paHalo)"/><circle r="6" fill="#0b8f6e"/></g></g>
+            <g transform="translate(548 150)"><g class="pa-node pa-n8"><circle r="12" fill="url(#paHalo)"/><circle r="6" fill="#0b8f6e"/></g></g>
+
+            <g transform="translate(152 152)"><g class="pa-node">
+              <circle r="24" fill="url(#paHalo)"/>
+              <circle r="10" fill="#0b8f6e"/>
+              <circle r="10" fill="none" stroke="#07644e" stroke-width="1.5"/>
+              <g stroke="#f1eee3" stroke-width="1.3" fill="none" stroke-linecap="round"><rect x="-5" y="-3" width="10" height="5" rx="1.4"/><line x1="0" y1="-3" x2="0" y2="-6"/></g>
+              <circle cx="-3" cy="3.6" r="1.5" fill="#f1eee3"/><circle cx="3" cy="3.6" r="1.5" fill="#f1eee3"/><circle cx="0" cy="-6.6" r="1" fill="#f1eee3"/>
+            </g></g>
+
+            <g transform="translate(268 116)"><g class="pa-node pa-n2">
+              <circle r="20" fill="url(#paHalo)"/><circle r="8" fill="#0b8f6e"/><circle r="8" fill="none" stroke="#07644e" stroke-width="1.4"/><circle r="2.4" fill="#f1eee3"/>
+            </g></g>
+
+            <g transform="translate(398 96)"><g class="pa-node pa-n3">
+              <circle r="28" fill="url(#paHalo)"/>
+              <circle r="13" fill="#15bd91"/>
+              <circle r="13" fill="none" stroke="#07644e" stroke-width="1.6"/>
+              <g stroke="#f1eee3" stroke-width="1.5" fill="none" stroke-linecap="round"><path d="M-6 4 A8 8 0 0 1 6 -5"/><line x1="0" y1="-0.5" x2="-4" y2="6"/></g>
+              <circle cx="0" cy="-0.5" r="1.5" fill="#f1eee3"/>
+            </g></g>
+
+            <g transform="translate(482 104)"><g class="pa-node pa-n4">
+              <circle r="22" fill="url(#paHalo)"/><circle r="9" fill="#0b8f6e"/><circle r="9" fill="none" stroke="#07644e" stroke-width="1.5"/><circle r="2.4" fill="#f1eee3"/>
+            </g></g>
+
+            <g transform="translate(606 120)"><g class="pa-node pa-n5">
+              <circle r="24" fill="url(#paHalo)"/>
+              <circle r="11" fill="#0b8f6e"/>
+              <circle r="11" fill="none" stroke="#07644e" stroke-width="1.5"/>
+              <g stroke="#f1eee3" stroke-width="1.4" fill="none" stroke-linecap="round"><line x1="0" y1="6" x2="0" y2="-3"/><path d="M3 -7 A5 5 0 0 1 3 -1" stroke-width="1.1"/><path d="M5.5 -9 A8 8 0 0 1 5.5 1" stroke-width="1.1" opacity=".7"/></g>
+              <circle cx="0" cy="-4.5" r="1.6" fill="#f1eee3"/>
+            </g></g>
+
+            <g transform="translate(726 150)"><g class="pa-node pa-n6">
+              <circle r="20" fill="url(#paHalo)"/><circle r="8" fill="#0b8f6e"/><circle r="8" fill="none" stroke="#07644e" stroke-width="1.4"/><circle r="2.4" fill="#f1eee3"/>
+            </g></g>
+          </svg>
+        </figure>
       </div>
     </section>
   </main>
