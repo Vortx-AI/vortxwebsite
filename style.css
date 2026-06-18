@@ -574,7 +574,6 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .r-proof { cursor: pointer; text-decoration: none; }
 .r-proof::after { content: " \2197"; opacity: 0.55; font-size: 0.88em; }
 .r-proof:hover { text-decoration: underline; text-underline-offset: 2px; }
-.r-proof.copied::after { content: " copied \2713"; color: #6fe3bf; opacity: 1; }
 
 /* --- Verify widget (the centrepiece) -------------------------- */
 .verify-grid {

@@ -137,21 +137,13 @@
       var d = c.dataset;
       set('r-place', d.place); set('r-read', d.read); set('r-val', d.val);
       set('r-cap', d.cap); set('r-cid', d.cid);
-      var cidEl = document.getElementById('r-cid'); if (cidEl) cidEl.setAttribute('data-cidfull', d.cidfull || '');
+      var cidEl = document.getElementById('r-cid'); if (cidEl) cidEl.setAttribute('href', 'https://emem.dev/verify?cid=' + encodeURIComponent(d.cidfull || ''));
       set('r-signer', '777er3y…omvka'); set('r-served', '— not yet');
       if (receipt) receipt.classList.remove('verified', 'fetching');
       setBadge('is-signed', 'signed');
       set('r-foot', 'a real signed fact · re-checkable offline');
     }
     chips.forEach(function (c) { c.addEventListener('click', function () { choose(c); }); });
-
-    var cidLink = document.getElementById('r-cid');
-    if (cidLink) cidLink.addEventListener('click', function () {
-      var full = cidLink.getAttribute('data-cidfull') || '';
-      if (full && navigator.clipboard) navigator.clipboard.writeText(full).catch(function () {});
-      cidLink.classList.add('copied');
-      setTimeout(function () { cidLink.classList.remove('copied'); }, 1600);
-    });
 
     function pull() {
       if (!window.fetch) return;
@@ -177,7 +169,7 @@
           set('r-val', (Math.round(f.value * 100) / 100).toFixed(2));
           if (vEl) { vEl.classList.remove('flash'); void vEl.offsetWidth; vEl.classList.add('flash'); }
           set('r-cid', shortId(f.fact_cid));
-          var cidEl2 = document.getElementById('r-cid'); if (cidEl2) cidEl2.setAttribute('data-cidfull', f.fact_cid || '');
+          var cidEl2 = document.getElementById('r-cid'); if (cidEl2) cidEl2.setAttribute('href', 'https://emem.dev/verify?cid=' + encodeURIComponent(f.fact_cid || ''));
           set('r-signer', shortId(rc.responder_pubkey_b32 || f.signer_pubkey_b32));
           set('r-served', fmtTime(rc.served_at || f.signed_at));
           if (receipt) { receipt.classList.remove('fetching'); receipt.classList.add('verified'); }
