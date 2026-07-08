@@ -346,7 +346,52 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   max-width: 54ch;
 }
 .hero-sub b { color: var(--ink); font-weight: 600; }
-.hero-cta { margin-top: 34px; display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+.hero-cta { margin-top: 34px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: stretch; max-width: 600px; }
+
+/* --- Hero product doorways: two editorial cards, gold=open (emem) / teal=verified (geo.qa) --- */
+.hero-door {
+  position: relative;
+  display: flex; flex-direction: column;
+  padding: 20px 22px 18px 26px;
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  text-decoration: none; color: var(--ink);
+  transition: transform 0.35s var(--ease), border-color 0.35s var(--ease), box-shadow 0.35s var(--ease);
+  overflow: hidden;
+}
+.hero-door::before {
+  content: ""; position: absolute; left: 0; top: 16px; bottom: 16px; width: 3px; border-radius: 3px;
+}
+.door-emem::before { background: linear-gradient(180deg, var(--gold-vivid), var(--gold)); }
+.door-geo::before  { background: linear-gradient(180deg, var(--teal-vivid), var(--teal)); }
+.door-name {
+  font-family: var(--font-heading);
+  font-size: clamp(22px, 2.8vw, 26px); line-height: 1.05; letter-spacing: -0.01em;
+  font-weight: 500; color: var(--ink); margin-bottom: 6px;
+}
+.door-name em { font-style: italic; font-weight: 500; }
+.door-emem .door-name em { color: var(--gold); }
+.door-geo  .door-name em { color: var(--teal-ink); }
+.door-tag {
+  font-family: var(--font-body); font-size: 14.5px; color: var(--ink-soft);
+  line-height: 1.4; margin-bottom: 14px;
+}
+.door-go {
+  margin-top: auto;
+  display: inline-flex; align-items: center; gap: 5px;
+  font-family: var(--font-body); font-weight: 500; font-size: 12.5px; letter-spacing: 0.01em;
+}
+.door-go svg { width: 12px; height: 12px; transition: transform 0.35s var(--ease); }
+.door-emem .door-go { color: var(--gold); }
+.door-geo  .door-go { color: var(--teal-ink); }
+.hero-door:hover { transform: translateY(-2px); border-color: var(--line-strong); box-shadow: var(--shadow-sm); }
+.hero-door:hover .door-go svg { transform: translate(2px, -2px); }
+.hero-door:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+
+@media (max-width: 720px) {
+  .hero-cta { grid-template-columns: 1fr; gap: 12px; max-width: none; }
+}
 
 /* Hero stage — the living cell-map of Bengaluru */
 .hero-stage {
