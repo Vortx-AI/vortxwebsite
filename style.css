@@ -758,21 +758,30 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 
 /* --- Coming-soon rail ----------------------------------------- */
 .soon-rail { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.soon-rail-3 { grid-template-columns: repeat(3, 1fr); }
 .soon-card {
   display: flex; align-items: flex-start; gap: 16px;
   padding: 22px 24px;
   background: var(--surface);
   border: 1px dashed var(--line-strong);
   border-radius: var(--r);
+  text-decoration: none; color: inherit;
+  transition: transform 0.35s var(--ease), border-color 0.35s var(--ease), background 0.35s var(--ease);
 }
+a.soon-card:hover { transform: translateY(-2px); border-color: var(--ink-faint); background: var(--paper-2); }
 .soon-card .soon-mark {
   font-family: var(--font-heading); font-weight: 700; font-size: 16px;
-  color: var(--ink);
+  color: var(--ink); flex: none;
 }
 .soon-card .soon-body h4 {
   font-family: var(--font-heading); font-size: 16px; display: flex; gap: 9px; align-items: center;
 }
 .soon-card .soon-body p { font-size: 14px; color: var(--ink-soft); margin-top: 5px; }
+.soon-card-partner .soon-mark-plus {
+  font-family: var(--font-heading); font-style: italic; font-weight: 400;
+  font-size: 34px; line-height: 0.8; color: var(--teal);
+}
+.soon-card-partner .soon-body h4 { color: var(--teal-ink); }
 
 /* --- Coda ----------------------------------------------------- */
 .coda {
