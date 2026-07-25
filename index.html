@@ -16,15 +16,15 @@
 
   <!-- Primary SEO -->
   <title>Vortx AI · One verifiable memory of Earth for AI agents</title>
-  <meta name="description" content="Vortx is a spatial AI lab. We turn every way of watching Earth — satellites, drones, vehicle cameras, robots, CCTV and sensors — into signed memory an AI agent can quote and anyone can re-check. emem.dev is the open layer; geo.qa is the private one.">
-  <meta name="keywords" content="Vortx AI, spatial AI, Earth memory, verifiable Earth intelligence, AI agent grounding, emem, emem.dev, geo.qa, signed geospatial memory, ed25519, blake3, content-addressed, MCP, satellite intelligence, TerraGround, open source earth observation">
+  <meta name="description" content="Vortx turns every way of watching Earth, including satellites, drones, vehicle cameras, robots, CCTV and sensors, into signed memory an AI agent can quote and anyone can re-check. emem.dev is the open layer; geo.qa is the private one. Book a session to deploy it.">
+  <meta name="keywords" content="Vortx AI, spatial AI, Earth memory, verifiable Earth intelligence, AI agent grounding, emem, emem.dev, geo.qa, signed geospatial memory, ed25519, blake3, content-addressed, MCP, satellite intelligence, TerraGround, open source earth observation, decentralised earth memory, web3 spatial ai">
   <meta name="author" content="Vortx AI Private Limited">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://vortx.ai">
 
   <!-- Open Graph -->
   <meta property="og:title" content="Vortx AI · One verifiable memory of Earth for AI agents">
-  <meta property="og:description" content="Every sensor watching Earth, in one memory agents can verify. emem.dev is the open layer; geo.qa is the private one. Read a real signed fact in seconds.">
+  <meta property="og:description" content="The external memory of our physical world. emem.dev is the open layer; geo.qa is the private one. Read a real signed fact, then book a session to deploy it.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://vortx.ai">
   <meta property="og:image" content="https://vortx.ai/assets/og-card.png">
@@ -36,12 +36,18 @@
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Vortx AI · One verifiable memory of Earth for AI agents">
-  <meta name="twitter:description" content="Every sensor watching Earth, in one memory agents can verify. Read a real signed fact in seconds.">
+  <meta name="twitter:description" content="The external memory of our physical world. Read a real signed fact in seconds.">
   <meta name="twitter:image" content="https://vortx.ai/assets/og-card.png">
 
   <!-- Favicon & Icons -->
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
+  <!-- Geo Tags -->
+  <meta name="geo.region" content="IN-KA">
+  <meta name="geo.placename" content="Bengaluru">
+  <meta name="geo.position" content="12.9716;77.5946">
+  <meta name="ICBM" content="12.9716, 77.5946">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -114,6 +120,22 @@
     "publisher": { "@type": "Organization", "name": "Vortx AI" }
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "emem deployment session",
+    "name": "emem deployment session",
+    "provider": { "@type": "Organization", "name": "Vortx AI Private Limited" },
+    "description": "A one-on-one working session with the core team that built the emem protocol, to deploy verifiable Earth memory in your stack. Integration over MCP, REST, or SDK, receiver-side verification, and a memory pattern for your agents.",
+    "areaServed": "Worldwide",
+    "offers": [
+      { "@type": "Offer", "name": "Students & startups", "price": "0", "priceCurrency": "USD", "description": "Free, application-based, for students, researchers and early-stage startups." },
+      { "@type": "Offer", "name": "Enterprise", "price": "5000", "priceCurrency": "USD", "description": "For teams putting emem or geo.qa into production." },
+      { "@type": "Offer", "name": "Governments & defense", "price": "25000", "priceCurrency": "USD", "description": "For government, defense and critical-infrastructure deployments." }
+    ]
+  }
+  </script>
 </head>
 <body>
   <div class="blueprint" aria-hidden="true"></div>
@@ -127,15 +149,18 @@
         <span class="brand-text">vortx<span class="brand-dot">.ai</span></span>
       </a>
       <nav class="nav-menu" id="nav-menu" aria-label="Primary">
-        <a href="#thesis" class="nav-link">Thesis</a>
         <a href="#how" class="nav-link">How it works</a>
         <a href="#verify" class="nav-link">Proof</a>
         <a href="#products" class="nav-link">Products</a>
+        <a href="#consult" class="nav-link">Deploy</a>
         <a href="/research/" class="nav-link">Research</a>
       </nav>
       <div class="nav-actions">
-        <a href="#verify" class="btn btn-primary btn-sm">See a signed fact</a>
-        <a href="https://emem.dev/splats" class="btn btn-gold btn-sm" target="_blank" rel="noopener" onclick="gtag('event','click_emem_splats',{'link_location':'nav'});">Enter a signed world <svg class="arrow" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a href="https://github.com/Vortx-AI/emem" class="nav-star" target="_blank" rel="noopener" aria-label="Star emem on GitHub" onclick="gtag('event','click_emem_dev',{'link_location':'nav_star'});">
+          <svg viewBox="0 0 16 16" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/></svg>
+          Star emem
+        </a>
+        <button type="button" class="btn btn-primary btn-sm" data-open-pricing onclick="gtag('event','pricing_open_click',{'link_location':'nav'});">Book a session</button>
       </div>
       <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu">
         <span></span><span></span>
@@ -149,17 +174,21 @@
     <section class="section hero" id="hero">
       <div class="wrap hero-grid">
         <div class="hero-copy">
-          <h1 class="hero-title">Every sensor watching Earth, <span class="accent">in one memory agents can verify.</span></h1>
-          <div class="hero-cta">
+
+          <h1 class="hero-title">The external memory <span class="accent">of our physical world.</span></h1>
+          <p class="hero-lead">Long-horizon memory for multi-agent systems. Built for evidence, using machines. Book a session with the team to deploy.</p>
+          <div class="hero-actions">
+            <button type="button" class="btn btn-primary btn-lg" data-open-pricing onclick="gtag('event','pricing_open_click',{'link_location':'hero'});">Book a session</button>
+            <a href="#verify" class="btn btn-ghost btn-lg">See a signed fact</a>
+          </div>
+          <div class="hero-doors">
             <a href="/emem/" class="hero-door door-emem">
               <span class="door-name"><em>emem.dev</em></span>
-              <span class="door-tag">Shared Earth memory</span>
-              <span class="door-go">Enter <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="door-tag">Open · read a fact free</span>
             </a>
             <a href="/geo-qa/" class="hero-door door-geo">
               <span class="door-name"><em>geo.qa</em></span>
-              <span class="door-tag">A private tenancy</span>
-              <span class="door-go">Enter <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="door-tag">Private · your own data</span>
             </a>
           </div>
         </div>
@@ -300,46 +329,7 @@
       </div>
     </section>
 
-    <!-- Audience lanes -->
-    <section class="section" id="lanes" aria-label="Where to start">
-      <div class="wrap">
-        <div class="statstrip reveal" style="margin-bottom:46px;">
-          <div class="stat"><div class="stat-num">Every 10 m</div><div class="stat-label">of Earth, addressable</div></div>
-          <div class="stat"><div class="stat-num">Orbit&nbsp;→&nbsp;street</div><div class="stat-label">every kind of sensor</div></div>
-          <div class="stat"><div class="stat-num">Signed</div><div class="stat-label">every fact, checkable</div></div>
-          <div class="stat"><div class="stat-num">Open</div><div class="stat-label">free, and open source</div></div>
-          <div class="stat"><div class="stat-num">For agents</div><div class="stat-label">a memory AI can cite</div></div>
-        </div>
-        <div class="lanes">
-          <a class="lane lane-emem reveal" href="/emem/">
-            <span class="lane-kicker">For developers · open</span>
-            <span class="lane-title">emem.dev</span>
-            <span class="lane-desc">The open Earth memory protocol. Read a signed fact in seconds. No keys, no account.</span>
-            <span class="lane-link">Explore emem
-              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-          </a>
-          <a class="lane lane-geo reveal reveal-d1" href="/geo-qa/">
-            <span class="lane-kicker">For enterprise &amp; defense · private</span>
-            <span class="lane-title">geo.qa</span>
-            <span class="lane-desc">Geographical question answering on your own data, in a tenancy only your agents can read.</span>
-            <span class="lane-link">See geo.qa
-              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-          </a>
-          <a class="lane lane-soon reveal reveal-d2" href="#applications">
-            <span class="lane-kicker">Applications · on the protocol</span>
-            <span class="lane-title">Built with partners</span>
-            <span class="lane-desc">eudr.dev, propcheck.dev, and more. Early applications on Vortx, shaped with partner organisations.</span>
-            <span class="lane-link">See what's being built
-              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Scene 2 — Thesis -->
+    <!-- Scene 2 — Thesis + the instrument's readout -->
     <section class="section section--tint" id="thesis" aria-labelledby="thesis-h">
       <div class="wrap">
         <div class="thesis-text reveal" style="max-width:920px;margin-inline:auto;text-align:center;">
@@ -354,6 +344,20 @@
             So we built the memory: one signed record of Earth, starting wherever a
             sensor already sits.
           </p>
+        </div>
+        <div class="pillars reveal reveal-d1" aria-label="How the memory works">
+          <div class="pillar">
+            <span class="pillar-k">Substrates</span>
+            <p>Earth is the first substrate we fill. Nothing in the record is satellite-specific, so molecules, people, and signals write to the same loop next.</p>
+          </div>
+          <div class="pillar">
+            <span class="pillar-k">Tokens</span>
+            <p>Every observation is one signed, content-addressed token an agent can cite: facts, bundles, entities, rasters, cubes. One handle, the exact bytes, months later.</p>
+          </div>
+          <div class="pillar">
+            <span class="pillar-k">Verification</span>
+            <p>Two agents that share no model, vendor, or trust cite the same token and each verify it alone, offline, with no server to trust.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -375,7 +379,7 @@
                 <svg viewBox="0 0 28 28" fill="none"><path d="M2 14s5-8 12-8 12 8 12 8-5 8-12 8S2 14 2 14Z" stroke="currentColor" stroke-width="1.6"/><circle cx="14" cy="14" r="3.4" fill="currentColor"/></svg>
               </span>
             </div>
-            <p>Wherever a sensor already lives — satellites, drones, vehicle cameras, robots, fixed cameras — the world gets read right where it happens.</p>
+            <p>Wherever a sensor already lives, such as satellites, drones, vehicle cameras, robots, or fixed cameras, the world gets read right where it happens.</p>
           </div>
           <div class="step reveal reveal-d1">
             <div class="step-top">
@@ -385,7 +389,7 @@
                 <svg viewBox="0 0 28 28" fill="none"><rect x="3" y="3" width="22" height="22" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M3 10h22M3 18h22M10 3v22M18 3v22" stroke="currentColor" stroke-width="1" opacity="0.5"/><rect x="10" y="10" width="8" height="8" fill="currentColor" opacity="0.85"/></svg>
               </span>
             </div>
-            <p>Every observation becomes a small, signed record, pinned to a patch of Earth about ten metres across — so any agent can find it again, and trust it.</p>
+            <p>Every observation becomes a small, signed record, pinned to a patch of Earth about ten metres across, so any agent can find it again, and trust it.</p>
           </div>
           <div class="step reveal reveal-d2">
             <div class="step-top">
@@ -498,7 +502,7 @@
           </div>
 
           <div class="reveal reveal-d1">
-            <p class="section-lead" style="margin-top:0;">The same question, anywhere on Earth. Pick a place, then pull a fresh signed reading straight from emem — in your browser — and watch it verify.</p>
+            <p class="section-lead" style="margin-top:0;">The same question, anywhere on Earth. Pick a place, then pull a fresh signed reading straight from emem, in your browser, and watch it verify.</p>
             <div class="verify-actions">
               <button type="button" id="pull-live" class="btn btn-primary">
                 <svg class="pl-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13.6 8a5.6 5.6 0 1 1-1.7-4M13.6 2.4V5.2H10.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -516,7 +520,7 @@
     <section class="section" id="usecases" aria-labelledby="usecases-h">
       <div class="wrap">
         <div class="section-head reveal">
-          <h2 class="section-title" id="usecases-h">Where being wrong is <em>expensive.</em></h2>
+          <h2 class="section-title" id="usecases-h">Where being wrong is expensive.</h2>
           <p class="section-lead">A checkable fact earns its keep exactly where a confident guess costs the most.</p>
         </div>
         <div class="usecases">
@@ -573,7 +577,7 @@
             <span class="product-kicker">Private · Your tenancy</span>
             <h3 class="product-name">geo.qa</h3>
             <p class="product-tagline">Earth memory that's yours, on your data.</p>
-            <p class="product-desc">For teams whose AI has to be right about specific places — pipelines, airports, ports, borders, fleets. The same protocol, fed by your own sensors, in a tenancy only your agents can read.</p>
+            <p class="product-desc">For teams whose AI has to be right about specific places: pipelines, airports, ports, borders, fleets. The same protocol, fed by your own sensors, in a tenancy only your agents can read.</p>
             <ul class="product-bullets">
               <li><b>Your sensors, fused.</b> Cameras, drones, satellites, sensors, files and maps, registered by location and view and segmented on demand.</li>
               <li><b>A boundary that holds.</b> Per-organisation scoping enforced in the code, on every read, not in a brochure.</li>
@@ -617,17 +621,60 @@
       </div>
     </section>
 
-    <!-- Coda -->
-    <section class="section section--tint" id="coda">
+    <!-- Scene 6 — Deploy: work with the core team -->
+    <section class="section section--tint" id="consult" aria-labelledby="consult-h">
       <div class="wrap">
-        <div class="coda reveal">
-          <p style="font-size:clamp(28px,4.2vw,50px);line-height:1.04;letter-spacing:-0.015em;">One trustworthy memory of Earth, for the agents the world is <em>about to depend on.</em></p>
-          <p>We build it in the open, and ship only what we can sign.</p>
-          <div class="btnrow" style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:32px;">
-            <a href="#verify" class="btn btn-primary btn-lg">See a signed fact</a>
-            <a href="https://github.com/Vortx-AI/emem" class="btn btn-gold btn-lg" target="_blank" rel="noopener" onclick="gtag('event','click_emem_dev',{'link_location':'coda_github'});">Star emem on GitHub</a>
-            <a href="mailto:avijeet@vortx.ai" class="btn btn-ghost btn-lg">Talk to us</a>
+        <div class="section-head reveal">
+          <span class="eyebrow">Work with the core team</span>
+          <h2 class="section-title" id="consult-h">Deploy emem in <em>your stack.</em></h2>
+          <p class="section-lead">Sit with the people who built the protocol and wire it into your agents. You leave with running code and signed facts flowing, not slides.</p>
+        </div>
+
+        <div class="consult-grid">
+          <div class="consult-phases reveal">
+            <div class="cphase">
+              <span class="cphase-n">01</span>
+              <div class="cphase-body">
+                <h4>Locate the problem</h4>
+                <p>Where does your agent's memory break today. Compaction, hand-offs, cross-vendor trust, audit. We find the one place a verifiable fact earns its keep first.</p>
+              </div>
+            </div>
+            <div class="cphase">
+              <span class="cphase-n">02</span>
+              <div class="cphase-body">
+                <h4>Wire emem in</h4>
+                <p>Live integration on your stack over MCP, REST, or SDK. Recall, token discipline, and receiver-side verification, written against emem together.</p>
+              </div>
+            </div>
+            <div class="cphase">
+              <span class="cphase-n">03</span>
+              <div class="cphase-body">
+                <h4>Ship it</h4>
+                <p>Run the open layer or stand up a private geo.qa tenancy, decide what to sign, and roll it out. You leave with a working path and a written follow-up.</p>
+              </div>
+            </div>
           </div>
+
+          <aside class="consult-card reveal reveal-d1" aria-label="Book a session">
+            <div class="cc-kicker">Book a session</div>
+            <p class="cc-lead">Pick who you are. The session is the same; the price is not.</p>
+            <div class="cc-tiers">
+              <button type="button" class="cc-tier" data-open-pricing data-tier="student">
+                <span class="cc-who">Students &amp; startups</span>
+                <span class="cc-price cc-price-free">Free</span>
+              </button>
+              <button type="button" class="cc-tier" data-open-pricing data-tier="enterprise">
+                <span class="cc-who">Enterprise</span>
+                <span class="cc-price">$5,000</span>
+              </button>
+              <button type="button" class="cc-tier" data-open-pricing data-tier="government">
+                <span class="cc-who">Governments &amp; defense</span>
+                <span class="cc-price">$25,000</span>
+              </button>
+            </div>
+            <button type="button" class="btn btn-primary btn-lg cc-book" data-open-pricing onclick="gtag('event','pricing_open_click',{'link_location':'consult_card'});">Book a session</button>
+            <p class="cc-foot">1 to 3 hours, one-on-one, remote worldwide. Running code and a written follow-up included. Secure hosted checkout via Razorpay; invoice on request.</p>
+          </aside>
         </div>
       </div>
     </section>
@@ -680,6 +727,136 @@
     </section>
   </main>
 
+  <!-- Pricing slider (the booking + checkout flow) -->
+  <div class="pricing-modal" id="pricing-modal" role="dialog" aria-modal="true" aria-labelledby="pm-title" hidden>
+    <div class="pm-backdrop" data-pm-close></div>
+    <div class="pm-panel" role="document">
+      <button type="button" class="pm-x" data-pm-close aria-label="Close">
+        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+
+      <div class="pm-head">
+
+        <h2 id="pm-title">Get emem running in your stack.</h2>
+        <p class="pm-sub">Sit with the core team and wire emem into your agents. Same session for everyone; the price follows who you are.</p>
+      </div>
+
+      <!-- STEP 1 — pick who you are -->
+      <div class="pm-step" data-step="tier">
+        <div class="pm-seg" role="tablist" aria-label="Who are you">
+          <span class="pm-seg-pill" aria-hidden="true"></span>
+          <button type="button" class="pm-seg-btn active" role="tab" aria-selected="true" data-tier="student">Students &amp; startups</button>
+          <button type="button" class="pm-seg-btn" role="tab" aria-selected="false" data-tier="enterprise">Enterprise</button>
+          <button type="button" class="pm-seg-btn" role="tab" aria-selected="false" data-tier="government">Governments</button>
+        </div>
+
+        <div class="pm-tiers">
+          <!-- Students & startups -->
+          <section class="pm-tier active" data-tier="student" aria-label="Students and startups tier">
+            <div class="pm-price-row">
+              <span class="pm-price">Free</span>
+              <span class="pm-price-note">application-based</span>
+            </div>
+            <p class="pm-who">Students, researchers, and early-stage startups building on emem.</p>
+            <ul class="pm-list">
+              <li>The same one-on-one working session, no charge.</li>
+              <li>We confirm eligibility, then book you in.</li>
+              <li>Running code or a scoped plan, plus a written follow-up.</li>
+            </ul>
+            <button type="button" class="btn btn-primary btn-lg pm-continue" data-continue>Apply for a free session</button>
+          </section>
+
+          <!-- Enterprise -->
+          <section class="pm-tier" data-tier="enterprise" aria-label="Enterprise tier" hidden>
+            <div class="pm-price-row">
+              <span class="pm-price">$5,000</span>
+              <span class="pm-price-note">per session · USD</span>
+            </div>
+            <p class="pm-who">Teams putting emem or geo.qa into production.</p>
+            <ul class="pm-list">
+              <li>1 to 3 hours, one-on-one, on your stack.</li>
+              <li>Live integration over MCP, REST, or SDK.</li>
+              <li>A memory pattern and token discipline for your workload.</li>
+              <li>Receiver-side verification, and a written follow-up.</li>
+            </ul>
+            <button type="button" class="btn btn-primary btn-lg pm-continue" data-continue>Continue to secure payment</button>
+          </section>
+
+          <!-- Governments & defense -->
+          <section class="pm-tier" data-tier="government" aria-label="Governments and defense tier" hidden>
+            <div class="pm-price-row">
+              <span class="pm-price">$25,000</span>
+              <span class="pm-price-note">per session · USD</span>
+            </div>
+            <p class="pm-who">Government, defense, and critical infrastructure.</p>
+            <ul class="pm-list">
+              <li>Everything in Enterprise, on a sovereign footing.</li>
+              <li>Private tenancy and data-boundary guidance.</li>
+              <li>Security and signing review for your deployment.</li>
+              <li>Procurement support; invoice and NDA on request.</li>
+            </ul>
+            <button type="button" class="btn btn-primary btn-lg pm-continue" data-continue>Continue to secure payment</button>
+          </section>
+        </div>
+
+        <p class="pm-foot pm-foot-tier">
+          Secure hosted checkout via Razorpay. Cards, UPI, netbanking, international. Free reschedule up to 48h before.
+        </p>
+      </div>
+
+      <!-- STEP 2 — your details, then off to payment or the calendar -->
+      <div class="pm-step" data-step="form" hidden>
+        <button type="button" class="pm-back" data-back>
+          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Back
+        </button>
+        <div class="pm-form-summary">
+          <span class="pm-form-tier" id="pm-form-tier">Enterprise session</span>
+          <span class="pm-form-price" id="pm-form-price">$5,000</span>
+        </div>
+        <form class="pm-form" id="pm-form" novalidate>
+          <div class="pm-field">
+            <label for="pm-name">Full name</label>
+            <input id="pm-name" name="name" type="text" autocomplete="name" required>
+          </div>
+          <div class="pm-field">
+            <label for="pm-email">Work email</label>
+            <input id="pm-email" name="email" type="email" autocomplete="email" required>
+          </div>
+          <div class="pm-field">
+            <label for="pm-org">Organisation <span class="pm-opt">optional</span></label>
+            <input id="pm-org" name="org" type="text" autocomplete="organization">
+          </div>
+          <div class="pm-field" id="pm-field-phone">
+            <label for="pm-phone">Phone <span class="pm-opt">for your payment receipt</span></label>
+            <input id="pm-phone" name="phone" type="tel" autocomplete="tel">
+          </div>
+          <div class="pm-field">
+            <label for="pm-context">Where does emem fit? <span class="pm-opt">optional</span></label>
+            <textarea id="pm-context" name="context" rows="2" placeholder="One line on your agent, pipeline, or use case."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-lg pm-submit" id="pm-submit">Continue to secure payment</button>
+          <p class="pm-form-note" id="pm-form-note" hidden></p>
+        </form>
+        <p class="pm-foot">
+          You'll pay on Razorpay's secure page, then pick a time on our calendar. We never see your card details.
+          <a href="/refund.html">Refunds</a> · <a href="/terms.html">Terms</a>
+        </p>
+      </div>
+
+      <!-- STEP 3 — back from a successful payment -->
+      <div class="pm-step pm-confirm" data-step="confirmed" hidden>
+        <span class="pm-confirm-ic" aria-hidden="true">
+          <svg viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="21" stroke="currentColor" stroke-width="1.6"/><path d="M14 22.5l5.5 5.5L31 15.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <h3>Payment received.</h3>
+        <p>Now pick a time that works for you. We'll confirm the slot and send a calendar invite with a video link.</p>
+        <a class="btn btn-primary btn-lg" data-schedule href="#" target="_blank" rel="noopener">Pick your time</a>
+        <p class="pm-foot" style="text-align:center;border:0;margin-top:14px;padding:0;">A confirmation and a short prep note land in your inbox after.</p>
+      </div>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer class="site-footer">
     <div class="wrap">
@@ -715,9 +892,10 @@
             </div>
             <div class="footer-col">
               <h4>Company</h4>
+              <a href="#consult" data-open-pricing>Book a session</a>
               <a href="mailto:avijeet@vortx.ai">avijeet@vortx.ai</a>
-              <a href="/terms">Terms</a>
-              <a href="/privacy">Privacy</a>
+              <a href="/terms.html">Terms</a>
+              <a href="/privacy.html">Privacy</a>
               <a href="https://merchant.razorpay.com/policy/RxszPvkxcI83lo/refund" target="_blank" rel="noopener">Refunds</a>
               <a href="https://merchant.razorpay.com/policy/RxszPvkxcI83lo/shipping" target="_blank" rel="noopener">Shipping</a>
             </div>
@@ -746,6 +924,9 @@
     </div>
   </footer>
 
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script src="payments/config.js"></script>
   <script src="main.js"></script>
+  <script src="payments/checkout.js"></script>
 </body>
 </html>
