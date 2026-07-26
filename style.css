@@ -789,6 +789,17 @@ a.soon-card:hover { transform: translateY(-2px); border-color: var(--ink-faint);
   font-size: 34px; line-height: 0.8; color: var(--teal);
 }
 .soon-card-partner .soon-body h4 { color: var(--teal-ink); }
+.soon-card .soon-cta {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 10px;
+  font-family: var(--font-body); font-weight: 600; font-size: 13.5px;
+  color: var(--teal-ink);
+  transition: transform 0.25s var(--ease), color 0.25s var(--ease);
+}
+.soon-card:hover .soon-cta {
+  color: var(--teal);
+  transform: translateX(3px);
+}
 
 /* --- Coda ----------------------------------------------------- */
 .coda {
