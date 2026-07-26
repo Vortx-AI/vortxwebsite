@@ -918,7 +918,7 @@ a.soon-card:hover { transform: translateY(-2px); border-color: var(--ink-faint);
   align-items: start;
 }
 .footer-brand .brand { margin-bottom: 18px; }
-.footer-tagline { font-size: 16px; color: var(--ink-soft); max-width: 34ch; }
+.footer-tagline { font-size: 16px; color: var(--ink-soft); max-width: 48ch; }
 .footer-cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 26px; margin-top: 30px; }
 .footer-col h4 {
   font-family: var(--font-body); font-size: 13px; font-weight: 600; letter-spacing: 0;

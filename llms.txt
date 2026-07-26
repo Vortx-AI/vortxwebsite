@@ -1,6 +1,6 @@
 # Vortx AI
 
-> Vortx is a spatial AI lab building one verifiable memory of Earth that AI agents can cite. It turns every way of watching Earth (satellites, drones, vehicle cameras, robots, CCTV and sensors) into signed, content-addressed facts an agent can quote and anyone can re-check offline. Principles: open source, verifiable, shared intelligence.
+> Vortx is a spatial AI lab building the external memory of our physical world that AI agents can cite. It turns every way of watching Earth (satellites, drones, vehicle cameras, robots, CCTV and sensors) into signed, content-addressed facts an agent can quote and anyone can re-check offline. Principles: open source, verifiable, shared intelligence.
 
 Each fact is signed with ed25519 and addressed by a blake3 hash of the fact itself, so verification needs no account and no trust in the server. The shape of a fact is: Cell × Band × Time → Fact, where a Cell is a stable ~10 m address on Earth.
 
