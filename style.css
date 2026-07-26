@@ -1510,11 +1510,14 @@ body.pm-open { overflow: hidden; }
   border: 1px solid var(--line);
   border-radius: var(--r-sm);
 }
+.install-row {
+  min-width: 0; /* grid items must be allowed to shrink, or long URLs blow out */
+}
 .install-row code {
   font-family: var(--font-mono);
   font-size: 13px;
   color: var(--ink);
-  overflow-x: auto; white-space: nowrap;
+  overflow-wrap: anywhere; /* wrap inside the chip; nothing scrolls, nothing escapes */
 }
 .install-copy {
   font-family: var(--font-mono); font-size: 11.5px;
@@ -1618,13 +1621,13 @@ body.pm-open { overflow: hidden; }
   color: #7f9387;
 }
 
-/* Five ways in: install chips as a compact two-column grid */
+/* Five ways in: short commands sit two-up, full URLs get whole rows */
 .hero-install-grid {
   display: grid; grid-template-columns: 1fr 1fr;
   gap: 8px; max-width: 640px;
 }
-.hero-install-grid .install-row:last-child { grid-column: 1 / -1; }
-@media (max-width: 640px) { .hero-install-grid { grid-template-columns: 1fr; } .hero-install-grid .install-row:last-child { grid-column: auto; } }
+.hero-install-grid .install-row:nth-child(n+3) { grid-column: 1 / -1; }
+@media (max-width: 640px) { .hero-install-grid { grid-template-columns: 1fr; } }
 
 /* Offer cards: quiet kicker, the price gets its own serif moment */
 .offer-price-row {
