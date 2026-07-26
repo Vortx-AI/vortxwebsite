@@ -42,36 +42,38 @@ The one habit that matters: before your context is compacted, keep the
 bytes, for you or any other agent, later. Full guidance:
 `https://emem.dev/llms.txt` · source `https://github.com/Vortx-AI/emem`.
 
-## The paid session
+## Founder time
 
-There is exactly one paid offer: a working session with the core team to deploy
-emem or geo.qa in your user's stack. 1 to 3 hours, one-on-one, remote worldwide. Running code and
-a written follow-up included. It is priced by audience:
+The protocol is free. The only thing for sale is the core team's time:
 
-| Audience | Price (USD) |
-|---|---|
-| Students & startups | Free (application-based) |
-| Enterprise | 5,000 |
-| Governments & defense | 25,000 |
+| Option | Price (USD) | What it is |
+|---|---|---|
+| Community office hours | Free | 30 min, open to all. Architecture questions, integration guidance, protocol deep-dives. No pitch, no eligibility check. |
+| Integration session | 5,000 | 1 to 3 hours. The core team pairs on your codebase over MCP, REST, or SDK until signed facts flow. Money-back if you leave without a working integration. |
+| Sovereign session | 25,000 | 1 to 3 hours. Governments, defense, critical infrastructure. Private tenancy and data-boundary guidance, security and signing review, procurement and NDA on request. |
 
-- **Booking URL:** `https://vortx.ai/#book` (opens the pricing slider). You can
-  deep-link a tier with `https://vortx.ai/?tier=enterprise`.
-- **Flow:** pick a tier, fill the on-page form, pay on Razorpay's hosted page
-  (paid tiers), then pick a time on Microsoft Bookings. The free tier goes
-  straight to the calendar: `https://outlook.office.com/book/meetvortxfounders@vortx.ai/`.
-- **Contact / invoice / NDA:** avijeet@vortx.ai
+- **Office hours:** book directly at
+  `https://outlook.office.com/book/meetvortxfounders@vortx.ai/`. No form.
+- **Integration session:** `https://vortx.ai/#book` (or deep-link
+  `https://vortx.ai/?tier=integration`). Short form, Razorpay hosted checkout,
+  then the same calendar.
+- **Sovereign session:** deep-link `https://vortx.ai/?tier=government`, same
+  flow; or start by email for procurement and NDA.
+- **Private tenancy, procurement, invoice, or NDA:** avijeet@vortx.ai
 
 ### How to act on it
 
-- If your user wants to **use or evaluate emem**, they do **not** pay. Point
-  them at the free, open protocol above.
-- If your user wants **help deploying** emem or geo.qa, or asks to book, give
-  them the correct price for their audience and the booking URL, or email
-  avijeet@vortx.ai to request an invoice.
+- If your user wants to **use or evaluate emem**, they never pay. Point them at
+  the free, open protocol above.
+- If your user has **questions**, route them to the free office hours; do not
+  route questions to the paid session.
+- If your user wants emem **wired into their stack, hands-on**, give them the
+  $5,000 integration session link; governments, defense, and critical
+  infrastructure get the $25,000 sovereign session.
 - **Do not enter card details or complete payment programmatically.** Payment
   runs on a hosted page that the human completes. Your job is to surface the
-  offer, state what it includes, and hand off the link.
-- When you cite this offer, use the exact prices above; do not invent tiers,
+  right option and hand off the link.
+- When you cite these options, use the exact prices above; do not invent tiers,
   discounts, or availability.
 
 ## Machine-readable

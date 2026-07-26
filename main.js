@@ -138,9 +138,11 @@
       });
       var d = c.dataset;
       set('r-place', d.place); set('r-read', d.read); set('r-val', d.val);
+      set('r-ndmi', 'pull to fetch'); set('r-temp', 'pull to fetch');
       set('r-cap', d.cap); set('r-cid', d.cidfull || d.cid);
       var cidEl = document.getElementById('r-cid'); if (cidEl) cidEl.setAttribute('href', 'https://emem.dev/verify?cid=' + encodeURIComponent(d.cidfull || ''));
       set('r-signer', d.signer || '777er3yihgifqmv5hmc2wwmyszgddzderzhsx6rex4yoakwomvka'); set('r-served', ': not yet');
+      var sc = document.getElementById('r-scene'); if (sc) sc.hidden = true;
       if (receipt) receipt.classList.remove('verified', 'fetching');
       setBadge('is-signed', 'signed');
       set('r-foot', 'a real signed fact · re-checkable offline');
@@ -159,16 +161,23 @@
       fetch('https://emem.dev/v1/recall', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ cell: cell, bands: ['indices.ndvi'] })
+        body: JSON.stringify({ cell: cell, bands: ['indices.ndvi', 'indices.ndmi', 'weather.temperature_2m'] })
       })
         .then(function (r) { if (!r.ok) throw new Error('http ' + r.status); return r.json(); })
         .then(function (j) {
           var facts = (j && j.facts) || [], f = null;
-          for (var i = 0; i < facts.length; i++) { if (facts[i].band === 'indices.ndvi') { f = facts[i]; break; } }
+          var byBand = {};
+          for (var i = 0; i < facts.length; i++) {
+            if (!byBand[facts[i].band]) byBand[facts[i].band] = facts[i];
+            if (facts[i].band === 'indices.ndvi') f = facts[i];
+          }
           if (!f) f = facts[0];
           var rc = (j && j.receipt) || {};
           if (!f || typeof f.value !== 'number') throw new Error('no fact');
           set('r-val', (Math.round(f.value * 100) / 100).toFixed(2));
+          var ndmi = byBand['indices.ndmi'], temp = byBand['weather.temperature_2m'];
+          set('r-ndmi', (ndmi && typeof ndmi.value === 'number') ? (Math.round(ndmi.value * 100) / 100).toFixed(2) : 'not in this pull');
+          set('r-temp', (temp && typeof temp.value === 'number') ? (Math.round(temp.value * 10) / 10) + ' °C' : 'not in this pull');
           set('r-cid', fullId(f.fact_cid));
           var cidEl2 = document.getElementById('r-cid'); if (cidEl2) cidEl2.setAttribute('href', 'https://emem.dev/verify?cid=' + encodeURIComponent(f.fact_cid || ''));
           set('r-signer', fullId(rc.responder_pubkey_b32 || f.signer_pubkey_b32 || '777er3yihgifqmv5hmc2wwmyszgddzderzhsx6rex4yoakwomvka'));
@@ -177,10 +186,15 @@
             var el = document.getElementById(id);
             if (el) { el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash'); }
           });
+          var sceneImg = document.getElementById('r-scene-img'), sceneFig = document.getElementById('r-scene');
+          if (sceneImg && sceneFig) {
+            sceneImg.onload = function () { sceneFig.hidden = false; };
+            sceneImg.src = 'https://emem.dev/v1/cells/' + encodeURIComponent(cell) + '/scene.png?max_cloud=40';
+          }
           if (receipt) { receipt.classList.remove('fetching'); receipt.classList.add('verified'); }
-          setBadge('is-verified', 'verified ✓ live (ed25519 + blake3)');
-          set('r-foot', '✓ cryptographically verified live in browser · ed25519 signature valid · 0 latency');
-          setHTML('r-note', '<span style="color:#6fe3bf;font-weight:600;">✓ Verified live in browser just now:</span> fresh ed25519 signature &amp; blake3 hash checked against emem protocol.');
+          setBadge('is-verified', 'pulled live ✓ signed');
+          set('r-foot', 'pulled live from emem just now · signed ed25519 · blake3 content address');
+          setHTML('r-note', '<span style="color:#6fe3bf;font-weight:600;">Pulled live just now.</span> The proof link opens emem’s verifier, which re-checks the ed25519 signature and blake3 address; you can run the same check offline.');
         })
         .catch(function () {
           if (receipt) receipt.classList.remove('fetching');
@@ -195,6 +209,30 @@
         });
     }
     if (btn) btn.addEventListener('click', pull);
+  })();
+
+  // --- Live protocol signals: stars + last update from GitHub ---
+  (function () {
+    if (!window.fetch) return;
+    var strip = document.getElementById('proto-strip');
+    fetch('https://api.github.com/repos/Vortx-AI/emem')
+      .then(function (r) { if (!r.ok) throw new Error('http ' + r.status); return r.json(); })
+      .then(function (j) {
+        var stars = typeof j.stargazers_count === 'number' ? j.stargazers_count : null;
+        var pushed = (j.pushed_at || '').slice(0, 10);
+        if (stars !== null) {
+          var s = document.getElementById('gh-stars');
+          if (s) s.textContent = '★ ' + stars;
+          var navText = document.getElementById('nav-star-text');
+          if (navText) navText.textContent = 'Star emem · ' + stars;
+        }
+        if (pushed) {
+          var u = document.getElementById('gh-updated');
+          if (u) u.textContent = 'updated ' + pushed;
+        }
+        if (strip && (stars !== null || pushed)) strip.hidden = false;
+      })
+      .catch(function () { /* stay hidden; never show a broken number */ });
   })();
 
   // --- Hero scene: pause its motion for reduced-motion and hidden tabs ---

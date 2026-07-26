@@ -1,7 +1,7 @@
 /* ============================================================
-   Vortx AI · consultation slider + booking flow
-   pick a tier -> on-page form -> (paid) Razorpay hosted page,
-   then Microsoft Bookings; (free) straight to Bookings.
+   Vortx AI · founder-time booking flow
+   Office hours (free) link straight to the calendar. The paid
+   integration session goes form -> Razorpay Checkout -> calendar.
    Static, no backend, no mailbox. config in payments/config.js.
    ============================================================ */
 (function () {
@@ -23,7 +23,7 @@
   function toArr(n) { return Array.prototype.slice.call(n); }
   function firstTierKey() {
     var a = modal.querySelector('.pm-tier.active') || tiers[0];
-    return a ? a.getAttribute('data-tier') : 'student';
+    return a ? a.getAttribute('data-tier') : 'integration';
   }
   function reduceMotion() {
     return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -85,14 +85,14 @@
   });
   function openForm(key) {
     var c = conf(key);
-    var paid = key !== 'student';
-    setText('pm-form-tier', (c.label || key) + ' session');
+    var paid = !!c.amount;
+    setText('pm-form-tier', c.label || key);
     setText('pm-form-price', c.price || '');
     // phone only matters for the payment receipt
     var phone = document.getElementById('pm-field-phone');
     if (phone) phone.hidden = !paid;
     var submit = document.getElementById('pm-submit');
-    if (submit) submit.textContent = paid ? ('Continue to payment · ' + (c.price || '')) : 'Request your free session';
+    if (submit) submit.textContent = paid ? ('Continue to payment · ' + (c.price || '')) : 'Pick a time';
     var note = document.getElementById('pm-form-note');
     if (note) { note.hidden = true; note.className = 'pm-form-note'; }
     showStep('form');
@@ -123,7 +123,7 @@
     var c = conf(key);
     track('pricing_submit', { tier: key });
 
-    if (key === 'student') {
+    if (!c.amount) {
       go(schedulingUrl(data)); // free -> straight to the calendar
       return;
     }
@@ -148,7 +148,7 @@
       amount: c.amount,
       currency: rp.currency || 'INR',
       name: rp.name || 'Vortx AI',
-      description: (c.label || key) + ' session (emem deployment)',
+      description: (c.label || key) + ' with the emem core team',
       image: 'assets/vortx-logo.png',
       prefill: { name: data.name, email: data.email, contact: data.phone },
       notes: { tier: key, organisation: data.org, context: data.context },

@@ -1,7 +1,7 @@
 {
   "protocolVersion": "0.3.0",
   "name": "Vortx AI",
-  "description": "Decentralised spatial AI lab. Builds emem, a verifiable memory made of signed, content-addressed tokens (emem:fact:, emem:bundle:, emem:entity:, emem:raster:, emem:cube:, emem:rasterset:) that any agent cites and anyone verifies offline. Earth observation is the first substrate; nothing in the token grammar is satellite-specific, so more substrates follow. geo.qa is the same protocol on a private tenant. One paid offer: a working session with the core team to deploy emem in your stack.",
+  "description": "Decentralised spatial AI lab; maker and maintainer of the emem protocol. emem is a verifiable memory made of signed, content-addressed tokens (emem:fact:, emem:bundle:, emem:entity:, emem:raster:, emem:cube:, emem:rasterset:) that any agent cites and anyone verifies offline. Apache-2.0, free to read and run. Earth observation is the substrate shipped today; the token grammar is not satellite-specific, further substrates are roadmap. geo.qa is the same protocol on a private tenant. The only thing for sale is founder time: free office hours, and a paid integration session.",
   "url": "https://vortx.ai/",
   "preferredTransport": "JSONRPC",
   "provider": {
@@ -31,12 +31,13 @@
     },
     {
       "id": "book_session",
-      "name": "Book an emem deployment session",
-      "description": "Surface and hand off the one paid offer: a 1 to 3 hour, one-on-one working session with the core team to deploy emem or geo.qa in a team's stack. Priced by audience. An agent's job is to present the correct price and the booking URL and let the human complete payment on the hosted page. Do NOT enter card details or pay programmatically.",
-      "tags": ["deployment", "integration", "booking", "handoff"],
+      "name": "Book founder time",
+      "description": "Surface and hand off founder time. Three options: free community office hours (30 min, open to all, no eligibility check), a paid integration session (1 to 3 hours, 5000 USD, the core team pairs on the user's codebase, money-back if no working integration), and a sovereign session (1 to 3 hours, 25000 USD, for governments, defense, and critical infrastructure). The protocol itself is free either way. An agent's job is to present the right option and the booking URL and let the human complete any payment on the hosted page. Do NOT enter card details or pay programmatically.",
+      "tags": ["office-hours", "integration", "booking", "handoff"],
       "examples": [
-        "My user is an enterprise; give them the $5,000 emem deployment session booking link.",
-        "My user is a student; point them at the free session."
+        "My user has architecture questions about emem; point them at the free office hours calendar.",
+        "My user wants emem wired into their agent this week; give them the $5,000 integration session booking link.",
+        "My user is a defense agency standing up a private tenancy; give them the $25,000 sovereign session booking link."
       ]
     }
   ],
@@ -52,18 +53,17 @@
     "rest": "https://emem.dev/v1/recall"
   },
   "x-session": {
-    "name": "emem deployment session",
+    "name": "Founder time",
     "bookingUrl": "https://vortx.ai/#book",
     "schedulingUrl": "https://outlook.office.com/book/meetvortxfounders@vortx.ai/",
-    "duration": "1-3 hours",
     "format": "one-on-one, remote worldwide",
     "payment": "Razorpay hosted checkout; human completes payment",
     "contact": "avijeet@vortx.ai",
-    "tiers": [
-      { "audience": "Students & startups", "price": 0, "currency": "USD", "note": "application-based" },
-      { "audience": "Enterprise", "price": 5000, "currency": "USD" },
-      { "audience": "Governments & defense", "price": 25000, "currency": "USD" }
+    "options": [
+      { "name": "Community office hours", "price": 0, "currency": "USD", "duration": "30 min", "note": "Open to all. Architecture questions, integration guidance, protocol deep-dives. Book directly at schedulingUrl." },
+      { "name": "Integration session", "price": 5000, "currency": "USD", "duration": "1-3 hours", "note": "The core team pairs on your codebase over MCP, REST, or SDK. Money-back if you leave without a working integration." },
+      { "name": "Sovereign session", "price": 25000, "currency": "USD", "duration": "1-3 hours", "note": "Governments, defense, critical infrastructure. Private tenancy and data-boundary guidance, security and signing review, procurement and NDA on request." }
     ],
-    "agentGuidance": "Present the correct price and the booking URL for the user's audience. Hand the human the link. Never enter card details or complete payment programmatically."
+    "agentGuidance": "The protocol is free; only founder time is priced. Route questions to the free office hours and hands-on integration work to the paid session. Hand the human the link. Never enter card details or complete payment programmatically."
   }
 }

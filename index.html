@@ -16,8 +16,8 @@
 
   <!-- Primary SEO -->
   <title>Vortx AI · The external memory of our physical world</title>
-  <meta name="description" content="Vortx turns every way of watching Earth, including satellites, drones, vehicle cameras, robots, CCTV and sensors, into signed memory an AI agent can quote and anyone can re-check. emem.dev is the open layer; geo.qa is the private one. Book a session to deploy it.">
-  <meta name="keywords" content="Vortx AI, spatial AI, Earth memory, verifiable Earth intelligence, AI agent grounding, emem, emem.dev, geo.qa, signed geospatial memory, ed25519, blake3, content-addressed, MCP, satellite intelligence, TerraGround, open source earth observation, decentralised earth memory, web3 spatial ai">
+  <meta name="description" content="Vortx builds emem, the open protocol for signed, content-addressed memory of the physical world. Any agent can cite a fact; anyone can verify it offline. Apache-2.0. emem.dev is the open layer; geo.qa is the private one.">
+  <meta name="keywords" content="Vortx AI, spatial AI, Earth memory, verifiable Earth intelligence, AI agent grounding, emem, emem.dev, geo.qa, signed geospatial memory, ed25519, blake3, content-addressed, MCP, satellite intelligence, TerraGround, open source earth observation, decentralised earth memory, web3 spatial ai, multi-agent memory, agent handoff, external memory for AI agents, A2A agent card">
   <meta name="author" content="Vortx AI Private Limited">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://vortx.ai">
@@ -124,15 +124,15 @@
   {
     "@context": "https://schema.org",
     "@type": "Service",
-    "serviceType": "emem deployment session",
-    "name": "emem deployment session",
+    "serviceType": "Founder time",
+    "name": "Time with the emem core team",
     "provider": { "@type": "Organization", "name": "Vortx AI Private Limited" },
-    "description": "A one-on-one working session with the core team that built the emem protocol, to deploy verifiable Earth memory in your stack. Integration over MCP, REST, or SDK, receiver-side verification, and a memory pattern for your agents.",
+    "description": "The emem protocol is free and Apache-2.0. Founder time is the only thing for sale: free office hours for questions, and a paid integration session where the core team pairs on your codebase until signed facts flow.",
     "areaServed": "Worldwide",
     "offers": [
-      { "@type": "Offer", "name": "Students & startups", "price": "0", "priceCurrency": "USD", "description": "Free, application-based, for students, researchers and early-stage startups." },
-      { "@type": "Offer", "name": "Enterprise", "price": "5000", "priceCurrency": "USD", "description": "For teams putting emem or geo.qa into production." },
-      { "@type": "Offer", "name": "Governments & defense", "price": "25000", "priceCurrency": "USD", "description": "For government, defense and critical-infrastructure deployments." }
+      { "@type": "Offer", "name": "Community office hours", "price": "0", "priceCurrency": "USD", "description": "30 minutes, open to all. Architecture questions, integration guidance, protocol deep-dives. No pitch." },
+      { "@type": "Offer", "name": "Integration session", "price": "5000", "priceCurrency": "USD", "description": "1 to 3 hours pairing on your codebase over MCP, REST, or SDK. Money-back if you leave without a working integration." },
+      { "@type": "Offer", "name": "Sovereign session", "price": "25000", "priceCurrency": "USD", "description": "For governments, defense, and critical infrastructure. Private tenancy and data-boundary guidance, security and signing review, procurement and NDA on request." }
     ]
   }
   </script>
@@ -149,16 +149,17 @@
         <span class="brand-text">vortx<span class="brand-dot">.ai</span></span>
       </a>
       <nav class="nav-menu" id="nav-menu" aria-label="Primary">
-        <a href="#how" class="nav-link">How it works</a>
-        <a href="#verify" class="nav-link">Proof</a>
+        <a href="https://emem.dev" class="nav-link" target="_blank" rel="noopener">Docs</a>
+        <a href="https://github.com/Vortx-AI/emem" class="nav-link" target="_blank" rel="noopener">GitHub</a>
+        <a href="#verify" class="nav-link">Playground</a>
         <a href="#products" class="nav-link">Products</a>
-        <a href="#consult" class="nav-link">Deploy</a>
+        <a href="#consult" class="nav-link">Sessions</a>
         <a href="/research/" class="nav-link">Research</a>
       </nav>
       <div class="nav-actions">
         <a href="https://github.com/Vortx-AI/emem" class="nav-star" target="_blank" rel="noopener" aria-label="Star emem on GitHub" onclick="gtag('event','click_emem_dev',{'link_location':'nav_star'});">
           <svg viewBox="0 0 16 16" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/></svg>
-          Star emem
+          <span id="nav-star-text">Star emem</span>
         </a>
         <button type="button" class="btn btn-primary btn-sm" data-open-pricing onclick="gtag('event','pricing_open_click',{'link_location':'nav'});">Book a session</button>
       </div>
@@ -176,10 +177,32 @@
         <div class="hero-copy">
 
           <h1 class="hero-title">The external memory <span class="accent">of our physical world.</span></h1>
-          <p class="hero-lead">Long-horizon memory for multi-agent systems. Built for evidence, using machines. Book a session with the team to deploy.</p>
+          <p class="hero-lead">A model's memory ends where its context does. emem is the memory that lives outside: signed, content-addressed tokens that survive compaction, hand-offs, and model swaps, so agents that share no vendor and no trust can still cite the same fact. Open protocol, Apache-2.0. Earth is the first substrate.</p>
           <div class="hero-actions">
-            <button type="button" class="btn btn-primary btn-lg" data-open-pricing onclick="gtag('event','pricing_open_click',{'link_location':'hero'});">Book a session</button>
-            <a href="#verify" class="btn btn-ghost btn-lg">See a signed fact</a>
+            <a href="#verify" class="btn btn-primary btn-lg">See a live signed fact</a>
+            <a href="https://github.com/Vortx-AI/emem" class="btn btn-ghost btn-lg" target="_blank" rel="noopener" onclick="gtag('event','click_emem_dev',{'link_location':'hero'});">View on GitHub</a>
+          </div>
+          <div class="hero-install hero-install-grid" aria-label="Every way into emem">
+            <div class="install-row">
+              <code>pip install ememdev</code>
+              <button type="button" class="install-copy" data-copy="pip install ememdev" aria-label="Copy pip install command">copy</button>
+            </div>
+            <div class="install-row">
+              <code>npm i @vortxai/emem</code>
+              <button type="button" class="install-copy" data-copy="npm i @vortxai/emem" aria-label="Copy npm install command">copy</button>
+            </div>
+            <div class="install-row">
+              <code>MCP · https://emem.dev/mcp</code>
+              <button type="button" class="install-copy" data-copy='{ "mcpServers": { "emem": { "type": "http", "url": "https://emem.dev/mcp" } } }' aria-label="Copy MCP server config">copy</button>
+            </div>
+            <div class="install-row">
+              <code>REST · POST https://emem.dev/v1/recall</code>
+              <button type="button" class="install-copy" data-copy='curl -s -X POST https://emem.dev/v1/recall -H "content-type: application/json" -d &apos;{"place":"Bengaluru","bands":["indices.ndvi"]}&apos;' aria-label="Copy REST curl command">copy</button>
+            </div>
+            <div class="install-row">
+              <code>A2A · https://vortx.ai/.well-known/agent-card.json</code>
+              <button type="button" class="install-copy" data-copy="https://vortx.ai/.well-known/agent-card.json" aria-label="Copy A2A agent card URL">copy</button>
+            </div>
           </div>
           <div class="hero-doors">
             <a href="/emem/" class="hero-door door-emem">
@@ -191,6 +214,12 @@
               <span class="door-tag">Private · your own data</span>
             </a>
           </div>
+          <p class="proto-strip" id="proto-strip" hidden>
+            <span>emem · Apache-2.0</span>
+            <span id="gh-stars"></span>
+            <span id="gh-updated"></span>
+            <a href="https://github.com/Vortx-AI/emem/releases" target="_blank" rel="noopener">changelog</a>
+          </p>
         </div>
 
         <div class="hero-stage" aria-label="A satellite scans the ground below. What it sees becomes signed memory the cameras, robots and vehicles on the ground can use." role="img">
@@ -335,20 +364,22 @@
         <div class="thesis-text reveal" style="max-width:1080px;margin-inline:auto;text-align:center;">
           <h2 class="section-title" id="thesis-h" style="margin-bottom:30px;">An agent is only as good as <em>what it remembers.</em></h2>
           <p>
-            Put an agent in production and you'll watch it answer, with full
-            confidence, about a place it knows nothing real about. Did this address
-            flood. Did this farm get rain. It reaches for a bigger model; we think
-            the gap is memory.
+            Put agents in production and you'll watch it happen: a session gets
+            compacted and a verified fact becomes a paraphrase. A task hands off
+            and the next agent starts from hearsay. Two models describe the same
+            place and can't agree they mean the same thing. Everyone reaches for
+            a bigger model; we think the gap is memory.
           </p>
           <p class="thesis-foot" style="margin-top:20px;">
-            So we built the memory: one signed record of Earth, starting wherever a
-            sensor already sits.
+            So we built the external memory: signed tokens that outlive any one
+            model's context, shared by agents that share nothing else. Earth is
+            where it starts, because sensors already sit there.
           </p>
         </div>
         <div class="pillars reveal reveal-d1" aria-label="How the memory works">
           <div class="pillar">
             <span class="pillar-k">Substrates</span>
-            <p>Earth is the first substrate we fill. Nothing in the record is satellite-specific, so molecules, people, and signals write to the same loop next.</p>
+            <p>Earth is the substrate we ship today. Nothing in the record is satellite-specific, so any observer of the physical world can write to the same loop; further substrates are roadmap, and we say so.</p>
           </div>
           <div class="pillar">
             <span class="pillar-k">Tokens</span>
@@ -493,11 +524,17 @@
               <div class="r-row"><span class="r-key">place</span><span class="r-val" id="r-place">Bengaluru, India</span></div>
               <div class="r-row"><span class="r-key">we see</span><span class="r-val" id="r-read">healthy vegetation</span></div>
               <div class="r-row"><span class="r-key">index</span><span class="r-val"><span class="tealv" id="r-val">0.72</span>&nbsp;<span class="rd">greenness, by satellite</span></span></div>
+              <div class="r-row"><span class="r-key">moisture</span><span class="r-val"><span class="tealv" id="r-ndmi">pull to fetch</span>&nbsp;<span class="rd">NDMI, by satellite</span></span></div>
+              <div class="r-row"><span class="r-key">air temp</span><span class="r-val"><span class="tealv" id="r-temp">pull to fetch</span>&nbsp;<span class="rd">2 m, by weather station</span></span></div>
               <div class="r-row"><span class="r-key">measured</span><span class="r-val" id="r-cap">2026-06-16</span></div>
               <div class="r-row"><span class="r-key">proof</span><a class="r-val hi r-proof" id="r-cid" href="https://emem.dev/verify?cid=2vgxoukcscjvanuh3yiurqc3xpocbvjwozuygcobq2t6gyj5ojla" target="_blank" rel="noopener" title="Verify this fact on emem">2vgxoukcscjvanuh3yiurqc3xpocbvjwozuygcobq2t6gyj5ojla</a></div>
               <div class="r-row"><span class="r-key">signer</span><span class="r-val hi" id="r-signer" title="Full ed25519 signer public key (base32)">777er3yihgifqmv5hmc2wwmyszgddzderzhsx6rex4yoakwomvka</span></div>
               <div class="r-row"><span class="r-key">pulled</span><span class="r-val" id="r-served">: not yet</span></div>
             </div>
+            <figure class="r-scene" id="r-scene" hidden>
+              <img id="r-scene-img" alt="Latest cloud-free Sentinel-2 scene of this cell" width="560" height="160">
+              <figcaption>the cell itself · latest cloud-free Sentinel-2 scene</figcaption>
+            </figure>
             <div class="receipt-foot">
               <span id="r-foot">a real signed fact · re-checkable offline</span>
               <button type="button" id="card-pull-btn" class="btn btn-primary btn-sm" onclick="var p=document.getElementById('pull-live');if(p)p.click();">
@@ -522,33 +559,73 @@
       </div>
     </section>
 
+    <!-- Shipped today: the protocol surface, no roadmap in this list -->
+    <section class="section" id="shipped" aria-labelledby="shipped-h">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <h2 class="section-title" id="shipped-h">Shipped, <em>not promised.</em></h2>
+          <p class="section-lead">The protocol surface as it runs right now. Nothing on this list is roadmap.</p>
+        </div>
+        <div class="pillars" aria-label="What the protocol ships today">
+          <div class="pillar reveal">
+            <span class="pillar-k">Six token types</span>
+            <p>facts, bundles, entities, rasters, cubes, rastersets. One handle re-hydrates to the exact signed bytes, for any agent, months later.</p>
+          </div>
+          <div class="pillar reveal reveal-d1">
+            <span class="pillar-k">A public log</span>
+            <p>Every fact lands in a witnessed, Merkle-proofed transparency log. Inclusion and consistency are checkable by anyone, not asserted by us.</p>
+          </div>
+          <div class="pillar reveal reveal-d2">
+            <span class="pillar-k">Prediction</span>
+            <p>A learned dynamics head forecasts the next readout at a pinned cell, so your agent can ask what this place will look like, not just what it looked like.</p>
+          </div>
+          <div class="pillar reveal">
+            <span class="pillar-k">Fan-out</span>
+            <p>One question returns twenty-plus signed readings and scored recipes under a single receipt. We measured it; the playground above is the small version.</p>
+          </div>
+          <div class="pillar reveal reveal-d1">
+            <span class="pillar-k">Every interface</span>
+            <p>MCP for agents, REST for anything, Python and TypeScript SDKs, and an A2A agent card so other agents can find us on their own.</p>
+          </div>
+          <div class="pillar reveal reveal-d2">
+            <span class="pillar-k">Caveats built in</span>
+            <p>Grid resolution and revisit cadence ship inside every answer, not in a footnote. A memory you can trust states its own limits.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Where it pays off -->
     <section class="section" id="usecases" aria-labelledby="usecases-h">
       <div class="wrap">
         <div class="section-head reveal">
           <h2 class="section-title" id="usecases-h">Where being wrong is expensive.</h2>
-          <p class="section-lead">A checkable fact earns its keep exactly where a confident guess costs the most.</p>
+          <p class="section-lead">A checkable fact earns its keep exactly where a confident guess costs the most. One question to emem fans out to twenty-plus signed readings and scored algorithms under a single receipt; the tags below are the actual recipes in the registry.</p>
         </div>
         <div class="usecases">
           <div class="usecase reveal">
             <div class="usecase-who">Insurance &amp; risk</div>
             <div class="usecase-q">Did this place actually flood?</div>
             <p class="usecase-a">Pay or deny on a signed flood and rainfall record, with the receipt attached to the claim, instead of a model that only sounds confident.</p>
+            <span class="uc-chip">flood_extent_sar_threshold · water_consensus</span>
           </div>
           <div class="usecase reveal reveal-d1">
             <div class="usecase-who">Lending &amp; property</div>
             <div class="usecase-q">What is this address exposed to?</div>
             <p class="usecase-a">Flood, heat and land change for one parcel, each line traceable to a dated observation an underwriter can stand behind.</p>
+            <span class="uc-chip">heat_index · heat_health_risk · flood_history</span>
           </div>
           <div class="usecase reveal">
             <div class="usecase-who">Supply chain</div>
             <div class="usecase-q">Was this plot cleared before we sourced from it?</div>
             <p class="usecase-a">Check a parcel against the forest record for an EUDR file, and hand an auditor a receipt rather than an assurance.</p>
+            <span class="uc-chip">eudr_dds · sar_forest_disturbance</span>
           </div>
           <div class="usecase reveal reveal-d1">
             <div class="usecase-who">Defense &amp; critical infrastructure</div>
             <div class="usecase-q">What changed along this perimeter?</div>
             <p class="usecase-a">Signed change detection over sites and corridors, inside a private tenancy your agents read and outsiders never touch.</p>
+            <span class="uc-chip">sar_coherence_change · change_attribution</span>
           </div>
         </div>
       </div>
@@ -589,10 +666,10 @@
               <li><b>A boundary that holds.</b> Per-organisation scoping enforced in the code, on every read, not in a brochure.</li>
               <li><b>emem underneath.</b> Read the public layer, write your private one, cite both in one answer.</li>
             </ul>
-            <a href="https://geo.qa" class="btn btn-primary" target="_blank" rel="noopener" onclick="gtag('event','click_geo_qa',{'link_location':'products_section'});">
-              Open geo.qa
-              <svg class="arrow" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
+            <div class="btnrow" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
+              <a href="mailto:avijeet@vortx.ai?subject=geo.qa%20private%20tenancy" class="btn btn-primary" onclick="gtag('event','click_geo_qa',{'link_location':'products_section'});">Talk to us</a>
+              <a href="https://geo.qa" class="btn btn-quiet" target="_blank" rel="noopener">Open geo.qa →</a>
+            </div>
           </article>
         </div>
 
@@ -621,68 +698,57 @@
             <div class="soon-body">
               <h4>Your team's application</h4>
               <p>Insurance, supply chains, defense, urban planning. If your organisation needs an external memory of our physical world, ship on the same protocol.</p>
-              <span class="soon-cta">Book a session &rarr;</span>
+              <span class="soon-cta">Work with the core team &rarr;</span>
             </div>
           </a>
         </div>
       </div>
     </section>
 
-    <!-- Scene 6: Deploy: work with the core team -->
+    <!-- Scene 6: Founder time: free for questions, paid for pairing -->
     <section class="section section--tint" id="consult" aria-labelledby="consult-h">
       <div class="wrap">
         <div class="section-head reveal">
-          <span class="eyebrow">Work with the core team</span>
-          <h2 class="section-title" id="consult-h">Deploy emem in <em>your stack.</em></h2>
-          <p class="section-lead">Sit with the people who built the protocol and wire it into your agents. You leave with running code and signed facts flowing, not slides.</p>
+          <span class="eyebrow">Founder time</span>
+          <h2 class="section-title" id="consult-h">Talk to the humans <em>behind the protocol.</em></h2>
+          <p class="section-lead">Free for questions. Paid for our time. The protocol is open either way.</p>
         </div>
 
-        <div class="consult-grid">
-          <div class="consult-phases reveal">
-            <div class="cphase">
-              <span class="cphase-n">01</span>
-              <div class="cphase-body">
-                <h4>Locate the problem</h4>
-                <p>Where does your agent's memory break today. Compaction, hand-offs, cross-vendor trust, audit. We find the one place a verifiable fact earns its keep first.</p>
-              </div>
-            </div>
-            <div class="cphase">
-              <span class="cphase-n">02</span>
-              <div class="cphase-body">
-                <h4>Wire emem in</h4>
-                <p>Live integration on your stack over MCP, REST, or SDK. Recall, token discipline, and receiver-side verification, written against emem together.</p>
-              </div>
-            </div>
-            <div class="cphase">
-              <span class="cphase-n">03</span>
-              <div class="cphase-body">
-                <h4>Ship it</h4>
-                <p>Run the open layer or stand up a private geo.qa tenancy, decide what to sign, and roll it out. You leave with a working path and a written follow-up.</p>
-              </div>
-            </div>
-          </div>
+        <div class="offer-pair offer-trio">
+          <article class="offer offer-free reveal" aria-label="Community office hours, free">
+            <span class="offer-kicker">Office hours · free</span>
+            <h3 class="offer-name">Ask us anything.</h3>
+            <p class="offer-desc">Thirty minutes, open to all. Architecture questions, integration guidance, protocol deep-dives. No pitch, no eligibility check.</p>
+            <ul class="product-bullets">
+              <li><b>Real help.</b> Bring your hardest memory problem; we work it with you.</li>
+              <li><b>No gate.</b> Understanding emem never costs anything.</li>
+            </ul>
+            <a href="https://outlook.office.com/book/meetvortxfounders@vortx.ai/" class="btn btn-primary" target="_blank" rel="noopener" onclick="gtag('event','office_hours_click',{'link_location':'consult'});">Pick a time</a>
+          </article>
 
-          <aside class="consult-card reveal reveal-d1" aria-label="Book a session">
-            <div class="cc-kicker">Book a session</div>
-            <p class="cc-lead">Pick who you are. The session is the same; the price is not.</p>
-            <div class="cc-tiers">
-              <button type="button" class="cc-tier" data-open-pricing data-tier="student">
-                <span class="cc-who">Students &amp; startups</span>
-                <span class="cc-price cc-price-free">Free</span>
-              </button>
-              <button type="button" class="cc-tier" data-open-pricing data-tier="enterprise">
-                <span class="cc-who">Enterprise</span>
-                <span class="cc-price">$5,000</span>
-              </button>
-              <button type="button" class="cc-tier" data-open-pricing data-tier="government">
-                <span class="cc-who">Governments &amp; defense</span>
-                <span class="cc-price">$25,000</span>
-              </button>
-            </div>
-            <button type="button" class="btn btn-primary btn-lg cc-book" data-open-pricing onclick="gtag('event','pricing_open_click',{'link_location':'consult_card'});">Book a session</button>
-            <p class="cc-foot">1 to 3 hours, one-on-one, remote worldwide. Running code and a written follow-up included. Secure hosted checkout via Razorpay; invoice on request.</p>
-          </aside>
+          <article class="offer offer-paid reveal reveal-d1" aria-label="Integration session, five thousand dollars">
+            <span class="offer-kicker">Integration session · $5,000</span>
+            <h3 class="offer-name">We pair on your codebase.</h3>
+            <p class="offer-desc">One to three hours with the core team, live on your stack over MCP, REST, or SDK. You leave with running code and signed facts flowing.</p>
+            <ul class="product-bullets">
+              <li><b>Live pairing.</b> Recall, token discipline, and receiver-side verification, written together.</li>
+              <li><b>Money-back.</b> If you leave without a working integration, we refund the session.</li>
+            </ul>
+            <button type="button" class="btn btn-primary" data-open-pricing data-tier="integration" onclick="gtag('event','pricing_open_click',{'link_location':'consult'});">Book the session</button>
+          </article>
+
+          <article class="offer offer-sov reveal reveal-d2" aria-label="Sovereign session, twenty five thousand dollars">
+            <span class="offer-kicker">Sovereign session · $25,000</span>
+            <h3 class="offer-name">On a sovereign footing.</h3>
+            <p class="offer-desc">For governments, defense, and critical infrastructure. Everything in the integration session, plus the boundary work your deployment demands.</p>
+            <ul class="product-bullets">
+              <li><b>Your tenancy.</b> Private tenancy and data-boundary guidance, end to end.</li>
+              <li><b>Your process.</b> Security and signing review; procurement, invoice, and NDA on request.</li>
+            </ul>
+            <button type="button" class="btn btn-primary" data-open-pricing data-tier="government" onclick="gtag('event','pricing_open_click',{'link_location':'consult'});">Book the session</button>
+          </article>
         </div>
+        <p class="offer-foot reveal">Founder time is genuinely limited; the calendar shows real availability. Private tenancy, procurement, or NDA: <a href="mailto:avijeet@vortx.ai">avijeet@vortx.ai</a></p>
       </div>
     </section>
 
@@ -744,70 +810,68 @@
 
       <div class="pm-head">
 
-        <h2 id="pm-title">Get emem running in your stack.</h2>
-        <p class="pm-sub">Sit with the core team and wire emem into your agents. Same session for everyone; the price follows who you are.</p>
+        <h2 id="pm-title">Time with the core team.</h2>
+        <p class="pm-sub">The protocol is free either way. This is our time, not access to emem.</p>
       </div>
 
-      <!-- STEP 1: pick who you are -->
+      <!-- STEP 1: pick the session -->
       <div class="pm-step" data-step="tier">
-        <div class="pm-seg" role="tablist" aria-label="Who are you">
+        <div class="pm-seg" role="tablist" aria-label="Pick a session">
           <span class="pm-seg-pill" aria-hidden="true"></span>
-          <button type="button" class="pm-seg-btn active" role="tab" aria-selected="true" data-tier="student">Students &amp; startups</button>
-          <button type="button" class="pm-seg-btn" role="tab" aria-selected="false" data-tier="enterprise">Enterprise</button>
-          <button type="button" class="pm-seg-btn" role="tab" aria-selected="false" data-tier="government">Governments</button>
+          <button type="button" class="pm-seg-btn" role="tab" aria-selected="false" data-tier="office">Office hours</button>
+          <button type="button" class="pm-seg-btn active" role="tab" aria-selected="true" data-tier="integration">Integration</button>
+          <button type="button" class="pm-seg-btn" role="tab" aria-selected="false" data-tier="government">Sovereign</button>
         </div>
 
         <div class="pm-tiers">
-          <!-- Students & startups -->
-          <section class="pm-tier active" data-tier="student" aria-label="Students and startups tier">
+          <!-- Office hours -->
+          <section class="pm-tier" data-tier="office" aria-label="Office hours, free" hidden>
             <div class="pm-price-row">
               <span class="pm-price">Free</span>
-              <span class="pm-price-note">application-based</span>
+              <span class="pm-price-note">30 min · open to all</span>
             </div>
-            <p class="pm-who">Students, researchers, and early-stage startups building on emem.</p>
+            <p class="pm-who">Architecture questions, integration guidance, protocol deep-dives. No pitch.</p>
             <ul class="pm-list">
-              <li>The same one-on-one working session, no charge.</li>
-              <li>We confirm eligibility, then book you in.</li>
-              <li>Running code or a scoped plan, plus a written follow-up.</li>
+              <li>Bring your hardest memory problem; we work it with you.</li>
+              <li>No eligibility check, no form, no follow-up sequence.</li>
+              <li>The calendar shows real availability.</li>
             </ul>
-            <button type="button" class="btn btn-primary btn-lg pm-continue" data-continue>Apply for a free session</button>
+            <a class="btn btn-primary btn-lg pm-book" href="https://outlook.office.com/book/meetvortxfounders@vortx.ai/" target="_blank" rel="noopener" onclick="gtag('event','office_hours_click',{'link_location':'modal'});">Pick a time</a>
           </section>
 
-          <!-- Enterprise -->
-          <section class="pm-tier" data-tier="enterprise" aria-label="Enterprise tier" hidden>
+          <!-- Integration session -->
+          <section class="pm-tier active" data-tier="integration" aria-label="Integration session, five thousand dollars">
             <div class="pm-price-row">
               <span class="pm-price">$5,000</span>
-              <span class="pm-price-note">per session · USD</span>
+              <span class="pm-price-note">1 to 3 hours · USD</span>
             </div>
-            <p class="pm-who">Teams putting emem or geo.qa into production.</p>
+            <p class="pm-who">We pair on your codebase, live on your stack, until signed facts flow.</p>
             <ul class="pm-list">
-              <li>1 to 3 hours, one-on-one, on your stack.</li>
               <li>Live integration over MCP, REST, or SDK.</li>
-              <li>A memory pattern and token discipline for your workload.</li>
-              <li>Receiver-side verification, and a written follow-up.</li>
+              <li>Recall, token discipline, and receiver-side verification, written together.</li>
+              <li>Money-back if you leave without a working integration.</li>
             </ul>
             <button type="button" class="btn btn-primary btn-lg pm-continue" data-continue>Continue to secure payment</button>
           </section>
 
-          <!-- Governments & defense -->
-          <section class="pm-tier" data-tier="government" aria-label="Governments and defense tier" hidden>
+          <!-- Sovereign session -->
+          <section class="pm-tier" data-tier="government" aria-label="Sovereign session, twenty five thousand dollars" hidden>
             <div class="pm-price-row">
               <span class="pm-price">$25,000</span>
-              <span class="pm-price-note">per session · USD</span>
+              <span class="pm-price-note">1 to 3 hours · USD</span>
             </div>
-            <p class="pm-who">Government, defense, and critical infrastructure.</p>
+            <p class="pm-who">Governments, defense, and critical infrastructure, on a sovereign footing.</p>
             <ul class="pm-list">
-              <li>Everything in Enterprise, on a sovereign footing.</li>
-              <li>Private tenancy and data-boundary guidance.</li>
-              <li>Security and signing review for your deployment.</li>
-              <li>Procurement support; invoice and NDA on request.</li>
+              <li>Everything in the integration session.</li>
+              <li>Private tenancy and data-boundary guidance for your deployment.</li>
+              <li>Security and signing review; procurement, invoice, and NDA on request.</li>
             </ul>
             <button type="button" class="btn btn-primary btn-lg pm-continue" data-continue>Continue to secure payment</button>
           </section>
         </div>
 
         <p class="pm-foot pm-foot-tier">
-          Secure hosted checkout via Razorpay. Cards, UPI, netbanking, international. Free reschedule up to 48h before.
+          Secure hosted checkout via Razorpay. Cards, UPI, netbanking, international. Free reschedule up to 48h before. Private tenancy or procurement: <a href="mailto:avijeet@vortx.ai">avijeet@vortx.ai</a>
         </p>
       </div>
 
@@ -818,7 +882,7 @@
           Back
         </button>
         <div class="pm-form-summary">
-          <span class="pm-form-tier" id="pm-form-tier">Enterprise session</span>
+          <span class="pm-form-tier" id="pm-form-tier">Integration session</span>
           <span class="pm-form-price" id="pm-form-price">$5,000</span>
         </div>
         <form class="pm-form" id="pm-form" novalidate>
@@ -876,11 +940,14 @@
           <p class="footer-tagline">The external memory of our physical world, built for the multi-agent systems your customers depend on.</p>
           <div class="footer-cols">
             <div class="footer-col">
-              <h4>Explore</h4>
-              <a href="#thesis">Thesis</a>
-              <a href="#how">How it works</a>
-              <a href="#verify">Proof</a>
-              <a href="/spatial-ai/">What is spatial AI?</a>
+              <h4>Protocol</h4>
+              <a href="https://emem.dev" target="_blank" rel="noopener">Docs</a>
+              <a href="https://emem.dev/mcp" target="_blank" rel="noopener">MCP server</a>
+              <a href="https://pypi.org/project/ememdev/" target="_blank" rel="noopener">PyPI · ememdev</a>
+              <a href="https://www.npmjs.com/package/@vortxai/emem" target="_blank" rel="noopener">npm · @vortxai/emem</a>
+              <a href="https://github.com/Vortx-AI/emem/releases" target="_blank" rel="noopener">Changelog</a>
+              <a href="https://github.com/Vortx-AI/emem/issues" target="_blank" rel="noopener">Issues</a>
+              <a href="https://github.com/Vortx-AI/emem/blob/main/LICENSE" target="_blank" rel="noopener">Apache-2.0</a>
             </div>
             <div class="footer-col">
               <h4>Products</h4>
@@ -894,12 +961,13 @@
               <a href="/research/">Research</a>
               <a href="/log/">Log</a>
               <a href="/trust/">Trust &amp; security</a>
+              <a href="/spatial-ai/">What is spatial AI?</a>
               <a href="https://github.com/Vortx-AI" target="_blank" rel="noopener">GitHub</a>
               <a href="https://huggingface.co/avijeetsingh1608" target="_blank" rel="noopener">Hugging Face</a>
             </div>
             <div class="footer-col">
               <h4>Company</h4>
-              <a href="#consult" data-open-pricing>Book a session</a>
+              <a href="#consult">Office hours &amp; sessions</a>
               <a href="mailto:avijeet@vortx.ai">avijeet@vortx.ai</a>
               <a href="/terms.html">Terms</a>
               <a href="/privacy.html">Privacy</a>

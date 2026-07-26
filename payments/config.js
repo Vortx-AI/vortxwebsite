@@ -31,8 +31,8 @@ window.VORTX_PAY = {
   schedulingUrl: 'https://outlook.office.com/book/meetvortxfounders@vortx.ai/',
 
   razorpay: {
-    // DUMMY: Razorpay's public sample TEST key, so the Checkout
-    // modal opens locally. Replace with your own rzp_test_ / rzp_live_ key.
+    // LIVE public key id. Safe to ship in the browser; the secret
+    // stays in the Razorpay dashboard. Swap to rzp_test_... to test.
     keyId: 'rzp_live_jAQEp4vlDYSJWG',
     // Currency set to USD for global payments (including PayPal).
     // Razorpay will auto-convert and settle in your local currency.
@@ -42,29 +42,32 @@ window.VORTX_PAY = {
   },
 
   tiers: {
-    // Students, researchers, early-stage startups. No charge; straight to a slot.
-    student: {
-      label: 'Students & startups',
+    // Community office hours. 30 min, open to all, no charge, no form:
+    // the section and modal link straight to schedulingUrl.
+    office: {
+      label: 'Office hours',
       price: 'Free',
       amount: null
     },
 
-    // Companies putting emem / geo.qa into production.
-    enterprise: {
-      label: 'Enterprise',
+    // Integration session: the core team pairs on the client's codebase.
+    // Money-back if they leave without a working integration.
+    integration: {
+      label: 'Integration session',
       price: '$5,000',
-      // DUMMY amount in the smallest unit of `razorpay.currency`
-      // (paise for INR). Set the real charge amount before going live.
+      // Amount in the smallest unit of `razorpay.currency`
+      // (cents for USD): 500000 = $5,000.00.
       amount: 500000,
       // Optional: a hosted Razorpay Payment Page URL. Used only if
       // razorpay.keyId is left blank (redirect fallback).
       paymentPageUrl: null
     },
 
-    // Government, defense, critical infrastructure.
+    // Sovereign session: governments, defense, critical infrastructure.
     government: {
-      label: 'Governments & defense',
+      label: 'Sovereign session',
       price: '$25,000',
+      // 2500000 cents = $25,000.00.
       amount: 2500000,
       paymentPageUrl: null
     }
