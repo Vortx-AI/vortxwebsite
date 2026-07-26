@@ -49,7 +49,7 @@ The protocol is free. The only thing for sale is the core team's time:
 | Option | Price (USD) | What it is |
 |---|---|---|
 | Community office hours | Free | 30 min, open to all. Architecture questions, integration guidance, protocol deep-dives. No pitch, no eligibility check. |
-| Integration session | 5,000 | 1 to 3 hours. The core team pairs on your codebase over MCP, REST, or SDK until signed facts flow. Money-back if you leave without a working integration. |
+| Integration session | 5,000 | 1 to 3 hours. The core team pairs on your codebase over MCP, REST, or SDK. Exit criterion: recall running and a receipt verifying in your stack. |
 | Sovereign session | 25,000 | 1 to 3 hours. Governments, defense, critical infrastructure. Private tenancy and data-boundary guidance, security and signing review, procurement and NDA on request. |
 
 - **Office hours:** book directly at
