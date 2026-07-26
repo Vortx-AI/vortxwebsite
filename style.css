@@ -633,7 +633,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .r-val.flash { animation: val-flash 0.9s var(--ease); }
 @keyframes val-flash { 0% { color: #eafff7; } 100% { color: inherit; } }
 .pl-icon { width: 15px; height: 15px; }
-#pull-live.pl-spin .pl-icon { animation: spin 0.9s linear infinite; }
+#pull-live.pl-spin .pl-icon, #card-pull-btn.pl-spin .pl-icon { animation: spin 0.9s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .r-proof { cursor: pointer; text-decoration: none; }
 .r-proof::after { content: " \2197"; opacity: 0.55; font-size: 0.88em; }
@@ -673,14 +673,19 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .receipt-rows { padding: 16px 18px; display: grid; gap: 9px; }
 .r-row { display: grid; grid-template-columns: 96px 1fr; gap: 12px; font-size: 12.5px; line-height: 1.45; }
 .r-key { color: #a7bcb0; }
-.r-val { color: #e9efe9; word-break: break-all; }
+.r-val { color: #e9efe9; word-break: break-all; font-family: var(--font-mono); font-size: 11.8px; }
 .r-val .hi { color: #ffd79a; }
-.r-val .tealv { color: #6fe3bf; }
+.r-val .tealv { color: #6fe3bf; font-family: var(--font-body); font-size: 13px; }
 .receipt-foot {
   padding: 12px 18px 16px;
   border-top: 1px solid rgba(255,255,255,0.10);
   font-size: 11.5px;
   color: #a7bcb0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 .verify-actions { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 12px; }
