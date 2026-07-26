@@ -50,7 +50,21 @@
     "docs": "https://emem.dev/llms.txt",
     "source": "https://github.com/Vortx-AI/emem",
     "mcp": "https://emem.dev/mcp",
-    "rest": "https://emem.dev/v1/recall"
+    "rest": "https://emem.dev/v1/recall",
+    "liveEndpoints": {
+      "capabilities": "https://emem.dev/v1/capabilities",
+      "transparencyLog": "https://emem.dev/v1/log/sth",
+      "topics": "https://emem.dev/v1/topics",
+      "benchmark": "https://emem.dev/v1/benchmark",
+      "ask": "https://emem.dev/v1/ask",
+      "sceneImagery": "https://emem.dev/v1/cells/{cell64}/scene.png"
+    }
+  },
+  "x-research": {
+    "whitepaper": { "title": "emem: A Content-Addressed, Verifiable Earth-Memory Protocol for AI Agents over Foundation-Model Embeddings", "doi": "https://doi.org/10.5281/zenodo.20706317" },
+    "companionStudy": { "doi": "https://doi.org/10.5281/zenodo.20706893" },
+    "openModels": "https://huggingface.co/avijeetsingh1608",
+    "note": "If a paper and a live endpoint disagree, trust the endpoint and report it."
   },
   "x-session": {
     "name": "Founder time",
@@ -60,7 +74,7 @@
     "payment": "Razorpay hosted checkout; human completes payment",
     "contact": "avijeet@vortx.ai",
     "options": [
-      { "name": "Community office hours", "price": 0, "currency": "USD", "duration": "30 min", "note": "Open to all. Architecture questions, integration guidance, protocol deep-dives. Book directly at schedulingUrl." },
+      { "name": "Community office hours", "price": 0, "currency": "USD", "duration": "30 min", "note": "Open to all; students, researchers, and early-stage founders especially welcome. Architecture questions, integration guidance, protocol deep-dives. Book directly at schedulingUrl." },
       { "name": "Integration session", "price": 5000, "currency": "USD", "duration": "1-3 hours", "note": "The core team pairs on your codebase over MCP, REST, or SDK. Exit criterion: recall running and a receipt verifying in your stack." },
       { "name": "Sovereign session", "price": 25000, "currency": "USD", "duration": "1-3 hours", "note": "Governments, defense, critical infrastructure. Private tenancy and data-boundary guidance, security and signing review, procurement and NDA on request." }
     ],

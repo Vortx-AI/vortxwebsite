@@ -1665,3 +1665,11 @@ body.pm-open { overflow: hidden; }
   color: var(--ink-faint);
 }
 .offer-foot { margin-top: 16px; }
+
+/* One core product: emem gets the full stage */
+.products-solo { grid-template-columns: 1fr; max-width: 760px; margin-inline: auto; }
+
+/* Four applications on the protocol */
+.soon-rail-4 { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 1080px) { .soon-rail-4 { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 640px) { .soon-rail-4 { grid-template-columns: 1fr; } }

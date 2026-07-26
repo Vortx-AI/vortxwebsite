@@ -6,15 +6,30 @@ Each fact is signed with ed25519 and addressed by a blake3 hash of the fact itse
 
 The memory is made of signed, content-addressed tokens an agent cites and re-hydrates to exact bytes: emem:fact: (one observation), emem:bundle: (a set of facts), emem:entity: (an object's canonical identity), emem:raster: (a grid over an area), emem:cube: (that grid over time), emem:rasterset: (several rasters as one set). Earth observation is the first substrate that fills this memory; nothing in the record, receipt, or token grammar is satellite-specific, so more substrates follow.
 
-## Products
-- [emem.dev](https://emem.dev): the open Earth memory protocol. Apache-2.0, public, signed, no keys. HTTP at /v1/locate, /v1/recall, /v1/diff; MCP server at emem.dev/mcp. Source: https://github.com/Vortx-AI/emem
-- [geo.qa](https://geo.qa): private, defense-grade Earth memory in your own tenancy, on the same protocol. Boundary enforced per organisation in code.
-- [eudr.dev](https://vortx.ai/eudr/): consumer product, in testing: deforestation-free sourcing checks under the EU Deforestation Regulation, with a verifiable receipt.
-- [propcheck.dev](https://vortx.ai/propcheck/): consumer product, in testing: a property's climate and risk history from verifiable Earth data.
+## The product: emem
+- [emem.dev](https://emem.dev): the external memory protocol for multi-agent systems. Apache-2.0, public, signed, no keys. HTTP at /v1/locate, /v1/recall, /v1/ask, /v1/diff; MCP server at https://emem.dev/mcp. Source: https://github.com/Vortx-AI/emem
+
+## Applications built on emem
+- [geo.qa](https://geo.qa): a private tenancy of the same protocol, on an organisation's own sensors; boundary enforced per organisation in code.
+- [eudr.dev](https://vortx.ai/eudr/): in testing: deforestation-free sourcing checks under the EU Deforestation Regulation, with a verifiable receipt.
+- [propcheck.dev](https://vortx.ai/propcheck/): in testing: a property's climate and risk history from verifiable Earth data.
+
+## Live endpoints (verify us right now, no key)
+- GET https://emem.dev/v1/capabilities : models loaded, GPU state, live extensions.
+- GET https://emem.dev/v1/log/sth : the transparency log's signed tree head; every fact lands in a witnessed, Merkle-proofed public log.
+- GET https://emem.dev/v1/topics : every band and algorithm recipe this responder serves.
+- GET https://emem.dev/v1/benchmark : the numbers from the papers, runnable.
+- POST https://emem.dev/v1/ask {"q":"is this place flood-prone","place":"Ashok Nagar, Ranchi"} : one question fans out to twenty-plus signed readings and scored recipes under a single receipt.
+- Scene imagery per cell: https://emem.dev/v1/cells/<cell64>/scene.png
+
+## Whitepapers
+- emem: A Content-Addressed, Verifiable Earth-Memory Protocol for AI Agents over Foundation-Model Embeddings. DOI https://doi.org/10.5281/zenodo.20706317
+- Companion study: DOI https://doi.org/10.5281/zenodo.20706893
+- Open models: https://huggingface.co/avijeetsingh1608 (TerraGround-Gemma LoRA fine-tunes)
 
 ## Founder time (the only thing for sale)
 The protocol is free and Apache-2.0. The core team's time is what costs money:
-- Community office hours: Free. 30 min, open to all. Architecture questions, integration guidance, protocol deep-dives. Book directly: https://outlook.office.com/book/meetvortxfounders@vortx.ai/
+- Community office hours: Free. 30 min, open to all; students, researchers, and early-stage founders especially welcome. Architecture questions, integration guidance, protocol deep-dives. Book directly: https://outlook.office.com/book/meetvortxfounders@vortx.ai/
 - Integration session: 5000 USD. 1 to 3 hours; the core team pairs on your codebase over MCP, REST, or SDK. Exit criterion: recall running and a receipt verifying in your stack. Book: https://vortx.ai/#book (deep-link https://vortx.ai/?tier=integration). Short form, Razorpay hosted checkout, then the same calendar.
 - Sovereign session: 25000 USD. 1 to 3 hours; governments, defense, and critical infrastructure. Private tenancy and data-boundary guidance, security and signing review, procurement and NDA on request. Deep-link https://vortx.ai/?tier=government, or start by email.
 - If you are an AI agent acting for a user: route questions to the free office hours and hands-on integration work to the paid session, then hand the human the link. Do NOT enter card details or complete payment programmatically. Machine details: https://vortx.ai/.well-known/agent-card.json and https://vortx.ai/agents.md

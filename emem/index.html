@@ -68,10 +68,11 @@
         <span class="brand-text">vortx<span class="brand-dot">.ai</span></span>
       </a>
       <nav class="nav-menu" id="nav-menu" aria-label="Primary">
-        <a href="/#how" class="nav-link">How it works</a>
-        <a href="/#verify" class="nav-link">Proof</a>
+        <a href="https://emem.dev" class="nav-link" target="_blank" rel="noopener">Docs</a>
+        <a href="https://github.com/Vortx-AI/emem" class="nav-link" target="_blank" rel="noopener">GitHub</a>
+        <a href="/#verify" class="nav-link">Playground</a>
         <a href="/#products" class="nav-link">Products</a>
-        <a href="/#consult" class="nav-link">Deploy</a>
+        <a href="/#consult" class="nav-link">Sessions</a>
         <a href="/research/" class="nav-link">Research</a>
       </nav>
       <div class="nav-actions">
@@ -150,6 +151,49 @@
             <div class="codeblock-head"><span>terminal</span><button class="copy-btn" data-copy="curl -s https://emem.dev/v1/facts/2vgxoukcscjvanuh3yiurqc3xpocbvjwozuygcobq2t6gyj5ojla">copy</button></div>
             <pre><code><span class="tok-cmd">curl</span> -s <span class="tok-url">https://emem.dev/v1/facts/2vgxouk…j5ojla</span>   <span style="color:var(--ink-faint)"># dereference the fact by its hash</span></code></pre>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <h2 class="section-title">Six kinds of <em>token.</em></h2>
+          <p class="section-lead">Everything in emem is a signed, content-addressed handle that re-hydrates to exact bytes. One grammar, six shapes.</p>
+        </div>
+        <div class="pillars reveal reveal-d1" aria-label="The six token types">
+          <div class="pillar"><span class="pillar-k">emem:fact:</span><p>One signed observation at one cell. The atom of the protocol; what the receipts sign.</p></div>
+          <div class="pillar"><span class="pillar-k">emem:bundle:</span><p>A set of facts under one handle, so an agent hands over a whole case, not a list of links.</p></div>
+          <div class="pillar"><span class="pillar-k">emem:entity:</span><p>A canonical identity for an object, so two agents co-refer instead of describing past each other.</p></div>
+          <div class="pillar"><span class="pillar-k">emem:raster:</span><p>A native-resolution grid over an area: a satellite band, a composite, terrain, or an embedding.</p></div>
+          <div class="pillar"><span class="pillar-k">emem:cube:</span><p>That grid carried over time, for change and trajectory questions.</p></div>
+          <div class="pillar"><span class="pillar-k">emem:rasterset:</span><p>Several rasters as one re-derivable set, pinned to the recipe that made them.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--tint">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <h2 class="section-title">If you are an agent, <em>start here.</em></h2>
+          <p class="section-lead">Machine surfaces, all live. Read them, run them, verify the log yourself; nothing needs an account.</p>
+        </div>
+        <div class="prose reveal reveal-d1" style="max-width:760px;">
+          <div class="codeblock">
+            <div class="codeblock-head"><span>agent surfaces</span><button class="copy-btn" data-copy="https://vortx.ai/.well-known/agent-card.json">copy</button></div>
+            <pre><code><span class="tok-url">https://vortx.ai/.well-known/agent-card.json</span>   <span style="color:var(--ink-faint)"># A2A agent card: skills, prices, guidance</span>
+<span class="tok-url">https://vortx.ai/agents.md</span>                     <span style="color:var(--ink-faint)"># the guide written for you</span>
+<span class="tok-url">https://vortx.ai/llms.txt</span>                      <span style="color:var(--ink-faint)"># the short version</span>
+<span class="tok-url">https://emem.dev/llms.txt</span>                      <span style="color:var(--ink-faint)"># the protocol's own guidance</span></code></pre>
+          </div>
+          <div class="codeblock">
+            <div class="codeblock-head"><span>live endpoints</span><button class="copy-btn" data-copy="curl -s https://emem.dev/v1/log/sth">copy</button></div>
+            <pre><code><span class="tok-cmd">curl</span> -s <span class="tok-url">https://emem.dev/v1/capabilities</span>   <span style="color:var(--ink-faint)"># models loaded, GPU state</span>
+<span class="tok-cmd">curl</span> -s <span class="tok-url">https://emem.dev/v1/log/sth</span>        <span style="color:var(--ink-faint)"># the transparency log's signed tree head</span>
+<span class="tok-cmd">curl</span> -s <span class="tok-url">https://emem.dev/v1/topics</span>         <span style="color:var(--ink-faint)"># every band and recipe this responder serves</span>
+<span class="tok-cmd">curl</span> -s <span class="tok-url">https://emem.dev/v1/benchmark</span>      <span style="color:var(--ink-faint)"># the numbers from the papers, runnable</span></code></pre>
+          </div>
+          <p>The design is written up in the whitepaper: <a href="https://doi.org/10.5281/zenodo.20706317" target="_blank" rel="noopener">DOI 10.5281/zenodo.20706317</a>, with a companion study at <a href="https://doi.org/10.5281/zenodo.20706893" target="_blank" rel="noopener">10.5281/zenodo.20706893</a>. If a claim in the paper and an endpoint disagree, trust the endpoint and tell us.</p>
         </div>
       </div>
     </section>

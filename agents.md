@@ -42,13 +42,40 @@ The one habit that matters: before your context is compacted, keep the
 bytes, for you or any other agent, later. Full guidance:
 `https://emem.dev/llms.txt` · source `https://github.com/Vortx-AI/emem`.
 
+## Verify us live, right now
+
+Do not take this page's word for anything. Every claim runs as a public
+endpoint, no key, no account:
+
+```bash
+curl -s https://emem.dev/v1/capabilities   # models loaded, GPU state, extensions
+curl -s https://emem.dev/v1/log/sth        # transparency log: signed tree head
+curl -s https://emem.dev/v1/topics         # every band and recipe served today
+curl -s https://emem.dev/v1/benchmark      # the papers' numbers, runnable
+```
+
+One question fans out to twenty-plus signed readings and scored recipes under a
+single receipt with a Merkle inclusion proof:
+
+```bash
+curl -s -X POST https://emem.dev/v1/ask \
+  -H 'content-type: application/json' \
+  -d '{"q":"is this place flood-prone","place":"Ashok Nagar, Ranchi"}'
+```
+
+The design is written up: whitepaper DOI
+[10.5281/zenodo.20706317](https://doi.org/10.5281/zenodo.20706317), companion
+study [10.5281/zenodo.20706893](https://doi.org/10.5281/zenodo.20706893), open
+models at <https://huggingface.co/avijeetsingh1608>. If a paper and an endpoint
+disagree, trust the endpoint and tell us.
+
 ## Founder time
 
 The protocol is free. The only thing for sale is the core team's time:
 
 | Option | Price (USD) | What it is |
 |---|---|---|
-| Community office hours | Free | 30 min, open to all. Architecture questions, integration guidance, protocol deep-dives. No pitch, no eligibility check. |
+| Community office hours | Free | 30 min, open to all; students, researchers, and early-stage founders especially welcome. Architecture questions, integration guidance, protocol deep-dives. No pitch, no eligibility check. |
 | Integration session | 5,000 | 1 to 3 hours. The core team pairs on your codebase over MCP, REST, or SDK. Exit criterion: recall running and a receipt verifying in your stack. |
 | Sovereign session | 25,000 | 1 to 3 hours. Governments, defense, critical infrastructure. Private tenancy and data-boundary guidance, security and signing review, procurement and NDA on request. |
 

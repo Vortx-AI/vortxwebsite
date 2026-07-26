@@ -204,16 +204,6 @@
               <button type="button" class="install-copy" data-copy="https://vortx.ai/.well-known/agent-card.json" aria-label="Copy A2A agent card URL">copy</button>
             </div>
           </div>
-          <div class="hero-doors">
-            <a href="/emem/" class="hero-door door-emem">
-              <span class="door-name"><em>emem.dev</em></span>
-              <span class="door-tag">Open · read a fact free</span>
-            </a>
-            <a href="/geo-qa/" class="hero-door door-geo">
-              <span class="door-name"><em>geo.qa</em></span>
-              <span class="door-tag">Private · your own data</span>
-            </a>
-          </div>
           <p class="proto-strip" id="proto-strip" hidden>
             <span>emem · Apache-2.0</span>
             <span id="gh-stars"></span>
@@ -635,40 +625,27 @@
     <section class="section" id="products" aria-labelledby="products-h">
       <div class="wrap">
         <div class="section-head reveal">
-          <h2 class="section-title" id="products-h">One protocol. <em>Two doors.</em></h2>
-          <p class="section-lead">Read the public layer, write your private one, cite both in a single answer.</p>
+          <h2 class="section-title" id="products-h">One protocol: <em>emem.</em></h2>
+          <p class="section-lead">Everything we ship is emem or built on it. The protocol is the product; the applications prove it.</p>
         </div>
 
-        <div class="products-pair">
+        <div class="products-pair products-solo">
           <article class="product product-emem reveal">
             <span class="product-kicker">Open · Apache-2.0</span>
             <h3 class="product-name">emem.dev</h3>
-            <p class="product-tagline">The open Earth memory protocol.</p>
-            <p class="product-desc">A public, signed layer of Earth memory any agent can read without an API contract. Run it yourself; the receipts still check out.</p>
+            <p class="product-tagline">The external memory protocol for multi-agent systems.</p>
+            <p class="product-desc">A public, signed memory any agent can read without an API contract. Six token types, a witnessed transparency log, and receipts that verify offline. Run it yourself; the receipts still check out.</p>
             <ul class="product-bullets">
               <li><b>Free and open.</b> Read it without a key, an account, or a contract.</li>
-              <li><b>Checkable offline.</b> Every fact is signed, so you never have to trust the server.</li>
-              <li><b>Built on public satellite data.</b> Open for anyone to read, run, or build on.</li>
-            </ul>
-            <a href="https://emem.dev" class="btn btn-gold" target="_blank" rel="noopener" onclick="gtag('event','click_emem_dev',{'link_location':'products_section'});">
-              Open emem.dev
-              <svg class="arrow" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-          </article>
-
-          <article class="product product-geo reveal reveal-d1">
-            <span class="product-kicker">Private · Your tenancy</span>
-            <h3 class="product-name">geo.qa</h3>
-            <p class="product-tagline">Earth memory that's yours, on your data.</p>
-            <p class="product-desc">For teams whose AI has to be right about specific places: pipelines, airports, ports, borders, fleets. The same protocol, fed by your own sensors, in a tenancy only your agents can read.</p>
-            <ul class="product-bullets">
-              <li><b>Your sensors, fused.</b> Cameras, drones, satellites, sensors, files and maps, registered by location and view and segmented on demand.</li>
-              <li><b>A boundary that holds.</b> Per-organisation scoping enforced in the code, on every read, not in a brochure.</li>
-              <li><b>emem underneath.</b> Read the public layer, write your private one, cite both in one answer.</li>
+              <li><b>Checkable offline.</b> Every fact is signed and content-addressed, so you never have to trust the server.</li>
+              <li><b>Every interface.</b> MCP, REST, Python, TypeScript, and an A2A agent card.</li>
             </ul>
             <div class="btnrow" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
-              <a href="mailto:avijeet@vortx.ai?subject=geo.qa%20private%20tenancy" class="btn btn-primary" onclick="gtag('event','click_geo_qa',{'link_location':'products_section'});">Talk to us</a>
-              <a href="https://geo.qa" class="btn btn-quiet" target="_blank" rel="noopener">Open geo.qa →</a>
+              <a href="https://emem.dev" class="btn btn-gold" target="_blank" rel="noopener" onclick="gtag('event','click_emem_dev',{'link_location':'products_section'});">
+                Open emem.dev
+                <svg class="arrow" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+              <a href="/emem/" class="btn btn-quiet">How the protocol works →</a>
             </div>
           </article>
         </div>
@@ -676,9 +653,16 @@
         <!-- Applications on the protocol -->
         <div class="section-head reveal" id="applications" style="margin-top:76px;margin-bottom:22px;">
           <h3 class="section-title" style="font-size:clamp(24px,3.2vw,36px);">Built <em>on it.</em></h3>
-          <p class="section-lead" style="margin-top:12px;">The protocol is meant to be built on. eudr.dev and propcheck.dev are the first applications; partner organisations are shaping their own.</p>
+          <p class="section-lead" style="margin-top:12px;">The protocol is meant to be built on. geo.qa, eudr.dev, and propcheck.dev run on emem today; partner organisations are shaping their own.</p>
         </div>
-        <div class="soon-rail soon-rail-3">
+        <div class="soon-rail soon-rail-4">
+          <a class="soon-card reveal" href="/geo-qa/">
+            <span class="soon-mark">geo<span style="color:var(--gold)">.qa</span></span>
+            <div class="soon-body">
+              <h4>A private tenancy</h4>
+              <p>The same protocol on your own sensors, in a tenancy only your agents can read. For teams whose AI must be right about specific places.</p>
+            </div>
+          </a>
           <a class="soon-card reveal" href="/eudr/">
             <span class="soon-mark">eudr<span style="color:var(--gold)">.dev</span></span>
             <div class="soon-body">
@@ -718,10 +702,10 @@
           <article class="offer offer-free reveal" aria-label="Community office hours, free">
             <span class="offer-kicker">Office hours</span>
             <h3 class="offer-name">Ask us anything.</h3>
-            <p class="offer-desc">Thirty minutes, open to all. Architecture questions, integration guidance, protocol deep-dives. No pitch, no eligibility check.</p>
+            <p class="offer-desc">Thirty minutes, open to all. Students, researchers, and early-stage founders: this one is built for you. Architecture questions, integration guidance, protocol deep-dives.</p>
             <ul class="product-bullets">
               <li><b>Real help.</b> Bring your hardest memory problem; we work it with you.</li>
-              <li><b>No gate.</b> Understanding emem never costs anything.</li>
+              <li><b>No gate.</b> No pitch, no eligibility check. Understanding emem never costs anything.</li>
             </ul>
             <div class="offer-price-row"><span class="offer-price offer-price-free">Free</span><span class="offer-price-note">30 min</span></div>
             <a href="https://outlook.office.com/book/meetvortxfounders@vortx.ai/" class="btn btn-primary" target="_blank" rel="noopener" onclick="gtag('event','office_hours_click',{'link_location':'consult'});">Pick a time</a>
@@ -756,39 +740,6 @@
           <span class="founder-sig">Avijeet Singh · founder, Vortx AI</span>
         </div>
         <p class="offer-foot reveal">Founder time is genuinely limited; the calendar shows real availability. Private tenancy, procurement, or NDA: <a href="mailto:avijeet@vortx.ai">avijeet@vortx.ai</a></p>
-      </div>
-    </section>
-
-    <!-- Open research band -->
-    <section class="section" id="research" aria-labelledby="research-h">
-      <div class="wrap">
-        <div class="section-head reveal">
-          <h2 class="section-title" id="research-h">Read the <em>work.</em></h2>
-          <p class="section-lead">The papers and models behind the protocol are public, and checkable the same way a fact is.</p>
-        </div>
-        <div class="research-list">
-          <div class="res-item reveal">
-            <span class="res-date">2026-06-15</span>
-            <span class="res-tag paper">Paper</span>
-            <span class="res-title"><a href="https://zenodo.org/records/20706317" target="_blank" rel="noopener">emem: A Content-Addressed, Verifiable Earth-Memory Protocol for AI Agents over Foundation-Model Embeddings <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></span>
-          </div>
-          <div class="res-item reveal reveal-d2">
-            <span class="res-date">model</span>
-            <span class="res-tag model">Model</span>
-            <span class="res-title"><a href="https://huggingface.co/avijeetsingh1608/TerraGround-Gemma-4-12B-LoRA" target="_blank" rel="noopener">TerraGround-Gemma-4-12B-LoRA <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></span>
-          </div>
-          <div class="res-item reveal reveal-d2">
-            <span class="res-date">model</span>
-            <span class="res-tag model">Model</span>
-            <span class="res-title"><a href="https://huggingface.co/avijeetsingh1608/TerraGround-Gemma-4-E2B-LoRA" target="_blank" rel="noopener">TerraGround-Gemma-4-E2B-LoRA <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></span>
-          </div>
-          <div class="res-item reveal reveal-d3">
-            <span class="res-date">code</span>
-            <span class="res-tag oss">Open source</span>
-            <span class="res-title"><a href="https://github.com/Vortx-AI/emem" target="_blank" rel="noopener">github.com/Vortx-AI/emem (Apache-2.0) <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></span>
-          </div>
-        </div>
-        <p style="margin-top:22px;"><a href="/research/" class="btn btn-quiet">See all research →</a></p>
       </div>
     </section>
 
@@ -837,11 +788,11 @@
               <span class="pm-price">Free</span>
               <span class="pm-price-note">30 min · open to all</span>
             </div>
-            <p class="pm-who">Architecture questions, integration guidance, protocol deep-dives. No pitch.</p>
+            <p class="pm-who">Students, researchers, and early-stage founders: this one is built for you. No pitch.</p>
             <ul class="pm-list">
+              <li>Architecture questions, integration guidance, protocol deep-dives.</li>
               <li>Bring your hardest memory problem; we work it with you.</li>
               <li>No eligibility check, no form, no follow-up sequence.</li>
-              <li>The calendar shows real availability.</li>
             </ul>
             <a class="btn btn-primary btn-lg pm-book" href="https://outlook.office.com/book/meetvortxfounders@vortx.ai/" target="_blank" rel="noopener" onclick="gtag('event','office_hours_click',{'link_location':'modal'});">Pick a time</a>
           </section>
