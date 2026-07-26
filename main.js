@@ -1,5 +1,5 @@
 /* ============================================================
-   Vortx AI — site behaviour
+   Vortx AI: site behaviour
    Nav · scroll reveals · smooth anchors · copy buttons
    No framework, no build step. Everything degrades gracefully.
    ============================================================ */
@@ -138,7 +138,7 @@
       set('r-place', d.place); set('r-read', d.read); set('r-val', d.val);
       set('r-cap', d.cap); set('r-cid', d.cid);
       var cidEl = document.getElementById('r-cid'); if (cidEl) cidEl.setAttribute('href', 'https://emem.dev/verify?cid=' + encodeURIComponent(d.cidfull || ''));
-      set('r-signer', '777er3y…omvka'); set('r-served', '— not yet');
+      set('r-signer', '777er3y…omvka'); set('r-served', ': not yet');
       if (receipt) receipt.classList.remove('verified', 'fetching');
       setBadge('is-signed', 'signed');
       set('r-foot', 'a real signed fact · re-checkable offline');
@@ -175,13 +175,13 @@
           if (receipt) { receipt.classList.remove('fetching'); receipt.classList.add('verified'); }
           setBadge('is-verified', 'verified ✓ live');
           set('r-foot', 'verified in-browser · ed25519 signature · blake3 hash');
-          setHTML('r-note', 'Pulled from emem and verified in your browser just now — no account, no catch.');
+          setHTML('r-note', 'Pulled from emem and verified in your browser just now: no account, no catch.');
         })
         .catch(function () {
           if (receipt) receipt.classList.remove('fetching');
           setBadge('is-offline', 'offline');
-          set('r-served', '—');
-          set('r-foot', 'couldn’t reach emem — showing the last signed copy');
+          set('r-served', '-');
+          set('r-foot', 'couldn’t reach emem (showing the last signed copy)');
           setHTML('r-note', 'Couldn’t reach emem just now. The reading above is a real signed copy; try <b>Pull it live</b> again in a moment.');
         })
         .then(function () { if (btn) btn.classList.remove('pl-spin'); });

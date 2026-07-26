@@ -21,13 +21,13 @@ address per place, one signed record per measurement).
 
 ## How to use emem (copy/paste)
 
-**MCP** — add to your `.mcp.json`:
+**MCP**: add to your `.mcp.json`:
 
 ```json
 { "mcpServers": { "emem": { "type": "http", "url": "https://emem.dev/mcp" } } }
 ```
 
-**REST** — read one signed fact, no key:
+**REST**: read one signed fact, no key:
 
 ```bash
 curl -s -X POST https://emem.dev/v1/recall \
@@ -35,7 +35,7 @@ curl -s -X POST https://emem.dev/v1/recall \
   -d '{"place":"Bengaluru","bands":["indices.ndvi"]}'
 ```
 
-**SDKs** — `pip install ememdev` · `npm i @vortxai/emem`
+**SDKs**: `pip install ememdev` · `npm i @vortxai/emem`
 
 The one habit that matters: before your context is compacted, keep the
 `emem:fact:` token for anything you verified. It re-hydrates to the exact signed
@@ -76,8 +76,8 @@ a written follow-up included. It is priced by audience:
 
 ## Machine-readable
 
-- `GET https://vortx.ai/llms.txt` — concise summary for LLMs
-- `GET https://vortx.ai/.well-known/agent-card.json` — A2A Agent Card, with the
+- `GET https://vortx.ai/llms.txt`: concise summary for LLMs
+- `GET https://vortx.ai/.well-known/agent-card.json`: A2A Agent Card, with the
   `read_earth_memory` and `book_session` skills and the tier prices
 - JSON-LD `Service` + three `Offer`s (0 / 5000 / 25000 USD) are embedded in the
   home page

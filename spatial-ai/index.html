@@ -13,7 +13,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#faf8f2">
   <title>What is spatial AI? And what is Earth memory? | Vortx AI</title>
-  <meta name="description" content="Plain definitions of spatial AI, Earth memory, and AI agent grounding — and how a fact gets signed so an agent can cite it and anyone can re-check it. Field notes from Vortx, a spatial AI lab.">
+  <meta name="description" content="Plain definitions of spatial AI, Earth memory, and AI agent grounding, and how a fact gets signed so an agent can cite it and anyone can re-check it. Field notes from Vortx, a spatial AI lab.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://vortx.ai/spatial-ai/">
 
@@ -53,15 +53,18 @@
         <span class="brand-text">vortx<span class="brand-dot">.ai</span></span>
       </a>
       <nav class="nav-menu" id="nav-menu" aria-label="Primary">
-        <a href="/#thesis" class="nav-link">Thesis</a>
         <a href="/#how" class="nav-link">How it works</a>
         <a href="/#verify" class="nav-link">Proof</a>
         <a href="/#products" class="nav-link">Products</a>
+        <a href="/#consult" class="nav-link">Deploy</a>
         <a href="/research/" class="nav-link">Research</a>
       </nav>
       <div class="nav-actions">
-        <a href="/#verify" class="btn btn-primary btn-sm">See a signed fact</a>
-        <a href="https://emem.dev/splats" class="btn btn-gold btn-sm" target="_blank" rel="noopener" onclick="gtag('event','click_emem_splats',{'link_location':'nav'});">Enter a signed world <svg class="arrow" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a href="https://github.com/Vortx-AI/emem" class="nav-star" target="_blank" rel="noopener" aria-label="Star emem on GitHub" onclick="gtag('event','click_emem_dev',{'link_location':'nav_star'});">
+          <svg viewBox="0 0 16 16" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/></svg>
+          Star emem
+        </a>
+        <a href="/#consult" class="btn btn-primary btn-sm">Book a session</a>
       </div>
       <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu"><span></span><span></span></button>
     </div>
@@ -91,7 +94,7 @@
           <h2 class="qa-q">What is Earth memory?</h2>
           <div class="qa-a">
             <p class="lead-def">Earth memory is a record of what has been observed at each place on Earth, stored so an AI agent can recall it later and prove where it came from.</p>
-            <p>Every spot on Earth gets a stable address about ten metres across. Each observation at that address — a vegetation reading, a water level, a change since last month — is stored as a small fact with its time, its source, and a signature. An agent asks by place and gets the fact back, along with the receipt. The open version is <a href="/emem/">emem.dev</a>; the private version is <a href="/geo-qa/">geo.qa</a>.</p>
+            <p>Every spot on Earth gets a stable address about ten metres across. Each observation at that address (a vegetation reading, a water level, a change since last month) is stored as a small fact with its time, its source, and a signature. An agent asks by place and gets the fact back, along with the receipt. The open version is <a href="/emem/">emem.dev</a>; the private version is <a href="/geo-qa/">geo.qa</a>.</p>
           </div>
         </div>
 
@@ -115,7 +118,7 @@
           <h2 class="qa-q">How is this different from satellite imagery or a map?</h2>
           <div class="qa-a">
             <p class="lead-def">Imagery and maps show a place to a person. Earth memory gives an agent a signed answer about that place that it can cite.</p>
-            <p>You don't query a satellite photo; you look at it. A map tells you what is where, not what changed last week or whether a reading can be trusted. Earth memory sits a layer underneath: it turns observations from many sources — satellites, drones, vehicle cameras, fixed sensors — into facts an agent can ask for by place and time, and verify. That's the part that was missing.</p>
+            <p>You don't query a satellite photo; you look at it. A map tells you what is where, not what changed last week or whether a reading can be trusted. Earth memory sits a layer underneath: it turns observations from many sources (satellites, drones, vehicle cameras, fixed sensors) into facts an agent can ask for by place and time, and verify. That's the part that was missing.</p>
           </div>
         </div>
 
@@ -128,7 +131,7 @@
         <figure class="publish-art reveal reveal-d1" aria-hidden="true">
           <svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" role="img">
   <title>Verified ground growing into capable, grounded AI</title>
-  <desc>A slim tree rises from four teal roots buried below a sunrise horizon — the checked, open ground — and its trunk shifts from teal to gold as it forks one into many. Glowing agent-leaf nodes, a few bearing faint device glyphs, rest at the branch tips, and thin gold birds peel off the canopy and drift up and out, carrying verified light into flight.</desc>
+  <desc>A slim tree rises from four teal roots buried below a sunrise horizon (the checked, open ground) and its trunk shifts from teal to gold as it forks one into many. Glowing agent-leaf nodes, a few bearing faint device glyphs, rest at the branch tips, and thin gold birds peel off the canopy and drift up and out, carrying verified light into flight.</desc>
   <defs>
     <radialGradient id="orcDawn" cx="50%" cy="100%" r="92%"><stop offset="0%" stop-color="#e0a24a" stop-opacity=".5"/><stop offset="32%" stop-color="#e0a24a" stop-opacity=".2"/><stop offset="62%" stop-color="#b26b17" stop-opacity=".06"/><stop offset="100%" stop-color="#b26b17" stop-opacity="0"/></radialGradient>
     <radialGradient id="orcHalo" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#e0a24a" stop-opacity=".55"/><stop offset="68%" stop-color="#e0a24a" stop-opacity=".1"/><stop offset="100%" stop-color="#e0a24a" stop-opacity="0"/></radialGradient>

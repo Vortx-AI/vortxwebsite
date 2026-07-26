@@ -68,15 +68,18 @@
         <span class="brand-text">vortx<span class="brand-dot">.ai</span></span>
       </a>
       <nav class="nav-menu" id="nav-menu" aria-label="Primary">
-        <a href="/#thesis" class="nav-link">Thesis</a>
         <a href="/#how" class="nav-link">How it works</a>
         <a href="/#verify" class="nav-link">Proof</a>
         <a href="/#products" class="nav-link">Products</a>
+        <a href="/#consult" class="nav-link">Deploy</a>
         <a href="/research/" class="nav-link">Research</a>
       </nav>
       <div class="nav-actions">
-        <a href="https://emem.dev" class="btn btn-gold btn-sm" target="_blank" rel="noopener" onclick="gtag('event','click_emem_dev',{'link_location':'emem_nav'});">Open emem.dev</a>
-        <a href="https://emem.dev/splats" class="btn btn-gold btn-sm" target="_blank" rel="noopener" onclick="gtag('event','click_emem_splats',{'link_location':'nav'});">Enter a signed world <svg class="arrow" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a href="https://github.com/Vortx-AI/emem" class="nav-star" target="_blank" rel="noopener" aria-label="Star emem on GitHub" onclick="gtag('event','click_emem_dev',{'link_location':'nav_star'});">
+          <svg viewBox="0 0 16 16" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/></svg>
+          Star emem
+        </a>
+        <a href="/#consult" class="btn btn-primary btn-sm">Book a session</a>
       </div>
       <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu"><span></span><span></span></button>
     </div>
@@ -90,7 +93,7 @@
         <p class="hero-sub">
           emem is a public layer of Earth memory any agent can read. Every reading
           is signed and addressed by its own content, so a fact you quote is a fact
-          anyone can re-check — with no key, no account, and no need to trust the
+          anyone can re-check, with no key, no account, and no need to trust the
           server that served it.
         </p>
         <div class="hero-cta">
@@ -118,7 +121,7 @@
       <div class="wrap">
         <div class="section-head reveal">
           <h2 class="section-title">Three calls, and you can <em>check the answer.</em></h2>
-          <p class="section-lead">Plain HTTP. Here it is against our own neighbourhood in Bengaluru — the same fact shown on the home page.</p>
+          <p class="section-lead">Plain HTTP. Here it is against our own neighbourhood in Bengaluru: the same fact shown on the home page.</p>
         </div>
 
         <div class="prose reveal reveal-d1" style="max-width:760px;">
@@ -157,8 +160,8 @@
           <h2 class="section-title">It speaks MCP, so your agent <em>already knows how to ask.</em></h2>
         </div>
         <div class="prose reveal reveal-d1">
-          <p>emem runs a Model Context Protocol server at <code>emem.dev/mcp</code>. Point an MCP-capable agent at it and it can locate places, recall bands, compare two dates, and pull a fact's receipt — every answer carrying a signature it can pass along. The same protocol that powers the public layer is what a <a href="/geo-qa/">geo.qa</a> tenancy runs privately, so an agent can read a public fact and a private one in a single answer.</p>
-          <p>It is built on free, public data — Sentinel-1 and Sentinel-2, MODIS, Copernicus DEM and more — composed into bands and into named scores like flood risk, crop stress and walkability. The registry of recipes and the data sources are all in the open repository.</p>
+          <p>emem runs a Model Context Protocol server at <code>emem.dev/mcp</code>. Point an MCP-capable agent at it and it can locate places, recall bands, compare two dates, and pull a fact's receipt: every answer carrying a signature it can pass along. The same protocol that powers the public layer is what a <a href="/geo-qa/">geo.qa</a> tenancy runs privately, so an agent can read a public fact and a private one in a single answer.</p>
+          <p>It is built on free, public data: Sentinel-1 and Sentinel-2, MODIS, Copernicus DEM and more: composed into bands and into named scores like flood risk, crop stress and walkability. The registry of recipes and the data sources are all in the open repository.</p>
         </div>
         <div class="research-list reveal reveal-d2" style="margin-top:8px;">
           <div class="res-item">

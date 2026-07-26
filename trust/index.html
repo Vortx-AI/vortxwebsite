@@ -53,15 +53,18 @@
         <span class="brand-text">vortx<span class="brand-dot">.ai</span></span>
       </a>
       <nav class="nav-menu" id="nav-menu" aria-label="Primary">
-        <a href="/#thesis" class="nav-link">Thesis</a>
         <a href="/#how" class="nav-link">How it works</a>
         <a href="/#verify" class="nav-link">Proof</a>
         <a href="/#products" class="nav-link">Products</a>
+        <a href="/#consult" class="nav-link">Deploy</a>
         <a href="/research/" class="nav-link">Research</a>
       </nav>
       <div class="nav-actions">
-        <a href="mailto:avijeet@vortx.ai?subject=Security%20documentation" class="btn btn-primary btn-sm">Request docs</a>
-        <a href="https://emem.dev/splats" class="btn btn-gold btn-sm" target="_blank" rel="noopener" onclick="gtag('event','click_emem_splats',{'link_location':'nav'});">Enter a signed world <svg class="arrow" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a href="https://github.com/Vortx-AI/emem" class="nav-star" target="_blank" rel="noopener" aria-label="Star emem on GitHub" onclick="gtag('event','click_emem_dev',{'link_location':'nav_star'});">
+          <svg viewBox="0 0 16 16" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/></svg>
+          Star emem
+        </a>
+        <a href="/#consult" class="btn btn-primary btn-sm">Book a session</a>
       </div>
       <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu"><span></span><span></span></button>
     </div>
@@ -80,10 +83,10 @@
       <div class="wrap" style="max-width:780px;">
         <div class="prose reveal">
           <h2>What "verifiable" means here</h2>
-          <p>Every fact emem serves is signed with an ed25519 key and addressed by a blake3 hash taken over the fact itself. To check one, you recompute the hash and verify the signature against the responder's public key. This works offline — you never have to call us back or take the server's word. A fact your agent cites is a fact you, or an auditor, can re-pull and confirm independently. You can try it on the <a href="/#verify">home page</a> in about ten seconds.</p>
+          <p>Every fact emem serves is signed with an ed25519 key and addressed by a blake3 hash taken over the fact itself. To check one, you recompute the hash and verify the signature against the responder's public key. This works offline: you never have to call us back or take the server's word. A fact your agent cites is a fact you, or an auditor, can re-pull and confirm independently. You can try it on the <a href="/#verify">home page</a> in about ten seconds.</p>
 
           <h2>The tenancy boundary</h2>
-          <p>For <a href="/geo-qa/">geo.qa</a>, the line that matters is the one around your data. It is enforced per organisation, in the query layer, on every read and every write — not as a setting and not as a promise in a contract. The open emem layer is wired in underneath for public facts, so an agent can combine a public reading with one of your private ones in a single answer, while your private context never crosses the boundary.</p>
+          <p>For <a href="/geo-qa/">geo.qa</a>, the line that matters is the one around your data. It is enforced per organisation, in the query layer, on every read and every write: not as a setting and not as a promise in a contract. The open emem layer is wired in underneath for public facts, so an agent can combine a public reading with one of your private ones in a single answer, while your private context never crosses the boundary.</p>
 
           <h2>What we claim, and what we don't</h2>
           <p>We won't list certifications we don't hold. What we will do is show you exactly how a fact is signed, how the boundary is enforced, and how to verify a receipt yourself, and answer specific questions for your security review. As the lab and its products mature, formal attestations will follow, and we'll state them here plainly when they're real.</p>
@@ -95,7 +98,7 @@
         <div class="waitlist reveal reveal-d1">
           <h3>Talk to us about a security review</h3>
           <p>Tell us what your review needs and we'll respond with the relevant detail.</p>
-          <a href="mailto:avijeet@vortx.ai?subject=Security%20review%20%E2%80%94%20geo.qa" class="btn btn-primary">Email avijeet@vortx.ai</a>
+          <a href="mailto:avijeet@vortx.ai?subject=Security%20review%20-%20geo.qa" class="btn btn-primary">Email avijeet@vortx.ai</a>
         </div>
         <figure class="publish-art reveal reveal-d1" aria-hidden="true">
           <svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" role="img">
