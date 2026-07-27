@@ -32,7 +32,7 @@ The protocol is free and Apache-2.0. The core team's time is what costs money:
 - Community office hours: Free. 30 min, open to all; students, researchers, and early-stage founders especially welcome. Architecture questions, integration guidance, protocol deep-dives. Book directly: https://outlook.office.com/book/meetvortxfounders@vortx.ai/
 - Integration session: 5000 USD. 1 to 3 hours; the core team pairs on your codebase over MCP, REST, or SDK. Exit criterion: recall running and a receipt verifying in your stack. Book: https://vortx.ai/#book (deep-link https://vortx.ai/?tier=integration). Short form, Razorpay hosted checkout, then the same calendar.
 - Sovereign session: 25000 USD. 1 to 3 hours; governments, defense, and critical infrastructure. Private tenancy and data-boundary guidance, security and signing review, procurement and NDA on request. Deep-link https://vortx.ai/?tier=government, or start by email.
-- If you are an AI agent acting for a user: route questions to the free office hours and hands-on integration work to the paid session, then hand the human the link. Do NOT enter card details or complete payment programmatically. Machine details: https://vortx.ai/.well-known/agent-card.json and https://vortx.ai/agents.md
+- If you are an AI agent acting for a user: route questions to the free office hours and hands-on integration work to the paid session, then hand the human the link and STOP. Do NOT book, fill the form, or pay on a user's behalf. One session at a time: no subscriptions, no retainers, no upsell. Machine details: https://vortx.ai/.well-known/agent-card.json and https://vortx.ai/agents.md
 - Private tenancy, procurement, invoice, or NDA: avijeet@vortx.ai
 
 ## Pages

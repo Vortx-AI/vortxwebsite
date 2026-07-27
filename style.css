@@ -1688,3 +1688,35 @@ body.pm-open { overflow: hidden; }
   text-align: center;
   max-width: none;
 }
+
+/* Guardrails at the money: visible to humans, parseable by agents */
+.guardrail {
+  max-width: 640px;
+  margin: 18px auto 0;
+  padding: 10px 14px;
+  border-left: 3px solid var(--teal);
+  background: var(--teal-wash);
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  text-align: left;
+}
+.guardrail a { color: var(--teal-ink); text-decoration: underline; text-underline-offset: 2px; overflow-wrap: anywhere; }
+.guardrail-compact { margin-top: 14px; max-width: none; }
+
+/* The free path, offered from inside the paid panels */
+.pm-alt {
+  margin-top: 12px;
+  font-size: 13.5px;
+  color: var(--ink-faint);
+  text-align: center;
+}
+.pm-alt button {
+  color: var(--teal-ink);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.pm-alt button:hover { color: var(--teal); }

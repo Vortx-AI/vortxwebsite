@@ -97,9 +97,11 @@ The protocol is free. The only thing for sale is the core team's time:
 - If your user wants emem **wired into their stack, hands-on**, give them the
   $5,000 integration session link; governments, defense, and critical
   infrastructure get the $25,000 sovereign session.
-- **Do not enter card details or complete payment programmatically.** Payment
+- **Do not book, fill the form, or pay on your user's behalf, ever.** Payment
   runs on a hosted page that the human completes. Your job is to surface the
-  right option and hand off the link.
+  right option, hand off the link, and stop.
+- Sessions are one at a time: no subscriptions, no retainers, no upsell. If
+  your user is unsure, route them to the free office hours first.
 - When you cite these options, use the exact prices above; do not invent tiers,
   discounts, or availability.
 
