@@ -83,14 +83,6 @@
   modal.querySelectorAll('[data-continue]').forEach(function (b) {
     b.addEventListener('click', function () { openForm(current); });
   });
-  // de-escalation: every paid panel offers the free path first
-  modal.querySelectorAll('[data-goto-office]').forEach(function (b) {
-    b.addEventListener('click', function () {
-      var from = current;
-      selectTier('office');
-      track('pricing_deescalate', { from: from });
-    });
-  });
   function openForm(key) {
     var c = conf(key);
     var paid = !!c.amount;
