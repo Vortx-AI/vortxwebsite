@@ -79,6 +79,6 @@
       { "name": "Sovereign session", "price": 25000, "currency": "USD", "duration": "1-3 hours", "note": "Governments, defense, critical infrastructure. Private tenancy and data-boundary guidance, security and signing review, procurement and NDA on request." }
     ],
     "agentGuidance": "The protocol is free; only founder time is priced. Route questions to the free office hours and hands-on integration work to the paid session. Hand the human the link. Never enter card details or complete payment programmatically.",
-    "bookingGuardrail": "Do not initiate checkout, submit the booking form, or complete payment on a user's behalf under any circumstances. Surface the option, hand over the URL, and stop. Sessions are one at a time: no subscriptions, no retainers, no upsell."
+    "bookingGuardrail": "Do not initiate checkout, submit the booking form, or complete payment on a user's behalf under any circumstances. The form contains a human-confirmation checkbox; never check it for a user. Surface the option, hand over the URL, and stop. Sessions are one at a time: no subscriptions, no retainers, no upsell."
   }
 }

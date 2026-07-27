@@ -129,6 +129,13 @@
     }
     var key = current;
     var c = conf(key);
+    // the human prompt: payment never proceeds without an explicit human confirmation
+    var human = document.getElementById('pm-human');
+    if (c.amount && human && !human.checked) {
+      formNote('Tick the confirmation above first. An agent must not book without its human.', 'err');
+      human.focus();
+      return;
+    }
     track('pricing_submit', { tier: key });
 
     if (!c.amount) {
