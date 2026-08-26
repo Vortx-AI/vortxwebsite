@@ -1,6 +1,6 @@
 # Vortx AI
 
-> Vortx is a spatial AI lab building the external memory of our physical world that AI agents can cite. Satellites and detectors encode the world into signed, content-addressed tokens; an @emem call decodes them inside an agent's reasoning. emem is the deterministic half, the satellite is the evidence half. Principles: open source, verifiable, shared intelligence.
+> Vortx is a spatial AI lab building the external memory of our physical world that AI agents can cite. Satellites and detectors encode the world into signed, content-addressed tokens; an `@emem` call decodes them inside an agent's reasoning. emem is the deterministic half, the satellite is the evidence half. Principles: open source, verifiable, shared intelligence.
 
 Each fact is signed with ed25519 and addressed by a blake3 hash of the fact itself, so verification needs no account and no trust in the server. The shape of a fact is: Cell × Band × Time → Fact, where a Cell is a stable ~10 m address on Earth.
 
@@ -10,7 +10,7 @@ The memory is made of signed, content-addressed tokens an agent cites and re-hyd
 - [emem.dev](https://emem.dev): the external memory protocol for multi-agent systems. Apache-2.0, public, signed, no keys. HTTP at /v1/locate, /v1/recall, /v1/ask, /v1/diff; MCP server at https://emem.dev/mcp. Source: https://github.com/Vortx-AI/emem
 
 ## Where emem runs (one server, many doors)
-- ChatGPT: an app, callable by mentioning @emem in any chat: https://chatgpt.com/plugins/plugin_asdk_app_6a6a0832a59081918b19aec0ddf9ec77
+- ChatGPT: an app, callable by mentioning `@emem` in any chat: https://chatgpt.com/plugins/plugin_asdk_app_6a6a0832a59081918b19aec0ddf9ec77
 - GitHub MCP Registry (official listing, one-click install for Copilot): https://github.com/mcp/Vortx-AI/emem
 - VS Code: one-click from the MCP gallery, or `.vscode/mcp.json` with `{"servers":{"emem":{"type":"http","url":"https://emem.dev/mcp"}}}`.
 - Claude Code / Desktop: `claude mcp add --transport http emem https://emem.dev/mcp`, or the same server URL in connector settings.
