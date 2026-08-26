@@ -25,11 +25,14 @@ One server, many doors — pick whichever your stack already speaks:
 
 - **ChatGPT**: mention `@emem` in any chat; the memory answers inline with the
   receipt attached.
+  <https://chatgpt.com/plugins/plugin_asdk_app_6a6a0832a59081918b19aec0ddf9ec77>
 - **GitHub MCP Registry** (official listing, one-click for Copilot):
   <https://github.com/mcp/vortx-ai/emem>
 - **VS Code**: one click from the MCP gallery, or `.vscode/mcp.json`.
 - **Claude Code**: `claude mcp add --transport http emem https://emem.dev/mcp`
 - **Official MCP registry**: `io.github.Vortx-AI/emem`
+- **Dify marketplace** (all emem tools as Dify tools, no key):
+  <https://marketplace.dify.ai/plugin/vortx-ai/emem>
 - **Anything else**: REST, SDKs, or the A2A agent card, below.
 
 ## How to use emem (copy/paste)

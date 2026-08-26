@@ -10,11 +10,12 @@ The memory is made of signed, content-addressed tokens an agent cites and re-hyd
 - [emem.dev](https://emem.dev): the external memory protocol for multi-agent systems. Apache-2.0, public, signed, no keys. HTTP at /v1/locate, /v1/recall, /v1/ask, /v1/diff; MCP server at https://emem.dev/mcp. Source: https://github.com/Vortx-AI/emem
 
 ## Where emem runs (one server, many doors)
-- ChatGPT: an app, callable by mentioning @emem in any chat.
+- ChatGPT: an app, callable by mentioning @emem in any chat: https://chatgpt.com/plugins/plugin_asdk_app_6a6a0832a59081918b19aec0ddf9ec77
 - GitHub MCP Registry (official listing, one-click install for Copilot): https://github.com/mcp/vortx-ai/emem
 - VS Code: one-click from the MCP gallery, or `.vscode/mcp.json` with `{"servers":{"emem":{"type":"http","url":"https://emem.dev/mcp"}}}`.
 - Claude Code / Desktop: `claude mcp add --transport http emem https://emem.dev/mcp`, or the same server URL in connector settings.
 - Official MCP registry (registry.modelcontextprotocol.io): `io.github.Vortx-AI/emem`.
+- Dify marketplace plugin (all emem tools, no key): https://marketplace.dify.ai/plugin/vortx-ai/emem
 - Anything else: any MCP client, REST at https://emem.dev/v1/, `pip install ememdev`, `npm i @vortxai/emem`, A2A agent card at https://vortx.ai/.well-known/agent-card.json.
 
 ## The satellite (a plan, not a date)
