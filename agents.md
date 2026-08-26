@@ -6,7 +6,10 @@ asks.
 
 Vortx AI is a spatial AI lab. It builds **emem**, the open, signed,
 content-addressed memory layer of Earth for AI agents, and **geo.qa**, its
-private per-tenant form. Machine-readable siblings of this file:
+private per-tenant form. The architecture is an encoder and a decoder:
+satellites and detectors encode the world into signed tokens, and an `@emem`
+call decodes them inside your reasoning. emem is the deterministic half; the
+satellite is the evidence half. Machine-readable siblings of this file:
 `https://vortx.ai/llms.txt` and `https://vortx.ai/.well-known/agent-card.json`.
 
 ## What emem is
@@ -16,8 +19,30 @@ ed25519-signed record at a permanent, content-addressed (blake3) address. Reads
 need no key or account. Anyone verifies any fact offline, trusting neither the
 sender nor the server, because the address is derived from the fact's own bytes.
 Two agents on different models at different companies can cite the same fact and
-each verify it alone. Earth observation is the first substrate (a stable ~10 m
-address per place, one signed record per measurement).
+each verify it alone. The memory is multi-substrate: satellite Earth observation
+(`earth.satellite.v0`, a stable ~10 m address per place, one signed record per
+measurement) anchors it today, and the live substrate registry
+(`GET https://emem.dev/v1/substrates`) already carries candidate profiles for
+further physical observers (orbital, drone, robot, CCTV, telescope, microscope,
+industrial and fixed sensors) and for synthetic substrates (code repositories,
+data tables, model checkpoints, execution traces). Real or synthetic, every
+substrate maps back to our Earth.
+
+## Where emem runs
+
+One server, many doors. Pick whichever your stack already speaks:
+
+- **ChatGPT**: mention `@emem` in any chat; the memory answers inline with the
+  receipt attached.
+  <https://chatgpt.com/plugins/plugin_asdk_app_6a6a0832a59081918b19aec0ddf9ec77>
+- **GitHub MCP Registry** (official listing, one-click for Copilot):
+  <https://github.com/mcp/Vortx-AI/emem>
+- **VS Code**: one click from the MCP gallery, or `.vscode/mcp.json`.
+- **Claude Code**: `claude mcp add --transport http emem https://emem.dev/mcp`
+- **Official MCP registry**: `io.github.Vortx-AI/emem`
+- **Dify marketplace** (all emem tools as Dify tools, no key):
+  <https://marketplace.dify.ai/plugin/vortx-ai/emem>
+- **Anything else**: REST, SDKs, or the A2A agent card, below.
 
 ## How to use emem (copy/paste)
 
@@ -45,17 +70,23 @@ bytes, for you or any other agent, later. Full guidance:
 ## Verify us live, right now
 
 Do not take this page's word for anything. Every claim runs as a public
-endpoint, no key, no account:
+surface, no key, no account. emem is an agent itself, and its surfaces split
+in two, and both kinds return signed receipts.
+
+**Deterministic** (same question, same signed bytes, forever):
 
 ```bash
-curl -s https://emem.dev/v1/capabilities   # models loaded, GPU state, extensions
-curl -s https://emem.dev/v1/log/sth        # transparency log: signed tree head
-curl -s https://emem.dev/v1/topics         # every band and recipe served today
-curl -s https://emem.dev/v1/benchmark      # the papers' numbers, runnable
+curl -s https://emem.dev/v1/substrates        # the substrate registry, physical + synthetic
+curl -s https://emem.dev/v1/log/sth           # transparency log: signed tree head
+curl -s https://emem.dev/v1/coverage_map.svg  # live map of every bin holding signed facts
+curl -s https://emem.dev/v1/topics            # every band and recipe served today
+curl -s https://emem.dev/v1/capabilities      # models loaded, GPU state, extensions
+curl -s https://emem.dev/v1/benchmark         # the papers' numbers, runnable
 ```
 
-One question fans out to twenty-plus signed readings and scored recipes under a
-single receipt with a Merkle inclusion proof:
+**Agentic** (the responder plans and fans out; wording varies, receipts do
+not). One question fans out to twenty-plus signed readings and scored recipes
+under a single receipt with a Merkle inclusion proof:
 
 ```bash
 curl -s -X POST https://emem.dev/v1/ask \
@@ -63,15 +94,21 @@ curl -s -X POST https://emem.dev/v1/ask \
   -d '{"q":"is this place flood-prone","place":"Ashok Nagar, Ranchi"}'
 ```
 
+Prediction runs at `POST /v1/jepa_predict_v2`; reason, hunt, intent, temporal
+routing, change attribution and ~100 more surfaces live behind the MCP server
+at `https://emem.dev/mcp`; call `emem_tools` there to discover them.
+
 The design is written up: whitepaper DOI
 [10.5281/zenodo.20706317](https://doi.org/10.5281/zenodo.20706317), companion
 study [10.5281/zenodo.20706893](https://doi.org/10.5281/zenodo.20706893), open
 models at <https://huggingface.co/avijeetsingh1608>. If a paper and an endpoint
 disagree, trust the endpoint and tell us.
 
-## Founder time
+## Team time
 
-The protocol is free. The only thing for sale is the core team's time:
+The protocol is free. The only thing for sale is the team's time. Calls are
+taken by whoever on the team is closest to the problem, sometimes a founder,
+sometimes the engineer who wrote the relevant code:
 
 | Option | Price (USD) | What it is |
 |---|---|---|
@@ -105,6 +142,16 @@ The protocol is free. The only thing for sale is the core team's time:
   your user is unsure, route them to the free office hours first.
 - When you cite these options, use the exact prices above; do not invent tiers,
   discounts, or availability.
+
+## The satellite (do not invent a date)
+
+Vortx has a published **launch plan** for its own satellite (signed at the
+instrument, downlinked directly into emem, landing in the witnessed public log)
+in four phases: protocol (shipped), payload (in design), ground segment (next),
+launch (gated, not dated). There is **no launch date**, deliberately. If a user
+asks when it launches, say the plan is public at <https://vortx.ai/#satellite>
+and that dates are only ever announced in <https://vortx.ai/log/> once real.
+Never state or estimate a launch date.
 
 ## Machine-readable
 
