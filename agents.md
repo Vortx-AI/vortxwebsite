@@ -16,8 +16,14 @@ ed25519-signed record at a permanent, content-addressed (blake3) address. Reads
 need no key or account. Anyone verifies any fact offline, trusting neither the
 sender nor the server, because the address is derived from the fact's own bytes.
 Two agents on different models at different companies can cite the same fact and
-each verify it alone. Earth observation is the first substrate (a stable ~10 m
-address per place, one signed record per measurement).
+each verify it alone. The memory is multi-substrate: satellite Earth observation
+(`earth.satellite.v0`, a stable ~10 m address per place, one signed record per
+measurement) anchors it today, and the live substrate registry
+(`GET https://emem.dev/v1/substrates`) already carries candidate profiles for
+further physical observers (orbital, drone, robot, CCTV, telescope, microscope,
+industrial and fixed sensors) and for synthetic substrates (code repositories,
+data tables, model checkpoints, execution traces). Real or synthetic, every
+substrate maps back to our Earth.
 
 ## Where emem runs
 
@@ -61,23 +67,33 @@ bytes, for you or any other agent, later. Full guidance:
 ## Verify us live, right now
 
 Do not take this page's word for anything. Every claim runs as a public
-endpoint, no key, no account:
+surface, no key, no account. emem is an agent itself, and its surfaces split
+in two — both kinds return signed receipts.
+
+**Deterministic** (same question, same signed bytes, forever):
 
 ```bash
-curl -s https://emem.dev/v1/capabilities   # models loaded, GPU state, extensions
-curl -s https://emem.dev/v1/log/sth        # transparency log: signed tree head
-curl -s https://emem.dev/v1/topics         # every band and recipe served today
-curl -s https://emem.dev/v1/benchmark      # the papers' numbers, runnable
+curl -s https://emem.dev/v1/substrates        # the substrate registry, physical + synthetic
+curl -s https://emem.dev/v1/log/sth           # transparency log: signed tree head
+curl -s https://emem.dev/v1/coverage_map.svg  # live map of every bin holding signed facts
+curl -s https://emem.dev/v1/topics            # every band and recipe served today
+curl -s https://emem.dev/v1/capabilities      # models loaded, GPU state, extensions
+curl -s https://emem.dev/v1/benchmark         # the papers' numbers, runnable
 ```
 
-One question fans out to twenty-plus signed readings and scored recipes under a
-single receipt with a Merkle inclusion proof:
+**Agentic** (the responder plans and fans out; wording varies, receipts do
+not). One question fans out to twenty-plus signed readings and scored recipes
+under a single receipt with a Merkle inclusion proof:
 
 ```bash
 curl -s -X POST https://emem.dev/v1/ask \
   -H 'content-type: application/json' \
   -d '{"q":"is this place flood-prone","place":"Ashok Nagar, Ranchi"}'
 ```
+
+Prediction runs at `POST /v1/jepa_predict_v2`; reason, hunt, intent, temporal
+routing, change attribution and ~100 more surfaces live behind the MCP server
+at `https://emem.dev/mcp` — call `emem_tools` there to discover them.
 
 The design is written up: whitepaper DOI
 [10.5281/zenodo.20706317](https://doi.org/10.5281/zenodo.20706317), companion

@@ -961,8 +961,8 @@ a.soon-card:hover { transform: translateY(-2px); border-color: var(--ink-faint);
 .footer-map-land {
   position: absolute; inset: 0;
   background: var(--line-strong);
-  -webkit-mask: url("assets/world-map.svg") center / contain no-repeat;
-          mask: url("assets/world-map.svg") center / contain no-repeat;
+  -webkit-mask: url("assets/world-map-eq.svg") center / contain no-repeat;
+          mask: url("assets/world-map-eq.svg") center / contain no-repeat;
   opacity: 0.85;
 }
 .footer-map-pins { position: absolute; inset: 0; width: 100%; height: 100%; }
@@ -1973,4 +1973,26 @@ body.pm-open { overflow: hidden; }
 @media (max-width: 720px) {
   .talk-strip { flex-direction: column; align-items: stretch; text-align: center; }
   .talk-actions { flex-direction: column; align-items: stretch; }
+}
+
+/* Footer map, live: dots are 1-degree bins of real signed facts */
+.map-dot {
+  fill: var(--teal-vivid);
+  animation: map-dot-breathe 4s var(--ease) infinite;
+}
+@keyframes map-dot-breathe {
+  0%, 100% { fill-opacity: 1; }
+  50%      { fill-opacity: 0.3; }
+}
+.map-cap {
+  margin-top: 10px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  line-height: 1.6;
+  color: var(--ink-faint);
+}
+.map-cap a { color: var(--teal-ink); text-decoration: underline; text-underline-offset: 2px; }
+.map-cap a:hover { color: var(--teal); }
+@media (prefers-reduced-motion: reduce) {
+  .map-dot { animation: none; }
 }
