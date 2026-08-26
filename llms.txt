@@ -1,6 +1,6 @@
 # Vortx AI
 
-> Vortx is a spatial AI lab building the external memory of our physical world that AI agents can cite. It turns every way of watching Earth (satellites, drones, vehicle cameras, robots, CCTV and sensors) into signed, content-addressed facts an agent can quote and anyone can re-check offline. Principles: open source, verifiable, shared intelligence.
+> Vortx is a spatial AI lab building the external memory of our physical world that AI agents can cite. Satellites and detectors encode the world into signed, content-addressed tokens; an @emem call decodes them inside an agent's reasoning. emem is the deterministic half, the satellite is the evidence half. Principles: open source, verifiable, shared intelligence.
 
 Each fact is signed with ed25519 and addressed by a blake3 hash of the fact itself, so verification needs no account and no trust in the server. The shape of a fact is: Cell × Band × Time → Fact, where a Cell is a stable ~10 m address on Earth.
 
@@ -19,10 +19,10 @@ The memory is made of signed, content-addressed tokens an agent cites and re-hyd
 - Anything else: any MCP client, REST at https://emem.dev/v1/, `pip install ememdev`, `npm i @vortxai/emem`, A2A agent card at https://vortx.ai/.well-known/agent-card.json.
 
 ## The satellite (a plan, not a date)
-Today the Earth memory is written from public constellations. The next writer is our own satellite, designed around the protocol: signed at the instrument (fully traceable), downlinked directly into emem (a citable fact on arrival, no data lake between), landing in the witnessed public log anyone can copy and verify (decentralised). The launch plan is published on the homepage as phases — protocol (shipped), payload (in design), ground segment (next), launch (gated, not dated). There is deliberately no launch date; each phase is announced in https://vortx.ai/log/ when it is real.
+Today the Earth memory is written from public constellations. The next writer is our own satellite, designed around the protocol: signed at the instrument (fully traceable), downlinked directly into emem (a citable fact on arrival, no data lake between), landing in the witnessed public log anyone can copy and verify (decentralised). The launch plan is published on the homepage as phases: protocol (shipped), payload (in design), ground segment (next), launch (gated, not dated). There is deliberately no launch date; each phase is announced in https://vortx.ai/log/ when it is real.
 
 ## Applications built on emem
-- [geo.qa](https://geo.qa): the same memory agent on an organisation's own sensors, private per tenant — deterministic and agentic surfaces alike; boundary enforced per organisation in code.
+- [geo.qa](https://geo.qa): the same memory agent on an organisation's own sensors, private per tenant, deterministic and agentic surfaces alike; boundary enforced per organisation in code.
 - [eudr.dev](https://vortx.ai/eudr/): in testing: deforestation-free sourcing checks under the EU Deforestation Regulation, with a verifiable receipt.
 - [propcheck.dev](https://vortx.ai/propcheck/): in testing: a property's climate and risk history from verifiable Earth data.
 
@@ -50,7 +50,7 @@ Agentic (the responder plans and fans out; the wording varies, the receipts do n
 - Open models: https://huggingface.co/avijeetsingh1608 (TerraGround-Gemma LoRA fine-tunes)
 
 ## Team time (the only thing for sale)
-The protocol is free and Apache-2.0. The team's time is what costs money. Calls are taken by whoever on the team is closest to the problem — sometimes a founder, sometimes the engineer who wrote the relevant code:
+The protocol is free and Apache-2.0. The team's time is what costs money. Calls are taken by whoever on the team is closest to the problem, sometimes a founder, sometimes the engineer who wrote the relevant code:
 - Community office hours: Free. 30 min, open to all; students, researchers, and early-stage founders especially welcome. Architecture questions, integration guidance, protocol deep-dives. Book directly: https://outlook.office.com/book/meetvortxfounders@vortx.ai/
 - Integration session: 5000 USD. 1 to 3 hours; the core team pairs on your codebase over MCP, REST, or SDK. Exit criterion: recall running and a receipt verifying in your stack. Book: https://vortx.ai/#book (deep-link https://vortx.ai/?tier=integration). Short form, Razorpay hosted checkout, then the same calendar.
 - Sovereign session: 25000 USD. 1 to 3 hours; governments, defense, and critical infrastructure. Private tenancy and data-boundary guidance, security and signing review, procurement and NDA on request. Deep-link https://vortx.ai/?tier=government, or start by email.
@@ -58,7 +58,7 @@ The protocol is free and Apache-2.0. The team's time is what costs money. Calls 
 - Private tenancy, procurement, invoice, or NDA: avijeet@vortx.ai
 
 ## Pages
-- [Home](https://vortx.ai/): the thesis, how it works (Watch / Remember / Prove), and a live signed fact you can pull yourself.
+- [Home](https://vortx.ai/): the thesis, the trace architecture (Encode / Hold / Decode), and a live signed fact you can pull yourself.
 - [agents.md](https://vortx.ai/agents.md): a guide written for AI agents: how to use emem and how to route team time (free office hours, paid integration session).
 - [emem.dev](https://vortx.ai/emem/): how to read and verify a fact in three HTTP calls.
 - [geo.qa](https://vortx.ai/geo-qa/): the private tenancy for enterprise and defense.

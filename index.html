@@ -16,7 +16,7 @@
 
   <!-- Primary SEO -->
   <title>Vortx AI · The external memory of our physical world</title>
-  <meta name="description" content="Vortx builds emem, the open protocol for signed, content-addressed memory of the physical world. Call it as @emem in ChatGPT, install it from the GitHub MCP Registry or VS Code, add it to Claude in one line. Anyone can verify any fact offline. Apache-2.0. Next: our own satellite, on a published launch plan.">
+  <meta name="description" content="Vortx builds emem: satellites and detectors encode the world into signed tokens, and an @emem call decodes them inside your agent's reasoning. emem is the deterministic half, the satellite is the evidence half. Apache-2.0, callable in ChatGPT, Claude, Copilot and VS Code, verifiable offline.">
   <meta name="keywords" content="Vortx AI, spatial AI, Earth memory, verifiable Earth intelligence, AI agent grounding, emem, emem.dev, geo.qa, signed geospatial memory, ed25519, blake3, content-addressed, MCP, GitHub MCP Registry, VS Code MCP, ChatGPT app, @emem, satellite intelligence, TerraGround, open source earth observation, decentralised earth memory, web3 spatial ai, multi-agent memory, agent handoff, external memory for AI agents, A2A agent card, satellite launch plan">
   <meta name="author" content="Vortx AI Private Limited">
   <meta name="robots" content="index, follow">
@@ -24,7 +24,7 @@
 
   <!-- Open Graph -->
   <meta property="og:title" content="Vortx AI · The external memory of our physical world">
-  <meta property="og:description" content="The external memory of our physical world. emem.dev is the open layer; geo.qa is the private one. Read a real signed fact, then book a session to deploy it.">
+  <meta property="og:description" content="Satellites encode the world into signed tokens. An @emem call decodes them inside your agent's reasoning. The deterministic half meets the evidence half.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://vortx.ai">
   <meta property="og:image" content="https://vortx.ai/assets/og-card.png">
@@ -36,7 +36,7 @@
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Vortx AI · The external memory of our physical world">
-  <meta name="twitter:description" content="The external memory of our physical world. Read a real signed fact in seconds.">
+  <meta name="twitter:description" content="Satellites encode the world into signed tokens. @emem decodes them into your agent's reasoning. Read a real signed fact in seconds.">
   <meta name="twitter:image" content="https://vortx.ai/assets/og-card.png">
 
   <!-- Favicon & Icons -->
@@ -119,7 +119,7 @@
     "url": "https://geo.qa",
     "applicationCategory": "BusinessApplication",
     "operatingSystem": "Web",
-    "description": "Private, defense-grade Earth memory. Your own cameras, drones, satellites and sensors fused into a memory agent only your agents can read, on the same protocol as emem.dev — deterministic recall and agentic ask alike.",
+    "description": "Private, defense-grade Earth memory. Your own cameras, drones, satellites and sensors fused into a memory agent only your agents can read, on the same protocol as emem.dev, deterministic recall and agentic ask alike.",
     "publisher": { "@type": "Organization", "name": "Vortx AI" }
   }
   </script>
@@ -182,7 +182,7 @@
         <div class="hero-copy">
 
           <h1 class="hero-title">The external memory <span class="accent">of our physical world.</span></h1>
-          <p class="hero-plain">In plain words: we build <b>emem</b>, a shared memory where AI agents look up what is true about any place on Earth. Every answer arrives signed, and anyone can re-check it offline. Free to read. Call it as <b>@emem</b> in ChatGPT, from Claude, Copilot, VS Code, or any MCP client.</p>
+          <p class="hero-plain">Satellites and detectors encode the world into signed tokens. An <b>@emem</b> call decodes them inside your agent's reasoning. The memory is the deterministic half, the satellite is the evidence half. Free to read, checkable offline.</p>
           <div class="hero-actions">
             <a href="#verify" class="btn btn-primary btn-lg">See a live signed fact</a>
             <a href="https://github.com/Vortx-AI/emem" class="btn btn-ghost btn-lg" target="_blank" rel="noopener" onclick="gtag('event','click_emem_dev',{'link_location':'hero'});">View on GitHub</a>
@@ -352,7 +352,7 @@
         </div>
       </div>
       <div class="wrap">
-        <p class="hero-quote reveal">&ldquo;A model's memory ends where its context does. emem is the memory that lives outside: signed, content-addressed tokens that survive compaction, hand-offs, and model swaps, so agents that share no vendor and no trust can still cite the same fact. Open protocol, Apache-2.0. Earth is the anchor substrate; every other, real or synthetic, maps back to it.&rdquo;</p>
+        <p class="hero-quote reveal">&ldquo;A model's memory ends where its context does. emem lives outside it: signed tokens that survive compaction, hand-offs and model swaps, so two agents that trust nothing else can cite the same fact. Apache-2.0. Earth first; every substrate, real or synthetic, maps back to it.&rdquo;</p>
       </div>
     </section>
 
@@ -369,15 +369,16 @@
             a bigger model; we think the gap is memory.
           </p>
           <p class="thesis-foot" style="margin-top:20px;">
-            So we built the external memory: signed tokens that outlive any one
-            model's context, shared by agents that share nothing else. Earth is
-            where it starts, because sensors already sit there.
+            So we split the problem in two. Detectors write the evidence.
+            emem holds it deterministically, as signed tokens any agent can
+            decode back into its reasoning. Earth comes first because the
+            sensors already sit there.
           </p>
         </div>
         <div class="pillars reveal reveal-d1" aria-label="How the memory works">
           <div class="pillar">
             <span class="pillar-k">Substrates</span>
-            <p>One memory, many observers. Satellite Earth observation anchors the record today, and the live substrate registry already holds candidate profiles for drones, robots, CCTV, telescopes and microscopes — and for synthetic substrates: codebases, data tables, model checkpoints, execution traces. Real or synthetic, every one maps back to our Earth.</p>
+            <p>One memory, many observers. Satellite observation anchors it today. The live registry holds candidate profiles for drones, robots, CCTV, telescopes and microscopes, and for synthetic substrates: codebases, data tables, model checkpoints, execution traces. All of it maps back to Earth.</p>
           </div>
           <div class="pillar">
             <span class="pillar-k">Tokens</span>
@@ -391,44 +392,44 @@
       </div>
     </section>
 
-    <!-- Scene 3: How it works: Watch / Remember / Prove -->
+    <!-- Scene 3: The trace architecture: Encode / Hold / Decode -->
     <section class="section" id="how" aria-labelledby="how-h">
       <div class="wrap">
         <div class="section-head reveal">
-          <h2 class="section-title" id="how-h">From a sensor to a fact your agent can <em>cite.</em></h2>
-          <p class="section-lead">Watch the world, remember it as a signed record, let anyone prove it.</p>
+          <h2 class="section-title" id="how-h">From photons to a thought your agent <em>can prove.</em></h2>
+          <p class="section-lead">An encoder and a decoder, with a signature in between.</p>
         </div>
 
         <div class="how-steps">
           <div class="step reveal">
             <div class="step-top">
               <span class="step-num">01</span>
-              <span class="step-verb">Watch</span>
+              <span class="step-verb">Encode</span>
               <span class="step-icon" aria-hidden="true">
                 <svg viewBox="0 0 28 28" fill="none"><path d="M2 14s5-8 12-8 12 8 12 8-5 8-12 8S2 14 2 14Z" stroke="currentColor" stroke-width="1.6"/><circle cx="14" cy="14" r="3.4" fill="currentColor"/></svg>
               </span>
             </div>
-            <p>Wherever a sensor already lives, such as satellites, drones, vehicle cameras, robots, or fixed cameras, the world gets read right where it happens.</p>
+            <p>A satellite or sensor reads a place and writes one signed token. Not prose, not a paraphrase. A measurement with a signature.</p>
           </div>
           <div class="step reveal reveal-d1">
             <div class="step-top">
               <span class="step-num">02</span>
-              <span class="step-verb">Remember</span>
+              <span class="step-verb">Hold</span>
               <span class="step-icon" aria-hidden="true">
                 <svg viewBox="0 0 28 28" fill="none"><rect x="3" y="3" width="22" height="22" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M3 10h22M3 18h22M10 3v22M18 3v22" stroke="currentColor" stroke-width="1" opacity="0.5"/><rect x="10" y="10" width="8" height="8" fill="currentColor" opacity="0.85"/></svg>
               </span>
             </div>
-            <p>Every observation becomes a small, signed record, pinned to a patch of Earth about ten metres across, so any agent can find it again, and trust it.</p>
+            <p>The token sits at a permanent address, pinned to a patch of Earth about ten metres across, in a log anyone can audit. Same handle, same bytes, months later.</p>
           </div>
           <div class="step reveal reveal-d2">
             <div class="step-top">
               <span class="step-num">03</span>
-              <span class="step-verb">Prove</span>
+              <span class="step-verb">Decode</span>
               <span class="step-icon" aria-hidden="true">
                 <svg viewBox="0 0 28 28" fill="none"><path d="M14 2l10 4v7c0 6-4.4 10.4-10 13C8.4 23.4 4 19 4 13V6l10-4Z" stroke="currentColor" stroke-width="1.6"/><path d="M9.5 13.5l3 3 6-6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </span>
             </div>
-            <p>Each fact carries proof of where it came from. An agent that quotes it hands you a receipt you can re-check yourself, offline.</p>
+            <p>Your agent calls @emem mid-reasoning and the evidence streams into its chain of thought, receipt attached. You can re-check that receipt yourself, offline.</p>
           </div>
         </div>
 
@@ -456,9 +457,9 @@
             <path d="M95 66 C 200 168, 280 150, 350 150 C 470 150, 505 138, 575 140 C 705 143, 762 150, 830 150" fill="none" stroke="url(#flowGrad)" stroke-width="2.5" opacity="0.85"/>
             <path class="flow-line" d="M95 66 C 200 168, 280 150, 350 150 C 470 150, 505 138, 575 140 C 705 143, 762 150, 830 150" fill="none" stroke="#aef5df" stroke-width="2"/>
 
-            <text x="215" y="116" text-anchor="middle" class="flow-label">watch</text>
-            <text x="462" y="118" text-anchor="middle" class="flow-label">remember</text>
-            <text x="702" y="120" text-anchor="middle" class="flow-label">prove</text>
+            <text x="215" y="116" text-anchor="middle" class="flow-label">encode</text>
+            <text x="462" y="118" text-anchor="middle" class="flow-label">hold</text>
+            <text x="702" y="120" text-anchor="middle" class="flow-label">decode</text>
 
             <!-- a sensor (satellite) -->
             <g filter="url(#nd)"><circle cx="95" cy="60" r="30" fill="var(--surface)"/></g>
@@ -561,9 +562,8 @@
     <section class="section section--tint" id="connectors" aria-labelledby="connectors-h">
       <div class="wrap">
         <div class="section-head reveal">
-          <span class="eyebrow">Now listed</span>
           <h2 class="section-title" id="connectors-h">Wherever your agents live, <em>emem is already there.</em></h2>
-          <p class="section-lead">One protocol behind many doors. Mention <b>@emem</b> inside ChatGPT, install in one click from the official GitHub MCP Registry or the VS Code gallery, add it to Claude with one line. Same signed facts, same receipts, whichever door you walk in.</p>
+          <p class="section-lead">Mention <b>@emem</b> in ChatGPT. One click in the GitHub MCP Registry or VS Code. One line in Claude. Every door opens onto the same signed facts.</p>
         </div>
 
         <div class="conn-rail">
@@ -661,9 +661,8 @@
     <section class="section section--sky" id="satellite" aria-labelledby="satellite-h">
       <div class="wrap">
         <div class="section-head reveal">
-          <span class="eyebrow">Incoming</span>
-          <h2 class="section-title" id="satellite-h">The next writer of this memory: <em>our own satellite.</em></h2>
-          <p class="section-lead">Today, emem&rsquo;s Earth memory is written from public constellations and shared sensors. The next writer is ours: a satellite designed around the protocol rather than adapted to it. Everything above this line is shipped; this section is the plan, and it is labelled that way on purpose.</p>
+          <h2 class="section-title" id="satellite-h">The evidence half: <em>our own satellite.</em></h2>
+          <p class="section-lead">emem is the deterministic half, and today it holds evidence from public constellations. Our satellite is the evidence half built to match: traceable from photon to token, downlinked straight into the memory. Everything above this line is shipped. This section is the plan.</p>
         </div>
 
         <div class="pillars reveal" aria-label="What the satellite is designed to be">
@@ -726,7 +725,7 @@
       <div class="wrap">
         <div class="section-head reveal">
           <h2 class="section-title" id="usecases-h">Where being wrong is expensive.</h2>
-          <p class="section-lead">A checkable fact earns its keep exactly where a confident guess costs the most. One question to emem fans out to twenty-plus signed readings and scored algorithms under a single receipt; the tags below are the actual recipes in the registry.</p>
+          <p class="section-lead">A checkable fact earns its keep where a confident guess costs the most. The tags below are real recipes from the registry.</p>
         </div>
         <div class="usecases">
           <div class="usecase reveal">
@@ -769,7 +768,7 @@
           <article class="product product-emem reveal">
             <span class="product-kicker">Open · Apache-2.0</span>
             <h3 class="product-name">emem.dev</h3>
-            <p class="product-tagline">The external memory protocol for multi-agent systems.</p>
+            <p class="product-tagline">The deterministic half: external memory for multi-agent systems.</p>
             <p class="product-desc">A public, signed memory that is itself an agent. Its deterministic surfaces (locate, recall, verify, diff) return the exact signed bytes for the same question, every time; its agentic surfaces (ask, reason, hunt, predict) plan and fan out under one signed receipt. Six token types, a witnessed transparency log. Run it yourself; the receipts still check out.</p>
             <ul class="product-bullets">
               <li><b>Free and open.</b> Read it without a key, an account, or a contract.</li>
@@ -796,7 +795,7 @@
             <span class="soon-mark">geo<span style="color:var(--gold)">.qa</span></span>
             <div class="soon-body">
               <h4>Your private memory agent</h4>
-              <p>The same memory agent on your own sensors — deterministic recall and agentic ask alike — in a tenancy only your agents can read. For teams whose AI must be right about specific places.</p>
+              <p>The same memory agent on your own sensors, deterministic recall and agentic ask alike, in a tenancy only your agents can read. For teams whose AI must be right about specific places.</p>
             </div>
           </a>
           <a class="soon-card reveal" href="/eudr/">
@@ -829,7 +828,6 @@
     <section class="section section--tint" id="consult" aria-labelledby="consult-h">
       <div class="wrap">
         <div class="section-head reveal">
-          <span class="eyebrow">Team time</span>
           <h2 class="section-title" id="consult-h">Talk to the humans <em>behind the protocol.</em></h2>
           <p class="section-lead">Free for questions. Paid for our time. The protocol is open either way.</p>
         </div>

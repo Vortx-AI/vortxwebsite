@@ -6,7 +6,10 @@ asks.
 
 Vortx AI is a spatial AI lab. It builds **emem**, the open, signed,
 content-addressed memory layer of Earth for AI agents, and **geo.qa**, its
-private per-tenant form. Machine-readable siblings of this file:
+private per-tenant form. The architecture is an encoder and a decoder:
+satellites and detectors encode the world into signed tokens, and an `@emem`
+call decodes them inside your reasoning. emem is the deterministic half; the
+satellite is the evidence half. Machine-readable siblings of this file:
 `https://vortx.ai/llms.txt` and `https://vortx.ai/.well-known/agent-card.json`.
 
 ## What emem is
@@ -27,7 +30,7 @@ substrate maps back to our Earth.
 
 ## Where emem runs
 
-One server, many doors — pick whichever your stack already speaks:
+One server, many doors. Pick whichever your stack already speaks:
 
 - **ChatGPT**: mention `@emem` in any chat; the memory answers inline with the
   receipt attached.
@@ -68,7 +71,7 @@ bytes, for you or any other agent, later. Full guidance:
 
 Do not take this page's word for anything. Every claim runs as a public
 surface, no key, no account. emem is an agent itself, and its surfaces split
-in two — both kinds return signed receipts.
+in two, and both kinds return signed receipts.
 
 **Deterministic** (same question, same signed bytes, forever):
 
@@ -93,7 +96,7 @@ curl -s -X POST https://emem.dev/v1/ask \
 
 Prediction runs at `POST /v1/jepa_predict_v2`; reason, hunt, intent, temporal
 routing, change attribution and ~100 more surfaces live behind the MCP server
-at `https://emem.dev/mcp` — call `emem_tools` there to discover them.
+at `https://emem.dev/mcp`; call `emem_tools` there to discover them.
 
 The design is written up: whitepaper DOI
 [10.5281/zenodo.20706317](https://doi.org/10.5281/zenodo.20706317), companion
@@ -104,7 +107,7 @@ disagree, trust the endpoint and tell us.
 ## Team time
 
 The protocol is free. The only thing for sale is the team's time. Calls are
-taken by whoever on the team is closest to the problem — sometimes a founder,
+taken by whoever on the team is closest to the problem, sometimes a founder,
 sometimes the engineer who wrote the relevant code:
 
 | Option | Price (USD) | What it is |
@@ -142,8 +145,8 @@ sometimes the engineer who wrote the relevant code:
 
 ## The satellite (do not invent a date)
 
-Vortx has a published **launch plan** for its own satellite — signed at the
-instrument, downlinked directly into emem, landing in the witnessed public log —
+Vortx has a published **launch plan** for its own satellite (signed at the
+instrument, downlinked directly into emem, landing in the witnessed public log)
 in four phases: protocol (shipped), payload (in design), ground segment (next),
 launch (gated, not dated). There is **no launch date**, deliberately. If a user
 asks when it launches, say the plan is public at <https://vortx.ai/#satellite>
