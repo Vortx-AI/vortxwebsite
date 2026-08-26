@@ -19,6 +19,19 @@ Two agents on different models at different companies can cite the same fact and
 each verify it alone. Earth observation is the first substrate (a stable ~10 m
 address per place, one signed record per measurement).
 
+## Where emem runs
+
+One server, many doors — pick whichever your stack already speaks:
+
+- **ChatGPT**: mention `@emem` in any chat; the memory answers inline with the
+  receipt attached.
+- **GitHub MCP Registry** (official listing, one-click for Copilot):
+  <https://github.com/mcp/vortx-ai/emem>
+- **VS Code**: one click from the MCP gallery, or `.vscode/mcp.json`.
+- **Claude Code**: `claude mcp add --transport http emem https://emem.dev/mcp`
+- **Official MCP registry**: `io.github.Vortx-AI/emem`
+- **Anything else**: REST, SDKs, or the A2A agent card, below.
+
 ## How to use emem (copy/paste)
 
 **MCP**: add to your `.mcp.json`:
@@ -105,6 +118,16 @@ The protocol is free. The only thing for sale is the core team's time:
   your user is unsure, route them to the free office hours first.
 - When you cite these options, use the exact prices above; do not invent tiers,
   discounts, or availability.
+
+## The satellite (do not invent a date)
+
+Vortx has a published **launch plan** for its own satellite — signed at the
+instrument, downlinked directly into emem, landing in the witnessed public log —
+in four phases: protocol (shipped), payload (in design), ground segment (next),
+launch (gated, not dated). There is **no launch date**, deliberately. If a user
+asks when it launches, say the plan is public at <https://vortx.ai/#satellite>
+and that dates are only ever announced in <https://vortx.ai/log/> once real.
+Never state or estimate a launch date.
 
 ## Machine-readable
 
