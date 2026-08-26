@@ -11,7 +11,7 @@ The memory is made of signed, content-addressed tokens an agent cites and re-hyd
 
 ## Where emem runs (one server, many doors)
 - ChatGPT: an app, callable by mentioning @emem in any chat: https://chatgpt.com/plugins/plugin_asdk_app_6a6a0832a59081918b19aec0ddf9ec77
-- GitHub MCP Registry (official listing, one-click install for Copilot): https://github.com/mcp/vortx-ai/emem
+- GitHub MCP Registry (official listing, one-click install for Copilot): https://github.com/mcp/Vortx-AI/emem
 - VS Code: one-click from the MCP gallery, or `.vscode/mcp.json` with `{"servers":{"emem":{"type":"http","url":"https://emem.dev/mcp"}}}`.
 - Claude Code / Desktop: `claude mcp add --transport http emem https://emem.dev/mcp`, or the same server URL in connector settings.
 - Official MCP registry (registry.modelcontextprotocol.io): `io.github.Vortx-AI/emem`.
