@@ -1951,3 +1951,7 @@ body.pm-open { overflow: hidden; }
     box-shadow: var(--shadow-lg);
   }
 }
+
+/* The free tab sells nothing: hide the checkout footnote while office hours is selected
+   (older browsers without :has() simply keep showing it — harmless) */
+.pm-panel:has(.pm-tier[data-tier="office"].active) .pm-foot-tier { display: none; }

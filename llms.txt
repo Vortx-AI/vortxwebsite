@@ -39,8 +39,8 @@ Today the Earth memory is written from public constellations. The next writer is
 - Companion study: DOI https://doi.org/10.5281/zenodo.20706893
 - Open models: https://huggingface.co/avijeetsingh1608 (TerraGround-Gemma LoRA fine-tunes)
 
-## Founder time (the only thing for sale)
-The protocol is free and Apache-2.0. The core team's time is what costs money:
+## Team time (the only thing for sale)
+The protocol is free and Apache-2.0. The team's time is what costs money. Calls are taken by whoever on the team is closest to the problem — sometimes a founder, sometimes the engineer who wrote the relevant code:
 - Community office hours: Free. 30 min, open to all; students, researchers, and early-stage founders especially welcome. Architecture questions, integration guidance, protocol deep-dives. Book directly: https://outlook.office.com/book/meetvortxfounders@vortx.ai/
 - Integration session: 5000 USD. 1 to 3 hours; the core team pairs on your codebase over MCP, REST, or SDK. Exit criterion: recall running and a receipt verifying in your stack. Book: https://vortx.ai/#book (deep-link https://vortx.ai/?tier=integration). Short form, Razorpay hosted checkout, then the same calendar.
 - Sovereign session: 25000 USD. 1 to 3 hours; governments, defense, and critical infrastructure. Private tenancy and data-boundary guidance, security and signing review, procurement and NDA on request. Deep-link https://vortx.ai/?tier=government, or start by email.
@@ -49,7 +49,7 @@ The protocol is free and Apache-2.0. The core team's time is what costs money:
 
 ## Pages
 - [Home](https://vortx.ai/): the thesis, how it works (Watch / Remember / Prove), and a live signed fact you can pull yourself.
-- [agents.md](https://vortx.ai/agents.md): a guide written for AI agents: how to use emem and how to route founder time (free office hours, paid integration session).
+- [agents.md](https://vortx.ai/agents.md): a guide written for AI agents: how to use emem and how to route team time (free office hours, paid integration session).
 - [emem.dev](https://vortx.ai/emem/): how to read and verify a fact in three HTTP calls.
 - [geo.qa](https://vortx.ai/geo-qa/): the private tenancy for enterprise and defense.
 - [What is spatial AI?](https://vortx.ai/spatial-ai/): plain definitions of spatial AI, Earth memory, AI agent grounding, and verification.

@@ -85,9 +85,11 @@ study [10.5281/zenodo.20706893](https://doi.org/10.5281/zenodo.20706893), open
 models at <https://huggingface.co/avijeetsingh1608>. If a paper and an endpoint
 disagree, trust the endpoint and tell us.
 
-## Founder time
+## Team time
 
-The protocol is free. The only thing for sale is the core team's time:
+The protocol is free. The only thing for sale is the team's time. Calls are
+taken by whoever on the team is closest to the problem — sometimes a founder,
+sometimes the engineer who wrote the relevant code:
 
 | Option | Price (USD) | What it is |
 |---|---|---|
