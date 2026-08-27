@@ -1,8 +1,8 @@
 {
   "schema": "vortx.site_manifest.v1",
-  "cid": "jyqjlzgh3vgpwwgvyrbs6n62tz4mffor4szptvlbasrgvbwyrtha",
-  "commit": "883f20a77935044b727063ee953257b1d5091e15",
-  "generated_at": "2026-08-27T08:07:03Z",
+  "cid": "zld5p5yeevz5j4jfz2lznduj2xeexhz5dgvefwdeg6b5pd4zhfza",
+  "commit": "33c27b6a5ce83ad0f9787a026b88ca35f8523854",
+  "generated_at": "2026-08-27T08:15:40Z",
   "files": {
     ".nojekyll": {
       "blake3": "v4jutopv7gq2nicajxvdnxgjjgn4wjojvxarfn6mtkj4vza7gjra",
@@ -61,36 +61,36 @@
       "bytes": 4505
     },
     "emem/index.html": {
-      "blake3": "ctxs54matzeukq5egiu4p7ksuqfkohwqgtt4smjq7a52krlzu5ha",
-      "bytes": 29573
+      "blake3": "pirxsn2hdjnhiiokijq3aoox6yyuiysim4duhj5qyhdfbjpqavsa",
+      "bytes": 27868
     },
     "eudr/index.html": {
-      "blake3": "q5ncsqzhne2eznrjwzwp2mfcwu2ifm5u7sgi62ztpxpppdmyuz2q",
-      "bytes": 10376
+      "blake3": "7f6fpepe4tgihwl4ldnf7k4bio7deq6eg5aa2k2pa6mrbq236dba",
+      "bytes": 8671
     },
     "favicon.ico": {
       "blake3": "hc653mmrrq6nslaqgige5cg3hy23dwkupouqezuytlrzjhewezxa",
       "bytes": 4286
     },
     "geo-qa/index.html": {
-      "blake3": "jzorkyjh6jumh26lbf7kfuc7razxqve4osrdcsige3ieb5ps2oqq",
-      "bytes": 20766
+      "blake3": "k52my2vh27ujdmwvdvtcj3apbotaxq6acquuzfixvnv2wiu27tja",
+      "bytes": 19061
     },
     "index.html": {
-      "blake3": "5vagueeq6xgn4hnuqmzi6zqqmx7l3zqgcjt3shiugtse6bp7droa",
-      "bytes": 74895
+      "blake3": "hv2oyq7rdosdys4fqv5plpweziulbijf7lbhbdxukpprzs4oauvq",
+      "bytes": 71607
     },
     "llms.txt": {
       "blake3": "2slizd6nareonmm6pchkf6aihck7ccly2n7wwji6gpos5axnfckq",
       "bytes": 11067
     },
     "log/index.html": {
-      "blake3": "rogisvmmk5s5dybjtlbrn5bw5fothjuvgu3l2cilmicjqzsm4plq",
-      "bytes": 14082
+      "blake3": "jz4box5qglgdtkqumdifwxsfkyybbnqyxedfbacs6767nz7theiq",
+      "bytes": 13105
     },
     "main.js": {
-      "blake3": "gt7xzxrrhk6ljviqv5xfmdvnd7ebhjcsdgo5cbfwpsbkiusk57aa",
-      "bytes": 17867
+      "blake3": "bon5rudlgtwjz7nbku42akv3xic6xodsthaqpz26pa6algj2zhzq",
+      "bytes": 13875
     },
     "payments/checkout.js": {
       "blake3": "wc5hjwbb2jetxfzcanrqi63xydbq7lialsm5rcf3mgwukzy4vr4q",
@@ -105,16 +105,16 @@
       "bytes": 8850
     },
     "propcheck/index.html": {
-      "blake3": "7hbtmaq6y3ilqbqlsxkoxksrawyoogoaqft4lvd66klpr2fu6xea",
-      "bytes": 10312
+      "blake3": "w4s3bzbqknjjwk44zusnvbd7awnguax7zwf3aqapdjf3mxrpdatq",
+      "bytes": 8607
     },
     "refund.html": {
       "blake3": "ngyys3jah75itwywohmhcqzh75dcqxe6lu77tc3qubr4l37c3fva",
       "bytes": 5308
     },
     "research/index.html": {
-      "blake3": "kq5qinf4vc6zi2gdc7vr522tikerm4c45kmxuypkuitdqsf3dceq",
-      "bytes": 28716
+      "blake3": "363tg6nhikzfr6j2olvuatlsys2t7xgeyywrksmwpcstmrrfcm2q",
+      "bytes": 27011
     },
     "robots.txt": {
       "blake3": "wekcptwfqvbg4rcu3yegchpojqcgzyz67of6l265f43tnm3finbq",
@@ -129,20 +129,20 @@
       "bytes": 1978
     },
     "spatial-ai/index.html": {
-      "blake3": "7xxcnao7q3mmorsvcxwsw545eueyg7iipy4zoiswirnvs5f2tu7q",
-      "bytes": 22647
+      "blake3": "75k2dtcxftrywroeajzc5rhikwm2ri3llovkxfjqclahm35xh6xa",
+      "bytes": 20942
     },
     "style.css": {
-      "blake3": "qfpk7c6waw3eisqjg6aeis54oqpg6yhtyzixzpu4sxv5zzdv5xba",
-      "bytes": 78630
+      "blake3": "oxccy37rajm37qtj6doc745z3nzdcvycisf4rzwyaxyw36oiyo2a",
+      "bytes": 78624
     },
     "terms.html": {
       "blake3": "ol3fmg7hsxty6eli5fczwvjcwi2an3jcw7m5dwswmjormpkpwgmq",
       "bytes": 6424
     },
     "trust/index.html": {
-      "blake3": "roaqwv2bgxnadw322uhacxvvjtlwxlljgliuiw53ybmqcmqm6rca",
-      "bytes": 19078
+      "blake3": "lt7fy4ws5c6eltvxjuo7fou4bfqq45r34omqwebsa2dxlggkj2eq",
+      "bytes": 17373
     }
   },
   "_verify": "cid = base32(blake3(canonical JSON of {schema, files})) with sorted keys, separators (',',':'), utf-8, base32 lowercase unpadded: the same shape as an emem fact CID. Each files entry is the blake3 of that file's exact bytes. Re-check everything offline with: python3 tools/site_manifest.py --verify"
