@@ -1,8 +1,8 @@
 {
   "schema": "vortx.site_manifest.v1",
-  "cid": "ss3klwcnqhc5vlintv33go2zh4ej3teknxoegco4vsvv56udxfwq",
-  "commit": "5fbdced41fa5e3352fc1d9943d48baa6ef574cd9",
-  "generated_at": "2026-08-27T06:48:39Z",
+  "cid": "bjv5u5feeyffzznxuw3sx3i3tkkfp275nwx6buh442mrc57migma",
+  "commit": "7e043b3bd098c11c228e535228b4b34f23104b15",
+  "generated_at": "2026-08-27T06:46:48Z",
   "files": {
     ".nojekyll": {
       "blake3": "v4jutopv7gq2nicajxvdnxgjjgn4wjojvxarfn6mtkj4vza7gjra",
@@ -77,8 +77,8 @@
       "bytes": 75387
     },
     "llms.txt": {
-      "blake3": "ca4xbhcy52alh2jetxhhyutkcwjt6nkpohnsguhk22j4azud6bgq",
-      "bytes": 9595
+      "blake3": "6pxijnf4fu7vteoly4d5ulnfrtvr6ivdqdra6r2daehgmmchd4rq",
+      "bytes": 9267
     },
     "log/index.html": {
       "blake3": "vt72evpgrbdhvexyirdm3ymnxx2fqzanttvvyirhu7dmmyduxpea",
