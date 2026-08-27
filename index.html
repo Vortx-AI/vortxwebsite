@@ -184,30 +184,30 @@
           <h1 class="hero-title">The external memory <span class="accent">of our physical world.</span></h1>
           <p class="hero-plain">Satellites and detectors encode the world into signed tokens. An <b>@emem</b> call decodes them inside your agent's reasoning. The memory is the deterministic half, the satellite is the evidence half. Free to read, checkable offline.</p>
           <div class="hero-actions">
-            <a href="#verify" class="btn btn-primary btn-lg">See a live signed fact</a>
-            <a href="https://github.com/Vortx-AI/emem" class="btn btn-ghost btn-lg" target="_blank" rel="noopener" onclick="gtag('event','click_emem_dev',{'link_location':'hero'});">View on GitHub</a>
+            <a href="https://chatgpt.com/plugins/plugin_asdk_app_6a6a0832a59081918b19aec0ddf9ec77" class="btn btn-primary btn-lg" target="_blank" rel="noopener" onclick="gtag('event','connector_click',{'connector':'chatgpt','link_location':'hero'});">Talk to @emem in ChatGPT</a>
+            <a href="#verify" class="btn btn-ghost btn-lg">See a live signed fact</a>
           </div>
-          <div class="hero-install hero-install-grid" aria-label="Every way into emem">
+          <div class="hero-install hero-install-grid" aria-label="Where emem meets you">
+            <a class="install-row install-link" href="https://chatgpt.com/plugins/plugin_asdk_app_6a6a0832a59081918b19aec0ddf9ec77" target="_blank" rel="noopener" onclick="gtag('event','connector_click',{'connector':'chatgpt','link_location':'hero_rows'});">
+              <code>ChatGPT · mention @emem in any chat</code>
+              <span class="install-go">open</span>
+            </a>
             <div class="install-row">
-              <code>pip install ememdev</code>
-              <button type="button" class="install-copy" data-copy="pip install ememdev" aria-label="Copy pip install command">copy</button>
+              <code>Claude · code &amp; desktop</code>
+              <button type="button" class="install-copy" data-copy="claude mcp add --transport http emem https://emem.dev/mcp" aria-label="Copy the Claude Code install command">copy</button>
             </div>
-            <div class="install-row">
-              <code>npm i @vortxai/emem</code>
-              <button type="button" class="install-copy" data-copy="npm i @vortxai/emem" aria-label="Copy npm install command">copy</button>
-            </div>
-            <div class="install-row">
-              <code>MCP · https://emem.dev/mcp</code>
-              <button type="button" class="install-copy" data-copy='{ "mcpServers": { "emem": { "type": "http", "url": "https://emem.dev/mcp" } } }' aria-label="Copy MCP server config">copy</button>
-            </div>
-            <div class="install-row">
-              <code>REST · POST https://emem.dev/v1/recall</code>
-              <button type="button" class="install-copy" data-copy='curl -s -X POST https://emem.dev/v1/recall -H "content-type: application/json" -d &apos;{"place":"Bengaluru","bands":["indices.ndvi"]}&apos;' aria-label="Copy REST curl command">copy</button>
-            </div>
-            <div class="install-row">
-              <code>A2A · https://vortx.ai/.well-known/agent-card.json</code>
-              <button type="button" class="install-copy" data-copy="https://vortx.ai/.well-known/agent-card.json" aria-label="Copy A2A agent card URL">copy</button>
-            </div>
+            <a class="install-row install-link" href="https://github.com/mcp/Vortx-AI/emem" target="_blank" rel="noopener" onclick="gtag('event','connector_click',{'connector':'github_mcp','link_location':'hero_rows'});">
+              <code>VS Code &amp; Copilot · one click from the GitHub MCP Registry</code>
+              <span class="install-go">open</span>
+            </a>
+            <a class="install-row install-link" href="https://marketplace.dify.ai/plugin/vortx-ai/emem" target="_blank" rel="noopener" onclick="gtag('event','connector_click',{'connector':'dify','link_location':'hero_rows'});">
+              <code>Dify · every emem tool as a marketplace plugin</code>
+              <span class="install-go">open</span>
+            </a>
+            <a class="install-row install-link" href="#connectors">
+              <code>Building? MCP, SDKs, REST, A2A</code>
+              <span class="install-go">all doors</span>
+            </a>
           </div>
           <p class="proto-strip" id="proto-strip" hidden>
             <span>emem · Apache-2.0</span>
