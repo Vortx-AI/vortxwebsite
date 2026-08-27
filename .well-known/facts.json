@@ -1,0 +1,40 @@
+{
+  "schema": "vortx.facts.v1",
+  "note": "Every number this site asserts about emem, with the live source that can refute it. tools/drift_check.py re-derives each value from its source and fails when the site and the world disagree. If a value here and a live endpoint disagree, trust the endpoint and fix this file.",
+  "as_of": "2026-08-27",
+  "facts": {
+    "emem.version": {
+      "value": "2.3.0",
+      "source": "https://emem.dev/.well-known/agent-card.json",
+      "derive": "version"
+    },
+    "emem.tool_count": {
+      "value": 111,
+      "source": "https://emem.dev/.well-known/agent-card.json",
+      "derive": "len(skills)"
+    },
+    "emem.topics_live": {
+      "value": 27,
+      "source": "https://emem.dev/v1/topics",
+      "derive": "counts.live_total"
+    },
+    "emem.token_types": {
+      "value": 6,
+      "source": "https://emem.dev/llms.txt",
+      "derive": "the token grammar: fact, bundle, entity, raster, cube, rasterset",
+      "kind": "structural"
+    },
+    "emem.fanout_min_readings": {
+      "value": 20,
+      "source": "https://emem.dev/v1/ask",
+      "derive": "floor of signed readings one ask returns; the site states it as 'twenty-plus'",
+      "kind": "floor"
+    }
+  },
+  "checks": [
+    { "fact": "emem.tool_count", "file": "llms.txt", "pattern": "{value} tools in the live catalog" },
+    { "fact": "emem.tool_count", "file": "agents.md", "pattern": "{value} tools in the live catalog" },
+    { "fact": "emem.token_types", "file": "index.html", "pattern": "Six token types" },
+    { "fact": "emem.fanout_min_readings", "file": "index.html", "pattern": "twenty-plus signed readings" }
+  ]
+}

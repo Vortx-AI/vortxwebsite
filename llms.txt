@@ -42,7 +42,7 @@ Deterministic (same question, same signed bytes, forever):
 Agentic (the responder plans and fans out; the wording varies, the receipts do not):
 - POST https://emem.dev/v1/ask {"q":"is this place flood-prone","place":"Ashok Nagar, Ranchi"} : one question fans out to twenty-plus signed readings and scored recipes under a single receipt.
 - POST https://emem.dev/v1/jepa_predict_v2 : the learned dynamics head forecasts the next readout at a pinned cell.
-- reason, hunt, intent, temporal routing, change attribution, and ~100 more surfaces via MCP at https://emem.dev/mcp (discover them with the emem_tools tool).
+- reason, hunt, intent, temporal routing, change attribution and more: 111 tools in the live catalog at https://emem.dev/mcp. Count them yourself with emem_tools; if that count and this line disagree, trust the endpoint (every number this site asserts is registered with its refuting source in https://vortx.ai/.well-known/facts.json).
 
 ## Whitepapers
 - emem: A Content-Addressed, Verifiable Earth-Memory Protocol for AI Agents over Foundation-Model Embeddings. DOI https://doi.org/10.5281/zenodo.20706317
@@ -73,7 +73,7 @@ The protocol is free and Apache-2.0. The team's time is what costs money. Calls 
 - Model: TerraGround-Gemma-4-E2B-LoRA: https://huggingface.co/avijeetsingh1608/TerraGround-Gemma-4-E2B-LoRA
 
 ## The site itself is content-addressed
-Every file this site serves (pages, styles, scripts, images, these text files) is blake3-hashed into https://vortx.ai/.well-known/site-manifest.json, and the manifest core's own blake3, encoded like an emem fact CID, is the release id shown in the footer. CI reseals it on every deploy. Re-check offline: python3 tools/site_manifest.py --verify (source in the repo).
+Every file this site serves (pages, styles, scripts, images, these text files) is blake3-hashed into https://vortx.ai/.well-known/site-manifest.json, and the manifest core's own blake3, encoded like an emem fact CID, is the release id shown in the footer. CI reseals it on every deploy, and is wired to register each release as a signed record in emem's memory commons under /memories/by_attester/<pubkey8>/vortx.ai/releases/, so the site is itself an emem token: the page you read, citable from the same memory it documents. (Registration goes live with the signing key; the manifest verifies offline either way.) Re-check offline: python3 tools/site_manifest.py --verify (source in the repo).
 
 ## Contact
 - Email: avijeet@vortx.ai

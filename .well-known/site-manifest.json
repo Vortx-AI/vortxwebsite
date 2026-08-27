@@ -1,16 +1,20 @@
 {
   "schema": "vortx.site_manifest.v1",
-  "cid": "bjv5u5feeyffzznxuw3sx3i3tkkfp275nwx6buh442mrc57migma",
-  "commit": "7e043b3bd098c11c228e535228b4b34f23104b15",
-  "generated_at": "2026-08-27T06:46:48Z",
+  "cid": "ld7rh23mll3vtrsqs6a43vhhhigpiptc4lrrofyqx4rtqc4e5f2a",
+  "commit": "1ea0f4a54d54c91b5e8e9bf0da92628fc4c0d0ea",
+  "generated_at": "2026-08-27T07:14:36Z",
   "files": {
     ".nojekyll": {
       "blake3": "v4jutopv7gq2nicajxvdnxgjjgn4wjojvxarfn6mtkj4vza7gjra",
       "bytes": 0
     },
     ".well-known/agent-card.json": {
-      "blake3": "xq66suvihds5n2ik7jnjalwk5luw6ruujfm2usqmiuw2mozkalvq",
-      "bytes": 5928
+      "blake3": "bwdhwziugbqokmnbilyl7xnpbtdgrwbvjpvyd224idbpk6xdzuka",
+      "bytes": 8306
+    },
+    ".well-known/facts.json": {
+      "blake3": "vmoswma352xhuxy46lxaiuu7whz65geocj2qngztvaxu4dnzegva",
+      "bytes": 1636
     },
     "404.html": {
       "blake3": "7sqtkupi4gt3dive2j6ojp7hwswnjgwkhfhyoz34mu7xp7haaetq",
@@ -21,8 +25,8 @@
       "bytes": 8
     },
     "agents.md": {
-      "blake3": "dtlescwkm2yy23otdkqpoyswolwkue4zxsblgmj2opbdyhczcgtq",
-      "bytes": 8517
+      "blake3": "u4meqwjkmauwviojs35h6gxow7rohrpbl25vm3svem2cikq6invq",
+      "bytes": 8718
     },
     "apple-touch-icon.png": {
       "blake3": "tmchv7hjynhrjydegkd3acu7oa3qh372hxubq42iwxv2zs3fy2pq",
@@ -73,12 +77,12 @@
       "bytes": 20766
     },
     "index.html": {
-      "blake3": "5spmbntpd2nkgemrpgrieqsiqfwi6twaluhhi65sjjp6xegt4f7a",
-      "bytes": 75387
+      "blake3": "enidigiyg3j3gia2xdev6ltamxs6kn6p35id655657cveml6qygq",
+      "bytes": 75384
     },
     "llms.txt": {
-      "blake3": "6pxijnf4fu7vteoly4d5ulnfrtvr6ivdqdra6r2daehgmmchd4rq",
-      "bytes": 9267
+      "blake3": "jlq4c6bh5slznbyafi7fkyureop7gif3zu657un6csyxm65yjsua",
+      "bytes": 9772
     },
     "log/index.html": {
       "blake3": "vt72evpgrbdhvexyirdm3ymnxx2fqzanttvvyirhu7dmmyduxpea",

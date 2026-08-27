@@ -1,0 +1,41 @@
+# The site that sells anti-drift must not drift.
+#
+# .well-known/facts.json registers every number the site asserts about
+# emem, with the live source that can refute it. On every push the copy
+# is checked against the registry; weekly, each fact is re-derived from
+# its live source. A red run here is the alarm working: emem moved, and
+# the site owes it an update.
+
+name: drift-check
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'llms.txt'
+      - 'agents.md'
+      - '.well-known/facts.json'
+      - 'tools/drift_check.py'
+  schedule:
+    - cron: '17 3 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Copy checks (push) or full live check (schedule, manual)
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            python3 tools/drift_check.py --offline
+          else
+            python3 tools/drift_check.py
+          fi

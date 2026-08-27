@@ -48,9 +48,16 @@ jobs:
           git commit -m "release: reseal site manifest"
           git push
 
-      # Optional: register each release in emem so it lands in the
-      # witnessed transparency log. Wire this once a signing key for
-      # the vortx namespace exists as a repo secret; writes to your
-      # own namespace are free with a signature (see GET
-      # https://emem.dev/v1/enlist for enlistment and the write API).
-      # Until then the manifest is still fully verifiable offline.
+      # Register the release in emem's memory commons: the site itself
+      # becomes a signed emem record at
+      #   /memories/by_attester/<pubkey8>/vortx.ai/releases/<cid>.json
+      # Mint the key once with `python3 tools/register_release.py --keygen`
+      # and store the seed as the EMEM_SEED_B32 repo secret. Until the
+      # secret exists this step skips cleanly and the manifest stays
+      # verifiable offline.
+      - name: Register release in emem
+        env:
+          EMEM_SEED_B32: ${{ secrets.EMEM_SEED_B32 }}
+        run: |
+          pip install cryptography
+          python3 tools/register_release.py
