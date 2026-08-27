@@ -246,94 +246,6 @@
   })();
 })();
 
-  // --- Footer map: the memory, live ---
-  // Every dot is a 1-degree bin where emem holds at least one signed fact,
-  // re-projected from GET /v1/coverage_map.svg (plate-carree, 1440x720)
-  // into this map's frame. Seeds below are a real sample from the corpus,
-  // painted immediately; the live fetch then replaces them with the full,
-  // current picture. Intensity (0..1) follows fact density.
-  (function () {
-    var layer = document.getElementById('map-live');
-    if (!layer) return;
-    var SEEDS = [
-      [484, 412, 1], [1320, 496, .9], [1252, 452, .9], [1324, 492, .85], [496, 440, .85],
-      [1320, 492, .85], [1248, 456, .8], [472, 492, .75], [1252, 456, .7], [896, 452, .7],
-      [808, 436, .7], [1284, 464, .7], [432, 492, .65], [424, 504, .6], [804, 452, .6],
-      [1300, 464, .6], [440, 544, .6], [476, 492, .6], [492, 428, .55], [808, 420, .55],
-      [1200, 460, .55], [528, 416, .5], [1316, 464, .5], [832, 464, .5], [1272, 452, .5],
-      [1040, 440, .35], [908, 436, .3], [236, 480, .35], [136, 508, .3], [156, 416, .25],
-      [216, 528, .2], [664, 516, .2], [840, 540, .2], [852, 508, .2], [568, 564, .15],
-      [640, 564, .15], [300, 660, .15], [1188, 488, .15], [568, 440, .15], [592, 516, .15],
-      [988, 648, .15], [1368, 668, .4], [720, 716, .15], [32, 684, .15], [1416, 524, .35],
-      [476, 620, .35], [540, 652, .3], [456, 636, .2], [1172, 648, .2], [704, 600, .2]
-    ];
-    var NS = 'http://www.w3.org/2000/svg';
-
-    // plate-carree (1440x720) -> the footer land frame (950x620).
-    // world-map-eq.svg is generated on the same grid: x spans lon -180..180,
-    // y spans lat 84..-90, both linear, so this mapping is exact.
-    function project(x, y) {
-      var lat = 90 - ((y + 2) / 720) * 180;
-      var fx = ((x + 2) / 1440) * 950;
-      var fy = ((84 - lat) / 174) * 620;
-      return [Math.max(6, Math.min(944, fx)), Math.max(10, Math.min(612, fy))];
-    }
-    function intensityOf(hex) {
-      // the ramp runs light peach (few facts) to deep red (many); the green
-      // channel falls monotonically along it, so it doubles as a density read
-      var g = parseInt(hex.slice(3, 5), 16);
-      return Math.max(0, Math.min(1, 1 - g / 240));
-    }
-    function render(points) {
-      var frag = document.createDocumentFragment();
-      for (var i = 0; i < points.length; i++) {
-        var p = project(points[i][0], points[i][1]);
-        var t = points[i][2];
-        var c = document.createElementNS(NS, 'circle');
-        c.setAttribute('class', 'map-dot');
-        c.setAttribute('cx', p[0].toFixed(1));
-        c.setAttribute('cy', p[1].toFixed(1));
-        c.setAttribute('r', (2 + t * 3.4).toFixed(1));
-        c.style.opacity = (0.35 + t * 0.6).toFixed(2);
-        c.style.animationDelay = (-((i * 0.37) % 3.6)).toFixed(2) + 's';
-        c.style.animationDuration = (3.2 + ((i * 0.53) % 2.4)).toFixed(2) + 's';
-        frag.appendChild(c);
-      }
-      layer.textContent = '';
-      layer.appendChild(frag);
-    }
-    render(SEEDS);
-
-    if (!window.fetch) return;
-    fetch('https://emem.dev/v1/coverage_map.svg')
-      .then(function (r) { if (!r.ok) throw new Error('http ' + r.status); return r.text(); })
-      .then(function (svg) {
-        var points = [], m;
-        var re = /<rect x='(\d+)' y='(\d+)' width='4' height='4' fill='(#[0-9a-f]{6})'\/>/g;
-        while ((m = re.exec(svg)) && points.length < 900) {
-          points.push([+m[1], +m[2], intensityOf(m[3])]);
-        }
-        if (points.length) render(points);
-        var dek = svg.match(/class="dek"[^>]*>([^<]+)</);
-        if (dek) {
-          var nums = dek[1].match(/(\d[\d,]*) cells[^0-9]*([\d,]+) facts/);
-          var cap = document.getElementById('map-cap-text');
-          if (nums && cap) cap.textContent = 'the memory, live: ' + nums[1] + ' one-degree bins hold ' + nums[2] + ' signed facts';
-          var pb = document.getElementById('pulse-bins');
-          if (nums && pb) {
-            var pn = pb.querySelector('.pulse-n');
-            if (pn) {
-              pn.textContent = nums[1];
-              pb.hidden = false;
-              var strip = document.getElementById('pulse-strip');
-              if (strip) strip.hidden = false;
-            }
-          }
-        }
-      })
-      .catch(function () { /* seeds stay up; the map never goes dark */ });
-  })();
-
   // --- The site's own release token ---
   // CI reseals .well-known/site-manifest.json on every deploy: each served
   // file's blake3, and one CID over the whole set, emem-style. Shown only
@@ -387,5 +299,12 @@
       .then(function (j) {
         var n = j && j.sth && (j.sth.tree_size || j.sth.treeSize);
         if (typeof n === 'number' && n > 0) show('pulse-log', n.toLocaleString('en-US'));
+      }).catch(function () {});
+    fetch('https://emem.dev/v1/coverage_map.svg')
+      .then(function (r) { return r.text(); })
+      .then(function (svg) {
+        var dek = svg.match(/class="dek"[^>]*>([^<]+)</);
+        var nums = dek && dek[1].match(/(\d[\d,]*) cells/);
+        if (nums) show('pulse-bins', nums[1]);
       }).catch(function () {});
   })();

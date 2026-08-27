@@ -352,35 +352,129 @@
         </div>
       </div>
       <div class="wrap">
-        <p class="hero-quote reveal">&ldquo;A model's memory ends where its context does. emem lives outside it: signed tokens that survive compaction, hand-offs and model swaps, so two agents that trust nothing else can cite the same fact. Apache-2.0. Earth first; every substrate, real or synthetic, maps back to it.&rdquo;</p>
+        <p class="hero-quote reveal">&ldquo;A model's memory ends where its context does. emem lives outside it, so two agents that trust nothing else can cite the same fact. Apache-2.0.&rdquo;</p>
       </div>
     </section>
 
-    <!-- Scene 2: Thesis + the instrument's readout -->
-    <section class="section section--tint" id="thesis" aria-labelledby="thesis-h">
+    <!-- Scene 4: Proof: the live verify widget -->
+    <section class="section section--sky" id="verify" aria-labelledby="verify-h">
       <div class="wrap">
-        <div class="thesis-text reveal" style="max-width:1080px;margin-inline:auto;text-align:center;">
-          <h2 class="section-title" id="thesis-h" style="margin-bottom:30px;">An agent is only as good as <em>what it remembers.</em></h2>
-          <p>
-            Put agents in production and you watch it happen: a verified fact
-            becomes a paraphrase, a hand-off starts from hearsay, two models
-            can't agree they mean the same place. The gap is memory. So we
-            split it in two: encoders write the evidence, one decoder serves
-            it back, signed.
-          </p>
+        <div class="section-head reveal">
+          <h2 class="section-title" id="verify-h">You can use this <em>right now.</em></h2>
+          <p class="section-lead">A real signed fact about a real place, pulled from production in your browser. No key, no account.</p>
         </div>
-        <div class="pillars reveal reveal-d1" aria-label="How the memory works">
-          <div class="pillar">
-            <span class="pillar-k">Substrates</span>
-            <p>One memory, many observers, one admission contract: an encoder joins by proving how it produced its reading, execution trace and all. Synthetic substrates map back to Earth too.</p>
+
+        <div class="place-chips reveal reveal-d1" role="group" aria-label="Pick a place on Earth">
+          <button class="chip active" aria-pressed="true" data-place="Bengaluru, India" data-cell="defi.zb493.zezo.zcb35" data-val="0.72" data-read="healthy vegetation" data-cap="2026-06-16" data-cid="2vgxoukcscjvanuh3yiurqc3xpocbvjwozuygcobq2t6gyj5ojla" data-cidfull="2vgxoukcscjvanuh3yiurqc3xpocbvjwozuygcobq2t6gyj5ojla" data-signer="777er3yihgifqmv5hmc2wwmyszgddzderzhsx6rex4yoakwomvka" data-conf="0.95"><span class="chip-dot"></span>Bengaluru</button>
+          <button class="chip" aria-pressed="false" data-place="Amazon rainforest, Brazil" data-cell="defi.zb3dc.puzU.nuzU" data-val="0.71" data-read="forest canopy" data-cap="2026-03-27" data-cid="u36seportwjmkmfhlml7n45vxjsjl5lgx4nowdhfi4bwvakbpaia" data-cidfull="u36seportwjmkmfhlml7n45vxjsjl5lgx4nowdhfi4bwvakbpaia" data-signer="777er3yihgifqmv5hmc2wwmyszgddzderzhsx6rex4yoakwomvka" data-conf="0.90"><span class="chip-dot"></span>Amazon</button>
+          <button class="chip" aria-pressed="false" data-place="Sahara Desert (23.5°N, 12°E)" data-cell="defi.zb50b.pIvO.geqO" data-val="0.07" data-read="bare desert" data-cap="2026-06-17" data-cid="gqahgskrj5rbe3cmxvragkikaliddu5ybpgsajsiy3hheq425kjq" data-cidfull="gqahgskrj5rbe3cmxvragkikaliddu5ybpgsajsiy3hheq425kjq" data-signer="777er3yihgifqmv5hmc2wwmyszgddzderzhsx6rex4yoakwomvka" data-conf="0.95"><span class="chip-dot"></span>Sahara</button>
+          <button class="chip" aria-pressed="false" data-place="Des Moines, Iowa" data-cell="defi.zb5d9.heqe.pazi" data-val="0.01" data-read="cropland, between seasons" data-cap="2026-05-03" data-cid="4fz2osbqxpy2qscopxcvzjrtpthrlzyicl6dboid5jx7ikd6wwpa" data-cidfull="4fz2osbqxpy2qscopxcvzjrtpthrlzyicl6dboid5jx7ikd6wwpa" data-signer="777er3yihgifqmv5hmc2wwmyszgddzderzhsx6rex4yoakwomvka" data-conf="0.90"><span class="chip-dot"></span>Iowa farmland</button>
+          <button class="chip" aria-pressed="false" data-place="Manhattan, New York" data-cell="defi.zb5cf.zbc12.zd8d6" data-val="-0.09" data-read="built-up and water" data-cap="2025-11-02" data-cid="rby2p3f5qleti3x2vwahx44eauhjqfvx3535ngcnwjz3ctiil5ua" data-cidfull="rby2p3f5qleti3x2vwahx44eauhjqfvx3535ngcnwjz3ctiil5ua" data-signer="777er3yihgifqmv5hmc2wwmyszgddzderzhsx6rex4yoakwomvka" data-conf="0.90"><span class="chip-dot"></span>Manhattan</button>
+        </div>
+
+        <div class="verify-grid">
+          <div class="receipt reveal" id="receipt" role="figure" aria-label="A real signed fact from emem, fetched live in your browser">
+            <div class="receipt-head">
+              <span class="dot-row" aria-hidden="true"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span>
+              <span class="r-badge is-signed" id="r-badge"><span class="r-badge-dot"></span><span id="r-badge-text">signed</span></span>
+            </div>
+            <div class="receipt-rows">
+              <div class="r-row"><span class="r-key">place</span><span class="r-val" id="r-place">Bengaluru, India</span></div>
+              <div class="r-row"><span class="r-key">we see</span><span class="r-val" id="r-read">healthy vegetation</span></div>
+              <div class="r-row"><span class="r-key">index</span><span class="r-val"><span class="tealv" id="r-val">0.72</span>&nbsp;<span class="rd">greenness, by satellite</span></span></div>
+              <div class="r-row"><span class="r-key">moisture</span><span class="r-val"><span class="tealv" id="r-ndmi">pull to fetch</span>&nbsp;<span class="rd">NDMI, by satellite</span></span></div>
+              <div class="r-row"><span class="r-key">air temp</span><span class="r-val"><span class="tealv" id="r-temp">pull to fetch</span>&nbsp;<span class="rd">2 m, by weather station</span></span></div>
+              <div class="r-row"><span class="r-key">measured</span><span class="r-val" id="r-cap">2026-06-16</span></div>
+              <div class="r-row"><span class="r-key">proof</span><a class="r-val hi r-proof" id="r-cid" href="https://emem.dev/verify?cid=2vgxoukcscjvanuh3yiurqc3xpocbvjwozuygcobq2t6gyj5ojla" target="_blank" rel="noopener" title="Verify this fact on emem">2vgxoukcscjvanuh3yiurqc3xpocbvjwozuygcobq2t6gyj5ojla</a></div>
+              <div class="r-row"><span class="r-key">signer</span><span class="r-val hi" id="r-signer" title="Full ed25519 signer public key (base32)">777er3yihgifqmv5hmc2wwmyszgddzderzhsx6rex4yoakwomvka</span></div>
+              <div class="r-row"><span class="r-key">pulled</span><span class="r-val" id="r-served">: not yet</span></div>
+            </div>
+            <figure class="r-scene" id="r-scene" hidden>
+              <img id="r-scene-img" alt="Latest cloud-free Sentinel-2 scene of this cell" width="560" height="160">
+              <figcaption>the cell itself · latest cloud-free Sentinel-2 scene</figcaption>
+            </figure>
+            <div class="receipt-foot">
+              <span id="r-foot">a real signed fact · re-checkable offline</span>
+              <button type="button" id="card-pull-btn" class="btn btn-primary btn-sm" onclick="var p=document.getElementById('pull-live');if(p)p.click();">
+                <svg class="pl-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="width:13px;height:13px;"><path d="M13.6 8a5.6 5.6 0 1 1-1.7-4M13.6 2.4V5.2H10.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>Pull it live</span>
+              </button>
+            </div>
           </div>
-          <div class="pillar">
-            <span class="pillar-k">Tokens</span>
-            <p>Nine token shapes, one syntax: facts, bundles, entities, cells, rasters, cubes, rastersets, and for devices, execution traces and hardware attestations. One handle, the exact bytes, months later.</p>
+
+          <div class="reveal reveal-d1">
+            <p class="section-lead" style="margin-top:0;">Pick a place. Pull a fresh signed reading straight from production, in your browser. Watch it verify.</p>
+            <div class="verify-actions">
+              <button type="button" id="pull-live" class="btn btn-primary">
+                <svg class="pl-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13.6 8a5.6 5.6 0 1 1-1.7-4M13.6 2.4V5.2H10.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Pull it live
+              </button>
+              <a href="/emem/" class="btn btn-ghost">Run it yourself</a>
+            </div>
+            <p class="verify-note" id="r-note">These are real, signed readings. Hit <b>Pull it live</b> to fetch a fresh one from emem and watch it verify, right here.</p>
           </div>
-          <div class="pillar">
-            <span class="pillar-k">Verification</span>
-            <p>Two agents that share no model, vendor, or trust cite the same token and each verify it alone, offline, with no server to trust.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Where it runs: the connectors your agents already live in -->
+    <section class="section section--tint" id="connectors" aria-labelledby="connectors-h">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <h2 class="section-title" id="connectors-h">Wherever your agents live, <em>emem is already there.</em></h2>
+          <p class="section-lead">Mention <b>@emem</b> in ChatGPT. One click in the GitHub MCP Registry or VS Code. One line in Claude. Every door opens onto the same signed facts.</p>
+        </div>
+
+        <div class="conn-rail">
+          <article class="conn-card reveal">
+            <div class="conn-top"><span class="conn-name">ChatGPT</span><span class="conn-badge">app · @emem</span></div>
+            <p>Mention <code>@emem</code> and ask about a place. The answer arrives with its receipt.</p>
+            <div class="conn-how"><a href="https://chatgpt.com/plugins/plugin_asdk_app_6a6a0832a59081918b19aec0ddf9ec77" target="_blank" rel="noopener">Open @emem in ChatGPT</a></div>
+          </article>
+
+          <article class="conn-card reveal reveal-d1">
+            <div class="conn-top"><span class="conn-name">GitHub MCP Registry</span><span class="conn-badge">official listing</span></div>
+            <p>An official entry, one click from Copilot.</p>
+            <div class="conn-how"><a href="https://github.com/mcp/Vortx-AI/emem" target="_blank" rel="noopener">github.com/mcp/Vortx-AI/emem</a></div>
+          </article>
+
+          <article class="conn-card reveal reveal-d2">
+            <div class="conn-top"><span class="conn-name">VS Code</span><span class="conn-badge">one-click</span></div>
+            <p>From the MCP gallery straight into your editor, or via <code>.vscode/mcp.json</code>.</p>
+            <div class="conn-how">
+              <code>"emem": { "type": "http", "url": "https://emem.dev/mcp" }</code>
+              <button type="button" class="install-copy" data-copy='{ "servers": { "emem": { "type": "http", "url": "https://emem.dev/mcp" } } }' aria-label="Copy VS Code MCP config">copy</button>
+            </div>
+          </article>
+
+          <article class="conn-card reveal">
+            <div class="conn-top"><span class="conn-name">Claude</span><span class="conn-badge">code &amp; desktop</span></div>
+            <p>One line in Claude Code, or the same server in Desktop.</p>
+            <div class="conn-how">
+              <code>claude mcp add --transport http emem https://emem.dev/mcp</code>
+              <button type="button" class="install-copy" data-copy="claude mcp add --transport http emem https://emem.dev/mcp" aria-label="Copy Claude Code install command">copy</button>
+            </div>
+          </article>
+
+          <article class="conn-card reveal reveal-d1">
+            <div class="conn-top"><span class="conn-name">MCP Registry</span><span class="conn-badge">official listing</span></div>
+            <p>Published where every syncing client looks.</p>
+            <div class="conn-how"><code>io.github.Vortx-AI/emem</code></div>
+          </article>
+
+          <article class="conn-card reveal reveal-d2">
+            <div class="conn-top"><span class="conn-name">Dify</span><span class="conn-badge">marketplace plugin</span></div>
+            <p>Every emem tool, native in your workflows. No key to configure.</p>
+            <div class="conn-how"><a href="https://marketplace.dify.ai/plugin/vortx-ai/emem" target="_blank" rel="noopener">marketplace.dify.ai/plugin/vortx-ai/emem</a></div>
+          </article>
+        </div>
+
+        <p class="conn-foot reveal">No lock-in past these doors: Cursor, LangChain, any MCP client, REST, the Python and TypeScript SDKs, a live A2A endpoint, and the <a href="https://emem.dev/a2a" target="_blank" rel="noopener">Agora</a>, the open channel where agents co-build on the memory.<br>One server behind every one: <a href="https://emem.dev/mcp" target="_blank" rel="noopener">https://emem.dev/mcp</a> · no key to read, receipts everywhere</p>
+
+        <div class="talk-strip reveal" role="group" aria-label="Talk to the team about your agent">
+          <p><b>Wiring emem into your agent?</b> Bring your repo to free office hours: whoever on the team is closest to your problem reads it with you. No pitch, nothing to buy first.</p>
+          <div class="talk-actions">
+            <button type="button" class="btn btn-primary" data-open-pricing onclick="gtag('event','pricing_open_click',{'link_location':'connectors'});">Talk agents with us</button>
           </div>
         </div>
       </div>
@@ -515,130 +609,6 @@
       </div>
     </section>
 
-    <!-- Scene 4: Proof: the live verify widget -->
-    <section class="section section--sky" id="verify" aria-labelledby="verify-h">
-      <div class="wrap">
-        <div class="section-head reveal">
-          <h2 class="section-title" id="verify-h">Pick any place on Earth. <em>Check the answer yourself.</em></h2>
-          <p class="section-lead">Real, signed readings from emem. The same query everywhere; the value just tells you what's on the ground.</p>
-        </div>
-
-        <div class="place-chips reveal reveal-d1" role="group" aria-label="Pick a place on Earth">
-          <button class="chip active" aria-pressed="true" data-place="Bengaluru, India" data-cell="defi.zb493.zezo.zcb35" data-val="0.72" data-read="healthy vegetation" data-cap="2026-06-16" data-cid="2vgxoukcscjvanuh3yiurqc3xpocbvjwozuygcobq2t6gyj5ojla" data-cidfull="2vgxoukcscjvanuh3yiurqc3xpocbvjwozuygcobq2t6gyj5ojla" data-signer="777er3yihgifqmv5hmc2wwmyszgddzderzhsx6rex4yoakwomvka" data-conf="0.95"><span class="chip-dot"></span>Bengaluru</button>
-          <button class="chip" aria-pressed="false" data-place="Amazon rainforest, Brazil" data-cell="defi.zb3dc.puzU.nuzU" data-val="0.71" data-read="forest canopy" data-cap="2026-03-27" data-cid="u36seportwjmkmfhlml7n45vxjsjl5lgx4nowdhfi4bwvakbpaia" data-cidfull="u36seportwjmkmfhlml7n45vxjsjl5lgx4nowdhfi4bwvakbpaia" data-signer="777er3yihgifqmv5hmc2wwmyszgddzderzhsx6rex4yoakwomvka" data-conf="0.90"><span class="chip-dot"></span>Amazon</button>
-          <button class="chip" aria-pressed="false" data-place="Sahara Desert (23.5°N, 12°E)" data-cell="defi.zb50b.pIvO.geqO" data-val="0.07" data-read="bare desert" data-cap="2026-06-17" data-cid="gqahgskrj5rbe3cmxvragkikaliddu5ybpgsajsiy3hheq425kjq" data-cidfull="gqahgskrj5rbe3cmxvragkikaliddu5ybpgsajsiy3hheq425kjq" data-signer="777er3yihgifqmv5hmc2wwmyszgddzderzhsx6rex4yoakwomvka" data-conf="0.95"><span class="chip-dot"></span>Sahara</button>
-          <button class="chip" aria-pressed="false" data-place="Des Moines, Iowa" data-cell="defi.zb5d9.heqe.pazi" data-val="0.01" data-read="cropland, between seasons" data-cap="2026-05-03" data-cid="4fz2osbqxpy2qscopxcvzjrtpthrlzyicl6dboid5jx7ikd6wwpa" data-cidfull="4fz2osbqxpy2qscopxcvzjrtpthrlzyicl6dboid5jx7ikd6wwpa" data-signer="777er3yihgifqmv5hmc2wwmyszgddzderzhsx6rex4yoakwomvka" data-conf="0.90"><span class="chip-dot"></span>Iowa farmland</button>
-          <button class="chip" aria-pressed="false" data-place="Manhattan, New York" data-cell="defi.zb5cf.zbc12.zd8d6" data-val="-0.09" data-read="built-up and water" data-cap="2025-11-02" data-cid="rby2p3f5qleti3x2vwahx44eauhjqfvx3535ngcnwjz3ctiil5ua" data-cidfull="rby2p3f5qleti3x2vwahx44eauhjqfvx3535ngcnwjz3ctiil5ua" data-signer="777er3yihgifqmv5hmc2wwmyszgddzderzhsx6rex4yoakwomvka" data-conf="0.90"><span class="chip-dot"></span>Manhattan</button>
-        </div>
-
-        <div class="verify-grid">
-          <div class="receipt reveal" id="receipt" role="figure" aria-label="A real signed fact from emem, fetched live in your browser">
-            <div class="receipt-head">
-              <span class="dot-row" aria-hidden="true"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span>
-              <span class="r-badge is-signed" id="r-badge"><span class="r-badge-dot"></span><span id="r-badge-text">signed</span></span>
-            </div>
-            <div class="receipt-rows">
-              <div class="r-row"><span class="r-key">place</span><span class="r-val" id="r-place">Bengaluru, India</span></div>
-              <div class="r-row"><span class="r-key">we see</span><span class="r-val" id="r-read">healthy vegetation</span></div>
-              <div class="r-row"><span class="r-key">index</span><span class="r-val"><span class="tealv" id="r-val">0.72</span>&nbsp;<span class="rd">greenness, by satellite</span></span></div>
-              <div class="r-row"><span class="r-key">moisture</span><span class="r-val"><span class="tealv" id="r-ndmi">pull to fetch</span>&nbsp;<span class="rd">NDMI, by satellite</span></span></div>
-              <div class="r-row"><span class="r-key">air temp</span><span class="r-val"><span class="tealv" id="r-temp">pull to fetch</span>&nbsp;<span class="rd">2 m, by weather station</span></span></div>
-              <div class="r-row"><span class="r-key">measured</span><span class="r-val" id="r-cap">2026-06-16</span></div>
-              <div class="r-row"><span class="r-key">proof</span><a class="r-val hi r-proof" id="r-cid" href="https://emem.dev/verify?cid=2vgxoukcscjvanuh3yiurqc3xpocbvjwozuygcobq2t6gyj5ojla" target="_blank" rel="noopener" title="Verify this fact on emem">2vgxoukcscjvanuh3yiurqc3xpocbvjwozuygcobq2t6gyj5ojla</a></div>
-              <div class="r-row"><span class="r-key">signer</span><span class="r-val hi" id="r-signer" title="Full ed25519 signer public key (base32)">777er3yihgifqmv5hmc2wwmyszgddzderzhsx6rex4yoakwomvka</span></div>
-              <div class="r-row"><span class="r-key">pulled</span><span class="r-val" id="r-served">: not yet</span></div>
-            </div>
-            <figure class="r-scene" id="r-scene" hidden>
-              <img id="r-scene-img" alt="Latest cloud-free Sentinel-2 scene of this cell" width="560" height="160">
-              <figcaption>the cell itself · latest cloud-free Sentinel-2 scene</figcaption>
-            </figure>
-            <div class="receipt-foot">
-              <span id="r-foot">a real signed fact · re-checkable offline</span>
-              <button type="button" id="card-pull-btn" class="btn btn-primary btn-sm" onclick="var p=document.getElementById('pull-live');if(p)p.click();">
-                <svg class="pl-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="width:13px;height:13px;"><path d="M13.6 8a5.6 5.6 0 1 1-1.7-4M13.6 2.4V5.2H10.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                <span>Pull it live</span>
-              </button>
-            </div>
-          </div>
-
-          <div class="reveal reveal-d1">
-            <p class="section-lead" style="margin-top:0;">Pick a place. Pull a fresh signed reading straight from production, in your browser. Watch it verify.</p>
-            <div class="verify-actions">
-              <button type="button" id="pull-live" class="btn btn-primary">
-                <svg class="pl-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13.6 8a5.6 5.6 0 1 1-1.7-4M13.6 2.4V5.2H10.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                Pull it live
-              </button>
-              <a href="/emem/" class="btn btn-ghost">Run it yourself</a>
-            </div>
-            <p class="verify-note" id="r-note">These are real, signed readings. Hit <b>Pull it live</b> to fetch a fresh one from emem and watch it verify, right here.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Where it runs: the connectors your agents already live in -->
-    <section class="section section--tint" id="connectors" aria-labelledby="connectors-h">
-      <div class="wrap">
-        <div class="section-head reveal">
-          <h2 class="section-title" id="connectors-h">Wherever your agents live, <em>emem is already there.</em></h2>
-          <p class="section-lead">Mention <b>@emem</b> in ChatGPT. One click in the GitHub MCP Registry or VS Code. One line in Claude. Every door opens onto the same signed facts.</p>
-        </div>
-
-        <div class="conn-rail">
-          <article class="conn-card reveal">
-            <div class="conn-top"><span class="conn-name">ChatGPT</span><span class="conn-badge">app · @emem</span></div>
-            <p>Mention <code>@emem</code> and ask about a place. The answer arrives with its receipt.</p>
-            <div class="conn-how"><a href="https://chatgpt.com/plugins/plugin_asdk_app_6a6a0832a59081918b19aec0ddf9ec77" target="_blank" rel="noopener">Open @emem in ChatGPT</a></div>
-          </article>
-
-          <article class="conn-card reveal reveal-d1">
-            <div class="conn-top"><span class="conn-name">GitHub MCP Registry</span><span class="conn-badge">official listing</span></div>
-            <p>An official entry, one click from Copilot.</p>
-            <div class="conn-how"><a href="https://github.com/mcp/Vortx-AI/emem" target="_blank" rel="noopener">github.com/mcp/Vortx-AI/emem</a></div>
-          </article>
-
-          <article class="conn-card reveal reveal-d2">
-            <div class="conn-top"><span class="conn-name">VS Code</span><span class="conn-badge">one-click</span></div>
-            <p>From the MCP gallery straight into your editor, or via <code>.vscode/mcp.json</code>.</p>
-            <div class="conn-how">
-              <code>"emem": { "type": "http", "url": "https://emem.dev/mcp" }</code>
-              <button type="button" class="install-copy" data-copy='{ "servers": { "emem": { "type": "http", "url": "https://emem.dev/mcp" } } }' aria-label="Copy VS Code MCP config">copy</button>
-            </div>
-          </article>
-
-          <article class="conn-card reveal">
-            <div class="conn-top"><span class="conn-name">Claude</span><span class="conn-badge">code &amp; desktop</span></div>
-            <p>One line in Claude Code, or the same server in Desktop.</p>
-            <div class="conn-how">
-              <code>claude mcp add --transport http emem https://emem.dev/mcp</code>
-              <button type="button" class="install-copy" data-copy="claude mcp add --transport http emem https://emem.dev/mcp" aria-label="Copy Claude Code install command">copy</button>
-            </div>
-          </article>
-
-          <article class="conn-card reveal reveal-d1">
-            <div class="conn-top"><span class="conn-name">MCP Registry</span><span class="conn-badge">official listing</span></div>
-            <p>Published where every syncing client looks.</p>
-            <div class="conn-how"><code>io.github.Vortx-AI/emem</code></div>
-          </article>
-
-          <article class="conn-card reveal reveal-d2">
-            <div class="conn-top"><span class="conn-name">Dify</span><span class="conn-badge">marketplace plugin</span></div>
-            <p>Every emem tool, native in your workflows. No key to configure.</p>
-            <div class="conn-how"><a href="https://marketplace.dify.ai/plugin/vortx-ai/emem" target="_blank" rel="noopener">marketplace.dify.ai/plugin/vortx-ai/emem</a></div>
-          </article>
-        </div>
-
-        <p class="conn-foot reveal">No lock-in past these doors: Cursor, LangChain, any MCP client, REST, the Python and TypeScript SDKs, a live A2A endpoint, and the <a href="https://emem.dev/a2a" target="_blank" rel="noopener">Agora</a>, the open channel where agents co-build on the memory.<br>One server behind every one: <a href="https://emem.dev/mcp" target="_blank" rel="noopener">https://emem.dev/mcp</a> · no key to read, receipts everywhere</p>
-
-        <div class="talk-strip reveal" role="group" aria-label="Talk to the team about your agent">
-          <p><b>Wiring emem into your agent?</b> Bring your repo to free office hours: whoever on the team is closest to your problem reads it with you. No pitch, nothing to buy first.</p>
-          <div class="talk-actions">
-            <button type="button" class="btn btn-primary" data-open-pricing onclick="gtag('event','pricing_open_click',{'link_location':'connectors'});">Talk agents with us</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- Shipped today: the protocol surface, no roadmap in this list -->
     <section class="section" id="shipped" aria-labelledby="shipped-h">
       <div class="wrap">
@@ -681,15 +651,15 @@
         <div class="pillars reveal" aria-label="What the satellite is designed to be">
           <div class="pillar">
             <span class="pillar-k">Fully traceable</span>
-            <p>Signed where it is sensed. Keys minted for the instrument itself, every frame signed at capture, so the chain from photon to fact CID has no unsigned hop anyone must take on faith.</p>
+            <p>Signed where it is sensed: no unsigned hop from photon to fact CID.</p>
           </div>
           <div class="pillar">
             <span class="pillar-k">Direct to emem</span>
-            <p>No data lake between orbit and answer. The downlink writes straight into the protocol: the moment an observation lands, it is a citable, signed fact with a receipt, not a file waiting in an archive.</p>
+            <p>No data lake between orbit and answer: an observation lands as a citable, signed fact.</p>
           </div>
           <div class="pillar">
             <span class="pillar-k">Decentralised</span>
-            <p>What it sees lands in the witnessed, Merkle-proofed public log, and anyone can hold a copy. Verification never asks our permission, and nobody, including us, can quietly rewrite the record.</p>
+            <p>It lands in the witnessed public log. Nobody, including us, can quietly rewrite it.</p>
           </div>
         </div>
 
@@ -738,7 +708,7 @@
       <div class="wrap">
         <div class="section-head reveal">
           <h2 class="section-title" id="products-h">One protocol: <em>emem.</em></h2>
-          <p class="section-lead">Everything we ship is emem or built on it. The protocol is the product; the applications prove it.</p>
+          <p class="section-lead">The protocol is the product. The applications prove it.</p>
         </div>
 
         <div class="products-pair products-solo">
@@ -1054,16 +1024,6 @@
               <a href="https://merchant.razorpay.com/policy/RxszPvkxcI83lo/shipping" target="_blank" rel="noopener">Shipping</a>
             </div>
           </div>
-        </div>
-        <div class="footer-right">
-          <div class="footer-map" role="img" aria-label="Live map of where the open Earth memory already holds signed facts. Each dot is a one-degree bin with at least one signed observation; brighter dots hold more.">
-            <div class="footer-map-land"></div>
-            <svg class="footer-map-pins" viewBox="0 0 950 620" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <g id="map-live" class="map-live"></g>
-              <g class="map-pin map-pin-vortx"><title>Vortx AI · Bengaluru (HQ)</title><circle class="map-pin-pulse" cx="680" cy="253"/><circle class="map-pin-core" cx="680" cy="253" r="7"/></g>
-            </svg>
-          </div>
-          <p class="map-cap"><span id="map-cap-text">the memory, live: every dot a place emem already knows</span> · <a href="https://emem.dev/v1/coverage_map.svg" target="_blank" rel="noopener">coverage_map.svg</a></p>
         </div>
       </div>
       <p class="site-release" id="site-release" hidden>this site, as served, is content-addressed · release <a id="site-release-cid" href="/.well-known/site-manifest.json"></a> · every file&rsquo;s blake3 is inside · re-check offline with <code>tools/site_manifest.py --verify</code></p>

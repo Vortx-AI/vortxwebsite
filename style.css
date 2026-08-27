@@ -941,7 +941,7 @@ a.soon-card:hover { transform: translateY(-2px); border-color: var(--ink-faint);
 }
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.3fr 1fr;
+  grid-template-columns: 1fr;
   gap: clamp(36px, 6vw, 80px);
   align-items: start;
 }
