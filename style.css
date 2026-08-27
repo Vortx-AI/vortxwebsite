@@ -1996,3 +1996,16 @@ body.pm-open { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) {
   .map-dot { animation: none; }
 }
+
+/* The site's own release token, under the footer */
+.site-release {
+  margin-top: clamp(28px, 4vw, 44px);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  line-height: 1.7;
+  color: var(--ink-faint);
+  overflow-wrap: anywhere;
+}
+.site-release a { color: var(--teal-ink); text-decoration: underline; text-underline-offset: 2px; }
+.site-release a:hover { color: var(--teal); }
+.site-release code { color: var(--ink-soft); }

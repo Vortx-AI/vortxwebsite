@@ -323,3 +323,23 @@
       })
       .catch(function () { /* seeds stay up; the map never goes dark */ });
   })();
+
+  // --- The site's own release token ---
+  // CI reseals .well-known/site-manifest.json on every deploy: each served
+  // file's blake3, and one CID over the whole set, emem-style. Shown only
+  // when the manifest is reachable, full CID, never truncated.
+  (function () {
+    if (!window.fetch) return;
+    var wrap = document.getElementById('site-release');
+    var cidEl = document.getElementById('site-release-cid');
+    if (!wrap || !cidEl) return;
+    fetch('/.well-known/site-manifest.json')
+      .then(function (r) { if (!r.ok) throw new Error('http ' + r.status); return r.json(); })
+      .then(function (m) {
+        if (m && typeof m.cid === 'string' && m.cid.length >= 32) {
+          cidEl.textContent = m.cid;
+          wrap.hidden = false;
+        }
+      })
+      .catch(function () { /* file:// or pre-first-release: stay hidden */ });
+  })();

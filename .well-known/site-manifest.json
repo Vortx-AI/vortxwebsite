@@ -1,0 +1,145 @@
+{
+  "schema": "vortx.site_manifest.v1",
+  "cid": "bjv5u5feeyffzznxuw3sx3i3tkkfp275nwx6buh442mrc57migma",
+  "commit": "c2756a3966059bfb0e67128d5be77b5a7e1fa293",
+  "generated_at": "2026-08-27T04:37:17Z",
+  "files": {
+    ".nojekyll": {
+      "blake3": "v4jutopv7gq2nicajxvdnxgjjgn4wjojvxarfn6mtkj4vza7gjra",
+      "bytes": 0
+    },
+    ".well-known/agent-card.json": {
+      "blake3": "xq66suvihds5n2ik7jnjalwk5luw6ruujfm2usqmiuw2mozkalvq",
+      "bytes": 5928
+    },
+    "404.html": {
+      "blake3": "7sqtkupi4gt3dive2j6ojp7hwswnjgwkhfhyoz34mu7xp7haaetq",
+      "bytes": 2402
+    },
+    "CNAME": {
+      "blake3": "aaa4wyxh5ofaowtjpuj6wmzlkqdatayykjztfm4h776nxnlk46pa",
+      "bytes": 8
+    },
+    "agents.md": {
+      "blake3": "dtlescwkm2yy23otdkqpoyswolwkue4zxsblgmj2opbdyhczcgtq",
+      "bytes": 8517
+    },
+    "apple-touch-icon.png": {
+      "blake3": "tmchv7hjynhrjydegkd3acu7oa3qh372hxubq42iwxv2zs3fy2pq",
+      "bytes": 47782
+    },
+    "assets/og-card.png": {
+      "blake3": "nlq5ny4yxbpf5nfcicb6a5raolnfzb6ima66mbk6nqx3qpcaipqa",
+      "bytes": 194598
+    },
+    "assets/og-card.svg": {
+      "blake3": "lu7sdx3fbsaaphjzzwlgn22k63eqknqm2gmwlctyg4fvh6hdlgna",
+      "bytes": 4692
+    },
+    "assets/og-logo.png": {
+      "blake3": "ewgzexi6j6zkedz7ypwevs3gslrp26ggpullopzritpknso7xp3q",
+      "bytes": 316155
+    },
+    "assets/vortx-logo.png": {
+      "blake3": "gspmihuldzbhpv3hsefsrhivtdn55swfawexvu7nnbzrhoz47fpq",
+      "bytes": 26716
+    },
+    "assets/world-map-eq.svg": {
+      "blake3": "ric3rnanypt3m66nk7bi56dklxg63jxbnyy7mo4ek7tiy4hq2o7a",
+      "bytes": 71964
+    },
+    "assets/world-map.svg": {
+      "blake3": "kgsgl2xwie7ldpjs5gucgwuqmjrgt5gmgavsykntqua64ntm6a3q",
+      "bytes": 51390
+    },
+    "contact.html": {
+      "blake3": "ycjsr2uxqhroajnmlwjjx3oluz37bxkel6pqw2fsm2wc5tindrla",
+      "bytes": 4505
+    },
+    "emem/index.html": {
+      "blake3": "gmbzzptxt7w4ek4gmk4zfeawdm4gkxf3ghdfcl6qzux2f3ybn2jq",
+      "bytes": 28911
+    },
+    "eudr/index.html": {
+      "blake3": "q5ncsqzhne2eznrjwzwp2mfcwu2ifm5u7sgi62ztpxpppdmyuz2q",
+      "bytes": 10376
+    },
+    "favicon.ico": {
+      "blake3": "hc653mmrrq6nslaqgige5cg3hy23dwkupouqezuytlrzjhewezxa",
+      "bytes": 4286
+    },
+    "geo-qa/index.html": {
+      "blake3": "jzorkyjh6jumh26lbf7kfuc7razxqve4osrdcsige3ieb5ps2oqq",
+      "bytes": 20766
+    },
+    "index.html": {
+      "blake3": "5spmbntpd2nkgemrpgrieqsiqfwi6twaluhhi65sjjp6xegt4f7a",
+      "bytes": 75387
+    },
+    "llms.txt": {
+      "blake3": "6pxijnf4fu7vteoly4d5ulnfrtvr6ivdqdra6r2daehgmmchd4rq",
+      "bytes": 9267
+    },
+    "log/index.html": {
+      "blake3": "vt72evpgrbdhvexyirdm3ymnxx2fqzanttvvyirhu7dmmyduxpea",
+      "bytes": 11513
+    },
+    "main.js": {
+      "blake3": "kl2goowftf74kuqt55zugqb3vxcynusqm24xredsr6icuwr6zvpa",
+      "bytes": 16011
+    },
+    "payments/checkout.js": {
+      "blake3": "wc5hjwbb2jetxfzcanrqi63xydbq7lialsm5rcf3mgwukzy4vr4q",
+      "bytes": 11765
+    },
+    "payments/config.js": {
+      "blake3": "25tgq2jrh2vbjnlporrm7dmzcz3qzt7htjvf3k2z75taio2sc6vq",
+      "bytes": 2847
+    },
+    "privacy.html": {
+      "blake3": "vn754wsaduqv5mkivzhiqbzhzlfz2gj6b6z34ogawcfegp7bt6qa",
+      "bytes": 8850
+    },
+    "propcheck/index.html": {
+      "blake3": "7hbtmaq6y3ilqbqlsxkoxksrawyoogoaqft4lvd66klpr2fu6xea",
+      "bytes": 10312
+    },
+    "refund.html": {
+      "blake3": "ngyys3jah75itwywohmhcqzh75dcqxe6lu77tc3qubr4l37c3fva",
+      "bytes": 5308
+    },
+    "research/index.html": {
+      "blake3": "kq5qinf4vc6zi2gdc7vr522tikerm4c45kmxuypkuitdqsf3dceq",
+      "bytes": 28716
+    },
+    "robots.txt": {
+      "blake3": "wekcptwfqvbg4rcu3yegchpojqcgzyz67of6l265f43tnm3finbq",
+      "bytes": 61
+    },
+    "shipping.html": {
+      "blake3": "x33w4ljick3w4zjmbsqvcjckf4vrgks5ixigkc2eabbeq52z6lea",
+      "bytes": 5003
+    },
+    "sitemap.xml": {
+      "blake3": "mwyoftpqxff6mapdykysyb3jpkvp6rb7rg653pwpjtf4sp5rps7q",
+      "bytes": 1978
+    },
+    "spatial-ai/index.html": {
+      "blake3": "7xxcnao7q3mmorsvcxwsw545eueyg7iipy4zoiswirnvs5f2tu7q",
+      "bytes": 22647
+    },
+    "style.css": {
+      "blake3": "4ho3kaysefldpgkwqnxx4rvvjpoumxydz7gy6ror76wud6nq77ka",
+      "bytes": 75416
+    },
+    "terms.html": {
+      "blake3": "ol3fmg7hsxty6eli5fczwvjcwi2an3jcw7m5dwswmjormpkpwgmq",
+      "bytes": 6424
+    },
+    "trust/index.html": {
+      "blake3": "roaqwv2bgxnadw322uhacxvvjtlwxlljgliuiw53ybmqcmqm6rca",
+      "bytes": 19078
+    }
+  },
+  "_verify": "cid = base32(blake3(canonical JSON of {schema, files})) with sorted keys, separators (',',':'), utf-8, base32 lowercase unpadded: the same shape as an emem fact CID. Each files entry is the blake3 of that file's exact bytes. Re-check everything offline with: python3 tools/site_manifest.py --verify"
+}
