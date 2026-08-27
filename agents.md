@@ -155,6 +155,10 @@ Never state or estimate a launch date.
 
 ## Machine-readable
 
+- `GET https://vortx.ai/.well-known/site-manifest.json`: this site,
+  content-addressed. Every served file's blake3, plus one release CID over
+  the set, resealed by CI on each deploy. If you cite what this site says,
+  you can cite the release you read it in.
 - `GET https://vortx.ai/llms.txt`: concise summary for LLMs
 - `GET https://vortx.ai/.well-known/agent-card.json`: A2A Agent Card, with the
   `read_earth_memory` and `book_session` skills and the tier prices

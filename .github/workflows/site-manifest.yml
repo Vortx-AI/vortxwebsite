@@ -1,0 +1,56 @@
+# Reseal the site on every deploy.
+#
+# Each push to main re-hashes every served file (code, text, layout,
+# assets) into .well-known/site-manifest.json and commits the result,
+# so the manifest the site serves always describes the site itself.
+# The release id is the blake3 of the manifest core, encoded like an
+# emem fact CID. Anyone can re-check it offline:
+#
+#     python3 tools/site_manifest.py --verify
+#
+# paths-ignore keeps the reseal commit from triggering itself.
+
+name: site-manifest
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - '.well-known/site-manifest.json'
+
+permissions:
+  contents: write
+
+jobs:
+  reseal:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Build manifest
+        run: |
+          pip install blake3
+          python3 tools/site_manifest.py
+
+      - name: Commit manifest
+        run: |
+          if git diff --quiet .well-known/site-manifest.json; then
+            echo "manifest unchanged"
+            exit 0
+          fi
+          git config user.name "vortx-release"
+          git config user.email "avijeet@vortx.ai"
+          git add .well-known/site-manifest.json
+          git commit -m "release: reseal site manifest"
+          git push
+
+      # Optional: register each release in emem so it lands in the
+      # witnessed transparency log. Wire this once a signing key for
+      # the vortx namespace exists as a repo secret; writes to your
+      # own namespace are free with a signature (see GET
+      # https://emem.dev/v1/enlist for enlistment and the write API).
+      # Until then the manifest is still fully verifiable offline.

@@ -72,6 +72,9 @@ The protocol is free and Apache-2.0. The team's time is what costs money. Calls 
 - Model: TerraGround-Gemma-4-12B-LoRA: https://huggingface.co/avijeetsingh1608/TerraGround-Gemma-4-12B-LoRA
 - Model: TerraGround-Gemma-4-E2B-LoRA: https://huggingface.co/avijeetsingh1608/TerraGround-Gemma-4-E2B-LoRA
 
+## The site itself is content-addressed
+Every file this site serves (pages, styles, scripts, images, these text files) is blake3-hashed into https://vortx.ai/.well-known/site-manifest.json, and the manifest core's own blake3, encoded like an emem fact CID, is the release id shown in the footer. CI reseals it on every deploy. Re-check offline: python3 tools/site_manifest.py --verify (source in the repo).
+
 ## Contact
 - Email: avijeet@vortx.ai
 - GitHub: https://github.com/Vortx-AI
