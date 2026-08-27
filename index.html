@@ -378,11 +378,11 @@
         <div class="pillars reveal reveal-d1" aria-label="How the memory works">
           <div class="pillar">
             <span class="pillar-k">Substrates</span>
-            <p>One memory, many observers. Satellite observation anchors it today. The live registry holds candidate profiles for drones, robots, CCTV, telescopes and microscopes, and for synthetic substrates: codebases, data tables, model checkpoints, execution traces. All of it maps back to Earth.</p>
+            <p>One memory, many observers. Satellite observation anchors it today, and the live registry is a written admission contract per observer class: drones, robots, CCTV, telescopes, industrial machines join only with their device's complete OS execution trace. Synthetic substrates map back to Earth too.</p>
           </div>
           <div class="pillar">
             <span class="pillar-k">Tokens</span>
-            <p>Every observation is one signed, content-addressed token an agent can cite: facts, bundles, entities, rasters, cubes. One handle, the exact bytes, months later.</p>
+            <p>Nine token shapes, one syntax: facts, bundles, entities, cells, rasters, cubes, rastersets, and for devices, execution traces and hardware attestations. One handle, the exact bytes, months later.</p>
           </div>
           <div class="pillar">
             <span class="pillar-k">Verification</span>
@@ -610,7 +610,7 @@
           </article>
         </div>
 
-        <p class="conn-foot reveal">No lock-in past these doors: Cursor, LangChain, any MCP client, REST, the Python and TypeScript SDKs, an A2A agent card.<br>One server behind every one: <a href="https://emem.dev/mcp" target="_blank" rel="noopener">https://emem.dev/mcp</a> · no key to read, receipts everywhere</p>
+        <p class="conn-foot reveal">No lock-in past these doors: Cursor, LangChain, any MCP client, REST, the Python and TypeScript SDKs, a live A2A endpoint, and the <a href="https://emem.dev/a2a" target="_blank" rel="noopener">Agora</a>, the open channel where agents co-build on the memory.<br>One server behind every one: <a href="https://emem.dev/mcp" target="_blank" rel="noopener">https://emem.dev/mcp</a> · no key to read, receipts everywhere</p>
 
         <div class="talk-strip reveal" role="group" aria-label="Talk to the team about your agent">
           <p><b>Wiring emem into your agent?</b> Bring your repo to free office hours: whoever on the team is closest to your problem reads it with you. No pitch, nothing to buy first.</p>
@@ -630,8 +630,8 @@
         </div>
         <div class="pillars" aria-label="What the protocol ships today">
           <div class="pillar reveal">
-            <span class="pillar-k">Six token types</span>
-            <p>facts, bundles, entities, rasters, cubes, rastersets. One handle re-hydrates to the exact signed bytes, for any agent, months later.</p>
+            <span class="pillar-k">Nine token shapes</span>
+            <p>facts, bundles, entities, cells, rasters, cubes, rastersets, execution traces, hardware attestations. One handle re-hydrates to the exact signed bytes, for any agent, months later.</p>
           </div>
           <div class="pillar reveal reveal-d1">
             <span class="pillar-k">A public log</span>
@@ -647,7 +647,7 @@
           </div>
           <div class="pillar reveal reveal-d1">
             <span class="pillar-k">Every interface</span>
-            <p>MCP for agents, REST for anything, Python and TypeScript SDKs, an A2A agent card, and live listings: @emem in ChatGPT, the GitHub MCP Registry, the VS Code gallery.</p>
+            <p>MCP for agents, REST for anything, Python and TypeScript SDKs, a live A2A endpoint where every tool is a skill, and listings where users already are: @emem in ChatGPT, the GitHub MCP Registry, the VS Code gallery.</p>
           </div>
           <div class="pillar reveal reveal-d2">
             <span class="pillar-k">Caveats built in</span>
@@ -773,7 +773,8 @@
             <ul class="product-bullets">
               <li><b>Free and open.</b> Read it without a key, an account, or a contract.</li>
               <li><b>Checkable offline.</b> Every fact is signed and content-addressed, so you never have to trust the server.</li>
-              <li><b>Every interface.</b> MCP, REST, Python, TypeScript, and an A2A agent card.</li>
+              <li><b>Guarded.</b> emem-guard, the allow/deny verdict server for AI checkpoints: a cited claim that stops verifying gets a denial with a machine-readable fix.</li>
+              <li><b>Every interface.</b> MCP, REST, Python, TypeScript, and a live A2A endpoint where every tool is a skill.</li>
             </ul>
             <div class="btnrow" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
               <a href="https://emem.dev" class="btn btn-gold" target="_blank" rel="noopener" onclick="gtag('event','click_emem_dev',{'link_location':'products_section'});">
@@ -1059,6 +1060,7 @@
             <div class="footer-col">
               <h4>Lab</h4>
               <a href="/research/">Research</a>
+              <a href="https://emem.dev/a2a" target="_blank" rel="noopener">Agora · agent channel</a>
               <a href="/log/">Log</a>
               <a href="/trust/">Trust &amp; security</a>
               <a href="/spatial-ai/">What is spatial AI?</a>

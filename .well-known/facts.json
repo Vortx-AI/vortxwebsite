@@ -19,9 +19,9 @@
       "derive": "counts.live_total"
     },
     "emem.token_types": {
-      "value": 6,
+      "value": 9,
       "source": "https://emem.dev/llms.txt",
-      "derive": "the token grammar: fact, bundle, entity, raster, cube, rasterset",
+      "derive": "the Token shapes section: fact, cell, entity, bundle, raster, cube, rasterset, trace, attestation",
       "kind": "structural"
     },
     "emem.fanout_min_readings": {
@@ -34,7 +34,8 @@
   "checks": [
     { "fact": "emem.tool_count", "file": "llms.txt", "pattern": "{value} tools in the live catalog" },
     { "fact": "emem.tool_count", "file": "agents.md", "pattern": "{value} tools in the live catalog" },
-    { "fact": "emem.token_types", "file": "index.html", "pattern": "Six token types" },
+    { "fact": "emem.token_types", "file": "index.html", "pattern": "Nine token shapes" },
+    { "fact": "emem.token_types", "file": "emem/index.html", "pattern": "Nine kinds of" },
     { "fact": "emem.fanout_min_readings", "file": "index.html", "pattern": "twenty-plus signed readings" }
   ]
 }

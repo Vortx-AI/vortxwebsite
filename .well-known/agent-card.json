@@ -1,7 +1,7 @@
 {
   "protocolVersion": "0.3.0",
   "name": "Vortx AI",
-  "description": "Spatial AI lab; maker and maintainer of the emem protocol. The architecture is an encoder and a decoder: satellites and detectors encode the world into signed, content-addressed tokens (emem:fact:, emem:bundle:, emem:entity:, emem:raster:, emem:cube:, emem:rasterset:), and an @emem call decodes them inside an agent's reasoning. emem is the deterministic half (Apache-2.0, free to read, verifiable offline by anyone); the planned satellite is the evidence half, on a published launch plan with deliberately no date. The memory is multi-substrate: satellite Earth observation anchors it today, and the live registry at https://emem.dev/v1/substrates carries physical and synthetic candidates. geo.qa is the same memory agent on a private tenant. The only thing for sale is team time: free office hours, and a paid integration session; calls are taken by whoever on the team is closest to the problem.",
+  "description": "Spatial AI lab; maker and maintainer of the emem protocol. The architecture is an encoder and a decoder: satellites and detectors encode the world into signed, content-addressed tokens (nine shapes: emem:fact:, emem:cell:, emem:entity:, emem:bundle:, emem:raster:, emem:cube:, emem:rasterset:, emem:trace:, emem:attestation:), and an @emem call decodes them inside an agent's reasoning. emem is the deterministic half (Apache-2.0, free to read, verifiable offline by anyone); the planned satellite is the evidence half, on a published launch plan with deliberately no date. The memory is multi-substrate: satellite Earth observation anchors it today, and the live registry at https://emem.dev/v1/substrates carries physical and synthetic candidates. geo.qa is the same memory agent on a private tenant. The only thing for sale is team time: free office hours, and a paid integration session; calls are taken by whoever on the team is closest to the problem.",
   "url": "https://vortx.ai/",
   "preferredTransport": "JSONRPC",
   "provider": {
@@ -59,11 +59,23 @@
       "transparencyLog": "https://emem.dev/v1/log/sth",
       "topics": "https://emem.dev/v1/topics",
       "substrates": "https://emem.dev/v1/substrates",
+      "devicePlatforms": "https://emem.dev/v1/device_platforms",
       "coverageMap": "https://emem.dev/v1/coverage_map.svg",
       "verifierSpec": "https://emem.dev/v1/verifier_spec",
       "benchmark": "https://emem.dev/v1/benchmark",
       "ask": "https://emem.dev/v1/ask",
+      "guardVerdict": "https://emem.dev/v1/guard/verdict",
       "sceneImagery": "https://emem.dev/v1/cells/{cell64}/scene.png"
+    },
+    "a2a": {
+      "card": "https://emem.dev/.well-known/agent-card.json",
+      "tasksSync": "https://emem.dev/a2a/tasks",
+      "tasksAsync": "https://emem.dev/v1/a2a/tasks",
+      "skillSearch": "https://emem.dev/v1/a2a/skills?q=",
+      "events": "https://emem.dev/v1/memory/sse",
+      "agora": "https://emem.dev/a2a",
+      "inbox": "https://emem.dev/v1/inbox",
+      "note": "every emem tool is published as an A2A skill; the Agora is the open channel where agents co-build on the memory"
     }
   },
   "x-connectors": {
