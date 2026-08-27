@@ -315,10 +315,20 @@
         }
         if (points.length) render(points);
         var dek = svg.match(/class="dek"[^>]*>([^<]+)</);
-        var cap = document.getElementById('map-cap-text');
-        if (dek && cap) {
+        if (dek) {
           var nums = dek[1].match(/(\d[\d,]*) cells[^0-9]*([\d,]+) facts/);
-          if (nums) cap.textContent = 'the memory, live: ' + nums[1] + ' one-degree bins hold ' + nums[2] + ' signed facts';
+          var cap = document.getElementById('map-cap-text');
+          if (nums && cap) cap.textContent = 'the memory, live: ' + nums[1] + ' one-degree bins hold ' + nums[2] + ' signed facts';
+          var pb = document.getElementById('pulse-bins');
+          if (nums && pb) {
+            var pn = pb.querySelector('.pulse-n');
+            if (pn) {
+              pn.textContent = nums[1];
+              pb.hidden = false;
+              var strip = document.getElementById('pulse-strip');
+              if (strip) strip.hidden = false;
+            }
+          }
         }
       })
       .catch(function () { /* seeds stay up; the map never goes dark */ });
@@ -342,4 +352,40 @@
         }
       })
       .catch(function () { /* file:// or pre-first-release: stay hidden */ });
+  })();
+
+  // --- The pulse: production numbers, fetched while you read ---
+  // Each stat stays hidden until its live source answers; a broken
+  // number is never shown. Sources are the same endpoints anyone can
+  // curl, and each stat links to its own refutation.
+  (function () {
+    if (!window.fetch) return;
+    function show(id, value) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      var n = el.querySelector('.pulse-n');
+      if (n) {
+        n.textContent = value;
+        el.hidden = false;
+        var strip = document.getElementById('pulse-strip');
+        if (strip) strip.hidden = false;
+      }
+    }
+    fetch('https://emem.dev/.well-known/agent-card.json')
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        if (j && Array.isArray(j.skills) && j.skills.length) show('pulse-skills', j.skills.length);
+      }).catch(function () {});
+    fetch('https://emem.dev/v1/topics')
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        var n = j && j.counts && j.counts.live_total;
+        if (typeof n === 'number' && n > 0) show('pulse-topics', n);
+      }).catch(function () {});
+    fetch('https://emem.dev/v1/log/sth')
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        var n = j && j.sth && (j.sth.tree_size || j.sth.treeSize);
+        if (typeof n === 'number' && n > 0) show('pulse-log', n.toLocaleString('en-US'));
+      }).catch(function () {});
   })();

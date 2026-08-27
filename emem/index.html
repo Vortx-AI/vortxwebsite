@@ -158,16 +158,19 @@
     <section class="section">
       <div class="wrap">
         <div class="section-head reveal">
-          <h2 class="section-title">Six kinds of <em>token.</em></h2>
-          <p class="section-lead">Everything in emem is a signed, content-addressed handle that re-hydrates to exact bytes. One grammar, six shapes.</p>
+          <h2 class="section-title">Nine kinds of <em>token.</em></h2>
+          <p class="section-lead">Everything in emem is a signed, content-addressed handle. One grammar, nine shapes; they do not all carry the same guarantee, and each one says what citing it proves.</p>
         </div>
-        <div class="pillars reveal reveal-d1" aria-label="The six token types">
-          <div class="pillar"><span class="pillar-k">emem:fact:</span><p>One signed observation at one cell. The atom of the protocol; what the receipts sign.</p></div>
+        <div class="pillars reveal reveal-d1" aria-label="The nine token shapes">
+          <div class="pillar"><span class="pillar-k">emem:fact:</span><p>One signed observation at one cell. The atom of the protocol, and the only shape where "same bytes for everyone" holds in full.</p></div>
+          <div class="pillar"><span class="pillar-k">emem:cell:</span><p>A bare place. An address, not a digest: nothing is attached until a fact hangs on it.</p></div>
+          <div class="pillar"><span class="pillar-k">emem:entity:</span><p>A canonical identity for an object, so two agents co-refer instead of describing past each other. A shared reference, not shared bytes.</p></div>
           <div class="pillar"><span class="pillar-k">emem:bundle:</span><p>A set of facts under one handle, so an agent hands over a whole case, not a list of links.</p></div>
-          <div class="pillar"><span class="pillar-k">emem:entity:</span><p>A canonical identity for an object, so two agents co-refer instead of describing past each other.</p></div>
           <div class="pillar"><span class="pillar-k">emem:raster:</span><p>A native-resolution grid over an area: a satellite band, a composite, terrain, or an embedding.</p></div>
           <div class="pillar"><span class="pillar-k">emem:cube:</span><p>That grid carried over time, for change and trajectory questions.</p></div>
           <div class="pillar"><span class="pillar-k">emem:rasterset:</span><p>Several rasters as one re-derivable set, pinned to the recipe that made them.</p></div>
+          <div class="pillar"><span class="pillar-k">emem:trace:</span><p>One verified OS execution trace: how a robot, drone, or sensor actually ran when it produced a reading.</p></div>
+          <div class="pillar"><span class="pillar-k">emem:attestation:</span><p>A device's platform evidence: which hardware root of trust vouched for its key.</p></div>
         </div>
       </div>
     </section>

@@ -56,6 +56,8 @@
         <a href="https://emem.dev" class="nav-link" target="_blank" rel="noopener">Docs</a>
         <a href="https://github.com/Vortx-AI/emem" class="nav-link" target="_blank" rel="noopener">GitHub</a>
         <a href="/#verify" class="nav-link">Playground</a>
+        <a href="/#connectors" class="nav-link">Connectors</a>
+        <a href="/#satellite" class="nav-link">Satellite</a>
         <a href="/#products" class="nav-link">Products</a>
         <a href="/#consult" class="nav-link">Sessions</a>
         <a href="/research/" class="nav-link">Research</a>
@@ -65,7 +67,7 @@
           <svg viewBox="0 0 16 16" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/></svg>
           Star emem
         </a>
-        <a href="/#consult" class="btn btn-primary btn-sm">Book a session</a>
+        <a href="/#consult" class="btn btn-primary btn-sm">Talk to us</a>
       </div>
       <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu"><span></span><span></span></button>
     </div>
@@ -83,6 +85,15 @@
     <section class="section" style="padding-top:0;">
       <div class="wrap" style="max-width:740px;">
         <div class="prose reveal">
+          <h3>August 27, 2026: The product upgrade, sealed</h3>
+          <p>Rebuilt the site around what is actually live. A <a href="/#connectors">connectors section</a> for the doors users already have (@emem in ChatGPT, the GitHub MCP Registry, VS Code, Claude, Dify), the <a href="/#satellite">satellite launch plan</a> published as phases with deliberately no date, and the footer map replaced by the live memory itself: every dot a one-degree bin holding signed facts, straight from <a href="https://emem.dev/v1/coverage_map.svg" target="_blank" rel="noopener">coverage_map.svg</a>. The site now seals itself too: every served file is blake3-hashed into <a href="/.well-known/site-manifest.json">one release manifest</a> whose CID sits in the footer, and every number we assert about emem lives in a <a href="/.well-known/facts.json">facts registry</a> with the live source that can refute it; CI turns red when the world moves and we have not.</p>
+
+          <h3>August 2026: The memory grew devices, a front door for agents, and a guard</h3>
+          <p>emem's token family is nine shapes now: <code>emem:trace:</code> (a verified OS execution trace of the machine that produced a reading) and <code>emem:attestation:</code> (a device's hardware root-of-trust evidence) joined the grammar, alongside the bare <code>emem:cell:</code> address. The <a href="https://emem.dev/v1/substrates" target="_blank" rel="noopener">substrate registry</a> became a written admission contract: robots, drones, CCTV and industrial machines join only with their complete OS execution trace, verified against sixteen whitelisted hardware platforms. Agent-to-agent went live end to end: every tool is an A2A skill, runnable at <code>POST /a2a/tasks</code>, and the <a href="https://emem.dev/a2a" target="_blank" rel="noopener">Agora</a> opened as the collaborative channel where agents co-build on the memory, with a standard, a curriculum, a contacts registry and an inbox. And <a href="https://emem.dev/guard" target="_blank" rel="noopener">emem-guard</a> shipped: an allow/deny verdict server for AI checkpoints, where a cited claim that stops verifying gets a denial with a machine-readable fix.</p>
+
+          <h3>August 24, 2026: Listed where agents live</h3>
+          <p>emem stopped being only an endpoint and became a listing: an app in ChatGPT you reach by mentioning <code>@emem</code>, an official entry in the <a href="https://github.com/mcp/Vortx-AI/emem" target="_blank" rel="noopener">GitHub MCP Registry</a> with one-click install for Copilot and VS Code, a record in the official MCP registry, and a <a href="https://marketplace.dify.ai/plugin/vortx-ai/emem" target="_blank" rel="noopener">Dify marketplace plugin</a> carrying every emem tool with no key to configure.</p>
+
           <h3>July 27, 2026: emem is the product</h3>
           <p>Rebuilt the site around the protocol itself. geo.qa now sits with <a href="/eudr/">eudr.dev</a> and <a href="/propcheck/">propcheck.dev</a> as applications built on emem, and the home page shows the surface that actually ships: six token types, the witnessed transparency log, prediction, and every interface with full, copy-able URLs (pip, npm, MCP, REST, A2A).</p>
 
@@ -138,6 +149,7 @@
             <div class="footer-col">
               <h4>Lab</h4>
               <a href="/research/">Research</a>
+              <a href="https://emem.dev/a2a" target="_blank" rel="noopener">Agora · agent channel</a>
               <a href="/log/">Log</a>
               <a href="/trust/">Trust &amp; security</a>
               <a href="https://github.com/Vortx-AI" target="_blank" rel="noopener">GitHub</a>
@@ -153,22 +165,18 @@
             </div>
           </div>
         </div>
-        <div class="footer-right" aria-hidden="true">
-          <div class="footer-map">
+        <div class="footer-right">
+          <div class="footer-map" role="img" aria-label="Live map of where the open Earth memory already holds signed facts. Each dot is a one-degree bin with at least one signed observation; brighter dots hold more.">
             <div class="footer-map-land"></div>
-            <svg class="footer-map-pins" viewBox="0 0 950 620" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
-              <g class="map-pins">
-                <g class="map-pin"><title>AWS Space Accelerator · Seattle</title><circle class="map-pin-pulse" cx="152" cy="180" style="animation-delay:0s"/><circle class="map-pin-core" cx="152" cy="180" r="9"/></g>
-                <g class="map-pin"><title>NVIDIA Inception · Santa Clara</title><circle class="map-pin-pulse" cx="155" cy="222" style="animation-delay:.45s"/><circle class="map-pin-core" cx="155" cy="222" r="9"/></g>
-                <g class="map-pin"><title>Seraphim Space Mission 15 · London</title><circle class="map-pin-pulse" cx="472" cy="175" style="animation-delay:.9s"/><circle class="map-pin-core" cx="472" cy="175" r="9"/></g>
-                <g class="map-pin"><title>Sisu Launchpad · Helsinki</title><circle class="map-pin-pulse" cx="538" cy="132" style="animation-delay:1.35s"/><circle class="map-pin-core" cx="538" cy="132" r="9"/></g>
-                <g class="map-pin"><title>Qatar Development Bank Accelerator · Doha</title><circle class="map-pin-pulse" cx="610" cy="282" style="animation-delay:1.8s"/><circle class="map-pin-core" cx="610" cy="282" r="9"/></g>
-                <g class="map-pin map-pin-vortx"><title>Vortx AI · Bengaluru (HQ)</title><circle class="map-pin-pulse" cx="682" cy="340" style="animation-delay:2.25s"/><circle class="map-pin-core" cx="682" cy="340" r="11"/></g>
-              </g>
+            <svg class="footer-map-pins" viewBox="0 0 950 620" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <g id="map-live" class="map-live"></g>
+              <g class="map-pin map-pin-vortx"><title>Vortx AI · Bengaluru (HQ)</title><circle class="map-pin-pulse" cx="680" cy="253"/><circle class="map-pin-core" cx="680" cy="253" r="7"/></g>
             </svg>
           </div>
+          <p class="map-cap"><span id="map-cap-text">the memory, live: every dot a place emem already knows</span> · <a href="https://emem.dev/v1/coverage_map.svg" target="_blank" rel="noopener">coverage_map.svg</a></p>
         </div>
       </div>
+      <p class="site-release" id="site-release" hidden>this site, as served, is content-addressed · release <a id="site-release-cid" href="/.well-known/site-manifest.json"></a> · every file&rsquo;s blake3 is inside · re-check offline with <code>tools/site_manifest.py --verify</code></p>
       <div class="footer-bottom">
         <p>&copy; 2026 Vortx AI Private Limited. Made on Earth, for Earth.</p>
         <p><a href="/contact">Contact</a> · CIN U72200JH2024PTC023101</p>

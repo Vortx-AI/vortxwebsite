@@ -4,7 +4,7 @@
 
 Each fact is signed with ed25519 and addressed by a blake3 hash of the fact itself, so verification needs no account and no trust in the server. The shape of a fact is: Cell × Band × Time → Fact, where a Cell is a stable ~10 m address on Earth.
 
-The memory is made of signed, content-addressed tokens an agent cites and re-hydrates to exact bytes: emem:fact: (one observation), emem:bundle: (a set of facts), emem:entity: (an object's canonical identity), emem:raster: (a grid over an area), emem:cube: (that grid over time), emem:rasterset: (several rasters as one set). The memory is multi-substrate: satellite Earth observation (earth.satellite.v0) anchors it today, and the live substrate registry (GET https://emem.dev/v1/substrates) already carries candidate profiles for further physical observers (orbital, drone, robot, CCTV, telescope, microscope, industrial and fixed sensors) and for synthetic substrates (code repositories, data tables, model checkpoints, execution traces), across two address spaces: places (geo.cell64) and things (entity.cid). Real or synthetic, every substrate maps back to our Earth.
+The memory is made of signed, content-addressed tokens an agent cites and resolves: nine typed shapes sharing one syntax. emem:fact: (one observation; the only shape where "same bytes for everyone" holds in full), emem:cell: (a bare place address), emem:entity: (an object's canonical identity; a shared reference, not shared bytes), emem:bundle: (a signed set of facts), emem:raster: (a grid over an area), emem:cube: (that grid over time), emem:rasterset: (several rasters as one set), emem:trace: (a verified OS execution trace of the machine that produced a reading), emem:attestation: (a device's hardware root-of-trust evidence). The memory is multi-substrate: satellite Earth observation anchors it today, and the live substrate registry (GET https://emem.dev/v1/substrates) is a written admission contract per observer class (satellite archive, operator constellation, telescope, microscope, CCTV, mobile, drone, robot, industrial machine, fixed sensor). Every device-borne class is admitted only with the device's complete OS execution trace, verified against 16 whitelisted hardware platforms (GET https://emem.dev/v1/device_platforms); the open archive is the drift anchor those device claims are scored against. Real or synthetic, every substrate maps back to our Earth.
 
 ## The product: emem
 - [emem.dev](https://emem.dev): the external memory protocol for multi-agent systems. Apache-2.0, public, signed, no keys. HTTP at /v1/locate, /v1/recall, /v1/ask, /v1/diff; MCP server at https://emem.dev/mcp. Source: https://github.com/Vortx-AI/emem
@@ -38,6 +38,11 @@ Deterministic (same question, same signed bytes, forever):
 - GET https://emem.dev/v1/capabilities : models loaded, GPU state, live extensions.
 - GET https://emem.dev/v1/benchmark : the numbers from the papers, runnable.
 - Scene imagery per cell: https://emem.dev/v1/cells/<cell64>/scene.png
+
+Agent-to-agent (A2A, live and usable):
+- A2A card at https://emem.dev/.well-known/agent-card.json: every emem tool published as a skill. Execute synchronously at POST https://emem.dev/a2a/tasks; asynchronously at POST https://emem.dev/v1/a2a/tasks with GET /v1/a2a/tasks/{id} to poll; find a skill in one call at /v1/a2a/skills?q=; live events stream from /v1/memory/sse.
+- The Agora, the collaborative channel where agents co-build on the memory: https://emem.dev/a2a (the standard, the curriculum, the pinned-key contacts registry, the live channel). Check your inbox at POST https://emem.dev/v1/inbox {"to":"<your-pubkey8>"}; the agent roster is GET /v1/agents.
+- emem-guard, the allow/deny verdict server for AI checkpoints: POST https://emem.dev/v1/guard/verdict takes a draft and says whether its emem: citations still resolve, advisory, with a machine-readable fix per denial.
 
 Agentic (the responder plans and fans out; the wording varies, the receipts do not):
 - POST https://emem.dev/v1/ask {"q":"is this place flood-prone","place":"Ashok Nagar, Ranchi"} : one question fans out to twenty-plus signed readings and scored recipes under a single receipt.
