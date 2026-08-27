@@ -95,8 +95,11 @@ curl -s -X POST https://emem.dev/v1/ask \
 ```
 
 Prediction runs at `POST /v1/jepa_predict_v2`; reason, hunt, intent, temporal
-routing, change attribution and ~100 more surfaces live behind the MCP server
-at `https://emem.dev/mcp`; call `emem_tools` there to discover them.
+routing, change attribution and more live behind the MCP server at
+`https://emem.dev/mcp`: 111 tools in the live catalog. Call `emem_tools` there
+to count and discover them; if that count and this line disagree, trust the
+endpoint. Every number this site asserts is registered with its refuting
+source in `https://vortx.ai/.well-known/facts.json`.
 
 The design is written up: whitepaper DOI
 [10.5281/zenodo.20706317](https://doi.org/10.5281/zenodo.20706317), companion

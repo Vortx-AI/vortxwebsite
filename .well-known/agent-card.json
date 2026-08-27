@@ -1,7 +1,7 @@
 {
   "protocolVersion": "0.3.0",
   "name": "Vortx AI",
-  "description": "Decentralised spatial AI lab; maker and maintainer of the emem protocol. emem is a verifiable memory made of signed, content-addressed tokens (emem:fact:, emem:bundle:, emem:entity:, emem:raster:, emem:cube:, emem:rasterset:) that any agent cites and anyone verifies offline. Apache-2.0, free to read and run. Earth observation is the substrate shipped today; the token grammar is not satellite-specific, further substrates are roadmap. geo.qa is the same protocol on a private tenant. The only thing for sale is team time: free office hours, and a paid integration session; calls are taken by whoever on the team is closest to the problem.",
+  "description": "Spatial AI lab; maker and maintainer of the emem protocol. The architecture is an encoder and a decoder: satellites and detectors encode the world into signed, content-addressed tokens (emem:fact:, emem:bundle:, emem:entity:, emem:raster:, emem:cube:, emem:rasterset:), and an @emem call decodes them inside an agent's reasoning. emem is the deterministic half (Apache-2.0, free to read, verifiable offline by anyone); the planned satellite is the evidence half, on a published launch plan with deliberately no date. The memory is multi-substrate: satellite Earth observation anchors it today, and the live registry at https://emem.dev/v1/substrates carries physical and synthetic candidates. geo.qa is the same memory agent on a private tenant. The only thing for sale is team time: free office hours, and a paid integration session; calls are taken by whoever on the team is closest to the problem.",
   "url": "https://vortx.ai/",
   "preferredTransport": "JSONRPC",
   "provider": {
@@ -10,7 +10,7 @@
   },
   "documentationUrl": "https://vortx.ai/agents.md",
   "iconUrl": "https://vortx.ai/assets/og-logo.png",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "capabilities": {
     "streaming": false,
     "pushNotifications": false,
@@ -48,17 +48,45 @@
   "x-emem": {
     "protocol": "emem",
     "docs": "https://emem.dev/llms.txt",
+    "agentCard": "https://emem.dev/.well-known/agent-card.json",
     "source": "https://github.com/Vortx-AI/emem",
     "mcp": "https://emem.dev/mcp",
     "rest": "https://emem.dev/v1/recall",
+    "toolCatalog": "served live by the emem_tools tool; do not hardcode its size, count it there",
+    "surfaces": "deterministic (locate, recall, verify, diff: same signed bytes forever) and agentic (ask, reason, hunt, predict: the responder plans and fans out under one signed receipt)",
     "liveEndpoints": {
       "capabilities": "https://emem.dev/v1/capabilities",
       "transparencyLog": "https://emem.dev/v1/log/sth",
       "topics": "https://emem.dev/v1/topics",
+      "substrates": "https://emem.dev/v1/substrates",
+      "coverageMap": "https://emem.dev/v1/coverage_map.svg",
+      "verifierSpec": "https://emem.dev/v1/verifier_spec",
       "benchmark": "https://emem.dev/v1/benchmark",
       "ask": "https://emem.dev/v1/ask",
       "sceneImagery": "https://emem.dev/v1/cells/{cell64}/scene.png"
     }
+  },
+  "x-connectors": {
+    "chatgpt": { "how": "mention @emem in any chat", "listing": "https://chatgpt.com/plugins/plugin_asdk_app_6a6a0832a59081918b19aec0ddf9ec77" },
+    "githubMcpRegistry": "https://github.com/mcp/Vortx-AI/emem",
+    "vscode": "one click from the MCP gallery, or .vscode/mcp.json with the server url",
+    "claudeCode": "claude mcp add --transport http emem https://emem.dev/mcp",
+    "mcpRegistry": "io.github.Vortx-AI/emem",
+    "dify": "https://marketplace.dify.ai/plugin/vortx-ai/emem",
+    "anythingElse": "any MCP client, REST, pip install ememdev, npm i @vortxai/emem"
+  },
+  "x-satellite": {
+    "status": "a plan, not a date",
+    "thesis": "the evidence half: traceable from photon to token, downlinked straight into emem, landing in the witnessed public log",
+    "phases": ["protocol (shipped)", "payload (in design)", "ground segment (next)", "launch (gated, not dated)"],
+    "details": "https://vortx.ai/#satellite",
+    "agentGuidance": "There is no launch date, deliberately. Never state or estimate one; dates are announced in https://vortx.ai/log/ when real."
+  },
+  "x-site": {
+    "contentAddressed": "https://vortx.ai/.well-known/site-manifest.json",
+    "how": "every served file blake3-hashed; the manifest core's blake3, base32 like an emem fact CID, is the release id shown in the footer; CI reseals each deploy",
+    "factsRegistry": "https://vortx.ai/.well-known/facts.json",
+    "factsNote": "every number this site asserts about emem, each with the live source that can refute it; if registry and endpoint disagree, trust the endpoint"
   },
   "x-research": {
     "whitepaper": { "title": "emem: A Content-Addressed, Verifiable Earth-Memory Protocol for AI Agents over Foundation-Model Embeddings", "doi": "https://doi.org/10.5281/zenodo.20706317" },
