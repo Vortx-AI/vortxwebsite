@@ -1,8 +1,8 @@
 {
   "schema": "vortx.site_manifest.v1",
-  "cid": "vknansdpeygthdcfpr4idgjzffxtod6ozgizsibdgesbynn5yi2a",
-  "commit": "b15da9046f2d63a11229abd717b2977b1dc26e56",
-  "generated_at": "2026-08-27T07:54:47Z",
+  "cid": "jyqjlzgh3vgpwwgvyrbs6n62tz4mffor4szptvlbasrgvbwyrtha",
+  "commit": "53989fb0c4e87a436c2366faf53192e0de8388e7",
+  "generated_at": "2026-08-27T08:05:48Z",
   "files": {
     ".nojekyll": {
       "blake3": "v4jutopv7gq2nicajxvdnxgjjgn4wjojvxarfn6mtkj4vza7gjra",
@@ -77,8 +77,8 @@
       "bytes": 20766
     },
     "index.html": {
-      "blake3": "jicftii7hkrra4lxoh2bhwvhq357epzhke7o6szmmtzubgcl6h2a",
-      "bytes": 76206
+      "blake3": "5vagueeq6xgn4hnuqmzi6zqqmx7l3zqgcjt3shiugtse6bp7droa",
+      "bytes": 74895
     },
     "llms.txt": {
       "blake3": "2slizd6nareonmm6pchkf6aihck7ccly2n7wwji6gpos5axnfckq",
@@ -89,8 +89,8 @@
       "bytes": 14082
     },
     "main.js": {
-      "blake3": "kl2goowftf74kuqt55zugqb3vxcynusqm24xredsr6icuwr6zvpa",
-      "bytes": 16011
+      "blake3": "gt7xzxrrhk6ljviqv5xfmdvnd7ebhjcsdgo5cbfwpsbkiusk57aa",
+      "bytes": 17867
     },
     "payments/checkout.js": {
       "blake3": "wc5hjwbb2jetxfzcanrqi63xydbq7lialsm5rcf3mgwukzy4vr4q",
@@ -133,8 +133,8 @@
       "bytes": 22647
     },
     "style.css": {
-      "blake3": "rxag5dex3xozewmftqhatmpkk6hpkuinvuq26k3apby6jdtluaia",
-      "bytes": 76182
+      "blake3": "qfpk7c6waw3eisqjg6aeis54oqpg6yhtyzixzpu4sxv5zzdv5xba",
+      "bytes": 78630
     },
     "terms.html": {
       "blake3": "ol3fmg7hsxty6eli5fczwvjcwi2an3jcw7m5dwswmjormpkpwgmq",

@@ -182,7 +182,7 @@
         <div class="hero-copy">
 
           <h1 class="hero-title">The external memory <span class="accent">of our physical world.</span></h1>
-          <p class="hero-plain">Satellites and detectors encode the world into signed tokens. An <b>@emem</b> call decodes them inside your agent's reasoning. The memory is the deterministic half, the satellite is the evidence half. Free to read, checkable offline.</p>
+          <p class="hero-plain">Satellites, observatories, robots, cars, machines and software encode the world into signed tokens. <b>emem is the global decoder:</b> an <b>@emem</b> call streams the evidence into your agent's reasoning. Free to read. Checkable offline.</p>
           <div class="hero-actions">
             <a href="https://chatgpt.com/plugins/plugin_asdk_app_6a6a0832a59081918b19aec0ddf9ec77" class="btn btn-primary btn-lg" target="_blank" rel="noopener" onclick="gtag('event','connector_click',{'connector':'chatgpt','link_location':'hero'});">Talk to @emem in ChatGPT</a>
             <a href="#verify" class="btn btn-ghost btn-lg">See a live signed fact</a>
@@ -362,23 +362,17 @@
         <div class="thesis-text reveal" style="max-width:1080px;margin-inline:auto;text-align:center;">
           <h2 class="section-title" id="thesis-h" style="margin-bottom:30px;">An agent is only as good as <em>what it remembers.</em></h2>
           <p>
-            Put agents in production and you'll watch it happen: a session gets
-            compacted and a verified fact becomes a paraphrase. A task hands off
-            and the next agent starts from hearsay. Two models describe the same
-            place and can't agree they mean the same thing. Everyone reaches for
-            a bigger model; we think the gap is memory.
-          </p>
-          <p class="thesis-foot" style="margin-top:20px;">
-            So we split the problem in two. Detectors write the evidence.
-            emem holds it deterministically, as signed tokens any agent can
-            decode back into its reasoning. Earth comes first because the
-            sensors already sit there.
+            Put agents in production and you watch it happen: a verified fact
+            becomes a paraphrase, a hand-off starts from hearsay, two models
+            can't agree they mean the same place. The gap is memory. So we
+            split it in two: encoders write the evidence, one decoder serves
+            it back, signed.
           </p>
         </div>
         <div class="pillars reveal reveal-d1" aria-label="How the memory works">
           <div class="pillar">
             <span class="pillar-k">Substrates</span>
-            <p>One memory, many observers. Satellite observation anchors it today, and the live registry is a written admission contract per observer class: drones, robots, CCTV, telescopes, industrial machines join only with their device's complete OS execution trace. Synthetic substrates map back to Earth too.</p>
+            <p>One memory, many observers, one admission contract: an encoder joins by proving how it produced its reading, execution trace and all. Synthetic substrates map back to Earth too.</p>
           </div>
           <div class="pillar">
             <span class="pillar-k">Tokens</span>
@@ -497,6 +491,30 @@
       </div>
     </section>
 
+    <!-- The encoders: everything that can write to the memory -->
+    <section class="section section--tint" id="encoders" aria-labelledby="encoders-h">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <h2 class="section-title" id="encoders-h">Everything that watches the world <em>can write to it.</em></h2>
+          <p class="section-lead">The encoder roster is a written admission contract, not a waitlist: a device joins by proving how it produced its reading, execution trace and all. <a href="https://emem.dev/v1/substrates" target="_blank" rel="noopener">The registry is live.</a></p>
+        </div>
+        <div class="enc-rail reveal reveal-d1" role="list" aria-label="Encoder classes and their status">
+          <span class="enc" role="listitem"><b>satellite archive</b><i class="enc-live">live · the anchor</i></span>
+          <span class="enc" role="listitem"><b>operator constellations</b><i>contract written</i></span>
+          <span class="enc" role="listitem"><b>telescopes</b><i>contract written</i></span>
+          <span class="enc" role="listitem"><b>microscopes</b><i>contract written</i></span>
+          <span class="enc" role="listitem"><b>CCTV</b><i>contract written</i></span>
+          <span class="enc" role="listitem"><b>vehicles &amp; mobile</b><i>contract written</i></span>
+          <span class="enc" role="listitem"><b>drones</b><i>contract written</i></span>
+          <span class="enc" role="listitem"><b>robots</b><i>contract written</i></span>
+          <span class="enc" role="listitem"><b>industrial machines</b><i>contract written</i></span>
+          <span class="enc" role="listitem"><b>fixed sensors</b><i>contract written</i></span>
+          <span class="enc enc-syn" role="listitem"><b>codebases &amp; AI systems</b><i>synthetic · maps back to Earth</i></span>
+          <span class="enc enc-next" role="listitem"><b>our satellite</b><i><a href="#satellite">a plan, not a date</a></i></span>
+        </div>
+      </div>
+    </section>
+
     <!-- Scene 4: Proof: the live verify widget -->
     <section class="section section--sky" id="verify" aria-labelledby="verify-h">
       <div class="wrap">
@@ -544,7 +562,7 @@
           </div>
 
           <div class="reveal reveal-d1">
-            <p class="section-lead" style="margin-top:0;">The same question, anywhere on Earth. Pick a place, then pull a fresh signed reading straight from emem, in your browser, and watch it verify.</p>
+            <p class="section-lead" style="margin-top:0;">Pick a place. Pull a fresh signed reading straight from production, in your browser. Watch it verify.</p>
             <div class="verify-actions">
               <button type="button" id="pull-live" class="btn btn-primary">
                 <svg class="pl-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13.6 8a5.6 5.6 0 1 1-1.7-4M13.6 2.4V5.2H10.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -569,19 +587,19 @@
         <div class="conn-rail">
           <article class="conn-card reveal">
             <div class="conn-top"><span class="conn-name">ChatGPT</span><span class="conn-badge">app · @emem</span></div>
-            <p>Mention <code>@emem</code> in any chat and ask about a place, e.g. <code>@emem is this parcel flood-prone?</code> The memory answers inline, with the receipt attached.</p>
+            <p>Mention <code>@emem</code> and ask about a place. The answer arrives with its receipt.</p>
             <div class="conn-how"><a href="https://chatgpt.com/plugins/plugin_asdk_app_6a6a0832a59081918b19aec0ddf9ec77" target="_blank" rel="noopener">Open @emem in ChatGPT</a></div>
           </article>
 
           <article class="conn-card reveal reveal-d1">
             <div class="conn-top"><span class="conn-name">GitHub MCP Registry</span><span class="conn-badge">official listing</span></div>
-            <p>An official entry in GitHub&rsquo;s MCP Registry: one-click install for Copilot, and the same listing VS Code reads.</p>
+            <p>An official entry, one click from Copilot.</p>
             <div class="conn-how"><a href="https://github.com/mcp/Vortx-AI/emem" target="_blank" rel="noopener">github.com/mcp/Vortx-AI/emem</a></div>
           </article>
 
           <article class="conn-card reveal reveal-d2">
             <div class="conn-top"><span class="conn-name">VS Code</span><span class="conn-badge">one-click</span></div>
-            <p>Install from the MCP gallery and signed Earth memory sits next to Copilot in your editor, or in <code>.vscode/mcp.json</code>.</p>
+            <p>From the MCP gallery straight into your editor, or via <code>.vscode/mcp.json</code>.</p>
             <div class="conn-how">
               <code>"emem": { "type": "http", "url": "https://emem.dev/mcp" }</code>
               <button type="button" class="install-copy" data-copy='{ "servers": { "emem": { "type": "http", "url": "https://emem.dev/mcp" } } }' aria-label="Copy VS Code MCP config">copy</button>
@@ -590,7 +608,7 @@
 
           <article class="conn-card reveal">
             <div class="conn-top"><span class="conn-name">Claude</span><span class="conn-badge">code &amp; desktop</span></div>
-            <p>One line in Claude Code, or the same server in Claude Desktop&rsquo;s connector settings.</p>
+            <p>One line in Claude Code, or the same server in Desktop.</p>
             <div class="conn-how">
               <code>claude mcp add --transport http emem https://emem.dev/mcp</code>
               <button type="button" class="install-copy" data-copy="claude mcp add --transport http emem https://emem.dev/mcp" aria-label="Copy Claude Code install command">copy</button>
@@ -599,13 +617,13 @@
 
           <article class="conn-card reveal reveal-d1">
             <div class="conn-top"><span class="conn-name">MCP Registry</span><span class="conn-badge">official listing</span></div>
-            <p>Published in the Model Context Protocol&rsquo;s own registry, so every client that syncs it finds us on its own.</p>
+            <p>Published where every syncing client looks.</p>
             <div class="conn-how"><code>io.github.Vortx-AI/emem</code></div>
           </article>
 
           <article class="conn-card reveal reveal-d2">
             <div class="conn-top"><span class="conn-name">Dify</span><span class="conn-badge">marketplace plugin</span></div>
-            <p>Every emem tool, installed from the marketplace as native tools for your Dify apps, agents, and workflows. No key to configure.</p>
+            <p>Every emem tool, native in your workflows. No key to configure.</p>
             <div class="conn-how"><a href="https://marketplace.dify.ai/plugin/vortx-ai/emem" target="_blank" rel="noopener">marketplace.dify.ai/plugin/vortx-ai/emem</a></div>
           </article>
         </div>
@@ -626,32 +644,27 @@
       <div class="wrap">
         <div class="section-head reveal">
           <h2 class="section-title" id="shipped-h">Shipped, <em>not promised.</em></h2>
-          <p class="section-lead">The protocol surface as it runs right now. Nothing on this list is roadmap.</p>
+          <p class="section-lead">These numbers are fetched from production while you read. Nothing on this list is roadmap.</p>
+        </div>
+        <div class="pulse-strip reveal" id="pulse-strip" aria-label="Live numbers from the production responder" hidden>
+          <a class="pulse" id="pulse-skills" href="https://emem.dev/.well-known/agent-card.json" target="_blank" rel="noopener" hidden><span class="pulse-n"></span><span class="pulse-l">skills, live</span></a>
+          <a class="pulse" id="pulse-topics" href="https://emem.dev/v1/topics" target="_blank" rel="noopener" hidden><span class="pulse-n"></span><span class="pulse-l">topic routes</span></a>
+          <a class="pulse" id="pulse-log" href="https://emem.dev/v1/log/sth" target="_blank" rel="noopener" hidden><span class="pulse-n"></span><span class="pulse-l">entries in the public log</span></a>
+          <a class="pulse" id="pulse-bins" href="https://emem.dev/v1/coverage_map.svg" target="_blank" rel="noopener" hidden><span class="pulse-n"></span><span class="pulse-l">1° bins with signed facts</span></a>
+          <span class="pulse-src">every number links to its own refutation · nothing here is typed by hand</span>
         </div>
         <div class="pillars" aria-label="What the protocol ships today">
           <div class="pillar reveal">
             <span class="pillar-k">Nine token shapes</span>
-            <p>facts, bundles, entities, cells, rasters, cubes, rastersets, execution traces, hardware attestations. One handle re-hydrates to the exact signed bytes, for any agent, months later.</p>
+            <p>facts, bundles, entities, cells, rasters, cubes, rastersets, execution traces, hardware attestations. One handle, the exact signed bytes, months later.</p>
           </div>
           <div class="pillar reveal reveal-d1">
             <span class="pillar-k">A public log</span>
-            <p>Every fact lands in a witnessed, Merkle-proofed transparency log. Inclusion and consistency are checkable by anyone, not asserted by us.</p>
+            <p>Every fact lands in a witnessed, Merkle-proofed transparency log. Checkable by anyone, not asserted by us; and every answer states its own resolution and cadence, never a footnote.</p>
           </div>
           <div class="pillar reveal reveal-d2">
-            <span class="pillar-k">Prediction</span>
-            <p>A learned dynamics head forecasts the next readout at a pinned cell, so your agent can ask what this place will look like, not just what it looked like.</p>
-          </div>
-          <div class="pillar reveal">
             <span class="pillar-k">An agent itself</span>
-            <p>Two kinds of surface. Deterministic ones (locate, recall, verify, diff) return the same signed bytes forever. Agentic ones (ask, reason, hunt, predict) plan and fan out to twenty-plus signed readings and scored recipes under one receipt.</p>
-          </div>
-          <div class="pillar reveal reveal-d1">
-            <span class="pillar-k">Every interface</span>
-            <p>MCP for agents, REST for anything, Python and TypeScript SDKs, a live A2A endpoint where every tool is a skill, and listings where users already are: @emem in ChatGPT, the GitHub MCP Registry, the VS Code gallery.</p>
-          </div>
-          <div class="pillar reveal reveal-d2">
-            <span class="pillar-k">Caveats built in</span>
-            <p>Grid resolution and revisit cadence ship inside every answer, not in a footnote. A memory you can trust states its own limits.</p>
+            <p>Deterministic surfaces (locate, recall, verify, diff) return the same signed bytes forever. Agentic ones (ask, reason, hunt, predict) fan out to twenty-plus signed readings under one receipt.</p>
           </div>
         </div>
       </div>
@@ -720,42 +733,6 @@
       </div>
     </section>
 
-    <!-- Where it pays off -->
-    <section class="section" id="usecases" aria-labelledby="usecases-h">
-      <div class="wrap">
-        <div class="section-head reveal">
-          <h2 class="section-title" id="usecases-h">Where being wrong is expensive.</h2>
-          <p class="section-lead">A checkable fact earns its keep where a confident guess costs the most. The tags below are real recipes from the registry.</p>
-        </div>
-        <div class="usecases">
-          <div class="usecase reveal">
-            <div class="usecase-who">Insurance &amp; risk</div>
-            <div class="usecase-q">Did this place actually flood?</div>
-            <p class="usecase-a">Pay or deny on a signed flood and rainfall record, with the receipt attached to the claim, instead of a model that only sounds confident.</p>
-            <span class="uc-chip">flood_extent_sar_threshold · water_consensus</span>
-          </div>
-          <div class="usecase reveal reveal-d1">
-            <div class="usecase-who">Lending &amp; property</div>
-            <div class="usecase-q">What is this address exposed to?</div>
-            <p class="usecase-a">Flood, heat and land change for one parcel, each line traceable to a dated observation an underwriter can stand behind.</p>
-            <span class="uc-chip">heat_index · heat_health_risk · flood_history</span>
-          </div>
-          <div class="usecase reveal">
-            <div class="usecase-who">Supply chain</div>
-            <div class="usecase-q">Was this plot cleared before we sourced from it?</div>
-            <p class="usecase-a">Check a parcel against the forest record for an EUDR file, and hand an auditor a receipt rather than an assurance.</p>
-            <span class="uc-chip">eudr_dds · sar_forest_disturbance</span>
-          </div>
-          <div class="usecase reveal reveal-d1">
-            <div class="usecase-who">Defense &amp; critical infrastructure</div>
-            <div class="usecase-q">What changed along this perimeter?</div>
-            <p class="usecase-a">Signed change detection over sites and corridors, inside a private tenancy your agents read and outsiders never touch.</p>
-            <span class="uc-chip">sar_coherence_change · change_attribution</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- Scene 5: Products -->
     <section class="section" id="products" aria-labelledby="products-h">
       <div class="wrap">
@@ -768,8 +745,8 @@
           <article class="product product-emem reveal">
             <span class="product-kicker">Open · Apache-2.0</span>
             <h3 class="product-name">emem.dev</h3>
-            <p class="product-tagline">The deterministic half: external memory for multi-agent systems.</p>
-            <p class="product-desc">A public, signed memory that is itself an agent. Its deterministic surfaces (locate, recall, verify, diff) return the exact signed bytes for the same question, every time; its agentic surfaces (ask, reason, hunt, predict) plan and fan out under one signed receipt. Six token types, a witnessed transparency log. Run it yourself; the receipts still check out.</p>
+            <p class="product-tagline">The global decoder: every encoder&rsquo;s evidence, served back signed.</p>
+            <p class="product-desc">A public, signed memory that is itself an agent. Deterministic surfaces return the exact bytes forever; agentic surfaces plan and fan out under one receipt. Run it yourself; the receipts still check out.</p>
             <ul class="product-bullets">
               <li><b>Free and open.</b> Read it without a key, an account, or a contract.</li>
               <li><b>Checkable offline.</b> Every fact is signed and content-addressed, so you never have to trust the server.</li>
@@ -786,38 +763,38 @@
           </article>
         </div>
 
-        <!-- Applications on the protocol -->
+        <!-- Deployments of the decoder -->
         <div class="section-head reveal" id="applications" style="margin-top:76px;margin-bottom:22px;">
-          <h3 class="section-title" style="font-size:clamp(24px,3.2vw,36px);">Built <em>on it.</em></h3>
-          <p class="section-lead" style="margin-top:12px;">The protocol is meant to be built on. geo.qa, eudr.dev, and propcheck.dev run on emem today; partner organisations are shaping their own.</p>
+          <h3 class="section-title" style="font-size:clamp(24px,3.2vw,36px);">Deployed, <em>and decentralised.</em></h3>
+          <p class="section-lead" style="margin-top:12px;">The decoder already runs in the field, and none of it needs our server: run a responder yourself and the receipts still verify.</p>
         </div>
         <div class="soon-rail soon-rail-4">
           <a class="soon-card reveal" href="/geo-qa/">
             <span class="soon-mark">geo<span style="color:var(--gold)">.qa</span></span>
             <div class="soon-body">
               <h4>Your private memory agent</h4>
-              <p>The same memory agent on your own sensors, deterministic recall and agentic ask alike, in a tenancy only your agents can read. For teams whose AI must be right about specific places.</p>
+              <p>The same decoder on your own sensors, in a tenancy only your agents can read. For insurance, defense, and teams whose AI must be right about specific places.</p>
             </div>
           </a>
           <a class="soon-card reveal" href="/eudr/">
             <span class="soon-mark">eudr<span style="color:var(--gold)">.dev</span></span>
             <div class="soon-body">
               <h4>Deforestation-free sourcing</h4>
-              <p>Was this plot recently cleared? The EUDR answer, from open forest-change records, with a receipt.</p>
+              <p>Was this plot cleared? The EUDR answer with a receipt an auditor can re-check.</p>
             </div>
           </a>
           <a class="soon-card reveal reveal-d1" href="/propcheck/">
             <span class="soon-mark">propcheck<span style="color:var(--gold)">.dev</span></span>
             <div class="soon-body">
               <h4>The real record of a place</h4>
-              <p>Flood, heat, and land-change history for any address, pulled from the open Earth memory.</p>
+              <p>Flood, heat, and land-change history for any address, from the open memory.</p>
             </div>
           </a>
           <a class="soon-card soon-card-partner reveal reveal-d2" href="#consult" data-open-pricing onclick="gtag('event','pricing_open_click',{'link_location':'applications_section'});">
             <span class="soon-mark soon-mark-plus"><em>+</em></span>
             <div class="soon-body">
-              <h4>Your team's application</h4>
-              <p>Insurance, supply chains, defense, urban planning. If your organisation needs an external memory of our physical world, ship on the same protocol.</p>
+              <h4>Yours</h4>
+              <p>Apache-2.0, self-hostable. Ship your own application, or your own responder, on the same protocol.</p>
               <span class="soon-cta">Work with the core team &rarr;</span>
             </div>
           </a>
