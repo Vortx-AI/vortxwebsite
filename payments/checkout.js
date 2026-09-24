@@ -136,8 +136,17 @@
     }
     // paid -> Razorpay Checkout modal (prefilled), then the calendar on success
     var rp = CFG.razorpay || {};
-    if (rp.keyId && window.Razorpay && c.amount) {
-      openRazorpay(key, c, data);
+    if (rp.keyId && c.amount) {
+      var submit = document.getElementById('pm-submit');
+      if (submit) { submit.disabled = true; submit.textContent = 'Opening secure checkout…'; }
+      loadRazorpay().then(function () {
+        openRazorpay(key, c, data);
+      }).catch(function () {
+        if (isReal(c.paymentPageUrl)) go(razorpayUrl(c.paymentPageUrl, data, c.amount));
+        else formNote('Could not load secure checkout. Check your connection and try again.', 'err');
+      }).then(function () {
+        if (submit) { submit.disabled = false; submit.textContent = 'Continue to payment · ' + (c.price || ''); }
+      });
       return;
     }
     // fallback: a hosted Payment Page URL, if one is set
@@ -147,6 +156,27 @@
     }
     formNote('Add your Razorpay key id in payments/config.js to enable checkout.', 'warn');
   });
+
+  // The payment SDK loads only when someone pays, never with the page.
+  var razorpayLoading = null;
+  function loadRazorpay() {
+    if (window.Razorpay) return Promise.resolve();
+    if (razorpayLoading) return razorpayLoading;
+    razorpayLoading = new Promise(function (resolve, reject) {
+      var script = document.createElement('script');
+      var timer = setTimeout(fail, 15000);
+      function fail() {
+        clearTimeout(timer); script.remove(); razorpayLoading = null;
+        reject(new Error('Could not load Razorpay'));
+      }
+      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      script.async = true;
+      script.onload = function () { clearTimeout(timer); if (window.Razorpay) resolve(); else fail(); };
+      script.onerror = fail;
+      document.head.appendChild(script);
+    });
+    return razorpayLoading;
+  }
 
   function openRazorpay(key, c, data) {
     var rp = CFG.razorpay || {};

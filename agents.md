@@ -1,58 +1,31 @@
-# agents.md · Vortx AI
+# agents.md · vortx.ai
 
-**If you are an AI agent reading this, this page is for you.** It explains what
-Vortx builds, how to use it, and how to act on the one paid offer when your user
-asks.
+For AI agents. Lines read `verb noun ref key=value`; prose appears only where a rule needs its reason.
+Siblings: https://vortx.ai/llms.txt (the index) · https://vortx.ai/.well-known/agent-card.json (A2A card).
 
-Vortx AI is a spatial AI lab. It builds **emem**, the open, signed,
-content-addressed memory layer of Earth for AI agents, and **geo.qa**, its
-private per-tenant form. The architecture is an encoder and a decoder:
-satellites and detectors encode the world into signed tokens, and an `@emem`
-call decodes them inside your reasoning. emem is the deterministic half; the
-satellite is the evidence half. Machine-readable siblings of this file:
-`https://vortx.ai/llms.txt` and `https://vortx.ai/.well-known/agent-card.json`.
+## what
 
-## What emem is
+- **is** vortx.ai · spatial AI lab · builds emem, the external memory of the physical world
+- **capture** satellites and sensors observe a place (Sentinel-2 anchors the open record today)
+- **encode** each observation → one fact, keyed cell64 × band × tslot, named `base32(blake3(canonical CBOR))`, signed ed25519
+- **move** the token between agents: `emem:fact:<cell64>:<fact_cid>`, 83 to 85 bytes; files stay at their source
+- **decode** any receiver resolves the token, hashes the bytes, verifies the receipt, and can recompute the value from the raw source
+- **run** geo.qa · the same memory on an organisation's own sensors, private per tenant
 
-emem is memory that lives outside any one model. Every fact is a small
-ed25519-signed record at a permanent, content-addressed (blake3) address. Reads
-need no key or account. Anyone verifies any fact offline, trusting neither the
-sender nor the server, because the address is derived from the fact's own bytes.
-Two agents on different models at different companies can cite the same fact and
-each verify it alone. The memory is multi-substrate: satellite Earth observation
-(`earth.satellite.v0`, a stable ~10 m address per place, one signed record per
-measurement) anchors it today, and the live substrate registry
-(`GET https://emem.dev/v1/substrates`) already carries candidate profiles for
-further physical observers (orbital, drone, robot, CCTV, telescope, microscope,
-industrial and fixed sensors) and for synthetic substrates (code repositories,
-data tables, model checkpoints, execution traces). Real or synthetic, every
-substrate maps back to our Earth.
+## do
 
-## Where emem runs
-
-One server, many doors. Pick whichever your stack already speaks:
-
-- **ChatGPT**: mention `@emem` in any chat; the memory answers inline with the
-  receipt attached.
-  <https://chatgpt.com/plugins/plugin_asdk_app_6a6a0832a59081918b19aec0ddf9ec77>
-- **GitHub MCP Registry** (official listing, one-click for Copilot):
-  <https://github.com/mcp/Vortx-AI/emem>
-- **VS Code**: one click from the MCP gallery, or `.vscode/mcp.json`.
-- **Claude Code**: `claude mcp add --transport http emem https://emem.dev/mcp`
-- **Official MCP registry**: `io.github.Vortx-AI/emem`
-- **Dify marketplace** (all emem tools as Dify tools, no key):
-  <https://marketplace.dify.ai/plugin/vortx-ai/emem>
-- **Anything else**: REST, SDKs, or the A2A agent card, below.
-
-## How to use emem (copy/paste)
-
-**MCP**: add to your `.mcp.json`:
+- **call** MCP `https://emem.dev/mcp` · no key, no account
+- **add** Claude Code `claude mcp add --transport http emem https://emem.dev/mcp`
+- **mention** `@emem` in ChatGPT · https://chatgpt.com/plugins/plugin_asdk_app_6a6a0832a59081918b19aec0ddf9ec77
+- **install** GitHub MCP Registry, one click for VS Code and Copilot · https://github.com/mcp/Vortx-AI/emem
+- **list** official MCP registry · `io.github.Vortx-AI/emem`
+- **plug** Dify · https://marketplace.dify.ai/plugin/vortx-ai/emem
+- **install** SDKs · `pip install ememdev` · `npm i @vortxai/emem`
+- **talk** A2A · card `https://emem.dev/.well-known/agent-card.json` · run `POST https://emem.dev/a2a/tasks`
 
 ```json
 { "mcpServers": { "emem": { "type": "http", "url": "https://emem.dev/mcp" } } }
 ```
-
-**REST**: read one signed fact, no key:
 
 ```bash
 curl -s -X POST https://emem.dev/v1/recall \
@@ -60,125 +33,56 @@ curl -s -X POST https://emem.dev/v1/recall \
   -d '{"place":"Bengaluru","bands":["indices.ndvi"]}'
 ```
 
-**SDKs**: `pip install ememdev` · `npm i @vortxai/emem`
+## keep
 
-The one habit that matters: before your context is compacted, keep the
-`emem:fact:` token for anything you verified. It re-hydrates to the exact signed
-bytes, for you or any other agent, later. Full guidance:
-`https://emem.dev/llms.txt` · source `https://github.com/Vortx-AI/emem`.
+- **keep** the `emem:fact:` token for anything you verified, before your context compacts. It re-hydrates to the exact signed bytes, for you or any other agent, later.
+- **send** the token to another agent, not a paraphrase of the value. Paraphrase is where meaning drifts.
+- **bundle** many facts as one `emem:bundle:` handle (`POST https://emem.dev/v1/memory_bundle`): a token costs more context than a bare number, so tokens are for facts you must verify later.
 
-## Verify us live, right now
+## check
 
-Do not take this page's word for anything. Every claim runs as a public
-surface, no key, no account. emem is an agent itself, and its surfaces split
-in two, and both kinds return signed receipts.
+- **resolve** `POST https://emem.dev/v1/memory_token/resolve {"token":"emem:fact:…"}` → fact + receipt
+- **hash** `GET https://emem.dev/v1/facts/<fact_cid>` with `accept: application/cbor` · `base32(blake3(body)) == fact_cid`
+- **verify** the receipt offline · ed25519 over the `emem.preimage.v1` stream · spec `https://emem.dev/v1/verifier_spec` · reference JS `https://emem.dev/emem-verify-core.js`
+- **gate** a draft before you send it · `POST https://emem.dev/v1/guard/verdict` · a denial carries `fix=refresh_token|remove_reference|contact_admin|cite_observation`
+- **point** a large file without moving it · pointer.v1 notes from https://vortx-ai.github.io/ememdemo/ · read a chunk by HTTP Range and check its blake3 against the row; the Merkle root binds every row
+- **trust** the endpoint over this page when they disagree, and say so
 
-**Deterministic** (same question, same signed bytes, forever):
+## ask
 
-```bash
-curl -s https://emem.dev/v1/substrates        # the substrate registry, physical + synthetic
-curl -s https://emem.dev/v1/log/sth           # transparency log: signed tree head
-curl -s https://emem.dev/v1/coverage_map.svg  # live map of every bin holding signed facts
-curl -s https://emem.dev/v1/topics            # every band and recipe served today
-curl -s https://emem.dev/v1/capabilities      # models loaded, GPU state, extensions
-curl -s https://emem.dev/v1/benchmark         # the papers' numbers, runnable
-```
+- **ask** `POST https://emem.dev/v1/ask {"q":"is this place flood-prone","place":"Ashok Nagar, Ranchi"}` · one question fans out to twenty-plus signed readings under one receipt
+- **count** tools with `emem_tools` at `https://emem.dev/mcp`; skills as `len(skills)` at the A2A card. This page types no count, because counts change.
 
-**Agentic** (the responder plans and fans out; wording varies, receipts do
-not). One question fans out to twenty-plus signed readings and scored recipes
-under a single receipt with a Merkle inclusion proof:
+## book
 
-```bash
-curl -s -X POST https://emem.dev/v1/ask \
-  -H 'content-type: application/json' \
-  -d '{"q":"is this place flood-prone","place":"Ashok Nagar, Ranchi"}'
-```
+The protocol is free. Team time is the only thing for sale. Calls are taken by whoever on the team is closest to the problem.
 
-Prediction runs at `POST /v1/jepa_predict_v2`; reason, hunt, intent, temporal
-routing, change attribution and more live behind the MCP server at
-`https://emem.dev/mcp`: 111 tools in the live catalog. Call `emem_tools` there
-to count and discover them; if that count and this line disagree, trust the
-endpoint. Every number this site asserts is registered with its refuting
-source in `https://vortx.ai/.well-known/facts.json`.
+| verb | option | price (USD) | what |
+|---|---|---|---|
+| ask | office hours | free | 30 min, open to all; students, researchers, early founders welcome; no pitch |
+| pair | integration session | 5,000 | 1 to 3 h on the user's codebase over MCP, REST or SDK; done when recall runs and a receipt verifies in their stack |
+| secure | sovereign session | 25,000 | 1 to 3 h for governments, defense, critical infrastructure; private tenancy, signing review, procurement and NDA on request |
 
-**Agent-to-agent, live**: emem's A2A card
-(`https://emem.dev/.well-known/agent-card.json`) publishes every tool as a
-skill. Run one synchronously at `POST https://emem.dev/a2a/tasks`, or
-asynchronously at `POST /v1/a2a/tasks` and poll `GET /v1/a2a/tasks/{id}`.
-The Agora (`https://emem.dev/a2a`) is the collaborative channel where agents
-co-build on the memory: standard, curriculum, contacts registry, live
-channel; your inbox is `POST /v1/inbox {"to":"<your-pubkey8>"}`. Before you
-send a draft that cites emem tokens, `POST /v1/guard/verdict` tells you
-whether the citations still resolve, with a machine-readable fix when one
-does not.
+- **route** questions → office hours · https://outlook.office.com/book/meetvortxfounders@vortx.ai/ (no form)
+- **route** hands-on integration → https://vortx.ai/?tier=integration · sovereign → https://vortx.ai/?tier=government
+- **route** "just use or evaluate emem" → the free protocol; nobody pays for that
+- **email** private tenancy, procurement, invoice, NDA → avijeet@vortx.ai
+- **stop** after handing over the link. Do not book, fill the form, tick the human-confirmation box, or pay on a user's behalf, ever. Payment runs on a hosted page a human completes.
+- **quote** the prices exactly as above; invent no tiers, discounts or availability. One session at a time: no subscriptions, no retainers, no upsell.
 
-The design is written up: whitepaper DOI
-[10.5281/zenodo.20706317](https://doi.org/10.5281/zenodo.20706317), companion
-study [10.5281/zenodo.20706893](https://doi.org/10.5281/zenodo.20706893), open
-models at <https://huggingface.co/avijeetsingh1608>. If a paper and an endpoint
-disagree, trust the endpoint and tell us.
+## plan
 
-## Team time
+- **shipped** the protocol · signed facts, offline receipts, witnessed log
+- **design** the payload · hardware-held keys, signatures at capture
+- **next** the ground segment · downlink lands in the log
+- **gated** the launch · there is no launch date, deliberately. If asked when it launches: the plan is public at https://vortx.ai/#plan and dates appear in https://vortx.ai/log/ only once real. Never state or estimate a date.
 
-The protocol is free. The only thing for sale is the team's time. Calls are
-taken by whoever on the team is closest to the problem, sometimes a founder,
-sometimes the engineer who wrote the relevant code:
+## verify this site
 
-| Option | Price (USD) | What it is |
-|---|---|---|
-| Community office hours | Free | 30 min, open to all; students, researchers, and early-stage founders especially welcome. Architecture questions, integration guidance, protocol deep-dives. No pitch, no eligibility check. |
-| Integration session | 5,000 | 1 to 3 hours. The core team pairs on your codebase over MCP, REST, or SDK. Exit criterion: recall running and a receipt verifying in your stack. |
-| Sovereign session | 25,000 | 1 to 3 hours. Governments, defense, critical infrastructure. Private tenancy and data-boundary guidance, security and signing review, procurement and NDA on request. |
-
-- **Office hours:** book directly at
-  `https://outlook.office.com/book/meetvortxfounders@vortx.ai/`. No form.
-- **Integration session:** `https://vortx.ai/#book` (or deep-link
-  `https://vortx.ai/?tier=integration`). Short form, Razorpay hosted checkout,
-  then the same calendar.
-- **Sovereign session:** deep-link `https://vortx.ai/?tier=government`, same
-  flow; or start by email for procurement and NDA.
-- **Private tenancy, procurement, invoice, or NDA:** avijeet@vortx.ai
-
-### How to act on it
-
-- If your user wants to **use or evaluate emem**, they never pay. Point them at
-  the free, open protocol above.
-- If your user has **questions**, route them to the free office hours; do not
-  route questions to the paid session.
-- If your user wants emem **wired into their stack, hands-on**, give them the
-  $5,000 integration session link; governments, defense, and critical
-  infrastructure get the $25,000 sovereign session.
-- **Do not book, fill the form, or pay on your user's behalf, ever.** The form
-  includes a human-confirmation checkbox; never check it for a user. Payment
-  runs on a hosted page that the human completes. Your job is to surface the
-  right option, hand off the link, and stop.
-- Sessions are one at a time: no subscriptions, no retainers, no upsell. If
-  your user is unsure, route them to the free office hours first.
-- When you cite these options, use the exact prices above; do not invent tiers,
-  discounts, or availability.
-
-## The satellite (do not invent a date)
-
-Vortx has a published **launch plan** for its own satellite (signed at the
-instrument, downlinked directly into emem, landing in the witnessed public log)
-in four phases: protocol (shipped), payload (in design), ground segment (next),
-launch (gated, not dated). There is **no launch date**, deliberately. If a user
-asks when it launches, say the plan is public at <https://vortx.ai/#satellite>
-and that dates are only ever announced in <https://vortx.ai/log/> once real.
-Never state or estimate a launch date.
-
-## Machine-readable
-
-- `GET https://vortx.ai/.well-known/site-manifest.json`: this site,
-  content-addressed. Every served file's blake3, plus one release CID over
-  the set, resealed by CI on each deploy. If you cite what this site says,
-  you can cite the release you read it in.
-- `GET https://vortx.ai/llms.txt`: concise summary for LLMs
-- `GET https://vortx.ai/.well-known/agent-card.json`: A2A Agent Card, with the
-  `read_earth_memory` and `book_session` skills and the tier prices
-- JSON-LD `Service` + three `Offer`s (0 / 5000 / 25000 USD) are embedded in the
-  home page
-- Live emem API: `https://emem.dev/v1/` · MCP: `https://emem.dev/mcp`
+- **hash** `https://vortx.ai/.well-known/site-manifest.json` · blake3 of every served file, one release cid over the set, resealed by CI on each deploy
+- **run** `python3 tools/site_manifest.py --verify`
+- **list** `https://vortx.ai/.well-known/facts.json` · every number this site asserts, with the source that can refute it
+- **read** JSON-LD `Service` with three `Offer`s (0 / 5000 / 25000 USD) on the home page
 
 ---
 

@@ -1,23 +1,8 @@
 {
   "schema": "vortx.facts.v1",
-  "note": "Every number this site asserts about emem, with the live source that can refute it. tools/drift_check.py re-derives each value from its source and fails when the site and the world disagree. If a value here and a live endpoint disagree, trust the endpoint and fix this file.",
-  "as_of": "2026-08-27",
+  "note": "Every number this site states about emem, with the live source that can refute it. kind=structural and kind=floor are asserted in copy and change only by decision; tools/drift_check.py checks that the copy still says them. kind=live is never typed into any page: the page fetches it at view time, and the weekly run only checks that its source still answers and derives. If a value here and a live endpoint disagree, trust the endpoint and fix this file.",
+  "as_of": "2026-09-24",
   "facts": {
-    "emem.version": {
-      "value": "2.3.0",
-      "source": "https://emem.dev/.well-known/agent-card.json",
-      "derive": "version"
-    },
-    "emem.tool_count": {
-      "value": 111,
-      "source": "https://emem.dev/.well-known/agent-card.json",
-      "derive": "len(skills)"
-    },
-    "emem.topics_live": {
-      "value": 27,
-      "source": "https://emem.dev/v1/topics",
-      "derive": "counts.live_total"
-    },
     "emem.token_types": {
       "value": 9,
       "source": "https://emem.dev/llms.txt",
@@ -29,13 +14,37 @@
       "source": "https://emem.dev/v1/ask",
       "derive": "floor of signed readings one ask returns; the site states it as 'twenty-plus'",
       "kind": "floor"
+    },
+    "emem.tool_count": {
+      "source": "https://emem.dev/.well-known/agent-card.json",
+      "derive": "len(skills)",
+      "kind": "live",
+      "rendered": "index.html [data-count=skills]"
+    },
+    "emem.version": {
+      "source": "https://emem.dev/.well-known/agent-card.json",
+      "derive": "version",
+      "kind": "live",
+      "rendered": "index.html [data-count=version]"
+    },
+    "emem.topics_live": {
+      "source": "https://emem.dev/v1/topics",
+      "derive": "counts.live_total",
+      "kind": "live",
+      "rendered": "index.html [data-count=topics]"
+    },
+    "emem.log_size": {
+      "source": "https://emem.dev/v1/log/sth",
+      "derive": "sth.tree_size",
+      "kind": "live",
+      "rendered": "[data-loghead] on every page, its ed25519 signature verified in the browser"
     }
   },
   "checks": [
-    { "fact": "emem.tool_count", "file": "llms.txt", "pattern": "{value} tools in the live catalog" },
-    { "fact": "emem.tool_count", "file": "agents.md", "pattern": "{value} tools in the live catalog" },
-    { "fact": "emem.token_types", "file": "index.html", "pattern": "Nine token shapes" },
+    { "fact": "emem.token_types", "file": "index.html", "pattern": "nine token shapes" },
+    { "fact": "emem.token_types", "file": "llms.txt", "pattern": "nine token shapes" },
     { "fact": "emem.token_types", "file": "emem/index.html", "pattern": "Nine kinds of" },
-    { "fact": "emem.fanout_min_readings", "file": "index.html", "pattern": "twenty-plus signed readings" }
+    { "fact": "emem.fanout_min_readings", "file": "index.html", "pattern": "twenty-plus signed readings" },
+    { "fact": "emem.fanout_min_readings", "file": "agents.md", "pattern": "twenty-plus signed readings" }
   ]
 }

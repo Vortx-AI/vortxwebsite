@@ -9,10 +9,12 @@ runs two kinds of check:
   the file that makes it, with the registered value. A copy edit that
   breaks a claim turns CI red.
 
-  live checks (default; skip with --offline): each derivable fact is
-  re-derived from its live source. emem shipping its 112th tool turns
-  the weekly run red, which is the alarm working, not a bug. Structural
-  and floor facts are exempt: they change by decision, not by traffic.
+  live checks (default; skip with --offline): each asserted fact that
+  carries a value is re-derived from its live source and compared.
+  Structural and floor facts are exempt: they change by decision, not by
+  traffic. Live facts (kind "live") are never typed into a page; the
+  page fetches them at view time, so the check is that the source still
+  answers and derives, not that it equals a number written down here.
 
 Exit 0 means the site and the world agree.
 """
@@ -40,6 +42,8 @@ def live_value(fact_id: str, spec: dict):
         return len(doc.get("skills", []))
     if derive == "counts.live_total":
         return (doc.get("counts") or {}).get("live_total")
+    if derive == "sth.tree_size":
+        return (doc.get("sth") or doc).get("tree_size")
     raise ValueError(f"{fact_id}: no deriver for {derive!r}")
 
 
@@ -64,6 +68,10 @@ def main() -> int:
                 live = live_value(fact_id, spec)
             except Exception as e:
                 drifts.append(f"live: {fact_id} source unreachable ({e})")
+                continue
+            if spec.get("kind") == "live":
+                if live is None:
+                    drifts.append(f"live: {fact_id} no longer derives from {spec['source']} ({spec['derive']})")
                 continue
             if live != spec["value"]:
                 drifts.append(f"live: {fact_id} is {live!r} at {spec['source']}, "

@@ -15,6 +15,7 @@ on:
       - 'index.html'
       - 'llms.txt'
       - 'agents.md'
+      - 'emem/index.html'
       - '.well-known/facts.json'
       - 'tools/drift_check.py'
   schedule:
