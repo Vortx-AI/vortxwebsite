@@ -1,8 +1,8 @@
 {
   "schema": "vortx.site_manifest.v1",
-  "cid": "5csq2ijaolsgoprt5bhrhs7okv2xehvnybcvdbgkgxoeftxwtfca",
-  "commit": "47f7280b06fc471996ee9fd372b1c2fd1b9e3886",
-  "generated_at": "2026-09-24T12:40:45Z",
+  "cid": "4pbrvpjnlyqas3pkbvkflpqway5stybqzdgorwz3ckv5gfe5c6qq",
+  "commit": "6b68403202462b78a736cb4f16083d842124dc20",
+  "generated_at": "2026-09-24T12:41:03Z",
   "files": {
     ".nojekyll": {
       "blake3": "v4jutopv7gq2nicajxvdnxgjjgn4wjojvxarfn6mtkj4vza7gjra",
@@ -89,8 +89,8 @@
       "bytes": 13105
     },
     "main.js": {
-      "blake3": "2kshvt77bspz35vv7a4xmz76xve3gvfinlazh5wuompp533c7ofq",
-      "bytes": 15685
+      "blake3": "ldrqkqh4isijpr7c2u6454lwu4566qv4holgplgsafpuirbmfbxq",
+      "bytes": 16235
     },
     "payments/checkout.js": {
       "blake3": "wc5hjwbb2jetxfzcanrqi63xydbq7lialsm5rcf3mgwukzy4vr4q",
