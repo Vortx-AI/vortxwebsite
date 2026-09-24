@@ -2521,3 +2521,330 @@ a.pulse:hover .pulse-l { color: var(--ink-soft); }
 @media (prefers-reduced-motion:reduce){
   .space-boot-log span{animation:none;opacity:1;transform:none;}
 }
+
+
+/* ============================================================
+   CLEAN VORTX HOMEPAGE
+   Minimal editorial treatment. Space is a quiet system layer,
+   not a visual theme.
+   ============================================================ */
+.home-space {
+  --paper:#f7f8f6;
+  --paper-2:#ffffff;
+  --surface:#ffffff;
+  --surface-2:#f1f4f2;
+  --ink:#111917;
+  --ink-soft:#53635f;
+  --ink-faint:#84918e;
+  --line:#e3e9e6;
+  --line-strong:#d5dfdb;
+  --teal:#137d69;
+  --teal-vivid:#0e9b7d;
+  --teal-wash:#edf8f5;
+  --gold:#9b6a25;
+  background:#f7f8f6;
+  color:var(--ink);
+}
+.home-space .space-stars,
+.home-space .blueprint,
+.home-space .space-boot { display:none !important; }
+
+.home-space .site-nav,
+.home-space .site-nav.scrolled {
+  background:rgba(247,248,246,.92);
+  border-bottom:1px solid rgba(17,25,23,.08);
+  box-shadow:none;
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+}
+.home-space .brand-text,.home-space .nav-link { color:#18221f; }
+.home-space .brand-dot { color:var(--teal); }
+.home-space .nav-link::after { background:var(--teal); }
+.home-space .nav-star {
+  background:#fff;
+  border-color:#dce5e1;
+  color:#31413d;
+  box-shadow:none;
+}
+.home-space .nav-star:hover { background:#f1f7f4; border-color:#bcd3cc; }
+
+.home-space .hero {
+  min-height:calc(100vh - 68px);
+  background:#f7f8f6;
+}
+.home-space .hero::before {
+  opacity:.35;
+  background:
+    linear-gradient(90deg,transparent 49.9%,rgba(17,25,23,.045) 50%,transparent 50.1%),
+    linear-gradient(transparent 49.9%,rgba(17,25,23,.045) 50%,transparent 50.1%);
+  background-size:80px 80px;
+}
+.home-space .hero-title {
+  color:#111917;
+  text-shadow:none;
+  letter-spacing:-.045em;
+}
+.home-space .hero-title .accent { color:var(--teal); }
+.home-space .hero-plain { color:#52625e; }
+.home-space .hero-install {
+  background:#fff;
+  border:1px solid #e0e7e4;
+  box-shadow:0 16px 45px rgba(22,40,34,.07);
+}
+.home-space .install-row {
+  border-color:#edf1ef;
+  background:#fafbfa;
+}
+.home-space .install-row code { color:#34433f; }
+.home-space .install-go,.home-space .install-copy { color:var(--teal); }
+.home-space .proto-strip { color:#7b8885; border-top-color:#e4e9e7; }
+.home-space .hero-stage { filter:none; }
+.home-space .hero-stage::before { display:none; }
+.home-space .hero-quote { color:#6d7976; border-top-color:#e3e9e6; }
+
+.home-space .section {
+  background:#f7f8f6;
+  border-top:1px solid #e5eae8;
+}
+.home-space .section--tint,
+.home-space .section--sky {
+  background:#fff;
+}
+.home-space .section-title { color:#121b18; letter-spacing:-.035em; }
+.home-space .section-title em { color:var(--teal); }
+.home-space .section-lead { color:#62716d; }
+.home-space .eyebrow { color:var(--teal); }
+.home-space .section-head::before { background:var(--teal); opacity:.55; }
+
+.home-space .receipt,
+.home-space .conn-card,
+.home-space .step,
+.home-space .pillar,
+.home-space .product,
+.home-space .soon-card,
+.home-space .offer,
+.home-space .plan,
+.home-space .talk-strip,
+.home-space .founder-note {
+  background:#fff;
+  border-color:#e0e7e4;
+  color:#18211f;
+  box-shadow:0 8px 28px rgba(22,40,34,.045);
+}
+.home-space .receipt { box-shadow:0 12px 36px rgba(22,40,34,.06); }
+.home-space .receipt-head,
+.home-space .receipt-foot,
+.home-space .r-row { border-color:#edf1ef; }
+.home-space .r-key,
+.home-space .rd,
+.home-space .verify-note,
+.home-space .conn-card p,
+.home-space .step p,
+.home-space .pillar p,
+.home-space .product-desc,
+.home-space .product-bullets,
+.home-space .soon-card p,
+.home-space .offer-desc,
+.home-space .offer-foot,
+.home-space .plan p,
+.home-space .talk-strip p,
+.home-space .founder-note p { color:#667570; }
+.home-space .r-val,
+.home-space .conn-name,
+.home-space .step-verb,
+.home-space .pillar-k,
+.home-space .product-name,
+.home-space .offer-name,
+.home-space .plan h3,
+.home-space .plan h4 { color:#18221f; }
+.home-space .r-badge.is-signed,
+.home-space .r-badge.is-verified {
+  background:#edf8f5;
+  color:var(--teal);
+  border-color:#cfe7df;
+}
+.home-space .place-chips .chip {
+  background:#fafbfa;
+  color:#65736f;
+  border-color:#e1e8e5;
+}
+.home-space .place-chips .chip.active {
+  background:#edf8f5;
+  color:#176f5e;
+  border-color:#c4e1d8;
+}
+.home-space .conn-how,
+.home-space .install-row { background:#fafbfa; }
+.home-space .conn-badge,
+.home-space .product-kicker,
+.home-space .offer-kicker,
+.home-space .plan-status { color:#74837f; }
+.home-space .pulse-strip {
+  background:#fff;
+  border-color:#e0e7e4;
+  box-shadow:none;
+}
+.home-space .pulse-n { color:var(--teal); }
+.home-space .pulse-l,.home-space .pulse-src { color:#7b8985; }
+.home-space .enc {
+  background:#fafbfa;
+  border-color:#e2e8e5;
+  color:#3b4945;
+}
+.home-space .enc i { color:#84928e; }
+
+.home-space .btn-ghost,
+.home-space .btn-quiet {
+  color:#34433f;
+  border-color:#d5dfdb;
+  background:#fff;
+}
+.home-space .btn-ghost:hover,
+.home-space .btn-quiet:hover {
+  background:#f2f8f5;
+  border-color:#bcd4cc;
+}
+.home-space .btn-primary {
+  background:#15221f;
+  color:#fff;
+  box-shadow:none;
+}
+.home-space .btn-primary:hover { background:#24413a; }
+.home-space .btn-gold { background:#f0e2ca; color:#5e431d; }
+
+.home-space .site-footer {
+  background:#f0f3f1;
+  border-top:1px solid #dfe6e3;
+  color:#687773;
+}
+.home-space .site-footer .brand-text { color:#18221f; }
+.home-space .footer-col h4 { color:#77847f; }
+.home-space .footer-col a { color:#53635e; }
+.home-space .footer-col a:hover { color:var(--teal); }
+.home-space .footer-bottom,
+.home-space .site-release { border-color:#dfe6e3; color:#7b8884; }
+
+/* Turn the orbital section into an editorial diagram. */
+.home-space .orbit-memory {
+  color:#17211e;
+  background:
+    radial-gradient(700px 360px at 80% 10%,rgba(24,132,111,.055),transparent 70%),
+    #f3f6f4;
+  border-color:#e1e8e5;
+}
+.home-space .orbit-memory::before { opacity:.55; background-image:linear-gradient(rgba(31,102,88,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(31,102,88,.035) 1px,transparent 1px); }
+.home-space .orbit-kicker { color:var(--teal); }
+.home-space .orbit-live-dot { background:var(--teal); box-shadow:none; }
+.home-space .orbit-live-dot-gold { background:var(--gold); box-shadow:none; }
+.home-space .orbit-title { color:#17211e; }
+.home-space .orbit-title em { color:var(--teal); }
+.home-space .orbit-lead { color:#64736f; }
+.home-space .orbit-console {
+  border-color:#dbe4e0;
+  background:#fff;
+  box-shadow:0 12px 36px rgba(22,40,34,.055);
+}
+.home-space .orbit-console-bar {
+  border-color:#e8edeb;
+  color:#7b8985;
+}
+.home-space .orbit-console-bar span:first-child { color:#52635e; }
+.home-space .orbit-console-bar i { background:var(--teal); box-shadow:none; }
+.home-space .orbit-source { border-color:#e8edeb; }
+.home-space .orbit-pointer { border-color:#e8edeb; }
+.home-space .orbit-label { color:#7c8a86; }
+.home-space .orbit-source>strong,
+.home-space .orbit-pointer>strong { color:#17211e; }
+.home-space .orbit-pointer>strong { color:var(--teal); }
+.home-space .orbit-source>p,
+.home-space .orbit-pointer>p { color:#697873; }
+.home-space .orbit-source dl div,
+.home-space .orbit-pointer-lines span { border-color:#e8edeb; }
+.home-space .orbit-source dt,
+.home-space .orbit-pointer-lines b { color:#84918d; }
+.home-space .orbit-source dd,
+.home-space .orbit-pointer-lines span { color:#52635e; }
+.home-space .orbit-map {
+  background:
+    radial-gradient(circle at 50% 64%,rgba(19,125,105,.06),transparent 35%),
+    #f8faf9;
+}
+.home-space .orbit-map::after {
+  background:radial-gradient(ellipse at 50% 100%,rgba(19,125,105,.06),transparent 65%);
+  border-color:#dfe9e5;
+}
+.home-space .orbit-sat-body { background:#263531; box-shadow:none; }
+.home-space .orbit-sat-wing { background:#dce9e5; border-color:#b9cec7; }
+.home-space .orbit-beam { background:linear-gradient(180deg,rgba(19,125,105,.09),rgba(19,125,105,.01)); }
+.home-space .orbit-tile { border-color:#dce6e2; background:#f3f7f5; }
+.home-space .orbit-memory[data-orbit-mode="flood"] .orbit-tile[data-signal~="flood"],
+.home-space .orbit-memory[data-orbit-mode="vegetation"] .orbit-tile[data-signal~="vegetation"],
+.home-space .orbit-memory[data-orbit-mode="change"] .orbit-tile[data-signal~="change"] {
+  background:#d9f0e9;
+  border-color:#83c9b7;
+  box-shadow:none;
+}
+.home-space .orbit-map-caption { color:#81908b; }
+.home-space .orbit-question,
+.home-space .orbit-route { border-color:#e8edeb; }
+.home-space .orbit-question-copy strong { color:#17211e; }
+.home-space .orbit-question-copy p { color:#697873; }
+.home-space .orbit-mode {
+  color:#667570;
+  border-color:#d7e1dd;
+  background:#fff;
+}
+.home-space .orbit-mode:hover { border-color:#b9d2ca; color:#27403a; }
+.home-space .orbit-mode.active {
+  background:#edf8f5;
+  border-color:#acd5c8;
+  color:#176f5e;
+  box-shadow:none;
+}
+.home-space .orbit-route-label,
+.home-space .orbit-route-note { color:#84918d; }
+.home-space .orbit-route code { color:#40534e; }
+.home-space .orbit-thesis-small { color:#7c8985; }
+.home-space .orbit-thesis h3 { color:#17211e; }
+.home-space .orbit-thesis>p:not(.orbit-thesis-small) { color:#687873; }
+.home-space .orbit-thesis>p em { color:var(--teal); }
+.home-space .orbit-btn-primary { background:#15221f;color:#fff;box-shadow:none; }
+.home-space .orbit-btn-primary:hover { background:#27433b; }
+.home-space .orbit-btn-ghost { color:#34433f;border-color:#d5dfdb;background:#fff; }
+
+/* Native-satellite section: white, with a single dark anchor band. */
+.home-space .orbit-satellite-section {
+  background:#fff;
+  color:#17211e;
+}
+.home-space .orbit-satellite-section .section-title { color:#17211e; }
+.home-space .orbit-satellite-section .section-lead { color:#65746f; }
+.home-space .native-path { color:#53635e; }
+.home-space .native-path span {
+  background:#f6f9f7;
+  border-color:#dce6e2;
+}
+.home-space .native-path span:nth-of-type(3) {
+  color:var(--teal);
+  border-color:#abd3c7;
+}
+.home-space .native-path i { color:#a0aca8; }
+.home-space .orbit-satellite-section .pillar { background:#fff; }
+.home-space .orbit-satellite-section .plan { background:#fafcfb; }
+
+/* Keep the page quiet: remove decorative glow and excessive rounding. */
+.home-space .card,
+.home-space .conn-card,
+.home-space .step,
+.home-space .pillar,
+.home-space .product,
+.home-space .soon-card,
+.home-space .offer,
+.home-space .plan { border-radius:12px; }
+.home-space .receipt,
+.home-space .orbit-console { border-radius:14px; }
+
+@media (max-width:700px) {
+  .home-space .hero { min-height:auto; padding-top:48px; padding-bottom:64px; }
+  .home-space .section-title { letter-spacing:-.025em; }
+}
