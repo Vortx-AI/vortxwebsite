@@ -132,7 +132,9 @@ async function loadTLE() {
   try {
     // force-cache: if this browser already holds CelesTrak's answer, read that copy instead of asking again
     // (CelesTrak throttles repeat requests); the bytes are still CelesTrak's, not agent A's
-    var r = await vx.getBytes(TLE_LIVE, { cache: 'force-cache' }, ledger);
+    var ctl = new AbortController(), timer = setTimeout(function () { ctl.abort(); }, 6000);
+    var r = await vx.getBytes(TLE_LIVE, { cache: 'force-cache', signal: ctl.signal }, ledger);
+    clearTimeout(timer);
     var txt = vx.dec.decode(r.bytes);
     if (/^1 \d{5}/m.test(txt)) return { txt: txt, from: 'celestrak.org' };
   } catch (e) { /* rate-limited or offline: fall through */ }

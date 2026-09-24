@@ -112,7 +112,9 @@
   function loadElements() {
     var c = cached();
     if (c) return Promise.resolve({ txt: c.txt, from: 'celestrak.org', fetched: c.at });
-    return fetch(TLE_LIVE).then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); }).then(function (txt) {
+    // CelesTrak throttles repeat callers; give it a few seconds, then fall back to the dated snapshot
+    var ctl = window.AbortController ? new AbortController() : null, timer = ctl && setTimeout(function () { ctl.abort(); }, 6000);
+    return fetch(TLE_LIVE, ctl ? { signal: ctl.signal } : {}).then(function (r) { clearTimeout(timer); if (!r.ok) throw new Error(r.status); return r.text(); }).then(function (txt) {
       if (!/^1 \d{5}/m.test(txt)) throw new Error('no elements');
       try { localStorage.setItem('vx-tle', JSON.stringify({ at: Date.now(), txt: txt })); } catch (e) {}
       return { txt: txt, from: 'celestrak.org', fetched: Date.now() };
