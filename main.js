@@ -9,6 +9,22 @@
   var reduceMotion = window.matchMedia &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // --- Homepage boot: brief mission-control handoff, once per tab session ---
+  (function () {
+    var boot = document.getElementById('space-boot');
+    if (!boot) return;
+    var already = false;
+    try { already = sessionStorage.getItem('vortx-space-boot') === '1'; } catch (e) {}
+    if (reduceMotion || already) {
+      boot.classList.add('is-done');
+      return;
+    }
+    window.setTimeout(function () {
+      boot.classList.add('is-done');
+      try { sessionStorage.setItem('vortx-space-boot', '1'); } catch (e) {}
+    }, 1150);
+  })();
+
   // --- Sticky nav: shadow once scrolled ---
   var nav = document.getElementById('nav');
   if (nav) {
