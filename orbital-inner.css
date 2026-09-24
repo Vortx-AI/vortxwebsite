@@ -1,0 +1,42 @@
+/* The Orbital visual language on the protocol, research and company pages. */
+:root {
+  color-scheme: dark;
+  --paper: #07090c; --paper-2: #0c1015; --surface: #10151c; --surface-2: #151c25;
+  --sky: #0c1622; --sky-2: #101e2d;
+  --ink: #f1f3f4; --ink-soft: #a4abb4; --ink-faint: #8291a2;
+  --line: #ffffff16; --line-strong: #ffffff32;
+  --teal: #c9f58a; --teal-ink: #c9f58a; --teal-vivid: #d5ffa3; --teal-wash: #c9f58a0d;
+  --gold: #b2d5f7; --gold-vivid: #c9e6ff; --gold-wash: #b2d5f70d;
+  --font-heading: Arial, Helvetica, sans-serif;
+  --font-body: Arial, Helvetica, sans-serif;
+  --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+  --r-sm: 2px; --r: 3px; --r-lg: 4px; --r-pill: 3px;
+  --shadow-sm: 0 2px 10px #0002; --shadow-md: 0 10px 30px #0003;
+  --shadow-lg: 0 20px 60px #0005; --shadow-teal: none; --shadow-gold: none;
+}
+body { background: var(--paper); }
+.blueprint { opacity: .22; background-image: linear-gradient(to right,#88b6e312 1px,transparent 1px),linear-gradient(to bottom,#88b6e312 1px,transparent 1px); }
+.site-nav, .site-nav.scrolled { background: #080c12ee; border-bottom: 1px solid var(--line); box-shadow: none; }
+.site-nav.open .nav-menu, .nav-toggle { background: #10151c; }
+.nav-link { font-size: 12px; }
+.nav-star { font-size: 11px; }
+.brand-mark { border-radius: 3px; }
+.hero-title, .section-title, .policy-page h1 { font-weight: 400; letter-spacing: -.045em; }
+.hero-title em, .section-title em, .hero-title .accent { font-style: normal; color: #91a6bc; }
+.page-hero { padding-top: 90px; }
+.page-hero .hero-title { font-size: clamp(34px,5vw,66px); max-width: 1000px; }
+.breadcrumb { text-transform: uppercase; font-size: 10px; letter-spacing: 1px; }
+.btn-primary,.btn-gold { color: #11190d; box-shadow: none; }
+.btn-primary:hover { background: #dcffaf; color: #11190d; }
+.btn-gold:hover { background: #c9e6ff; color: #11190d; }
+.btn-ghost,.btn-quiet { background: transparent; border-color: var(--line-strong); color: var(--ink); }
+.res-tag.oss { background: #b2d5f715; color: #b2d5f7; }
+.code-block { background: #090e15; border-color: var(--line-strong); }
+.code-head { background: #ffffff04; }
+.lead-def { border-color: #c9f58a; background: #c9f58a07; }
+.policy-nav { background: #080c12; border-bottom: 1px solid var(--line); }
+.policy-page h2 { font-weight: 400; letter-spacing: -.025em; }
+.footer-map-land { background: #93b3d03b; }
+.site-footer { background: #080b0f; }
+.site-footer .brand-text { font-size: 26px; letter-spacing: -1px; }
+@media(max-width:760px) { .page-hero { padding-top: 50px; } .page-hero .hero-title { font-size: 38px; } }

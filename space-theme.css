@@ -1,0 +1,801 @@
+/* ============================================================
+   Vortx AI -- Deep Space Theme
+   "Mission Control for Earth Memory"
+
+   Loaded AFTER style.css to override the daylight design system
+   with a deep-space command-center aesthetic.
+
+   Colour meaning is preserved:
+     teal  = verified / the live signal
+     gold  = open / the public layer (emem)
+   ============================================================ */
+
+/* --- Tokens: remap every root variable to the void ----------- */
+:root {
+  /* Deep void surfaces */
+  --paper:      #08090c;
+  --paper-2:    #0c0e13;
+  --surface:    #10121a;
+  --surface-2:  #13161f;
+  --sky:        #0d1033;
+  --sky-2:      #091a1f;
+
+  /* Silver-white text on the void */
+  --ink:        #c8cad0;
+  --ink-soft:   #8e919a;
+  --ink-faint:  #5a5d68;
+
+  /* Lines: faint cyan-laced grid lines */
+  --line:        rgba(60, 200, 220, 0.08);
+  --line-strong: rgba(60, 200, 220, 0.14);
+
+  /* Verified = teal (same meaning, brighter for dark bg) */
+  --teal:        #0fa87e;
+  --teal-ink:    #15bd91;
+  --teal-vivid:  #2ee8ad;
+  --teal-wash:   rgba(15, 168, 126, 0.12);
+
+  /* Open = gold (same meaning, warmer for dark bg) */
+  --gold:        #e0a24a;
+  --gold-vivid:  #f0c178;
+  --gold-wash:   rgba(224, 162, 74, 0.10);
+
+  /* Shadows: deeper, with optional glow accents */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.30), 0 2px 8px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 2px 12px rgba(0, 0, 0, 0.35), 0 14px 34px rgba(0, 0, 0, 0.30);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.40), 0 30px 70px rgba(0, 0, 0, 0.35);
+  --shadow-teal: 0 6px 28px rgba(15, 168, 126, 0.28), 0 0 60px rgba(15, 168, 126, 0.10);
+  --shadow-gold: 0 6px 28px rgba(224, 162, 74, 0.24), 0 0 60px rgba(224, 162, 74, 0.08);
+}
+
+/* --- Body: nebula wash over the void ------------------------- */
+body {
+  background: var(--paper);
+  color: var(--ink);
+  background-image:
+    radial-gradient(1200px 560px at 78% -8%, rgba(13, 16, 51, 0.7) 0%, transparent 60%),
+    radial-gradient(900px 460px at 8% 2%, rgba(9, 26, 31, 0.5) 0%, transparent 55%),
+    radial-gradient(600px 600px at 50% 60%, rgba(15, 168, 126, 0.03) 0%, transparent 70%);
+  background-repeat: no-repeat;
+}
+
+/* --- Blueprint: cyan HUD grid -------------------------------- */
+.blueprint {
+  background-image:
+    linear-gradient(to right, rgba(60, 200, 220, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(60, 200, 220, 0.04) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+/* --- Selection ----------------------------------------------- */
+::selection { background: var(--teal); color: #fff; }
+
+/* --- Skip link ----------------------------------------------- */
+.skip-link {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+/* --- Navigation: dark glass with cyan bottom glow ------------ */
+.site-nav {
+  background: rgba(8, 9, 12, 0.72);
+  backdrop-filter: blur(16px) saturate(1.3);
+  -webkit-backdrop-filter: blur(16px) saturate(1.3);
+  border-bottom: 1px solid rgba(60, 200, 220, 0.06);
+  box-shadow: 0 1px 0 rgba(60, 200, 220, 0.08);
+}
+.site-nav.scrolled {
+  background: rgba(8, 9, 12, 0.92);
+  border-bottom-color: rgba(60, 200, 220, 0.10);
+  box-shadow: 0 1px 0 rgba(60, 200, 220, 0.12), 0 4px 20px rgba(0, 0, 0, 0.40);
+}
+
+/* Nav toggle (mobile hamburger) */
+.nav-toggle {
+  border-color: rgba(60, 200, 220, 0.14);
+  background: var(--surface);
+}
+.nav-toggle span {
+  background: var(--ink);
+}
+
+/* Mobile nav dropdown */
+@media (max-width: 1020px) {
+  .site-nav.open .nav-menu {
+    background: var(--surface);
+    border-color: rgba(60, 200, 220, 0.12);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.50);
+  }
+}
+@media (max-width: 760px) {
+  .site-nav.open .nav-menu {
+    background: var(--surface);
+    border-color: rgba(60, 200, 220, 0.12);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.50);
+  }
+}
+
+/* Nav star pill */
+.nav-star {
+  background: var(--surface);
+  border-color: rgba(60, 200, 220, 0.14);
+}
+
+/* --- Section tints ------------------------------------------- */
+.section--tint {
+  background: var(--paper-2);
+}
+.section--sky {
+  background: linear-gradient(180deg, var(--sky) 0%, var(--paper) 100%);
+}
+
+/* --- Hero ---------------------------------------------------- */
+.hero-title .accent {
+  color: var(--teal-vivid);
+  text-shadow: 0 0 30px rgba(46, 232, 173, 0.25), 0 0 60px rgba(46, 232, 173, 0.10);
+}
+.section-title em, .hero-title em {
+  color: var(--teal-vivid);
+}
+
+/* Hero chip */
+.hero-chip {
+  background: var(--surface);
+  border-color: rgba(60, 200, 220, 0.12);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.40);
+  color: var(--ink-soft);
+}
+
+/* Hero doors */
+.hero-door {
+  background: var(--surface);
+  border-color: rgba(60, 200, 220, 0.10);
+  color: var(--ink);
+}
+.hero-door:hover {
+  border-color: rgba(60, 200, 220, 0.22);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.30);
+}
+.door-name { color: var(--ink); }
+
+/* --- Buttons ------------------------------------------------- */
+.btn-ghost {
+  background: var(--surface);
+  color: var(--ink);
+  border-color: rgba(60, 200, 220, 0.14);
+}
+.btn-ghost:hover {
+  border-color: var(--teal);
+  color: var(--teal-vivid);
+  background: rgba(15, 168, 126, 0.06);
+}
+.btn-primary {
+  box-shadow: var(--shadow-teal);
+}
+.btn-gold {
+  box-shadow: var(--shadow-gold);
+}
+.btn-gold:hover {
+  background: #b87a20;
+}
+
+/* --- Cards: dark surfaces with subtle glow borders ----------- */
+.step,
+.pillar,
+.conn-card,
+.soon-card,
+.offer,
+.product,
+.lane,
+.usecase,
+.res-item,
+.fact,
+.waitlist,
+.plan,
+.consult-card,
+.cphase,
+.enc,
+.pulse-strip,
+.statstrip,
+.talk-strip {
+  background: var(--surface);
+  border-color: rgba(60, 200, 220, 0.08);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Hover glow on cards */
+.step:hover,
+.pillar:hover,
+.conn-card:hover,
+.offer:hover,
+.product:hover,
+.lane:hover,
+.usecase:hover,
+.res-item:hover,
+.cphase:hover {
+  border-color: rgba(60, 200, 220, 0.18);
+  box-shadow: var(--shadow-md), 0 0 30px rgba(60, 200, 220, 0.04);
+}
+
+/* Soon cards: dashed border */
+.soon-card {
+  border-color: rgba(60, 200, 220, 0.12);
+}
+a.soon-card:hover {
+  background: var(--paper-2);
+  border-color: rgba(60, 200, 220, 0.22);
+}
+
+/* Product gradient washes */
+.product-emem {
+  background: linear-gradient(180deg, rgba(224, 162, 74, 0.08), var(--surface) 42%);
+}
+.product-geo {
+  background: linear-gradient(180deg, rgba(15, 168, 126, 0.08), var(--surface) 42%);
+}
+
+/* Product bullets code */
+.product-bullets code, .prose code {
+  background: var(--surface-2);
+  color: var(--ink);
+}
+
+/* --- Chips: dark with teal glow on active -------------------- */
+.chip {
+  background: var(--surface);
+  color: var(--ink-soft);
+  border-color: rgba(60, 200, 220, 0.14);
+}
+.chip:hover {
+  border-color: var(--teal);
+  color: var(--teal-vivid);
+}
+.chip.active {
+  background: rgba(15, 168, 126, 0.15);
+  color: var(--teal-vivid);
+  border-color: var(--teal);
+  box-shadow: 0 0 16px rgba(46, 232, 173, 0.15), inset 0 0 12px rgba(46, 232, 173, 0.06);
+}
+.chip.active .chip-dot {
+  background: var(--teal-vivid);
+  box-shadow: 0 0 8px rgba(46, 232, 173, 0.5);
+}
+
+/* --- Codeblock ----------------------------------------------- */
+.codeblock {
+  background: var(--surface);
+  border-color: rgba(60, 200, 220, 0.10);
+}
+.codeblock-head {
+  border-bottom-color: rgba(60, 200, 220, 0.08);
+}
+.codeblock pre {
+  color: var(--ink);
+}
+
+/* Copy button */
+.copy-btn {
+  background: var(--surface-2);
+  border-color: rgba(60, 200, 220, 0.14);
+  color: var(--ink-soft);
+}
+.copy-btn:hover {
+  border-color: var(--teal);
+  color: var(--teal-vivid);
+}
+
+/* Install rows */
+.install-row {
+  background: var(--surface);
+  border-color: rgba(60, 200, 220, 0.10);
+}
+.install-row code { color: var(--ink); }
+.install-copy {
+  background: var(--surface-2);
+  border-color: rgba(60, 200, 220, 0.14);
+}
+.install-copy:hover {
+  border-color: var(--teal);
+  background: var(--surface);
+}
+.install-copy.copied {
+  color: #fff;
+  background: var(--teal);
+  border-color: var(--teal);
+}
+a.install-link:hover {
+  border-color: var(--teal);
+  background: var(--surface-2);
+}
+.install-go {
+  background: var(--surface-2);
+  border-color: rgba(60, 200, 220, 0.14);
+}
+a.install-link:hover .install-go {
+  border-color: var(--teal);
+  background: var(--surface);
+}
+
+/* --- Step code ----------------------------------------------- */
+.step code {
+  background: var(--teal-wash);
+  color: var(--teal-vivid);
+}
+.step-num {
+  border-color: rgba(60, 200, 220, 0.14);
+}
+
+/* --- Flow diagram -------------------------------------------- */
+.flow {
+  background: var(--surface);
+  border-color: rgba(60, 200, 220, 0.10);
+}
+
+/* --- Verify receipt card: already dark, make it a telemetry feed --- */
+.receipt {
+  background: #080a10;
+  box-shadow: var(--shadow-lg), 0 0 40px rgba(15, 168, 126, 0.06);
+  border: 1px solid rgba(60, 200, 220, 0.10);
+}
+.receipt::before {
+  background:
+    radial-gradient(120% 70% at 88% -10%, rgba(46, 232, 173, 0.14), transparent 60%),
+    radial-gradient(1px 1px at 22% 30%, rgba(60, 200, 220, 0.4), transparent),
+    radial-gradient(1px 1px at 68% 18%, rgba(60, 200, 220, 0.3), transparent),
+    radial-gradient(1px 1px at 84% 62%, rgba(60, 200, 220, 0.25), transparent),
+    radial-gradient(1px 1px at 40% 78%, rgba(60, 200, 220, 0.2), transparent);
+}
+.receipt-head {
+  border-bottom-color: rgba(60, 200, 220, 0.08);
+  background: rgba(60, 200, 220, 0.03);
+}
+.receipt-head .dot { background: rgba(60, 200, 220, 0.18); }
+.receipt-foot {
+  border-top-color: rgba(60, 200, 220, 0.08);
+}
+
+/* Verified state: dramatic glow + scan lines */
+.receipt.verified {
+  box-shadow:
+    var(--shadow-lg),
+    inset 0 0 0 1px rgba(46, 232, 173, 0.45),
+    0 0 50px rgba(46, 232, 173, 0.18),
+    0 0 100px rgba(46, 232, 173, 0.06);
+}
+
+/* Scan-line effect on verified receipt */
+.receipt.verified::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(60, 200, 220, 0.015) 2px,
+    rgba(60, 200, 220, 0.015) 4px
+  );
+  border-radius: inherit;
+}
+
+/* Fetching scan bar */
+.receipt.fetching::after {
+  background: linear-gradient(180deg, transparent, rgba(46, 232, 173, 0.22), transparent);
+}
+
+/* Scene image inside receipt */
+.r-scene img {
+  border-color: rgba(60, 200, 220, 0.14);
+}
+
+/* --- Pillar top-bar color stays, but surface is dark --------- */
+.pillar::before { background: var(--teal); }
+.pillar:nth-child(2)::before { background: var(--gold); }
+
+/* --- Lane top-bar -------------------------------------------- */
+.lane::before { background: rgba(60, 200, 220, 0.14); }
+
+/* --- Plan steps ---------------------------------------------- */
+.plan-step {
+  background: var(--paper);
+  border-color: rgba(60, 200, 220, 0.08);
+}
+.plan-step.is-done {
+  border-color: rgba(15, 168, 126, 0.30);
+}
+.plan-status {
+  background: var(--surface-2);
+  border-color: rgba(60, 200, 220, 0.14);
+}
+.plan-step.is-done .plan-status {
+  background: var(--teal-wash);
+  border-color: rgba(15, 168, 126, 0.3);
+}
+.plan-step.is-now .plan-status {
+  background: var(--gold-wash);
+  border-color: rgba(224, 162, 74, 0.3);
+}
+.plan-note {
+  background: var(--gold-wash);
+  border-color: rgba(224, 162, 74, 0.3);
+}
+
+/* --- Connector cards ----------------------------------------- */
+.conn-badge {
+  background: var(--teal-wash);
+  border-color: rgba(15, 168, 126, 0.25);
+}
+.conn-badge--gold {
+  background: var(--gold-wash);
+  border-color: rgba(224, 162, 74, 0.25);
+}
+.conn-how {
+  background: var(--surface-2);
+  border-color: rgba(60, 200, 220, 0.08);
+}
+
+/* --- Research tags ------------------------------------------- */
+.res-tag.oss {
+  background: rgba(60, 200, 220, 0.06);
+  color: var(--ink-soft);
+}
+
+/* --- Pricing modal ------------------------------------------- */
+.pm-backdrop {
+  background: rgba(4, 5, 8, 0.75);
+}
+.pm-panel {
+  background: var(--paper);
+  border-color: rgba(60, 200, 220, 0.12);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.60), 0 0 40px rgba(60, 200, 220, 0.04);
+}
+.pm-x {
+  background: var(--surface-2);
+  border-color: rgba(60, 200, 220, 0.10);
+  color: var(--ink-soft);
+}
+.pm-x:hover {
+  background: var(--surface);
+  color: var(--ink);
+}
+
+/* Segmented slider */
+.pm-seg {
+  background: var(--surface-2);
+  border-color: rgba(60, 200, 220, 0.10);
+}
+.pm-seg-pill {
+  background: var(--teal);
+  box-shadow: 0 0 14px rgba(15, 168, 126, 0.3);
+}
+.pm-seg-btn.active { color: #fff; }
+
+/* Form fields */
+.pm-field input, .pm-field textarea {
+  background: var(--surface);
+  border-color: rgba(60, 200, 220, 0.14);
+  color: var(--ink);
+}
+.pm-field input::placeholder, .pm-field textarea::placeholder {
+  color: var(--ink-faint);
+}
+.pm-field input:focus, .pm-field textarea:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(15, 168, 126, 0.15);
+}
+
+/* Form summary row */
+.pm-form-summary {
+  background: var(--surface-2);
+  border-color: rgba(60, 200, 220, 0.10);
+}
+
+/* Form notes */
+.pm-form-note.is-err {
+  color: #e85b4a;
+  background: rgba(232, 91, 74, 0.10);
+}
+.pm-form-note.is-warn {
+  color: var(--gold);
+  background: var(--gold-wash);
+}
+
+.pm-note {
+  color: var(--gold);
+  background: var(--gold-wash);
+}
+
+/* Consent checkbox */
+.pm-consent {
+  background: var(--surface-2);
+  border-color: rgba(60, 200, 220, 0.10);
+}
+.pm-consent:hover {
+  border-color: rgba(60, 200, 220, 0.18);
+}
+
+/* Tier card within modal */
+.cc-tier {
+  background: var(--surface);
+  border-color: rgba(60, 200, 220, 0.10);
+}
+.cc-tier:hover {
+  border-color: var(--teal);
+  background: var(--surface-2);
+  box-shadow: 0 0 16px rgba(15, 168, 126, 0.08);
+}
+
+/* --- Guardrail (gold alert) ---------------------------------- */
+.guardrail {
+  background: rgba(224, 162, 74, 0.08);
+  border-color: rgba(224, 162, 74, 0.30);
+  color: var(--ink);
+}
+
+/* --- Talk strip ---------------------------------------------- */
+.talk-strip {
+  background: var(--surface);
+  border-color: rgba(60, 200, 220, 0.08);
+}
+
+/* --- Footer -------------------------------------------------- */
+.site-footer {
+  background: #060710;
+  border-top-color: rgba(60, 200, 220, 0.08);
+}
+.footer-map-land {
+  background: rgba(60, 200, 220, 0.12);
+}
+
+/* --- Lead definition block ----------------------------------- */
+.lead-def {
+  border-left-color: var(--teal);
+  background: var(--teal-wash);
+}
+
+/* --- Q&A ----------------------------------------------------- */
+.qa-item {
+  border-bottom-color: rgba(60, 200, 220, 0.08);
+}
+.qa-item:first-of-type {
+  border-top-color: rgba(60, 200, 220, 0.08);
+}
+
+/* --- Policy pages -------------------------------------------- */
+.policy-page .subtitle {
+  background: var(--surface);
+  border-color: rgba(60, 200, 220, 0.10);
+}
+.policy-page .contact-box, .policy-page .contact-card {
+  background: var(--surface);
+  border-color: rgba(60, 200, 220, 0.10);
+}
+
+/* --- Tag soon ------------------------------------------------ */
+.tag-soon {
+  border-color: rgba(60, 200, 220, 0.14);
+}
+
+/* --- Encoder roster ------------------------------------------ */
+.enc {
+  background: var(--surface);
+  border-color: rgba(60, 200, 220, 0.08);
+}
+.enc:hover {
+  border-color: rgba(60, 200, 220, 0.18);
+}
+.enc-syn {
+  border-style: dashed;
+}
+.enc-next {
+  border-color: rgba(224, 162, 74, 0.3);
+}
+
+/* --- Orbital SVG hero: recolor for space ---------------------- */
+
+/* Sky/atmosphere gradients: make them dark void */
+.orbital .sky-fill,
+.orbital [class*="sky"],
+.orbital .atmo { opacity: 0.15; }
+
+/* Ground/terrain: deep teal-dark */
+.orbital .ground,
+.orbital .terrain,
+.orbital .land { fill: #091a1f; }
+
+/* Scan sweep: brighter cyan glow */
+.orbital .scan {
+  opacity: 0.7;
+  filter: drop-shadow(0 0 8px rgba(60, 200, 220, 0.5));
+}
+
+/* Satellite: teal glow */
+.orbital .sat-bob {
+  filter: drop-shadow(0 0 6px rgba(46, 232, 173, 0.4));
+}
+
+/* Ground cells: cyan/teal pulse */
+.orbital .gcell {
+  opacity: 0.20;
+  fill: rgba(60, 200, 220, 0.5);
+}
+.orbital .gdev {
+  opacity: 0.16;
+  fill: rgba(46, 232, 173, 0.4);
+}
+
+/* Streams */
+.orbital .stream { stroke: var(--teal-vivid); }
+.orbital .stream.gold { stroke: var(--gold-vivid); }
+.orbital .stream.down { stroke: rgba(46, 232, 173, 0.5); }
+
+/* Nodes and sparks */
+.orbital .node-glow {
+  filter: drop-shadow(0 0 4px rgba(46, 232, 173, 0.3));
+}
+.orbital .spark {
+  filter: drop-shadow(0 0 3px rgba(60, 200, 220, 0.4));
+}
+
+/* Active cells in the SVG */
+.orbital .active-cell,
+.cellmap .active-cell {
+  filter: drop-shadow(0 0 4px rgba(46, 232, 173, 0.25));
+}
+
+/* Sensors */
+.orbital .sensor,
+.cellmap .sensor {
+  filter: drop-shadow(0 0 3px rgba(60, 200, 220, 0.3));
+}
+
+/* --- Map footer dots ----------------------------------------- */
+.map-dot {
+  fill: var(--teal-vivid);
+  filter: drop-shadow(0 0 3px rgba(46, 232, 173, 0.3));
+}
+.map-pin-core { fill: var(--teal); filter: drop-shadow(0 0 4px rgba(15, 168, 126, 0.4)); }
+.map-pin-vortx .map-pin-core { fill: var(--gold); filter: drop-shadow(0 0 4px rgba(224, 162, 74, 0.4)); }
+
+/* --- Pulse numbers on hero ----------------------------------- */
+.hero-eyebrow .pip {
+  background: var(--teal-vivid);
+  box-shadow: 0 0 0 0 rgba(46, 232, 173, 0.55);
+}
+
+/* --- Live pip keyframe: recolor for teal-vivid --------------- */
+@keyframes live-pip {
+  0%   { box-shadow: 0 0 0 0 rgba(46, 232, 173, 0.5); }
+  70%  { box-shadow: 0 0 0 12px rgba(46, 232, 173, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(46, 232, 173, 0); }
+}
+
+/* --- Stat strip corrections ---------------------------------- */
+.stat + .stat::before {
+  background: rgba(60, 200, 220, 0.10);
+}
+
+/* --- Hero quote border --------------------------------------- */
+.hero-quote {
+  border-top-color: rgba(60, 200, 220, 0.10);
+}
+
+/* --- Footer bottom border ------------------------------------ */
+.footer-bottom {
+  border-top-color: rgba(60, 200, 220, 0.08);
+}
+
+/* --- Plan foot border ---------------------------------------- */
+.plan-foot {
+  border-top-color: rgba(60, 200, 220, 0.08);
+}
+
+/* --- PM foot border ------------------------------------------ */
+.pm-foot {
+  border-top-color: rgba(60, 200, 220, 0.08);
+}
+
+/* --- Receipt border accents ---------------------------------- */
+.receipt-head { border-bottom-color: rgba(60, 200, 220, 0.08); }
+.receipt-foot { border-top-color: rgba(60, 200, 220, 0.08); }
+
+/* --- Stronger ambient glow on the hero live-pip -------------- */
+@keyframes live-ping {
+  0%   { box-shadow: 0 0 0 0 rgba(46, 232, 173, 0.55); }
+  100% { box-shadow: 0 0 0 7px rgba(46, 232, 173, 0); }
+}
+
+/* --- Scrollbar styling for dark theme ------------------------ */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--paper);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(60, 200, 220, 0.15);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(60, 200, 220, 0.25);
+}
+
+/* --- Verified receipt: enhanced telemetry aesthetic ----------- */
+
+/* A faint horizontal scan-line overlay on the entire receipt */
+.receipt::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(60, 200, 220, 0.012) 3px,
+    rgba(60, 200, 220, 0.012) 6px
+  );
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.receipt.verified::after {
+  opacity: 1;
+}
+
+/* Pulsing border glow on verified */
+.receipt.verified {
+  animation: receipt-glow 3s ease-in-out infinite;
+}
+@keyframes receipt-glow {
+  0%, 100% {
+    box-shadow:
+      var(--shadow-lg),
+      inset 0 0 0 1px rgba(46, 232, 173, 0.35),
+      0 0 40px rgba(46, 232, 173, 0.12);
+  }
+  50% {
+    box-shadow:
+      var(--shadow-lg),
+      inset 0 0 0 1px rgba(46, 232, 173, 0.55),
+      0 0 60px rgba(46, 232, 173, 0.20);
+  }
+}
+
+/* --- Image and SVG brightness adjustments -------------------- */
+/* Brighten the brand mark slightly since it sits on dark bg */
+.brand-mark {
+  filter: brightness(1.1);
+}
+
+/* --- Publish art SVG ----------------------------------------- */
+.publish-art svg {
+  filter: brightness(0.7) saturate(0.8);
+}
+
+/* --- Offer card price row ------------------------------------ */
+.offer-price { color: var(--ink); }
+.offer-price-free { color: var(--teal-vivid); }
+
+/* --- Confirm modal ------------------------------------------- */
+.pm-confirm-ic { color: var(--teal-vivid); }
+
+/* --- Focus visible: teal ring on dark bg --------------------- */
+:focus-visible {
+  outline-color: var(--teal);
+}
+
+/* --- Reduced motion: honour user preference, keep colours ---- */
+@media (prefers-reduced-motion: reduce) {
+  .receipt.verified { animation: none; }
+  .receipt.verified {
+    box-shadow:
+      var(--shadow-lg),
+      inset 0 0 0 1px rgba(46, 232, 173, 0.45),
+      0 0 50px rgba(46, 232, 173, 0.15);
+  }
+}
