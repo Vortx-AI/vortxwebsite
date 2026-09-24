@@ -137,7 +137,7 @@
   // Hero terminal — observation carousel + thumbnail strip
   const ht = $('#hero-terminal');
   const strip = $('#obs-strip');
-  if (ht) {
+  if (ht && ht.querySelector('.ht-viewport')) {
     const htObs = [
       {title:'Cosmic Cliffs, Carina',dtype:'combined',source:'Webb JWST · NIRCam',meta:'144 MB · 1 frame signed',tokens:'~1.2k',frames:1,cid:'wkxa7tcm…66dhe',url:'https://emem.dev/memories/by_attester/ddzmyzhn/wkxa7tcmw2orf7ujjf5yi66dhe.md',img:'assets/observatory/carina.webp'},
       {title:'Amazon frontier, 2017–2025',dtype:'timelapse',source:'timelapse: -9.73, -63.03',meta:'5 frames · 3 cubes signed · bound',tokens:'~1.7k',frames:5,cid:'gkc2jap4…deru',url:'https://emem.dev/memories/by_attester/ddzmyzhn/gkc2jap4r47zgs4t2sja4qderu.md',img:'assets/observatory/amazon-frontier-2017-2025.webp'},
@@ -214,81 +214,52 @@
     }
   }
 
-  // Tokenise — file upload and URL input
+  // The studio owns all creation. The landing page only prepares the input and
+  // loads the official studio on an explicit user action.
   const drop = $('#ememfy-drop');
-  const fileInput = $('#ememfy-file');
   const textInput = $('#ememfy-text');
   const goBtn = $('#ememfy-go');
   const chooseBtn = $('#ememfy-choose');
-  const tokensEl = $('#ememfy-tokens');
+  const status = $('#ememfy-status');
+  const studio = $('#ememfy-studio');
+  const studioFrame = $('#ememfy-frame');
+  const closeStudio = $('#ememfy-close');
+  const external = $('#ememfy-external');
+  const demo = 'https://vortx-ai.github.io/ememdemo/';
 
-  if (drop && fileInput && tokensEl) {
-    function formatSize(bytes) {
-      if (bytes < 1024) return bytes + ' B';
-      if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
-      if (bytes < 1073741824) return (bytes / 1048576).toFixed(1) + ' MB';
-      return (bytes / 1073741824).toFixed(1) + ' GB';
-    }
-
-    function addToken(name, size) {
-      tokensEl.hidden = false;
-      const el = document.createElement('div');
-      el.className = 'ememfy-token tk-loading';
-      el.innerHTML = '<span class="tk-name">' + name + '</span><span class="tk-size">' + (size ? formatSize(size) : '') + '</span><span class="tk-cid">tokenising…</span><span class="tk-proof"><em>sig</em> pending <em>int</em> pending</span>';
-      tokensEl.prepend(el);
-      return el;
-    }
-
-    function fillToken(el, data) {
-      el.classList.remove('tk-loading');
-      if (data.error) {
-        el.classList.add('tk-error');
-        el.querySelector('.tk-cid').textContent = data.error;
-        el.querySelector('.tk-proof').innerHTML = '';
+  if (drop && textInput && goBtn && chooseBtn && studio && studioFrame) {
+    document.addEventListener('vortx:open-studio', event => {
+      if (typeof event.detail?.input === 'string') openStudio(event.detail.input);
+    });
+    function openStudio(input = '') {
+      const href = input ? demo + '?s=' + encodeURIComponent(input) : demo;
+      if (typeof studio.showModal !== 'function') {
+        window.open(href, '_blank', 'noopener');
+        status.textContent = 'The emem studio opened in a new tab.';
         return;
       }
-      const cid = data.cid || data.fact_cid || data.token || '—';
-      const url = data.url || (typeof cid === 'string' && cid.length > 10 ? 'https://emem.dev/verify?cid=' + encodeURIComponent(cid) : '');
-      el.querySelector('.tk-cid').innerHTML = url ? '<a href="' + url + '" target="_blank" rel="noopener">' + cid + '</a>' : cid;
-      el.querySelector('.tk-proof').innerHTML = '<em>sig</em> ed25519 ✓ <em>int</em> blake3 ✓' + (url ? ' <button class="tk-copy" data-copy="' + cid + '">Copy token</button>' : '');
-      const copyBtn = el.querySelector('.tk-copy');
-      if (copyBtn) copyBtn.addEventListener('click', async () => {
-        try { await navigator.clipboard.writeText(copyBtn.dataset.copy); copyBtn.textContent = 'Copied ✓'; setTimeout(() => { copyBtn.textContent = 'Copy token'; }, 2000); } catch {}
-      });
+      studioFrame.src = href;
+      external.href = href;
+      studio.showModal();
+      status.textContent = input ? 'Your input is ready in the studio. Press → there to read or make a link.' : 'The emem studio is open. Choose files there to keep their handling in one place.';
     }
 
-    async function tokeniseFile(file) {
-      const el = addToken(file.name, file.size);
-      const body = new FormData();
-      body.append('file', file);
-      try {
-        const r = await fetch('https://emem.dev/v1/remember', { method: 'POST', body, signal: AbortSignal.timeout(120000) });
-        if (!r.ok) throw new Error('HTTP ' + r.status);
-        fillToken(el, await r.json());
-      } catch (e) {
-        fillToken(el, { error: e.name === 'AbortError' ? 'Timed out — try a smaller file or open emem.dev directly.' : 'Could not tokenise — ' + (e.message || 'try emem.dev directly.') });
-      }
-    }
-
-    async function tokeniseText(text) {
-      const el = addToken(text, null);
-      try {
-        const r = await fetch('https://emem.dev/v1/remember', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ input: text }), signal: AbortSignal.timeout(120000) });
-        if (!r.ok) throw new Error('HTTP ' + r.status);
-        fillToken(el, await r.json());
-      } catch (e) {
-        fillToken(el, { error: e.name === 'AbortError' ? 'Timed out — try emem.dev directly.' : 'Could not tokenise — ' + (e.message || 'try emem.dev directly.') });
-      }
-    }
-
-    chooseBtn.addEventListener('click', () => fileInput.click());
-    fileInput.addEventListener('change', () => { [...fileInput.files].forEach(tokeniseFile); fileInput.value = ''; });
-    goBtn.addEventListener('click', () => { const t = textInput.value.trim(); if (t) { tokeniseText(t); textInput.value = ''; } });
-    textInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); goBtn.click(); } });
-
-    drop.addEventListener('dragover', e => { e.preventDefault(); drop.classList.add('dragover'); });
-    drop.addEventListener('dragleave', () => drop.classList.remove('dragover'));
-    drop.addEventListener('drop', e => { e.preventDefault(); drop.classList.remove('dragover'); [...e.dataTransfer.files].forEach(tokeniseFile); });
+    drop.addEventListener('submit', event => {
+      event.preventDefault();
+      const input = textInput.value.trim();
+      if (!input) { textInput.focus(); status.textContent = 'Paste a URL, a place command, or choose files to begin.'; return; }
+      openStudio(input);
+    });
+    chooseBtn.addEventListener('click', () => openStudio());
+    closeStudio.addEventListener('click', () => studio.close());
+    studio.addEventListener('close', () => { studioFrame.removeAttribute('src'); });
+    studio.addEventListener('click', event => { if (event.target === studio) studio.close(); });
+    document.addEventListener('keydown', event => { if (event.key === 'Escape' && studio.open) studio.close(); });
+    document.querySelectorAll('.ememfy-tags button[data-cmd]').forEach(button => button.addEventListener('click', () => {
+      const input = button.dataset.cmd;
+      textInput.value = input;
+      openStudio(input);
+    }));
   }
 
   // Planet WebGL — only if canvas is present (removed from current homepage)

@@ -53,11 +53,12 @@
   <meta name="geo.position" content="12.9716;77.5946">
   <meta name="ICBM" content="12.9716, 77.5946">
 
-  <link rel="preload" href="assets/observatory/carina.webp" as="image" fetchpriority="high">
+  <link rel="preload" href="assets/earth-day.webp" as="image" fetchpriority="high">
 
   <!-- Styles -->
   <link rel="stylesheet" href="orbital.css">
-  <noscript><style>.recall-form,.recall-examples,.menu-toggle,.archive-filters{display:none!important}.orbit-links{display:flex;flex-wrap:wrap}.world-hero{margin-top:45px}</style></noscript>
+  <link rel="stylesheet" href="world.css">
+  <noscript><style>.recall-form,.recall-examples,.menu-toggle,.archive-filters,.world-dock,.world-map-controls{display:none!important}.orbit-links{display:flex;flex-wrap:wrap}.world-hero{margin-top:45px}</style></noscript>
 
   <!-- Structured data: the Vortx entity graph -->
   <script type="application/ld+json">
@@ -146,38 +147,89 @@
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="orbit-nav" id="nav">
     <div class="wrap">
-      <a href="/" class="orbit-brand" aria-label="Vortx AI home"><img src="/assets/vortx-logo.png" alt="" width="32" height="32" class="brand-planet"><span>vortx<small> AI</small></span></a>
+      <a href="/" class="orbit-brand" aria-label="vortx.ai home"><img src="/assets/vortx-logo.png" alt="" width="32" height="32" class="brand-planet"><span>vortx.ai</span></a>
       <nav class="orbit-links" id="orbit-links" aria-label="Main navigation">
-        <a href="#explore">Explore</a><a href="#memory">The protocol</a><a href="#satellite">The mission</a><a href="/research/">Research ↗</a>
+        <a href="#hero">Our world</a><a href="#explore">Archive</a><a href="#satellite">Space × AI</a><a href="/research/">Research ↗</a>
       </nav>
       <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="orbit-links">☰</button>
       <a class="nav-contact" href="#build">Build with us <span aria-hidden="true">↗</span></a>
     </div>
   </header>
   <main id="main">
-    <h1 class="sr-only">Vortx AI — direct-to-AI space intelligence. emem is the open protocol.</h1>
-    <section class="world-hero" id="hero">
+    <section class="world-stage intelligence-observatory emem-world" id="hero" aria-labelledby="world-heading">
+      <canvas id="world-stars" aria-hidden="true"></canvas>
+      <div class="world-aura" aria-hidden="true"></div>
+      <div class="deep-space-field" aria-hidden="true"></div>
+      <div class="world-intro">
+        <h1 id="world-heading">External memory<span class="heading-context">of the <em>world.</em></span></h1>
+      </div>
+      <div class="world-orientation"><span>BEYOND EARTH</span><span>TELESCOPE OBSERVATIONS</span></div>
+      <div class="atlas-planet" id="atlas-planet">
+        <div class="atlas-fallback" aria-hidden="true"></div>
+        <canvas id="atlas-canvas" tabindex="0" role="img" aria-label="Interactive Earth. Drag or use arrow keys to rotate. Choose a memory pin to explore."></canvas>
+      </div>
+      <canvas id="intelligence-field" aria-hidden="true"></canvas>
+      <svg class="world-connectors" id="world-connectors" aria-hidden="true"></svg>
+      <div id="world-pins" aria-label="Geographically anchored observations"></div>
+      <div class="world-features" id="world-features" aria-label="Featured memories"></div>
+      <div class="world-map-controls" role="group" aria-label="World view">
+        <button type="button" data-world-view="earth" aria-pressed="true">Earth</button>
+        <button type="button" data-world-view="memory" aria-pressed="false">Memory</button>
+        <span></span>
+        <button type="button" id="world-motion" aria-label="Pause world motion" aria-pressed="false">Ⅱ</button>
+        <button type="button" id="world-immersive" aria-label="Enter fullscreen world">⛶</button>
+      </div>
+      <div class="world-position"><span class="signal"></span><span id="world-coordinates">DRAG TO ORBIT · SELECT TO EXPLORE</span></div>
+      <div class="world-dock" aria-label="Work with the world's memory">
+        <button type="button" data-station="generate"><span class="dock-number">01</span><span>Generate<small>Make a memory</small></span><b aria-hidden="true">↗</b></button>
+        <button type="button" data-station="share"><span class="dock-number">02</span><span>Share<small>Carry it forward</small></span><b aria-hidden="true">↗</b></button>
+        <button class="memory-nexus emem-companion" type="button" data-station="recall" aria-label="Ask the shared memory">
+          <span class="companion-halo" aria-hidden="true"></span>
+          <span class="ai-explorer" aria-hidden="true"><img src="assets/emem-companion.webp" alt="" width="1254" height="1254" fetchpriority="high" draggable="false"></span>
+          <span class="nexus-name">emem</span><span class="nexus-invite">Ask the memory ↗</span>
+        </button>
+        <button type="button" data-station="verify"><span class="dock-number">03</span><span>Verify<small>Trust the evidence</small></span><b aria-hidden="true">↗</b></button>
+        <button type="button" class="dock-recall" data-station="recall"><span class="recall-symbol" aria-hidden="true">⌕</span><span>Recall<small>Ask a place</small></span><b aria-hidden="true">↗</b></button>
+      </div>
+      <div class="world-bottom"><span>emem <i>/</i> THE OPEN MEMORY PROTOCOL</span><a href="#explore">Explore the observation archive <span aria-hidden="true">↓</span></a></div>
+      <noscript><p class="world-noscript">Explore the full <a href="#explore">observation archive ↓</a>. Enable JavaScript to rotate Earth and open memory stations.</p></noscript>
+    </section>
+    <section class="world-hero" id="generate">
       <div class="wrap">
-        <div class="hero-terminal" id="hero-terminal" role="region" aria-label="Ememfied observations">
-          <div class="ht-bar"><span>emem.dev</span><span class="ht-live"><span class="signal"></span>ememfied</span></div>
-          <div class="ememfy-drop" id="ememfy-drop">
-            <input type="file" id="ememfy-file" multiple hidden>
+        <section class="hero-terminal" id="hero-terminal" aria-labelledby="ememfy-title">
+          <div class="ememfy-intro">
+            <h2 id="ememfy-title">Give the world a memory.</h2>
+            <p>A satellite scene, a scan, a video, a repository, a whole place. Turn what you observe into a small, permanent link an agent can read.</p>
+          </div>
+          <form class="ememfy-drop" id="ememfy-drop">
+            <label class="sr-only" for="ememfy-text">What should emem turn into a link?</label>
             <div class="ememfy-row">
-              <input type="text" id="ememfy-text" placeholder="Paste a URL, a repo, world: a place, timelapse: coordinates, city: a city, forest: a place, or cameras: London" autocomplete="off" spellcheck="false">
-              <button type="button" id="ememfy-go" class="orbit-button">→</button>
+              <textarea id="ememfy-text" rows="2" placeholder="Paste a URL, repo, world: a place, timelapse: coordinates, city: a city, forest: a place, or cameras: London" autocomplete="off" spellcheck="false"></textarea>
+              <button type="submit" id="ememfy-go" class="orbit-button">Open studio <span aria-hidden="true">→</span></button>
             </div>
             <div class="ememfy-row ememfy-row-alt">
-              <button type="button" id="ememfy-choose">choose files</button>
-              <span class="ememfy-note micro">or drop files here · public: anyone with the link can read it</span>
+              <button type="button" id="ememfy-choose">Choose files</button>
+              <span class="ememfy-note micro">Images, video, scans, code & more</span>
+            </div>
+          </form>
+          <div class="ememfy-try" aria-label="Try an example">
+            <span class="micro">Try a real observation</span>
+            <div class="ememfy-tags">
+              <button type="button" data-cmd="timelapse: -9.73, -63.03">Amazon timelapse</button>
+              <button type="button" data-cmd="https://esawebb.org/media/archives/images/original/weic2205a.tif">Webb nebula</button>
+              <button type="button" data-cmd="https://r2-public.protomaps.com/protomaps-sample-datasets/terrarium_z9.pmtiles">Earth's terrain</button>
+              <button type="button" data-cmd="world: Cubbon Park, Bengaluru">Sense a place</button>
             </div>
           </div>
-        </div>
-        <div class="ememfy-tokens" id="ememfy-tokens" hidden></div>
+          <p class="ememfy-status" id="ememfy-status" role="status">Continue in the emem studio to choose files or generate your memory.</p>
+          <noscript><p class="ememfy-status">JavaScript is needed to open the embedded studio. <a href="https://vortx-ai.github.io/ememdemo/" target="_blank" rel="noopener">Open emem demo ↗</a></p></noscript>
+        </section>
       </div>
     </section>
     <section class="chapter archive" id="explore" aria-labelledby="explore-title">
       <div class="wrap">
-        <p class="chapter-label micro"><span class="section-no">01 /</span> The observation archive</p>
+        <p class="chapter-label micro"><span class="signal"></span> The observation archive</p>
+        <div class="archive-heading"><h2 id="explore-title">Every memory has a world inside.</h2><a href="#hero">Return to orbit ↑</a></div>
         <div class="archive-toolbar">
           <div class="archive-filters" role="group" aria-label="Filter observations">
             <button type="button" class="archive-filter" data-filter="all" aria-pressed="true">All observations <span>36</span></button>
@@ -194,7 +246,7 @@
               </div>
               <h3>Cosmic Cliffs, Carina</h3>
               <p>WEBB <span aria-hidden="true">/</span> OPEN RECORD ↗</p>
-            </a>
+            <div class="obs-detail"><span class="obs-dtype">combined</span><span class="obs-src">esawebb.org / weic2205a.tif</span><span class="obs-meta">144 MB · 1 frame signed</span><span class="obs-tokens">agent reads ~1.5k tokens</span><span class="obs-cid">wkxa7tcm…6dhe</span></div></a>
             <a class="observation" data-category="earth" href="https://emem.dev/memories/by_attester/ddzmyzhn/gkc2jap4r47zgs4t2sja4qderu.md" target="_blank" rel="noopener">
               <div class="observation-image">
                 <img src="assets/observations/gkc2jap4r47zgs4t2sja4qderu.webp" alt="Amazon frontier, 2017–2025 — preview from the emem archive" width="320" height="200" loading="lazy" decoding="async">
@@ -202,7 +254,7 @@
               </div>
               <h3>Amazon frontier, 2017–2025</h3>
               <p>TIMELAPSE <span aria-hidden="true">/</span> FRAME FROM ARCHIVE ↗</p>
-            </a>
+            <div class="obs-detail"><span class="obs-dtype">timelapse</span><span class="obs-src">timelapse: -9.73, -63.03</span><span class="obs-meta">5 frames signed</span><span class="obs-tokens">agent reads ~2.3k tokens</span><span class="obs-cid">gkc2jap4…deru</span></div></a>
             <a class="observation" data-category="space" href="https://emem.dev/memories/by_attester/ddzmyzhn/7rn7fxbl75o5cijqpnok5oc7rq.md" target="_blank" rel="noopener">
               <div class="observation-image">
                 <img src="assets/observations/7rn7fxbl75o5cijqpnok5oc7rq.webp" alt="Whirlpool galaxy, M51 — preview from the emem archive" width="320" height="200" loading="lazy" decoding="async">
@@ -210,7 +262,7 @@
               </div>
               <h3>Whirlpool galaxy, M51</h3>
               <p>HUBBLE <span aria-hidden="true">/</span> OPEN RECORD ↗</p>
-            </a>
+            <div class="obs-detail"><span class="obs-dtype">combined</span><span class="obs-src">esahubble.org / heic0506a.tif</span><span class="obs-meta">215 MB · 1 frame signed</span><span class="obs-tokens">agent reads ~1.5k tokens</span><span class="obs-cid">7rn7fxbl…c7rq</span></div></a>
             <a class="observation" data-category="earth" href="https://emem.dev/memories/by_attester/ddzmyzhn/twlpco5kin6qlz5eplt2pjm7n4.md" target="_blank" rel="noopener">
               <div class="observation-image">
                 <img src="assets/observations/twlpco5kin6qlz5eplt2pjm7n4.webp" alt="Bengaluru, true colour — preview from the emem archive" width="320" height="200" loading="lazy" decoding="async">
@@ -218,7 +270,7 @@
               </div>
               <h3>Bengaluru, true colour</h3>
               <p>SENTINEL-2 <span aria-hidden="true">/</span> OPEN RECORD ↗</p>
-            </a>
+            <div class="obs-detail"><span class="obs-dtype">combined</span><span class="obs-src">sentinel-cogs.s3.us-west-2.amazonaws.com / TCI.tif</span><span class="obs-meta">351 MB · 1 frame signed</span><span class="obs-tokens">agent reads ~1.5k tokens</span><span class="obs-cid">twlpco5k…m7n4</span></div></a>
             <a class="observation" data-category="space" href="https://emem.dev/memories/by_attester/ddzmyzhn/fi67bt4rxkic3ssuag2v2hskly.md" target="_blank" rel="noopener">
               <div class="observation-image">
                 <img src="assets/observations/fi67bt4rxkic3ssuag2v2hskly.webp" alt="Mars, December 2024 — preview from the emem archive" width="320" height="200" loading="lazy" decoding="async">
@@ -226,7 +278,7 @@
               </div>
               <h3>Mars, December 2024</h3>
               <p>HUBBLE <span aria-hidden="true">/</span> OPEN RECORD ↗</p>
-            </a>
+            <div class="obs-detail"><span class="obs-dtype">combined</span><span class="obs-src">esahubble.org / heic2505b.tif</span><span class="obs-meta">1 frame signed</span><span class="obs-tokens">agent reads ~1.1k tokens</span><span class="obs-cid">fi67bt4r…skly</span></div></a>
             <a class="observation" data-category="space" href="https://emem.dev/memories/by_attester/ddzmyzhn/jxz6pghlsjbohvx6s5iw6yek4m.md" target="_blank" rel="noopener">
               <div class="observation-image">
                 <img src="assets/observations/jxz6pghlsjbohvx6s5iw6yek4m.webp" alt="Moon terrain, Kaguya — preview from the emem archive" width="320" height="200" loading="lazy" decoding="async">
@@ -234,7 +286,7 @@
               </div>
               <h3>Moon terrain, Kaguya</h3>
               <p>USGS · HILLSHADE <span aria-hidden="true">/</span> OPEN RECORD ↗</p>
-            </a>
+            <div class="obs-detail"><span class="obs-dtype">combined</span><span class="obs-src">astrogeo-ard.s3.us-west-2.amazonaws.com / TC2W2B0_01_00608S446E2621__T…</span><span class="obs-meta">1 frame signed</span><span class="obs-tokens">agent reads ~1.1k tokens</span><span class="obs-cid">jxz6pghl…ek4m</span></div></a>
             <a class="observation" data-category="earth" href="https://emem.dev/memories/by_attester/ddzmyzhn/ppdqanaf7ufpxedvwdrwuqhf5u.md" target="_blank" rel="noopener">
               <div class="observation-image">
                 <img src="assets/observations/ppdqanaf7ufpxedvwdrwuqhf5u.webp" alt="The whole Earth's terrain, 30 GB of tiles — preview from the emem archive" width="320" height="200" loading="lazy" decoding="async">
@@ -242,7 +294,7 @@
               </div>
               <h3>The whole Earth's terrain, 30 GB of tiles</h3>
               <p>PMTILES <span aria-hidden="true">/</span> FRAME FROM ARCHIVE ↗</p>
-            </a>
+            <div class="obs-detail"><span class="obs-dtype">pmtiles</span><span class="obs-src">r2-public.protomaps.com / terrarium_z9.pmtiles</span><span class="obs-meta">30.5 GB · 8 frames signed</span><span class="obs-tokens">agent reads ~3.6k tokens</span><span class="obs-cid">ppdqanaf…hf5u</span></div></a>
             <a class="observation" data-category="earth" href="https://emem.dev/memories/by_attester/ddzmyzhn/o2iyw5aexedv7sneir7sgng4fm.md" target="_blank" rel="noopener">
               <div class="observation-image">
                 <img src="assets/observations/o2iyw5aexedv7sneir7sgng4fm.webp" alt="Ozone, 41 years of a climate model — preview from the emem archive" width="320" height="200" loading="lazy" decoding="async">
@@ -250,7 +302,7 @@
               </div>
               <h3>Ozone, 41 years of a climate model</h3>
               <p>NETCDF <span aria-hidden="true">/</span> OPEN RECORD ↗</p>
-            </a>
+            <div class="obs-detail"><span class="obs-dtype">netcdf</span><span class="obs-src">huggingface.co / o3_AERmon_GISS-E2-1-G_piClim…</span><span class="obs-meta">1.05 GB · 1 frame signed</span><span class="obs-tokens">agent reads ~1.5k tokens</span><span class="obs-cid">o2iyw5ae…g4fm</span></div></a>
             <a class="observation" data-category="earth" href="https://emem.dev/memories/by_attester/ddzmyzhn/boupyjevzwv6qlj2q477tvmkmi.md" target="_blank" rel="noopener">
               <div class="observation-image">
                 <div class="data-preview" aria-hidden="true"><span>⌗</span><small>NetCDF-4 · 848 MB / data record</small></div>
@@ -258,7 +310,7 @@
               </div>
               <h3>Hurricane Katrina, the weather model run</h3>
               <p>NETCDF-4 <span aria-hidden="true">/</span> OPEN RECORD ↗</p>
-            </a>
+            <div class="obs-detail"><span class="obs-dtype">netcdf-4</span><span class="obs-src">huggingface.co / wrfout_d01_2005-08-28_000000…</span><span class="obs-meta">848 MB · 1 frame signed</span><span class="obs-tokens">agent reads ~1.5k tokens</span><span class="obs-cid">boupyjev…mkmi</span></div></a>
             <a class="observation" data-category="earth" href="https://emem.dev/memories/by_attester/ddzmyzhn/jjyznjvil64vzygbs6mxceszbu.md" target="_blank" rel="noopener">
               <div class="observation-image">
                 <div class="data-preview" aria-hidden="true"><span>⌗</span><small>COPC · 81 MB / data record</small></div>
@@ -266,7 +318,7 @@
               </div>
               <h3>Autzen, 10.6 million lidar points</h3>
               <p>COPC <span aria-hidden="true">/</span> OPEN RECORD ↗</p>
-            </a>
+            <div class="obs-detail"><span class="obs-dtype">copc</span><span class="obs-src">s3.amazonaws.com / autzen-classified.copc.laz</span><span class="obs-meta">81 MB · 1 frame signed</span><span class="obs-tokens">agent reads ~1.5k tokens</span><span class="obs-cid">jjyznjvi…szbu</span></div></a>
             <a class="observation" data-category="earth" href="https://emem.dev/memories/by_attester/ddzmyzhn/qfclw5qafxejoqabrtnjlqbvxu.md" target="_blank" rel="noopener">
               <div class="observation-image">
                 <img src="assets/observations/qfclw5qafxejoqabrtnjlqbvxu.webp" alt="A train, as 3D Gaussian splats — preview from the emem archive" width="320" height="200" loading="lazy" decoding="async">
@@ -274,7 +326,7 @@
               </div>
               <h3>A train, as 3D Gaussian splats</h3>
               <p>3DGS PLY <span aria-hidden="true">/</span> OPEN RECORD ↗</p>
-            </a>
+            <div class="obs-detail"><span class="obs-dtype">3dgs</span><span class="obs-src">huggingface.co / point_cloud.ply</span><span class="obs-meta">139 MB · 1 frame signed</span><span class="obs-tokens">agent reads ~1.5k tokens</span><span class="obs-cid">qfclw5qa…bvxu</span></div></a>
             <a class="observation" data-category="earth" href="https://emem.dev/memories/by_attester/ddzmyzhn/aqq3465nvlazh7xzy7jkiqii4q.md" target="_blank" rel="noopener">
               <div class="observation-image">
                 <div class="data-preview" aria-hidden="true"><span>⌗</span><small>FlatGeobuf · 8 MB / data record</small></div>
@@ -282,7 +334,7 @@
               </div>
               <h3>Every US county, with its spatial index</h3>
               <p>FLATGEOBUF <span aria-hidden="true">/</span> OPEN RECORD ↗</p>
-            </a>
+            <div class="obs-detail"><span class="obs-dtype">flatgeobuf</span><span class="obs-src">flatgeobuf.org / UScounties.fgb</span><span class="obs-meta">8 MB · 1 frame signed</span><span class="obs-tokens">agent reads ~1.5k tokens</span><span class="obs-cid">aqq3465n…ii4q</span></div></a>
             <a class="observation" data-category="earth" href="https://emem.dev/memories/by_attester/ddzmyzhn/ota6xerxrqzya5txb4jxvzpb2q.md" target="_blank" rel="noopener">
               <div class="observation-image">
                 <img src="assets/observations/ota6xerxrqzya5txb4jxvzpb2q.webp" alt="Lahaina, before and after fire — preview from the emem archive" width="320" height="200" loading="lazy" decoding="async">
@@ -290,7 +342,7 @@
               </div>
               <h3>Lahaina, before and after fire</h3>
               <p>TIMELAPSE <span aria-hidden="true">/</span> FRAME FROM ARCHIVE ↗</p>
-            </a>
+            <div class="obs-detail"><span class="obs-dtype">timelapse</span><span class="obs-src">timelapse: 20.878, -156.683 | 2022-2025 09</span><span class="obs-meta">4 frames signed</span><span class="obs-tokens">agent reads ~2.0k tokens</span><span class="obs-cid">ota6xerx…pb2q</span></div></a>
             <a class="observation" data-category="earth" href="https://emem.dev/memories/by_attester/ddzmyzhn/dzhe5a7rsjtnmc35qqwxybys5u.md" target="_blank" rel="noopener">
               <div class="observation-image">
                 <img src="assets/observations/dzhe5a7rsjtnmc35qqwxybys5u.webp" alt="Amazon forest loss since 2000 — preview from the emem archive" width="320" height="200" loading="lazy" decoding="async">
@@ -298,7 +350,7 @@
               </div>
               <h3>Amazon forest loss since 2000</h3>
               <p>FOREST GRID <span aria-hidden="true">/</span> OPEN RECORD ↗</p>
-            </a>
+            <div class="obs-detail"><span class="obs-dtype">forest</span><span class="obs-src">forest: -9.73, -63.03</span><span class="obs-meta">1 frame signed</span><span class="obs-tokens">agent reads ~1.1k tokens</span><span class="obs-cid">dzhe5a7r…ys5u</span></div></a>
             <a class="observation" data-category="earth" href="https://emem.dev/memories/by_attester/ddzmyzhn/jnt6yrjflrxu3apgde37ykn55e.md" target="_blank" rel="noopener">
               <div class="observation-image">
                 <img src="assets/observations/jnt6yrjflrxu3apgde37ykn55e.webp" alt="Phoenix: green vs heat — preview from the emem archive" width="320" height="200" loading="lazy" decoding="async">
@@ -306,7 +358,7 @@
               </div>
               <h3>Phoenix: green vs heat</h3>
               <p>CITY GRID <span aria-hidden="true">/</span> OPEN RECORD ↗</p>
-            </a>
+            <div class="obs-detail"><span class="obs-dtype">city</span><span class="obs-src">city: Phoenix, Arizona</span><span class="obs-meta">1 frame signed</span><span class="obs-tokens">agent reads ~1.1k tokens</span><span class="obs-cid">jnt6yrjf…n55e</span></div></a>
             <a class="observation" data-category="earth" href="https://emem.dev/memories/by_attester/ddzmyzhn/2re7jfo2v34uwsqxkmpwxoxesu.md" target="_blank" rel="noopener">
               <div class="observation-image">
                 <img src="assets/observations/2re7jfo2v34uwsqxkmpwxoxesu.webp" alt="Lion and impala, Kruger — preview from the emem archive" width="320" height="200" loading="lazy" decoding="async">
@@ -314,7 +366,7 @@
               </div>
               <h3>Lion and impala, Kruger</h3>
               <p>INATURALIST <span aria-hidden="true">/</span> OPEN RECORD ↗</p>
-            </a>
+            <div class="obs-detail"><span class="obs-dtype">inaturalist</span><span class="obs-src">www.inaturalist.org / 39540446</span><span class="obs-meta">1 frame signed</span><span class="obs-tokens">agent reads ~1.1k tokens</span><span class="obs-cid">2re7jfo2…xesu</span></div></a>
             <a class="observation" data-category="earth" href="https://emem.dev/memories/by_attester/ddzmyzhn/fdobixnnucctqkn2qtii7kibyq.md" target="_blank" rel="noopener">
               <div class="observation-image">
                 <img src="assets/observations/fdobixnnucctqkn2qtii7kibyq.webp" alt="Super Pit, Kalgoorlie — preview from the emem archive" width="320" height="200" loading="lazy" decoding="async">
@@ -322,7 +374,7 @@
               </div>
               <h3>Super Pit, Kalgoorlie</h3>
               <p>TIMELAPSE <span aria-hidden="true">/</span> FRAME FROM ARCHIVE ↗</p>
-            </a>
+            <div class="obs-detail"><span class="obs-dtype">timelapse</span><span class="obs-src">timelapse: -30.777, 121.506</span><span class="obs-meta">5 frames signed</span><span class="obs-tokens">agent reads ~2.3k tokens</span><span class="obs-cid">fdobixnn…ibyq</span></div></a>
             <a class="observation" data-category="earth" href="https://emem.dev/memories/by_attester/ddzmyzhn/bafppksajtcekqt62r3thg3a5u.md" target="_blank" rel="noopener">
               <div class="observation-image">
                 <img src="assets/observations/bafppksajtcekqt62r3thg3a5u.webp" alt="Maui fires, 50 cm — preview from the emem archive" width="320" height="200" loading="lazy" decoding="async">
@@ -330,7 +382,7 @@
               </div>
               <h3>Maui fires, 50 cm</h3>
               <p>MAXAR <span aria-hidden="true">/</span> OPEN RECORD ↗</p>
-            </a>
+            <div class="obs-detail"><span class="obs-dtype">combined</span><span class="obs-src">maxar-opendata.s3.amazonaws.com / 105001003590C300-visual.tif</span><span class="obs-meta">71 MB · 1 frame signed</span><span class="obs-tokens">agent reads ~1.5k tokens</span><span class="obs-cid">bafppksa…3a5u</span></div></a>
             <a class="observation" data-category="earth" href="https://emem.dev/memories/by_attester/ddzmyzhn/sm45gry43cubuqjp2cpu5bit6i.md" target="_blank" rel="noopener">
               <div class="observation-image">
                 <img src="assets/observations/sm45gry43cubuqjp2cpu5bit6i.webp" alt="Okavango Delta, flood pulse — preview from the emem archive" width="320" height="200" loading="lazy" decoding="async">
@@ -338,7 +390,7 @@
               </div>
               <h3>Okavango Delta, flood pulse</h3>
               <p>TIMELAPSE <span aria-hidden="true">/</span> FRAME FROM ARCHIVE ↗</p>
-            </a>
+            <div class="obs-detail"><span class="obs-dtype">timelapse</span><span class="obs-src">timelapse: -19.55, 23.05 | 2017-2025 08</span><span class="obs-meta">5 frames signed</span><span class="obs-tokens">agent reads ~2.3k tokens</span><span class="obs-cid">sm45gry4…it6i</span></div></a>
             <a class="observation" data-category="earth" href="https://emem.dev/memories/by_attester/ddzmyzhn/ejvovl6sz7d3sugfcrwwie4rma.md" target="_blank" rel="noopener">
               <div class="observation-image">
                 <img src="assets/observations/ejvovl6sz7d3sugfcrwwie4rma.webp" alt="Dry lake cracks, drone — preview from the emem archive" width="320" height="200" loading="lazy" decoding="async">
@@ -346,7 +398,7 @@
               </div>
               <h3>Dry lake cracks, drone</h3>
               <p>OPENAERIALMAP <span aria-hidden="true">/</span> OPEN RECORD ↗</p>
-            </a>
+            <div class="obs-detail"><span class="obs-dtype">openaerialmap</span><span class="obs-src">oin-hotosm-temp.s3.amazonaws.com / 86052d9a-8c9b-4ca3-a836-0289…</span><span class="obs-meta">38 MB · 1 frame signed</span><span class="obs-tokens">agent reads ~1.5k tokens</span><span class="obs-cid">ejvovl6s…4rma</span></div></a>
             <a class="observation" data-category="earth" href="https://emem.dev/memories/by_attester/ddzmyzhn/gpnxkvkwz22ug4jeqexggiy63q.md" target="_blank" rel="noopener">
               <div class="observation-image">
                 <img src="assets/observations/gpnxkvkwz22ug4jeqexggiy63q.webp" alt="Lusail, a city rising — preview from the emem archive" width="320" height="200" loading="lazy" decoding="async">
@@ -354,7 +406,7 @@
               </div>
               <h3>Lusail, a city rising</h3>
               <p>TIMELAPSE <span aria-hidden="true">/</span> FRAME FROM ARCHIVE ↗</p>
-            </a>
+            <div class="obs-detail"><span class="obs-dtype">timelapse</span><span class="obs-src">timelapse: 25.42, 51.49 | 2017-2025 02</span><span class="obs-meta">5 frames signed</span><span class="obs-tokens">agent reads ~2.3k tokens</span><span class="obs-cid">gpnxkvkw…y63q</span></div></a>
             <a class="observation" data-category="earth" href="https://emem.dev/memories/by_attester/ddzmyzhn/cfbt6bctfgnfoun347mgobvkku.md" target="_blank" rel="noopener">
               <div class="observation-image">
                 <img src="assets/observations/cfbt6bctfgnfoun347mgobvkku.webp" alt="Bengaluru: green vs heat — preview from the emem archive" width="320" height="200" loading="lazy" decoding="async">
@@ -362,7 +414,7 @@
               </div>
               <h3>Bengaluru: green vs heat</h3>
               <p>CITY GRID <span aria-hidden="true">/</span> OPEN RECORD ↗</p>
-            </a>
+            <div class="obs-detail"><span class="obs-dtype">city</span><span class="obs-src">city: Bengaluru</span><span class="obs-meta">1 frame signed</span><span class="obs-tokens">agent reads ~1.1k tokens</span><span class="obs-cid">cfbt6bct…vkku</span></div></a>
             <a class="observation" data-category="earth" href="https://emem.dev/memories/by_attester/ddzmyzhn/ia3cqu7ycf455mjs2vue33cnfi.md" target="_blank" rel="noopener">
               <div class="observation-image">
                 <img src="assets/observations/ia3cqu7ycf455mjs2vue33cnfi.webp" alt="Cubbon Park, every layer — preview from the emem archive" width="320" height="200" loading="lazy" decoding="async">
@@ -370,7 +422,7 @@
               </div>
               <h3>Cubbon Park, every layer</h3>
               <p>WORLD <span aria-hidden="true">/</span> OPEN RECORD ↗</p>
-            </a>
+            <div class="obs-detail"><span class="obs-dtype">world</span><span class="obs-src">world: Cubbon Park, Bengaluru</span><span class="obs-meta">1 frame signed</span><span class="obs-tokens">agent reads ~1.1k tokens</span><span class="obs-cid">ia3cqu7y…cnfi</span></div></a>
             <a class="observation" data-category="earth" href="https://emem.dev/memories/by_attester/ddzmyzhn/t7ebh6s6imxrwdmizebnw52nwe.md" target="_blank" rel="noopener">
               <div class="observation-image">
                 <img src="assets/observations/t7ebh6s6imxrwdmizebnw52nwe.webp" alt="London street cameras — preview from the emem archive" width="320" height="200" loading="lazy" decoding="async">
@@ -378,7 +430,7 @@
               </div>
               <h3>London street cameras</h3>
               <p>CCTV · GEO.QA <span aria-hidden="true">/</span> FRAME FROM ARCHIVE ↗</p>
-            </a>
+            <div class="obs-detail"><span class="obs-dtype">cctv</span><span class="obs-src">cameras: London</span><span class="obs-meta">6 frames signed</span><span class="obs-tokens">agent reads ~2.6k tokens</span><span class="obs-cid">t7ebh6s6…2nwe</span></div></a>
             <a class="observation" data-category="earth" href="https://emem.dev/memories/by_attester/ddzmyzhn/iliojyunnoeoomohc5346n4zrm.md" target="_blank" rel="noopener">
               <div class="observation-image">
                 <img src="assets/observations/iliojyunnoeoomohc5346n4zrm.webp" alt="Train yard, 1M splats — preview from the emem archive" width="320" height="200" loading="lazy" decoding="async">
@@ -386,7 +438,7 @@
               </div>
               <h3>Train yard, 1M splats</h3>
               <p>SPLATS <span aria-hidden="true">/</span> OPEN RECORD ↗</p>
-            </a>
+            <div class="obs-detail"><span class="obs-dtype">splats</span><span class="obs-src">huggingface.co / train.splat</span><span class="obs-meta">1 frame signed</span><span class="obs-tokens">agent reads ~1.1k tokens</span><span class="obs-cid">iliojyun…4zrm</span></div></a>
             <a class="observation" data-category="space" href="https://emem.dev/memories/by_attester/ddzmyzhn/4uweu43yaiik2mw5nc4eznztbu.md" target="_blank" rel="noopener">
               <div class="observation-image">
                 <img src="assets/observations/4uweu43yaiik2mw5nc4eznztbu.webp" alt="Sombrero galaxy — preview from the emem archive" width="320" height="200" loading="lazy" decoding="async">
@@ -394,7 +446,7 @@
               </div>
               <h3>Sombrero galaxy</h3>
               <p>HUBBLE <span aria-hidden="true">/</span> OPEN RECORD ↗</p>
-            </a>
+            <div class="obs-detail"><span class="obs-dtype">combined</span><span class="obs-src">esahubble.org / opo0328a.tif</span><span class="obs-meta">180 MB · 1 frame signed</span><span class="obs-tokens">agent reads ~1.5k tokens</span><span class="obs-cid">4uweu43y…ztbu</span></div></a>
             <a class="observation" data-category="earth" href="https://emem.dev/memories/by_attester/ddzmyzhn/kl23pezpc2lfzuflxgm5qyblxa.md" target="_blank" rel="noopener">
               <div class="observation-image">
                 <img src="assets/observations/kl23pezpc2lfzuflxgm5qyblxa.webp" alt="Maasai Mara, every layer — preview from the emem archive" width="320" height="200" loading="lazy" decoding="async">
@@ -402,7 +454,7 @@
               </div>
               <h3>Maasai Mara, every layer</h3>
               <p>WORLD <span aria-hidden="true">/</span> OPEN RECORD ↗</p>
-            </a>
+            <div class="obs-detail"><span class="obs-dtype">world</span><span class="obs-src">world: Maasai Mara National Reserve, Kenya</span><span class="obs-meta">1 frame signed</span><span class="obs-tokens">agent reads ~1.1k tokens</span><span class="obs-cid">kl23pezp…blxa</span></div></a>
             <a class="observation" data-category="earth" href="https://emem.dev/memories/by_attester/ddzmyzhn/tm3nwiorldoo7v4uryp65gsonu.md" target="_blank" rel="noopener">
               <div class="observation-image">
                 <img src="assets/observations/tm3nwiorldoo7v4uryp65gsonu.webp" alt="Near infrared, placed — preview from the emem archive" width="320" height="200" loading="lazy" decoding="async">
@@ -410,7 +462,7 @@
               </div>
               <h3>Near infrared, placed</h3>
               <p>COG <span aria-hidden="true">/</span> OPEN RECORD ↗</p>
-            </a>
+            <div class="obs-detail"><span class="obs-dtype">cog</span><span class="obs-src">sentinel-cogs.s3.us-west-2.amazonaws.com / B08.tif</span><span class="obs-meta">238 MB · 1 frame signed</span><span class="obs-tokens">agent reads ~1.5k tokens</span><span class="obs-cid">tm3nwior…sonu</span></div></a>
             <a class="observation" data-category="earth" href="https://emem.dev/memories/by_attester/ddzmyzhn/ytrbmovcooav45okmof7pxt3bi.md" target="_blank" rel="noopener">
               <div class="observation-image">
                 <div class="data-preview" aria-hidden="true"><span>⌗</span><small>S3 folder / data record</small></div>
@@ -418,7 +470,7 @@
               </div>
               <h3>One satellite scene, 21 files</h3>
               <p>S3 FOLDER <span aria-hidden="true">/</span> OPEN RECORD ↗</p>
-            </a>
+            <div class="obs-detail"><span class="obs-dtype">s3</span><span class="obs-src">sentinel-cogs.s3.us-west-2.amazonaws.com / S2B_43PGQ_20260512_0_L2A</span><span class="obs-meta">1 frame signed</span><span class="obs-tokens">agent reads ~1.1k tokens</span><span class="obs-cid">ytrbmovc…t3bi</span></div></a>
             <a class="observation" data-category="earth" href="https://vortx-ai.github.io/ememdemo/" target="_blank" rel="noopener">
               <div class="observation-image">
                 <div class="data-preview" aria-hidden="true"><span>⌗</span><small>ask / data record</small></div>
@@ -434,7 +486,7 @@
               </div>
               <h3>Marina Beach, every layer</h3>
               <p>WORLD <span aria-hidden="true">/</span> OPEN RECORD ↗</p>
-            </a>
+            <div class="obs-detail"><span class="obs-dtype">world</span><span class="obs-src">world: Marina Beach, Chennai</span><span class="obs-meta">1 frame signed</span><span class="obs-tokens">agent reads ~1.1k tokens</span><span class="obs-cid">77e2qubt…auvu</span></div></a>
             <a class="observation" data-category="earth" href="https://emem.dev/memories/by_attester/ddzmyzhn/4o7zgq2ogbs2trae4mdxkxwvq4.md" target="_blank" rel="noopener">
               <div class="observation-image">
                 <img src="assets/observations/4o7zgq2ogbs2trae4mdxkxwvq4.webp" alt="Port of Rotterdam, every layer — preview from the emem archive" width="320" height="200" loading="lazy" decoding="async">
@@ -442,7 +494,7 @@
               </div>
               <h3>Port of Rotterdam, every layer</h3>
               <p>WORLD <span aria-hidden="true">/</span> OPEN RECORD ↗</p>
-            </a>
+            <div class="obs-detail"><span class="obs-dtype">world</span><span class="obs-src">world: Port of Rotterdam</span><span class="obs-meta">1 frame signed</span><span class="obs-tokens">agent reads ~1.1k tokens</span><span class="obs-cid">4o7zgq2o…wvq4</span></div></a>
             <a class="observation" data-category="earth" href="https://vortx-ai.github.io/ememdemo/" target="_blank" rel="noopener">
               <div class="observation-image">
                 <img src="assets/observations/cubbon-park-two-dates.webp" alt="Cubbon Park, two dates — preview from the emem archive" width="320" height="200" loading="lazy" decoding="async">
@@ -480,6 +532,15 @@
           <p>Small previews. Vast source material.<br>Explore the original datasets and tools in the <a href="https://vortx-ai.github.io/ememdemo/" target="_blank" rel="noopener">full emem demo ↗</a>.</p>
           <button type="button" class="load-more" id="archive-more" aria-controls="archive-grid" aria-expanded="false" hidden>View all observations +</button>
         </div>
+      </div>
+    </section>
+    <section class="space-intersection chapter" id="satellite" aria-labelledby="intersection-title">
+      <div class="wrap">
+        <p class="chapter-label micro"><span class="signal"></span> At the intersection of space and AI</p>
+        <h2 id="intersection-title">Space observes.<br><em>Intelligence remembers.</em></h2>
+        <p class="intersection-description">Satellites and sensors encode the physical world. emem makes that evidence permanent, shared, and verifiable. Any AI agent can recall it and reason from the same reality.</p>
+        <div class="intersection-orbit" aria-label="Evidence flows from physical observers through emem to AI agents"><span>Satellites & sensors<small>THE EVIDENCE</small></span><i aria-hidden="true">⟶</i><a href="/emem/">emem<small>THE MEMORY</small></a><i aria-hidden="true">⟶</i><span>AI agents<small>THE INTELLIGENCE</small></span></div>
+        <div class="mission-plan"><div><span class="micro">Our own satellite</span><p>Signed at the instrument.<br>Remembered by the world.</p></div><ol><li><span>01</span>Protocol<small>Shipped</small></li><li><span>02</span>Payload<small>In design</small></li><li><span>03</span>Ground segment<small>Next</small></li><li><span>04</span>Launch<small>Gated, not dated</small></li></ol><a href="/log/">Follow the mission ↗</a></div>
       </div>
     </section>
     <section class="chapter" id="memory" aria-labelledby="memory-title">
@@ -530,21 +591,6 @@
         </div>
       </div>
     </section>
-    <section class="chapter horizon" id="satellite" aria-labelledby="satellite-title">
-      <div class="horizon-art" aria-hidden="true"></div>
-      <div class="wrap horizon-content">
-        <p class="chapter-label micro"><span class="section-no">04 /</span> The satellite</p>
-        <h2 class="sr-only" id="satellite-title">The satellite</h2>
-        <a class="text-link" href="/log/">Follow the mission <span aria-hidden="true">↗</span></a>
-        <div class="mission-phases" aria-label="Satellite development phases">
-          <div class="mission-phase complete"><h3>01 / Protocol</h3><p>Shipped</p></div>
-          <div class="mission-phase current"><h3>02 / Payload</h3><p>In design</p></div>
-          <div class="mission-phase"><h3>03 / Ground</h3><p>Next</p></div>
-          <div class="mission-phase"><h3>04 / Launch</h3><p>Gated, not dated</p></div>
-        </div>
-        <p class="horizon-caption">A public plan. No launch date. Milestones appear in the mission log.</p>
-      </div>
-    </section>
     <section class="chapter" id="build" aria-labelledby="build-title">
       <div class="wrap">
         <p class="chapter-label micro"><span class="section-no">05 /</span> Build</p>
@@ -574,6 +620,26 @@
     </section>
     <div class="wrap supporters"><span class="micro">In good company</span><span>Seraphim Space</span><span>NVIDIA Inception</span><span>AWS Space Accelerator</span><span>Sisu Launchpad</span><span>Qatar Development Bank Accelerator</span></div>
   </main>
+  <dialog class="world-dialog memory-viewer" id="memory-viewer" aria-labelledby="memory-view-title">
+    <button class="world-close" type="button" data-close-world aria-label="Close memory and return to orbit">×</button>
+    <div class="memory-visual"><img id="memory-view-image" alt=""><div class="memory-visual-coordinate" id="memory-view-coordinate"></div><span class="memory-visual-label">OBSERVATION / ARCHIVE PREVIEW</span></div>
+    <div class="memory-information"><p class="world-eyebrow" id="memory-view-category"></p><h2 id="memory-view-title"></h2><p id="memory-view-description"></p><dl id="memory-view-facts"></dl><div class="memory-address"><span class="micro">ONE MEMORY. ANY AGENT.</span><code id="memory-view-address"></code></div><div class="memory-view-actions"><a id="memory-view-open" target="_blank" rel="noopener">Read original ↗</a><button type="button" id="memory-view-share">Share memory ↗</button><button type="button" id="memory-view-verify">Verify ↗</button></div><p class="memory-view-note">Archive previews link to their original records. Open verification to check the evidence.</p></div>
+  </dialog>
+  <dialog class="world-dialog station-dialog" id="station-dialog" aria-labelledby="station-heading">
+    <div class="station-top"><span class="world-eyebrow" id="station-label">MEMORY STATION</span><button class="world-close" type="button" data-close-world aria-label="Close station and return to orbit">×</button></div>
+    <h2 id="station-heading"></h2>
+    <div id="station-generate" class="station-content" hidden></div>
+    <div id="station-share" class="station-content" hidden><p>A memory travels as a link. Give it to a person, paste it into an AI conversation, or return to it later.</p><label for="share-address">Memory address</label><input id="share-address" type="url" spellcheck="false"><div class="station-actions"><button type="button" id="share-copy">Copy memory link ↗</button><a id="share-original" target="_blank" rel="noopener">Read original ↗</a></div><p class="station-feedback" id="share-feedback" role="status">The selected observation is ready to share.</p><div class="agent-handoff"><span class="micro">TAKE IT INTO YOUR REASONING</span><p>“Read this memory. Tell me what it observes, and cite the evidence.”</p></div></div>
+    <div id="station-verify" class="station-content" hidden><p>Every record can be checked independently. Open a memory in emem to inspect its receipt, or look up a signed fact by its token.</p><form id="world-verify-form"><label for="verify-address">Memory link, emem:fact: token, or fact CID</label><input id="verify-address" required spellcheck="false" placeholder="emem:fact:…"><div class="station-actions"><button type="submit">Open verification ↗</button><a href="/trust/">How verification works ↗</a></div><p class="station-feedback" id="verify-feedback" role="status">Verification opens in emem; no verification result is assumed here.</p></form></div>
+    <div id="station-recall" class="station-content" hidden></div>
+  </dialog>
+  <dialog class="ememfy-studio" id="ememfy-studio" aria-labelledby="studio-title">
+    <div class="ememfy-studio-bar">
+      <div><span class="micro">emem demo</span><strong id="studio-title">Tokenise, inspect, or verify</strong></div>
+      <div><a id="ememfy-external" href="https://vortx-ai.github.io/ememdemo/" target="_blank" rel="noopener">Open separately ↗</a><button type="button" id="ememfy-close" aria-label="Close emem studio">×</button></div>
+    </div>
+    <iframe id="ememfy-frame" title="emem tokenisation studio" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+  </dialog>
   <!-- Pricing slider (the booking + checkout flow) -->
   <div class="pricing-modal" id="pricing-modal" role="dialog" aria-modal="true" aria-labelledby="pm-title" hidden>
     <div class="pm-backdrop" data-pm-close></div>
@@ -711,7 +777,7 @@
   <footer class="orbit-footer">
     <div class="wrap">
       <div class="footer-top">
-        <div><a href="/" class="orbit-brand" aria-label="Vortx AI home"><img src="/assets/vortx-logo.png" alt="" width="32" height="32" class="brand-planet"><span>vortx<small> AI</small></span></a><p class="footer-tag">The external memory of our physical world.<br>Made on Earth. For what comes next.</p></div>
+        <div><a href="/" class="orbit-brand" aria-label="vortx.ai home"><img src="/assets/vortx-logo.png" alt="" width="32" height="32" class="brand-planet"><span>vortx.ai</span></a><p class="footer-tag">The external memory of our physical world.<br>Made on Earth. For what comes next.</p></div>
         <div class="footer-nav">
           <div><span class="micro">Explore</span><a href="#explore">The archive</a><a href="/emem/">emem protocol</a><a href="/geo-qa/">Private memory</a><a href="/eudr/">eudr.dev</a><a href="/propcheck/">propcheck.dev</a></div>
           <div><span class="micro">The lab</span><a href="/research/">Research</a><a href="/log/">Mission log</a><a href="/trust/">Trust &amp; security</a><a href="https://github.com/Vortx-AI" target="_blank" rel="noopener">GitHub ↗</a><a href="https://emem.dev/a2a" target="_blank" rel="noopener">Agent Agora ↗</a></div>
@@ -723,8 +789,8 @@
       <p class="asset-credits">Earth imagery: <a href="https://svs.gsfc.nasa.gov/2915" target="_blank" rel="noopener">NASA / Goddard SVS · Reto Stöckli</a>. Archive imagery and source records: <a href="https://vortx-ai.github.io/ememdemo/" target="_blank" rel="noopener">emem demo</a>, NASA, ESA, CSA, STScI, USGS and the credited Earth providers. Orbital paths and the memory grid are illustrative.</p>
     </div>
   </footer>
-  <script src="space.js" defer></script>
   <script src="orbital.js" defer></script>
+  <script src="world.js" defer></script>
   <script src="payments/config.js" defer></script>
   <script src="payments/checkout.js" defer></script>
 </body>
