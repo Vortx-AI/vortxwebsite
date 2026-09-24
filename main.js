@@ -235,6 +235,49 @@
       .catch(function () { /* stay hidden; never show a broken number */ });
   })();
 
+  // --- Mission Control: let one orbital observation route to different evidence ---
+  (function () {
+    var section = document.getElementById('orbit-memory');
+    if (!section) return;
+    var buttons = section.querySelectorAll('[data-orbit-mode]');
+    var query = document.getElementById('orbit-query-text');
+    var readout = document.getElementById('orbit-readout');
+    var route = document.getElementById('orbit-route-text');
+    var modes = {
+      flood: {
+        query: 'Did this field flood?',
+        readout: 'Only the radar + terrain evidence needed for this question lights up.',
+        route: 'location → radar tile → terrain → agent'
+      },
+      vegetation: {
+        query: 'Is this crop under stress?',
+        readout: 'The agent follows the red + near-infrared path instead of opening the whole scene.',
+        route: 'location → red + NIR tiles → NDVI → agent'
+      },
+      change: {
+        query: 'What changed here?',
+        readout: 'The same location is resolved across dates, so only comparable tiles wake up.',
+        route: 'location → date A + date B → matching tiles → agent'
+      }
+    };
+    buttons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        var mode = button.getAttribute('data-orbit-mode');
+        var next = modes[mode];
+        if (!next) return;
+        section.setAttribute('data-orbit-mode', mode);
+        buttons.forEach(function (b) {
+          var active = b === button;
+          b.classList.toggle('active', active);
+          b.setAttribute('aria-pressed', active ? 'true' : 'false');
+        });
+        if (query) query.textContent = next.query;
+        if (readout) readout.textContent = next.readout;
+        if (route) route.textContent = next.route;
+      });
+    });
+  })();
+
   // --- Hero scene: pause its motion for reduced-motion and hidden tabs ---
   (function () {
     var hero = document.querySelector('.orbital');

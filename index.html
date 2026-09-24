@@ -640,12 +640,106 @@
       </div>
     </section>
 
+    <!-- Mission Control: orbital data becomes addressable evidence for agents -->
+    <section class="section orbit-memory" id="orbit-memory" aria-labelledby="orbit-memory-h" data-orbit-mode="flood">
+      <div class="orbit-stars" aria-hidden="true"></div>
+      <div class="wrap">
+        <div class="orbit-head reveal">
+          <span class="orbit-kicker"><span class="orbit-live-dot"></span> mission control · earth memory</span>
+          <h2 class="orbit-title" id="orbit-memory-h">Satellites produce data. <em>Agents need evidence.</em></h2>
+          <p class="orbit-lead">A model should not have to swallow an entire orbital file to answer one question. emem gives the observation a small, checkable address and a map of what is inside. The source bytes stay where they already live.</p>
+        </div>
+
+        <div class="orbit-console reveal reveal-d1" aria-label="A Sentinel-2 band is turned into an addressable pointer an agent can navigate">
+          <div class="orbit-console-bar">
+            <span><i></i> SENTINEL-2 · COG</span>
+            <span>source online</span>
+            <span>pointer verified</span>
+          </div>
+
+          <div class="orbit-console-grid">
+            <article class="orbit-source">
+              <span class="orbit-label">01 · orbital source</span>
+              <strong>238 MB</strong>
+              <p>One Sentinel-2 cloud-optimised GeoTIFF band on its existing source.</p>
+              <dl>
+                <div><dt>format</dt><dd>GeoTIFF / COG</dd></div>
+                <div><dt>location</dt><dd>stays at source</dd></div>
+                <div><dt>agent receives</dt><dd>not the whole file</dd></div>
+              </dl>
+            </article>
+
+            <div class="orbit-map" aria-hidden="true">
+              <div class="orbit-satellite">
+                <span class="orbit-sat-body"></span><span class="orbit-sat-wing orbit-sat-wing-a"></span><span class="orbit-sat-wing orbit-sat-wing-b"></span>
+              </div>
+              <div class="orbit-beam"></div>
+              <div class="orbit-tile-grid">
+                <span class="orbit-tile" data-signal="change"></span><span class="orbit-tile" data-signal=""></span><span class="orbit-tile" data-signal="vegetation"></span><span class="orbit-tile" data-signal=""></span><span class="orbit-tile" data-signal="change"></span><span class="orbit-tile" data-signal=""></span>
+                <span class="orbit-tile" data-signal=""></span><span class="orbit-tile" data-signal="flood change"></span><span class="orbit-tile" data-signal="vegetation"></span><span class="orbit-tile" data-signal="vegetation change"></span><span class="orbit-tile" data-signal=""></span><span class="orbit-tile" data-signal=""></span>
+                <span class="orbit-tile" data-signal=""></span><span class="orbit-tile" data-signal="flood"></span><span class="orbit-tile" data-signal="flood vegetation change"></span><span class="orbit-tile" data-signal="flood vegetation"></span><span class="orbit-tile" data-signal="change"></span><span class="orbit-tile" data-signal=""></span>
+                <span class="orbit-tile" data-signal=""></span><span class="orbit-tile" data-signal="flood"></span><span class="orbit-tile" data-signal="vegetation change"></span><span class="orbit-tile" data-signal="vegetation"></span><span class="orbit-tile" data-signal=""></span><span class="orbit-tile" data-signal="change"></span>
+                <span class="orbit-tile" data-signal=""></span><span class="orbit-tile" data-signal=""></span><span class="orbit-tile" data-signal="flood change"></span><span class="orbit-tile" data-signal=""></span><span class="orbit-tile" data-signal="vegetation"></span><span class="orbit-tile" data-signal=""></span>
+                <span class="orbit-tile" data-signal="change"></span><span class="orbit-tile" data-signal=""></span><span class="orbit-tile" data-signal=""></span><span class="orbit-tile" data-signal="vegetation"></span><span class="orbit-tile" data-signal=""></span><span class="orbit-tile" data-signal="change"></span>
+              </div>
+              <span class="orbit-map-caption">the observation becomes navigable</span>
+            </div>
+
+            <article class="orbit-pointer">
+              <span class="orbit-label">02 · emem pointer</span>
+              <strong>12.7 KB</strong>
+              <p>Address, structure, chunk hashes and statistics. The image itself is not copied into the pointer.</p>
+              <div class="orbit-pointer-lines" aria-hidden="true">
+                <span><b>source</b> s3://…/B08.tif</span>
+                <span><b>unit</b> tile @ zoom level</span>
+                <span><b>hash</b> blake3:7k4…</span>
+                <span><b>check</b> bytes before use</span>
+              </div>
+            </article>
+          </div>
+
+          <div class="orbit-question">
+            <div class="orbit-question-copy">
+              <span class="orbit-label">03 · ask earth</span>
+              <strong id="orbit-query-text">Did this field flood?</strong>
+              <p id="orbit-readout">Only the radar + terrain evidence needed for this question lights up.</p>
+            </div>
+            <div class="orbit-modes" role="group" aria-label="Choose an agent question">
+              <button type="button" class="orbit-mode active" data-orbit-mode="flood" aria-pressed="true">Flood?</button>
+              <button type="button" class="orbit-mode" data-orbit-mode="vegetation" aria-pressed="false">Crop stress?</button>
+              <button type="button" class="orbit-mode" data-orbit-mode="change" aria-pressed="false">What changed?</button>
+            </div>
+          </div>
+
+          <div class="orbit-route">
+            <span class="orbit-route-label">agent path</span>
+            <code id="orbit-route-text">location → radar tile → terrain → agent</code>
+            <span class="orbit-route-note">resolve only what advances the next reasoning step</span>
+          </div>
+        </div>
+
+        <div class="orbit-thesis reveal">
+          <p class="orbit-thesis-small">One observation. Many agents. No repeated whole-file ingestion.</p>
+          <h3>Do not send the whole Earth into the context window.</h3>
+          <p>The world did not get smaller. <em>Its address did.</em></p>
+          <div class="orbit-actions">
+            <a class="btn orbit-btn-primary" href="https://vortx-ai.github.io/ememdemo/" target="_blank" rel="noopener" onclick="gtag('event','ememdemo_click',{'link_location':'orbit_memory'});">Tokenise a real satellite file</a>
+            <a class="btn orbit-btn-ghost" href="#satellite">See what flies next ↓</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- The satellite: a plan, not a date -->
-    <section class="section section--sky" id="satellite" aria-labelledby="satellite-h">
+    <section class="section orbit-satellite-section" id="satellite" aria-labelledby="satellite-h">
       <div class="wrap">
         <div class="section-head reveal">
-          <h2 class="section-title" id="satellite-h">The evidence half: <em>our own satellite.</em></h2>
-          <p class="section-lead">emem is the deterministic half, and today it holds evidence from public constellations. Our satellite is the evidence half built to match: traceable from photon to token, downlinked straight into the memory. Everything above this line is shipped. This section is the plan.</p>
+          <span class="orbit-kicker"><span class="orbit-live-dot orbit-live-dot-gold"></span> next · native orbit</span>
+          <h2 class="section-title" id="satellite-h">A satellite that <em>writes emem natively.</em></h2>
+          <p class="section-lead">Today emem makes existing orbital data addressable to AI. Next, we remove the translation layer: the evidence half is designed to sign at capture and land directly in the same memory agents already know how to resolve. Everything above this line is shipped. This section is the plan.</p>
+          <div class="native-path" aria-label="Photon to agent">
+            <span>photon</span><i>→</i><span>observation</span><i>→</i><span>signed address</span><i>→</i><span>agent</span>
+          </div>
         </div>
 
         <div class="pillars reveal" aria-label="What the satellite is designed to be">
