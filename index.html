@@ -58,7 +58,7 @@
   <!-- Styles -->
   <link rel="stylesheet" href="orbital.css">
   <link rel="stylesheet" href="world.css">
-  <noscript><style>.recall-form,.recall-examples,.menu-toggle,.archive-filters,.world-dock,.world-map-controls{display:none!important}.orbit-links{display:flex;flex-wrap:wrap}.world-hero{margin-top:45px}</style></noscript>
+  <noscript><style>.recall-form,.recall-examples,.menu-toggle,.archive-filters,.world-dock,.world-map-controls,.companion-actions{display:none!important}.orbit-links{display:flex;flex-wrap:wrap}.world-hero{margin-top:45px}</style></noscript>
 
   <!-- Structured data: the Vortx entity graph -->
   <script type="application/ld+json">
@@ -180,16 +180,18 @@
         <button type="button" id="world-immersive" aria-label="Enter fullscreen world">⛶</button>
       </div>
       <div class="world-position"><span class="signal"></span><span id="world-coordinates">DRAG TO ORBIT · SELECT TO EXPLORE</span></div>
-      <div class="world-dock" aria-label="Work with the world's memory">
-        <button type="button" data-station="generate"><span class="dock-number">01</span><span>Generate<small>Make a memory</small></span><b aria-hidden="true">↗</b></button>
-        <button type="button" data-station="share"><span class="dock-number">02</span><span>Share<small>Carry it forward</small></span><b aria-hidden="true">↗</b></button>
-        <button class="memory-nexus emem-companion" type="button" data-station="recall" aria-label="Ask the shared memory">
+      <div class="world-dock" aria-label="emem — the world's shared memory">
+        <button class="memory-nexus emem-companion" type="button" aria-label="Open emem">
           <span class="companion-halo" aria-hidden="true"></span>
           <span class="ai-explorer" aria-hidden="true"><img src="assets/emem-companion.webp" alt="" width="1254" height="1254" fetchpriority="high" draggable="false"></span>
-          <span class="nexus-name">emem</span><span class="nexus-invite">Ask the memory ↗</span>
+          <span class="nexus-name">emem</span><span class="nexus-invite">the world's shared memory</span>
         </button>
-        <button type="button" data-station="verify"><span class="dock-number">03</span><span>Verify<small>Trust the evidence</small></span><b aria-hidden="true">↗</b></button>
-        <button type="button" class="dock-recall" data-station="recall"><span class="recall-symbol" aria-hidden="true">⌕</span><span>Recall<small>Ask a place</small></span><b aria-hidden="true">↗</b></button>
+        <nav class="companion-actions" aria-label="Memory actions">
+          <button type="button" data-station="generate" class="action-locate"><span class="action-icon">⬡</span><span>Locate<small>Ground a place</small></span></button>
+          <button type="button" data-station="share" class="action-cite"><span class="action-icon">◇</span><span>Cite<small>Token for agents</small></span></button>
+          <button type="button" data-station="verify" class="action-verify"><span class="action-icon">⊘</span><span>Verify<small>Check the receipt</small></span></button>
+          <button type="button" data-station="recall" class="action-recall"><span class="action-icon">⌕</span><span>Recall<small>Ask a place</small></span></button>
+        </nav>
       </div>
       <div class="world-bottom"><span>emem <i>/</i> THE OPEN MEMORY PROTOCOL</span><a href="#explore">Explore the observation archive <span aria-hidden="true">↓</span></a></div>
       <noscript><p class="world-noscript">Explore the full <a href="#explore">observation archive ↓</a>. Enable JavaScript to rotate Earth and open memory stations.</p></noscript>

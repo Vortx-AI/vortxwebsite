@@ -108,7 +108,7 @@
   $('#station-generate').append($('#hero-terminal'));
   $('#station-recall').append($('#verify .recall-layout'));
   document.body.classList.add('world-enhanced');
-  const headings = {generate:['01 / GENERATE','Give the world a memory.'],share:['02 / SHARE','One link. Shared understanding.'],verify:['03 / VERIFY','Evidence you can check.'],recall:['↳ / RECALL','What does this place remember?']};
+  const headings = {generate:['⬡ LOCATE','Ground a place into memory.'],share:['◇ CITE','One token. Any agent can resolve it.'],verify:['⊘ VERIFY','Check the receipt — no trust required.'],recall:['⌕ RECALL','What does this place remember?']};
   function closeWorld(dialog) {
     dialog.close();
   }
@@ -354,9 +354,30 @@
   const starsCanvas=$('#world-stars'), starsContext=starsCanvas.getContext('2d');
   const intelligenceCanvas=$('#intelligence-field'), intelligence=intelligenceCanvas.getContext('2d');
   const nexus=$('.memory-nexus'), explorer=$('.ai-explorer');
-  const dockActions=[...document.querySelectorAll('.world-dock > button:not(.emem-companion)')];
-  let actionPoints=[],companionMode='';
+  let companionMode='';
   let nexusPoint={x:0,y:0},look={x:0,y:0},lookTarget={x:0,y:0};
+
+  // ── Companion pose state machine ──
+  let currentPose='',poseTimer=0,sleepTimer=0;
+  const SLEEP_DELAY=25000; // ms of inactivity before sleep
+  function setPose(pose){
+    if(pose===currentPose)return;
+    currentPose=pose;
+    stage.dataset.companionPose=pose;
+    sleepTimer=Date.now();
+  }
+  // Greet on first appearance
+  setPose('greet');
+  setTimeout(()=>{if(currentPose==='greet')setPose('');},1500);
+  // Sleep after prolonged inactivity
+  function checkSleep(){
+    if(currentPose==='sleep'||currentPose==='greet'||currentPose==='active'||currentPose==='think')return;
+    if(Date.now()-sleepTimer>SLEEP_DELAY)setPose('sleep');
+  }
+  setInterval(checkSleep,5000);
+  // Wake on any interaction in the stage
+  stage.addEventListener('pointerdown',()=>{if(currentPose==='sleep'){setPose('greet');setTimeout(()=>{if(currentPose==='greet')setPose('');},1200);}else{sleepTimer=Date.now();}},{passive:true});
+  stage.addEventListener('pointermove',()=>{if(currentPose==='sleep'){setPose('');} sleepTimer=Date.now();},{passive:true});
   let stars=[];
   let seed=17;
   const random=()=>{seed=(seed*16807)%2147483647;return (seed-1)/2147483646;};
@@ -366,7 +387,6 @@
     const bounds=stage.getBoundingClientRect(),n=nexus.getBoundingClientRect();
     const character=explorer.getBoundingClientRect();
     nexusPoint={x:n.left-bounds.left+n.width/2,y:character.top-bounds.top-24};
-    actionPoints=dockActions.map(button=>{const r=button.getBoundingClientRect();return {name:button.dataset.station,x:r.left-bounds.left+r.width/2,y:r.top-bounds.top};});
     stars=Array.from({length:small.matches?120:240},()=>({x:random(),y:random(),size:random()>.98?1.4:random()*.7+.2,alpha:.15+random()*.55,phase:random()*TAU}));
   }
   function drawStars(){
@@ -379,68 +399,37 @@
     if(!intelligence || !layout.width)return;
     const c=intelligence,w=layout.width,h=layout.height,n=nexusPoint;
     c.clearRect(0,0,w,h);
-    const size=small.matches?15:21,angle=clock*.16+.6;
+    const size=small.matches?15:21;
+    // Soft glow beneath the companion
     const glow=c.createRadialGradient(n.x,n.y,2,n.x,n.y,size*3.5);
     glow.addColorStop(0,'#91e4dc24');glow.addColorStop(.45,'#79c0d20c');glow.addColorStop(1,'#79c0d200');
     c.fillStyle=glow;c.fillRect(n.x-size*4,n.y-size*4,size*8,size*8);
-    const vertices=[];
-    for(let i=0;i<8;i++){
-      const x=i&1?1:-1,y=i&2?1:-1,z=i&4?1:-1;
-      const a=x*Math.cos(angle)-z*Math.sin(angle),b=x*Math.sin(angle)+z*Math.cos(angle);
-      const yy=y*Math.cos(.55)-b*Math.sin(.55),zz=y*Math.sin(.55)+b*Math.cos(.55);
-      const perspective=3.7/(3.7-zz*.2);
-      vertices.push({x:n.x+a*size*perspective,y:n.y+yy*size*perspective,z:zz});
-    }
-    c.lineWidth=.8;
-    for(let i=0;i<8;i++)for(let j=i+1;j<8;j++){
-      const distance=i^j;if(distance!==1 && distance!==2 && distance!==4)continue;
-      const a=vertices[i],b=vertices[j];c.strokeStyle=(a.z+b.z)>0?'#a7f0e5aa':'#7fc7d344';
-      c.beginPath();c.moveTo(a.x,a.y);c.lineTo(b.x,b.y);c.stroke();
-    }
-    const inner=size*.48;
-    c.strokeStyle='#c8edab65';c.beginPath();c.moveTo(n.x,n.y-inner);c.lineTo(n.x+inner,n.y);c.lineTo(n.x,n.y+inner);c.lineTo(n.x-inner,n.y);c.closePath();c.stroke();
-    for(const v of vertices){c.fillStyle=v.z>0?'#caf5e1':'#73a4ae';c.beginPath();c.arc(v.x,v.y,v.z>0?2:1.3,0,TAU);c.fill();}
-    // Illustrative flow: physical evidence and telescope evidence meet in shared memory.
+    // Evidence flows: Earth surface and sky observations converge on emem
     const earthSource={x:layout.cx+layout.radius*.77,y:layout.cy+layout.radius*.12};
     const skySource={x:w*.76,y:h*.34};
     for(const [i,start] of [earthSource,skySource].entries()){
-      const end={x:n.x-size*1.1,y:n.y};
+      const end={x:n.x-(i?-1:1)*size*1.1,y:n.y};
       const bend={x:(start.x+end.x)/2,y:Math.min(start.y,end.y)-(i?12:45)};
       c.strokeStyle=i?'#bb9c7150':'#8dc6c64a';c.lineWidth=.65;c.setLineDash([2,7]);c.lineDashOffset=-clock*4;
       c.beginPath();c.moveTo(start.x,start.y);c.quadraticCurveTo(bend.x,bend.y,end.x,end.y);c.stroke();c.setLineDash([]);
       for(let k=0;k<3;k++){const t=(clock*.095+k/3+i*.2)%1,s=1-t,x=s*s*start.x+2*s*t*bend.x+t*t*end.x,y=s*s*start.y+2*s*t*bend.y+t*t*end.y;c.fillStyle=i?'#d3bc93':'#b8e9df';c.globalAlpha=Math.sin(t*Math.PI)*.65;c.fillRect(x-1,y-1,2,2);}
       c.globalAlpha=1;
     }
-    // A pathway is an interaction affordance, not a simulated backend operation.
-    for(const point of actionPoints){
-      const active=point.name===companionMode;
-      if(small.matches && !active)continue;
-      const side=point.x<n.x?-1:1;
-      const start={x:n.x+side*size,y:n.y+size*.4};
-      const bend={x:point.x,y:n.y+size*2};
-      c.strokeStyle=active?'#b8f3e5b0':'#86c5c620';c.lineWidth=active?1:.6;
-      c.beginPath();c.moveTo(start.x,start.y);c.quadraticCurveTo(bend.x,bend.y,point.x,point.y);c.stroke();
-      if(active){
-        const t=(clock*.3)%1,s=1-t;
-        c.fillStyle='#d0fff0';c.beginPath();c.arc(s*s*start.x+2*s*t*bend.x+t*t*point.x,s*s*start.y+2*s*t*bend.y+t*t*point.y,2,0,TAU);c.fill();
-      }
-    }
     if(!paused){look.x+=(lookTarget.x-look.x)*.04;look.y+=(lookTarget.y-look.y)*.04;}
     const dx=reduced.matches?0:look.x,dy=reduced.matches?0:look.y+Math.sin(clock*.35)*2;
     explorer.style.setProperty('--explorer-x',dx+'px');explorer.style.setProperty('--explorer-y',dy+'px');
   }
-  function attendTo(button){
-    companionMode=button?.dataset.station || '';
-    stage.dataset.companionAction=companionMode;
-    const lean=button?Math.sign(button.getBoundingClientRect().left-nexus.getBoundingClientRect().left)*3:0;
-    explorer.style.setProperty('--companion-lean',reduced.matches?'0deg':lean+'deg');
-    drawIntelligence();
-  }
-  for(const button of dockActions){
-    button.addEventListener('pointerenter',()=>attendTo(button));
-    button.addEventListener('pointerleave',()=>attendTo(dockActions.includes(document.activeElement)?document.activeElement:null));
-    button.addEventListener('focus',()=>attendTo(button));
-    button.addEventListener('blur',()=>attendTo(null));
+  // Companion click → think then active pose
+  nexus.addEventListener('click',()=>{
+    setPose('think');
+    clearTimeout(poseTimer);
+    poseTimer=setTimeout(()=>{setPose('active');poseTimer=setTimeout(()=>setPose(''),3000);},2200);
+  });
+  // Action buttons: companion leans toward hovered action
+  const actionButtons=[...document.querySelectorAll('.companion-actions button')];
+  for(const button of actionButtons){
+    button.addEventListener('pointerenter',()=>{setPose('attend');explorer.style.setProperty('--companion-lean',(button.classList.contains('action-verify')||button.classList.contains('action-recall')?'3':button.classList.contains('action-locate')?'-3':'0')+'deg');});
+    button.addEventListener('pointerleave',()=>{if(currentPose==='attend')setPose('');explorer.style.setProperty('--companion-lean','0deg');});
   }
   stage.addEventListener('pointermove',event=>{if(event.pointerType==='mouse' && !dragging){const r=stage.getBoundingClientRect();lookTarget={x:(event.clientX-r.left-r.width/2)/r.width*8,y:(event.clientY-r.top-r.height/2)/r.height*5};}},{passive:true});
   stage.addEventListener('pointerleave',()=>{lookTarget={x:0,y:0};});
