@@ -1,8 +1,8 @@
 {
   "schema": "vortx.site_manifest.v1",
-  "cid": "tg5evtlxtunbp3c5c6malpxog5pgglq6i7x45xvklhl6ftplsnjq",
-  "commit": "da5f3273762e6a9b291b3354a41f2c84e292666c",
-  "generated_at": "2026-09-25T08:02:48Z",
+  "cid": "a4jt6n756e3gr5ztuqeyx3ynca4yq5mw6kza6shuydolowsphwya",
+  "commit": "f923f8759dc048b4cc8acf0d16eaf1087d3fbdb4",
+  "generated_at": "2026-09-25T08:19:52Z",
   "files": {
     ".nojekyll": {
       "blake3": "v4jutopv7gq2nicajxvdnxgjjgn4wjojvxarfn6mtkj4vza7gjra",
@@ -25,8 +25,8 @@
       "bytes": 8
     },
     "agents.md": {
-      "blake3": "aaf7sc6w6r2l25guvuwsj5iyzipkxypicg44ebm437xccuksoylq",
-      "bytes": 14732
+      "blake3": "tkeogxmw7jizuqyz2btkhylgu7a4yikineiia6f365sz3cvwybia",
+      "bytes": 14773
     },
     "apple-touch-icon.png": {
       "blake3": "tmchv7hjynhrjydegkd3acu7oa3qh372hxubq42iwxv2zs3fy2pq",
@@ -389,8 +389,8 @@
       "bytes": 752
     },
     "emem/index.html": {
-      "blake3": "cekqy6mxbt5r3swr7mqppz3ipqthhhx4wcbqkmvq3edcr7pzxsyq",
-      "bytes": 30231
+      "blake3": "zcjf4j77ebmm4y4uy2muss3zgbnvm3gkqr4lhrwupbw5etf6clka",
+      "bytes": 30274
     },
     "eudr/index.html": {
       "blake3": "sz4motmzfowkbvof2ruqn52zv6u5gioap6ag72tstqxus5mmn4ga",
@@ -429,8 +429,8 @@
       "bytes": 3646
     },
     "js/engine.js": {
-      "blake3": "hbk27f27bpwu7ycx4ztvtaer4wvisfl6l5edoja6dnnt6s6empaa",
-      "bytes": 50511
+      "blake3": "fj4wgyg3uvgvtganljcwj2rk3lzlh4exv75n5xappjtxrdmu7sla",
+      "bytes": 50545
     },
     "js/files.js": {
       "blake3": "ghn7ufrvapkgnhxhmhqu5xoqmi3kiue74qasmt625fhxznrf7c2a",
@@ -465,8 +465,8 @@
       "bytes": 5355
     },
     "js/pop.js": {
-      "blake3": "hwsqttjhrkmnpdw7xim3jjqhvycb3zpn3hydi6csngnn7eceisiq",
-      "bytes": 19713
+      "blake3": "dtdhdscvavzm6yt2cbduheehaa5og3ef2xbq2vmf7umxizevalqa",
+      "bytes": 19948
     },
     "js/press.js": {
       "blake3": "yvgunihxxwzxn577vks3z4ds2khvjjtjkbcsdvtynqpft4mbwu4a",
@@ -501,12 +501,12 @@
       "bytes": 3403
     },
     "llms.txt": {
-      "blake3": "sczdtmkn6qyc5mbov6yhqkdomhgoghccmowg7e53tneddh4so3ma",
+      "blake3": "ir3qhy23547eqkzfvyaj6wio3vwajmcqfgpl2zx54oi5gzs33pfa",
       "bytes": 3651
     },
     "llms/ask.txt": {
-      "blake3": "tz263sjgnapvruy5cfqx62i23eetxxwjvidmec2nwrwysdevgsua",
-      "bytes": 1410
+      "blake3": "kul77g7pwyvqk3r7bcfsappzlsge3t2f4hxwfdhpml7hfzcuhpwa",
+      "bytes": 1454
     },
     "llms/encode.txt": {
       "blake3": "45y34pj7xmjz5dnaj2hkk7f6olnzszvm4qwkpxzcmcciq4ta5cpa",
@@ -609,7 +609,7 @@
       "bytes": 2135
     },
     "spatial-ai/index.html": {
-      "blake3": "2bifuccxvwj2eipzq6rsjrs32c7pd35axrmzp6oyttkp5ihre7iq",
+      "blake3": "h7mdq7arz23xshmub3iyszp77dvesed536635uqitin3beupyoiq",
       "bytes": 20985
     },
     "style.css": {
