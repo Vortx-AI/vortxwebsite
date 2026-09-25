@@ -1,8 +1,8 @@
 {
   "schema": "vortx.site_manifest.v1",
   "cid": "nk3nqb7mgw7glqui52puj74tslouilbeyinwa2numv7kwf5unh5a",
-  "commit": "beaa3500a3e717555ce7bc04c542d14fd4ebd498",
-  "generated_at": "2026-09-25T01:35:30Z",
+  "commit": "1f2085f135597578ce8186458fd362641878b904",
+  "generated_at": "2026-09-25T01:36:45Z",
   "files": {
     ".nojekyll": {
       "blake3": "v4jutopv7gq2nicajxvdnxgjjgn4wjojvxarfn6mtkj4vza7gjra",
