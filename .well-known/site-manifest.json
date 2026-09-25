@@ -1,8 +1,8 @@
 {
   "schema": "vortx.site_manifest.v1",
-  "cid": "ytfqhyiw2fndtivciq2epwcunt3ykftno6jpqyecbtabo46cu4ia",
-  "commit": "25c7cfa05b40622d3b5ff3fc00f083e459267fa0",
-  "generated_at": "2026-09-25T02:43:49Z",
+  "cid": "ticjz2crharxaukkev56za4skzvw6rz73rfg5qn4kqmtje4qjpfa",
+  "commit": "fc49fa45055d1f59b37b7342a44ddd078db74b55",
+  "generated_at": "2026-09-25T04:44:46Z",
   "files": {
     ".nojekyll": {
       "blake3": "v4jutopv7gq2nicajxvdnxgjjgn4wjojvxarfn6mtkj4vza7gjra",
@@ -25,8 +25,8 @@
       "bytes": 8
     },
     "agents.md": {
-      "blake3": "kz6ioa6cmnuxw5j2ipgrx7tbym6v5w2rdn6oomlg3ieo372bnqcq",
-      "bytes": 13199
+      "blake3": "mqn6plbxvxodnw6pno46cqpfzbc47za2ssf54mqj36y2rbhpcdbq",
+      "bytes": 13672
     },
     "apple-touch-icon.png": {
       "blake3": "tmchv7hjynhrjydegkd3acu7oa3qh372hxubq42iwxv2zs3fy2pq",
@@ -245,20 +245,20 @@
       "bytes": 10883
     },
     "home.css": {
-      "blake3": "5pawsyapzkuzxjhgrsulmv3vpicoem5tbfd2naw2tk4ftgmecloq",
-      "bytes": 25501
+      "blake3": "ffzky4cyy2yzsz7ohor2valaojftzswsvfhss5bd4fg2jaoqnq3a",
+      "bytes": 35789
     },
     "index.html": {
-      "blake3": "7ptxdz6raeoy6l6ow7fijje53kwhwxvrtdqkusppfpf52llkfoxa",
-      "bytes": 43044
+      "blake3": "aiow4bzcs4do7suzyv4it3wsf4gkz2pa7tpk6phlhedrhxvxfv3q",
+      "bytes": 42924
     },
     "js/ask.js": {
       "blake3": "y3i43wck37yu7u2xxhhb6su25swrgzv6hpa5azhpkpl2qdfwkuwa",
       "bytes": 5919
     },
     "js/connect.js": {
-      "blake3": "htiiydbauni7kcb72lq6jolg5tqia7sqrbctmaczsggvretw4rqq",
-      "bytes": 11417
+      "blake3": "shmvtceixtxeymx6pk756cz2bg2w6uuso7ibwe3ssn6p6u24zsiq",
+      "bytes": 11937
     },
     "js/drift.js": {
       "blake3": "dgizicpdxcvafm7ysuxoqz6nbuasev7l2vtuvx4h3p56dh6zyyqq",
@@ -267,6 +267,10 @@
     "js/encoder.js": {
       "blake3": "tcweuu5uyz56jzx2srkmwxn5sd2rshiievclo3murcxew3ebenla",
       "bytes": 3646
+    },
+    "js/engine.js": {
+      "blake3": "k34ukg4c6ixxrs5nlmm3mvgxjfvf57qfhzoq7jgbtoo4jnb63tzq",
+      "bytes": 46284
     },
     "js/files.js": {
       "blake3": "bdivp6xs4e2swo2k6abcyugjj62bz2bf5qnpk2fajmposdj6ownq",
@@ -281,8 +285,8 @@
       "bytes": 20165
     },
     "js/hero.js": {
-      "blake3": "ukg3talurhtvwb4snfs7ilmnld5jz3vjf5wtg3di7fjf7apd5gxq",
-      "bytes": 17044
+      "blake3": "oxz6ttskyxh3xgjagqhhsayij7mvacctqtgecf2fmrujnvgej5va",
+      "bytes": 18195
     },
     "js/lib.js": {
       "blake3": "tsdjt7fx4dingnjt76y6gdksxezv2es7qqwz3es37n5u4ovqluua",
@@ -291,6 +295,10 @@
     "js/orbit.js": {
       "blake3": "6q6xrxzljas67g7na7kjq3xnhok3jsiw7p6pg6vh4f4v6o4mhsnq",
       "bytes": 36004
+    },
+    "js/pop.js": {
+      "blake3": "tddenhdefwlxdfigv4vwbx47ixpjs3jc6rcwyy7732ffs527j5oa",
+      "bytes": 15645
     },
     "js/reach.js": {
       "blake3": "kcukiscuhesievm7gvb5r56dhnxuajtzqpcrzznlzwtbjotaousa",
@@ -301,12 +309,12 @@
       "bytes": 13893
     },
     "js/runs.js": {
-      "blake3": "3ewjgoienx5257mvqga6gtdfunrrczmsyceid57olohdomzvnqeq",
-      "bytes": 24115
+      "blake3": "yamqk54rjavxd3wmprueygtdtthg3hgbwsriqoj2yz63rv6gfc7q",
+      "bytes": 5502
     },
     "js/samples.js": {
-      "blake3": "olxyouiotlqxiw4ujib37n6rwiitnesvrg32djrtaw2h2asyaehq",
-      "bytes": 13238
+      "blake3": "mn3i3kkqgsfu4ad322sfstvdy333sr3fxdo63662jxzmgkllxrwa",
+      "bytes": 13851
     },
     "js/site.js": {
       "blake3": "gzrz3pukyqdvx5ay6xt6wpfco2w6xaro5fs7rr6sepe4sz4cxnua",
@@ -321,8 +329,8 @@
       "bytes": 3490
     },
     "llms.txt": {
-      "blake3": "dc5ruxw2akueswixnhuugctcg6hvxzrr7cke5y75gb3xlvdu537q",
-      "bytes": 18795
+      "blake3": "ztb5szaib6mmz44jkttubodjb4ktbi3sehkvohggumxv2twyhzzq",
+      "bytes": 19447
     },
     "log/index.html": {
       "blake3": "dzozfwvd6ubm47ko7ynrriqf66jlrzykg7qsrwnmwwuhc6vani3q",
