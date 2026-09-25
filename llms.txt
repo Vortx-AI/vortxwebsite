@@ -8,6 +8,7 @@ run       /#run             six devices, one published sample each, run end to e
 encode    /#connect         your file, hashed on your device, nothing uploaded; tools/emem_point.py for the device
 decode    /#decode          ask @emem; catch a drifted number; @emem in ChatGPT, Claude, Agentforce, Dify, VS Code
 browse    /#samples         the ememdemo catalogue: Earth, Space, Machines; each note re-checked as it loads
+open      /?s=<cid>         any sample, opened on the page (a globe pin, a card): it runs end to end, its picture drawn from bytes checked here
 plan      /#mission         the satellite plan, deliberately without a date
 book      /#book            team time; the protocol is free
 check     /proof/           every check, step by step: handoff, observers, token family, files, trust chain
@@ -71,6 +72,7 @@ keep      by              machine (signed by a system) · third-party (a publish
 check     note            re-checked as each card loads: base32(blake3(note)[0:16])==cid → "✓ note", else "✗ name lies"; unreachable is not a failed check
 show      picture         only the image a thumb.v1 note carries: its name matches, its of: is the record, its data:image line is the file shown; https://vortx.ai/data/thumbs.json maps record → thumb
 print     values          verbatim, as signed; 0.767 for 0.767258382642998 is drift
+open      sample          https://vortx.ai/?s=<cid>  by schema: pointer.v1 name, root, one row proved and read by range, then a whole overview level (every tile hashed) or the photo · world.v1 bundle signed and recomputed, every reading inside it, one echoed verbatim · grid.v1 each map's bundle, every square a member · timelapse.v1 three cubes signed, first and last frames' pixels hashed to their names · camera.v1 clip, geo.qa signature, sun · directory.v1 root, one file against its publisher hash
 
 ## family (one live example per shape; https://vortx.ai/proof/#tokens re-derives each in the browser)
 fact      emem:fact:defi.zb493.yiwo.zcb4e:eheadieomxr2zusgh4nx7mfisrtme23ztjiluyrfve64xoap6hka  Cubbon Park NDVI 0.767258382642998  check=blake3(GET /v1/facts/<cid> as CBOR)==fact_cid; receipt names the cid

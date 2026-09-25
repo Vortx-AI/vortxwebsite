@@ -138,6 +138,14 @@
     var n = $('[data-devnote]'); if (n) n.href = 'https://emem.dev/memories/by_attester/ddzmyzhn/' + d.cid + '.md';
   }
   root.querySelectorAll('[data-dev]').forEach(function (b) { b.addEventListener('click', function () { device(b.getAttribute('data-dev')); }); });
+  // the recipe's sample opens here, in the popup (js/pop.js), and runs end to end
+  var devNote = $('[data-devnote]');
+  if (devNote) devNote.addEventListener('click', function (e) {
+    if (!window.vxPop || !window.vxPop.plain(e) || !window.vxCatalog) return;
+    e.preventDefault();
+    var cid = DEV[devKey].cid;
+    window.vxCatalog.then(function (items) { var x = items.filter(function (i) { return i.cid === cid; })[0]; if (x) window.vxPop.open(x); else window.open(devNote.href, '_blank', 'noopener'); });
+  });
   var runBtn = $('[data-devrun]');
   if (runBtn) runBtn.addEventListener('click', function () {
     var t = document.querySelector('#run [data-run="' + devKey + '"]'), sec = document.getElementById('run');

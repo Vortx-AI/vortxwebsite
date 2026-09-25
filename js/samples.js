@@ -1,7 +1,8 @@
 /* samples.js: the catalogue, to the ememdemo standard.
  *
  * Each card is a piece of real-world evidence: its picture, the noun, the verbs applied to it
- * (counted, read from the note itself) and who keeps it. No descriptive prose.
+ * (counted, read from the note itself) and who keeps it. No descriptive prose. Its picture, title
+ * and "run it" open it here, in the popup (js/pop.js), where it runs end to end.
  *   line     the live catalogue line (vortx-ai.github.io/ememdemo/llms.txt): verb, kind, size, tok, raw, by
  *   picture  only the image a record's thumb.v1 note carries (data/thumbs.json), never an invented one;
  *            re-checked as it comes into view: the thumb hashes to its name, its of: is this record,
@@ -108,7 +109,7 @@
 
   function card(x) {
     var li = el('li', 'sc'), t = thumbs[x.cid], line = x.line;
-    var pic = el('a', 'sc-pic'); pic.href = NOTE(x.cid); pic.target = '_blank'; pic.rel = 'noopener';
+    var pic = el('a', 'sc-pic'); pic.href = NOTE(x.cid); pic.target = '_blank'; pic.rel = 'noopener'; here(pic, x);
     if (t) { pic.style.backgroundImage = 'url(' + t.file + ')'; if (t.frames > 1) { pic.classList.add('is-sprite'); pic.style.setProperty('--n', t.frames); } pic.setAttribute('aria-label', x.title + ', its saved picture'); }
     else { pic.classList.add('is-none'); pic.appendChild(el('span', null, 'no saved picture')); }
     li.appendChild(pic);
@@ -117,7 +118,7 @@
     var keep = KEEP[x.kv.by] || x.kv.by || ''; if (keep) { var kp = el('span', 'sc-keep', keep); kp.title = KEEP_T[keep] || ''; head.appendChild(kp); }
     head.appendChild(el('span', 'sc-state', 'checking…'));
     bd.appendChild(head);
-    var h = el('h3'), a = el('a', null, x.title); a.href = NOTE(x.cid); a.target = '_blank'; a.rel = 'noopener'; h.appendChild(a); bd.appendChild(h);
+    var h = el('h3'), a = el('a', null, x.title); a.href = NOTE(x.cid); a.target = '_blank'; a.rel = 'noopener'; here(a, x); h.appendChild(a); bd.appendChild(h);
     var meta = el('p', 'sc-meta'); meta.appendChild(el('span', 'sc-saved')); if (x.kv.src) meta.appendChild(el('span', null, x.kv.src)); bd.appendChild(meta);
     bd.appendChild(el('p', 'sc-big', big(x)));
     var tk = num(x.kv.tok), rw = num(x.kv.raw), tl = el('p', 'sc-tok');
@@ -125,10 +126,11 @@
     if (tk && rw) tl.appendChild(document.createTextNode(' · source ' + tok(rw).slice(1) + ' as raw bytes · ' + Math.round(rw / tk).toLocaleString('en-US') + '× less'));
     bd.appendChild(tl);
     bd.appendChild(el('p', 'sc-verbs', ''));
-    var acts = el('p', 'sc-acts'), op = el('a', 'lk', 'open'); op.href = NOTE(x.cid); op.target = '_blank'; op.rel = 'noopener';
+    var acts = el('p', 'sc-acts'), rn = el('button', 'lk', 'run it'); rn.type = 'button'; here(rn, x);
     var cp = el('button', 'lk', 'copy agent line'); cp.type = 'button';
     cp.addEventListener('click', function () { if (navigator.clipboard) navigator.clipboard.writeText(line).then(function () { cp.textContent = 'copied'; setTimeout(function () { cp.textContent = 'copy agent line'; }, 1400); }); });
-    acts.appendChild(op); acts.appendChild(document.createTextNode(' · ')); acts.appendChild(cp); bd.appendChild(acts);
+    var op = el('a', 'lk', 'note ↗'); op.href = NOTE(x.cid); op.target = '_blank'; op.rel = 'noopener';
+    acts.appendChild(rn); acts.appendChild(document.createTextNode(' · ')); acts.appendChild(cp); acts.appendChild(document.createTextNode(' · ')); acts.appendChild(op); bd.appendChild(acts);
     li.appendChild(bd);
     li.vxRun = function () { queue.push(function () { return check(x, li); }); if (t) queue.push(function () { return picture(t, li); }); pump(); };
     return li;
@@ -136,9 +138,18 @@
   var io = 'IntersectionObserver' in window ? new IntersectionObserver(function (en) {
     en.forEach(function (e) { if (e.isIntersecting) { io.unobserve(e.target); e.target.vxRun(); } });
   }, { rootMargin: '300px' }) : null;
+  // a card opens its sample here, in the popup, stepping through the cards shown (js/pop.js)
+  var shown = [];
+  function here(node, x) {
+    node.addEventListener('click', function (e) {
+      if (!window.vxPop || !window.vxPop.plain(e)) return;
+      e.preventDefault(); window.vxPop.open(x, shown);
+    });
+  }
   function render() {
     grid.innerHTML = '';
     var list = items.filter(function (x) { return filter === 'All' || x.group === filter; });
+    shown = list;
     var cut = filter === 'All' && !expanded && list.length > FIRST.length;
     (cut ? list.slice(0, FIRST.length) : list).forEach(function (x) {
       var c = card(x); grid.appendChild(c); if (io) io.observe(c); else c.vxRun();

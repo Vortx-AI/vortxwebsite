@@ -1,7 +1,9 @@
 /* hero.js: the Earth, and what it remembers, around it.
  *
- *   pins     every Earth observation in the live ememdemo catalogue, at its own at=lat,lng
- *   cards    featured memories, each tethered to its pin; Hubble's image to Hubble, where it is now
+ *   pins     every Earth observation in the live ememdemo catalogue, at its own at=lat,lng; a pin opens
+ *            its sample here, in the popup (js/pop.js), where it runs end to end
+ *   cards    featured memories, each tethered to its pin; Hubble's image to Hubble, where it is now; each
+ *            opens in the popup too, and a middle-click still opens the note itself
  *   planets  Mars (distance, light time) and the Moon (distance, phase) from vx.eph, recomputed now
  *   decode   @emem decodes one live token: recall, mint, resolve, hash the CBOR, verify the receipt,
  *            all in this browser; then the token's path from its place to @emem is drawn once
@@ -37,13 +39,17 @@
   /* ---------- pins and tethers ---------- */
   var pins = [], cards = [].slice.call(root.querySelectorAll('.hc[data-cid], .hc[data-sat], .hd-card[data-cid]'));
   function el(tag, attrs) { var e = document.createElementNS(NS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); return e; }
+  // a pin or a card opens its sample here, in the popup (js/pop.js); the note itself stays one click further
+  function openHere(x, list) { if (window.vxPop) window.vxPop.open(x, list && list.indexOf(x) >= 0 ? list : null); else window.open(NOTE(x.cid), '_blank', 'noopener'); }
   window.vxCatalog.then(function (items) {
-    items.filter(function (x) { return x.at; }).forEach(function (x) {
+    // the popup's arrows travel west to east, around the globe
+    var placed = items.filter(function (x) { return x.at; }), east = placed.slice().sort(function (a, b) { return a.at[1] - b.at[1]; });
+    placed.forEach(function (x) {
       var b = document.createElement('button');
       b.type = 'button'; b.className = 'h3o-pin is-far';
-      b.setAttribute('aria-label', x.title + ', open its memory');
+      b.setAttribute('aria-label', x.title + ', open it');
       b.innerHTML = '<span></span>'; b.firstChild.textContent = x.title;
-      b.addEventListener('click', function () { window.open(NOTE(x.cid), '_blank', 'noopener'); });
+      b.addEventListener('click', function () { openHere(x, east); });
       pinsEl.appendChild(b);
       pins.push({ item: x, el: b });
     });
@@ -52,7 +58,10 @@
       var x = items.filter(function (i) { return i.cid === cid; })[0];
       if (!x) return;
       c.vxItem = x;
-      if (!c.getAttribute('href')) c.setAttribute('href', NOTE(cid));
+      if (c.tagName === 'A') {
+        if (!c.getAttribute('href')) c.setAttribute('href', NOTE(cid));
+        c.addEventListener('click', function (e) { if (window.vxPop && window.vxPop.plain(e)) { e.preventDefault(); openHere(x, east); } });
+      }
       var meta = c.querySelector('[data-meta]');
       if (meta) {
         // the ememdemo token line, from the catalogue's own fields
@@ -236,6 +245,10 @@
   }
   var again = root.querySelector('[data-decode]');
   if (again) again.addEventListener('click', decode);
+  var layers = root.querySelector('[data-layers]');
+  if (layers) layers.addEventListener('click', function () {
+    window.vxCatalog.then(function (items) { var x = items.filter(function (i) { return i.cid === card.getAttribute('data-cid'); })[0]; if (x) openHere(x, items.filter(function (i) { return i.at; }).sort(function (a, b) { return a.at[1] - b.at[1]; })); });
+  });
   // decode once the globe has drawn, so the path has somewhere to start
   var started = false;
   function go() { if (started) return; started = true; setTimeout(decode, 900); }

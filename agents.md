@@ -23,6 +23,7 @@ One structure for people and agents; llms.txt mirrors it line for line.
 - **encode** `/#connect` · your file on your device, nothing uploaded; `tools/emem_point.py` on the device
 - **decode** `/#decode` · ask @emem, catch a drifted number, connect @emem to your agent
 - **browse** `/#samples` · the ememdemo catalogue, each note re-checked as it loads
+- **open** `/?s=<cid>` · any sample, opened on the page from a globe pin or a card, run end to end, its picture drawn from bytes checked here
 - **check** `/proof/` · every check, step by step
 - **read** `/emem/` protocol · `/geo-qa/` · `/eudr/` · `/propcheck/` · `/trust/` · `/spatial-ai/` · `/research/` · `/log/`
 
@@ -119,6 +120,7 @@ Every sample on vortx.ai is an ememdemo sample, kept to its standard.
 - **check** each note as it loads: `base32(blake3(note)[0:16]) == cid`; unreachable is not a failed check
 - **show** only the picture a `thumb.v1` note carries, byte for byte: https://vortx.ai/data/thumbs.json
 - **print** values verbatim: 0.767 for 0.767258382642998 is drift
+- **open** one: `https://vortx.ai/?s=<cid>` runs it by its schema: a pointer's row proved and read by range, then a whole overview level or the photo drawn from checked bytes; a place's bundle and one reading echoed verbatim; a grid's maps; a timelapse's first and last frames from signed pixels; a camera's clip; a folder's root
 
 ## segment
 
