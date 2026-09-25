@@ -51,18 +51,41 @@
     pic.className = 'run-pic is-tile'; pic.style.backgroundImage = ''; pic.innerHTML = ''; pic.appendChild(node);
     if (tag) pic.appendChild(el('span', 'run-tag', tag));
   }
+  function retag(t) { var s = pic.querySelector('.run-tag'); if (s) s.textContent = t; }
   function done() { root.classList.remove('is-running'); if (again) again.disabled = false; }
+  // the result first: checks passed, what stayed, what moved, how much less an agent reads
+  var verdict = $('.run-verdict');
+  function judge(R, x, out) {
+    if (!verdict) return;
+    var nt = x && E.tokOf(x.kv.tok), rt = x && E.tokOf(x.kv.raw), ok = R.passed === R.checks && R.checks;
+    verdict.className = 'run-verdict ' + (ok ? 'is-ok' : 'is-fail'); verdict.innerHTML = '';
+    var b = document.createElement('b'); b.textContent = R.passed + '/' + R.checks + (ok ? ' ✓' : ' ✕'); verdict.appendChild(b);
+    [out && out.fileB ? vx.fmtBytes(out.fileB) + ' stayed put' : '', out && out.tb ? out.tb + ' bytes moved' : '', nt && rt ? Math.round(rt / nt).toLocaleString('en-US') + '× less to read' : ''].filter(Boolean).forEach(function (t) { var sp = document.createElement('span'); sp.textContent = t; verdict.appendChild(sp); });
+    // the storyline under the hero ends on this result
+    var sc = document.querySelector('.st [data-st="score"]');
+    if (sc && R.checks) {
+      sc.textContent = R.passed + '/' + R.checks + (ok ? ' ✓' : ' ✕'); sc.classList.toggle('is-ok', !!ok); sc.classList.toggle('is-bad', !ok);
+      sc.setAttribute('aria-label', R.passed + ' of ' + R.checks + ' checks passed, in this browser: see the run');
+      var cp = sc.parentNode.querySelector('span:last-child'); if (cp) cp.textContent = 'just now, in this browser';
+    }
+  }
 
   async function run(key) {
     var r = RUNS[key]; if (!r) return;
     var g = ++gen; cur = key;
     root.querySelectorAll('[data-run]').forEach(function (b) { b.setAttribute('aria-selected', b.getAttribute('data-run') === key ? 'true' : 'false'); });
     log.innerHTML = ''; sum.innerHTML = ''; root.classList.add('is-running'); if (again) again.disabled = true;
-    var x = showSample(key), R = new E.Run({ log: log, show: showLive, live: function () { return g === gen; } });
+    if (verdict) { verdict.className = 'run-verdict'; verdict.innerHTML = '<b>…</b><span>running, live</span>'; }
+    var x = showSample(key), R = new E.Run({ log: log, show: showLive, retag: retag, live: function () { return g === gen; } });
     try {
       var out = await E.auto(R, r, x);
-      if (g === gen) { E.tally(sum, R, x, out); done(); }
-    } catch (e) { if (g === gen) { R.line('stop', key, { why: vx.why(e, 'a source') }, 'fail', null); done(); } }
+      if (g === gen) { E.tally(sum, R, x, out); judge(R, x, out); done(); }
+    } catch (e) {
+      if (g !== gen) return;
+      R.line('stop', key, { why: vx.why(e, 'a source') }, 'fail', null); done();
+      // a source that did not answer is not a failed check: say so, and check nothing
+      if (verdict) { verdict.className = 'run-verdict is-off'; verdict.innerHTML = ''; var b = document.createElement('b'); b.textContent = '—'; verdict.appendChild(b); var sp = document.createElement('span'); sp.textContent = 'not checked: ' + vx.why(e, 'a source'); verdict.appendChild(sp); }
+    }
   }
 
   root.querySelectorAll('[data-run]').forEach(function (b) { b.addEventListener('click', function () { run(b.getAttribute('data-run')); }); });

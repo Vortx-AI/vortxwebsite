@@ -48,7 +48,7 @@
   function Run(o) {
     o = o || {};
     this.log = o.log; this.live = o.live || function () { return true; };
-    this.show = o.show || function () {}; this.data = o.data || function () {}; this.named = o.named || function () {};
+    this.show = o.show || function () {}; this.retag = o.retag || function () {}; this.data = o.data || function () {}; this.named = o.named || function () {};
     this.whole = !!o.whole; this.t0 = performance.now(); this.L = new vx.Ledger(); this.checks = 0; this.passed = 0; this.cache = {};
   }
   Run.prototype.ms = function () { return Math.round(performance.now() - this.t0); };
@@ -274,7 +274,12 @@
       if (!best || W * H > best.W * best.H) best = { d: d, W: W, H: H, tw: tw, th: th, offs: offs, cnts: cnts, total: total };
     });
     if (!best || best.offs.length < 2) return null;
-    var b = best, across = Math.ceil(b.W / b.tw), same = 0, statsN = 0, statsOk = 0;
+    var b = best, across = Math.ceil(b.W / b.tw), same = 0, statsN = 0, statsOk = 0, got = 0;
+    var n = b.offs.filter(function (o, k) { return b.cnts[k]; }).length;
+    // the picture builds in front of you: each tile is drawn the moment its bytes hash true, edged green
+    var cv = el('canvas'); cv.width = b.W; cv.height = b.H; cv.className = 'eg-build';
+    var g0 = cv.getContext('2d'); g0.fillStyle = '#05080d'; g0.fillRect(0, 0, b.W, b.H);
+    R.show(cv, '0 of ' + n + ' tiles · reading by range');
     var tiles = await pool(b.offs.map(function (o, k) {
       return function () {
         if (!b.cnts[k] || R.stale()) return Promise.resolve(null);
@@ -282,14 +287,22 @@
         return R.row(w.url || src, w).then(function (rr) {
           if (vx.cid52(rr.bytes) !== w.hash) return null;
           same++;
-          return decodeTile(b.d, rr.bytes, b.tw, b.th).then(function (t) { if (t) t.row = w; return t; });
+          return decodeTile(b.d, rr.bytes, b.tw, b.th).then(function (t) {
+            if (!t || R.stale()) return t;
+            t.row = w;
+            if (t.deep) stretch([t]); // its own stretch until the whole picture's is known
+            var x = (k % across) * b.tw, y = Math.floor(k / across) * b.th;
+            paintTile(cv, t, x, y);
+            g0.strokeStyle = 'rgba(61, 220, 151, .9)'; g0.lineWidth = Math.max(2, b.W / 260); g0.strokeRect(x + g0.lineWidth / 2, y + g0.lineWidth / 2, Math.min(b.tw, b.W - x) - g0.lineWidth, Math.min(b.th, b.H - y) - g0.lineWidth);
+            R.retag(++got + ' of ' + n + ' tiles · each blake3 ✓ as it lands');
+            return t;
+          });
         });
       };
     }), 4);
     if (R.stale()) return;
-    var n = b.offs.filter(function (o, k) { return b.cnts[k]; }).length;
     stretch(tiles);
-    var cv = el('canvas'); cv.width = b.W; cv.height = b.H;
+    g0.fillStyle = '#05080d'; g0.fillRect(0, 0, b.W, b.H);
     tiles.forEach(function (t, k) {
       if (!t || !t.rgba) return;
       paintTile(cv, t, (k % across) * b.tw, Math.floor(k / across) * b.th);
@@ -314,7 +327,7 @@
     var good = R.ok(parts.every(Boolean));
     R.line('see', 'the photo itself', { rows: parts.filter(Boolean).length + ' of ' + ord.length + (good ? ' ✓' : ''), read: vx.fmtBytes(sz) }, good ? 'ok' : 'fail', 'drawn from the checked bytes');
     if (!good) return;
-    var img = el('img'); img.alt = ''; img.decoding = 'async';
+    var img = el('img'); img.alt = ''; img.decoding = 'async'; img.className = 'eg-wipe';
     img.src = URL.createObjectURL(new Blob(parts, { type: /PNG/i.test(fm.kind) ? 'image/png' : 'image/jpeg' }));
     R.show(img, 'the photo · ' + vx.fmtBytes(sz) + ' read from ' + vx.hostOf(src) + ', every row ✓');
     return undefined;
@@ -419,19 +432,23 @@
   }
   var NAME = { 'indices.ndvi': 'greenness', 'modis.lst_day_8day': 'ground heat', 'overture.buildings.count': 'buildings', 'hansen.tree_cover_2000': 'tree cover 2000', 'hansen.loss_year': 'year lost' };
   var RAMP = { 'indices.ndvi': [[120, 72, 40], [196, 170, 90], [40, 150, 70]], 'modis.lst_day_8day': [[40, 90, 200], [240, 210, 90], [215, 50, 40]], 'hansen.tree_cover_2000': [[70, 50, 30], [150, 160, 80], [30, 120, 60]], 'hansen.loss_year': [[30, 60, 40], [230, 170, 60], [230, 60, 50]] };
-  function heat(sq, bi, band) {
+  function heat(sq, bi, band, sweep) {
     var n = 1 + Math.max.apply(null, sq.map(function (s) { return Math.max(s.r, s.c); })), S = 30, cv = el('canvas'); cv.width = cv.height = n * S;
     var vals = sq.map(function (s) { return s.v[bi] == null ? null : +s.v[bi]; }).filter(function (v) { return v != null && isFinite(v); }).sort(function (a, b) { return a - b; });
     var lo = vals[0], hi = vals[vals.length - 1], g = cv.getContext('2d'), ramp = RAMP[band] || [[20, 24, 30], [110, 120, 140], [240, 240, 235]];
     g.fillStyle = '#06090d'; g.fillRect(0, 0, cv.width, cv.height);
-    sq.forEach(function (s) {
+    var paint = function (s) {
       var v = s.v[bi] == null ? null : +s.v[bi];
       if (v == null || !isFinite(v)) { g.fillStyle = '#10141a'; } else {
         var t = hi > lo ? (v - lo) / (hi - lo) : .5, a = t < .5 ? ramp[0] : ramp[1], b = t < .5 ? ramp[1] : ramp[2], u = t < .5 ? t * 2 : t * 2 - 1;
         g.fillStyle = 'rgb(' + [0, 1, 2].map(function (i) { return Math.round(a[i] + (b[i] - a[i]) * u); }).join(',') + ')';
       }
       g.fillRect(s.c * S + 1, s.r * S + 1, S - 2, S - 2);
-    });
+    };
+    // swept in along the diagonals, a square at a time, as the note's rows are read
+    var order = sq.slice().sort(function (a, b) { return a.r + a.c - b.r - b.c; });
+    if (!sweep || !window.requestAnimationFrame || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) order.forEach(paint);
+    else { var i = 0, per = Math.ceil(order.length / 26); (function step() { for (var k = 0; k < per && i < order.length; k++) paint(order[i++]); if (i < order.length) requestAnimationFrame(step); })(); }
     return { cv: cv, lo: lo, hi: hi };
   }
   async function grid(R, r, x, nb) {
@@ -441,8 +458,8 @@
     if (!named) return {};
     // see: every map drawn from the note, one chip per band
     var box = el('div', 'eg-maps'), pic = el('div', 'eg-map'), chips = el('div', 'eg-chips'), key = el('p', 'eg-key');
-    var draw = function (bi) {
-      var h = heat(sq, bi, bands[bi]); pic.innerHTML = ''; pic.appendChild(h.cv);
+    var first = true, draw = function (bi) {
+      var h = heat(sq, bi, bands[bi], first); first = false; pic.innerHTML = ''; pic.appendChild(h.cv);
       key.textContent = bands[bi] + ' · ' + (h.lo != null ? +h.lo.toPrecision(4) + ' → ' + +h.hi.toPrecision(4) : 'no values');
       chips.querySelectorAll('button').forEach(function (b, i) { b.setAttribute('aria-pressed', i === bi ? 'true' : 'false'); });
     };
@@ -481,6 +498,22 @@
       g.putImageData(img, 0, 0); return cv;
     });
   }
+  // a frame from whichever of its bands have arrived; each band stretched on its own
+  function bandsCanvas(bands) {
+    var g0 = bands.filter(Boolean)[0]; if (!g0) return el('canvas');
+    var w = g0.w, h = g0.h, cv = el('canvas'); cv.width = w; cv.height = h;
+    var cx = cv.getContext('2d'), img = cx.createImageData(w, h);
+    var lim = bands.map(function (b) {
+      if (!b) return null; var v = [];
+      for (var i = 0; i < b.data.length; i += 17) if (isFinite(b.data[i]) && b.data[i] > 0) v.push(b.data[i]);
+      v.sort(function (a, c) { return a - c; }); return [v[Math.floor(v.length * .02)] || 0, v[Math.floor(v.length * .98)] || 1];
+    });
+    for (var i = 0; i < w * h; i++) {
+      for (var k = 0; k < 3; k++) { var b = bands[k], L = lim[k], v = b && b.data[i]; img.data[i * 4 + k] = b && isFinite(v) ? Math.max(0, Math.min(255, 255 * Math.pow(Math.max(0, (v - L[0]) / (L[1] - L[0] || 1)), .8))) : 0; }
+      img.data[i * 4 + 3] = 255;
+    }
+    cx.putImageData(img, 0, 0); return cv;
+  }
   // two frames, one over the other: drag to see what changed
   function slider(a, b, da, db) {
     var box = el('div', 'eg-cmp'), top = el('div', 'eg-cmp-top'), r = el('input'), la = el('span', 'eg-cmp-a', da), lb = el('span', 'eg-cmp-b', db);
@@ -506,12 +539,15 @@
     R.line('decode', '@emem opens the three cubes', { signed: nSig + ' of 3' + (nSig === 3 ? ' ✓' : ''), frames: inCube + ' of ' + frames.length + ' are their members' + (inCube === frames.length ? ' ✓' : '') }, good ? 'ok' : 'fail', 'emem.dev, checked here');
     if (!good) return { tb: tb };
     // check: the first and last frames' pixels, fetched by name; each must hash to it
-    var ends = [frames[0], frames[frames.length - 1]], got = 0, bytes = 0;
+    var ends = [frames[0], frames[frames.length - 1]], got = 0, bytes = 0, early = [null, null, null], NAMES = ['red', 'green', 'blue'];
     var grids = await pool([0, 1, 2, 3, 4, 5].map(function (k) {
       var fr = ends[k / 3 | 0], m = find(k % 3, fr.t[k % 3]);
       return function () {
         return vx.getBytes(EMEM + '/v1/artifacts/' + m.artifact_cid, {}, R.L).then(function (res) {
-          bytes += res.bytes.length; if (vx.cid52(res.bytes) !== m.artifact_cid) return null; got++; return vx.gridDecode(res.bytes);
+          bytes += res.bytes.length; if (vx.cid52(res.bytes) !== m.artifact_cid) return null; got++;
+          var gd = vx.gridDecode(res.bytes);
+          if (k < 3 && !R.stale()) { early[k] = gd; R.show(bandsCanvas(early), ends[0].date + ' · ' + NAMES.map(function (nm, i) { return nm + (early[i] ? ' ✓' : ' …'); }).join(' · ')); }
+          return gd;
         });
       };
     }), 3);

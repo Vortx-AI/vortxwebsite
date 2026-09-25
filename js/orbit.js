@@ -59,9 +59,10 @@
   function ll(latDeg, lonDeg) { var la = latDeg * DEG, lo = lonDeg * DEG; return [Math.cos(la) * Math.cos(lo), Math.cos(la) * Math.sin(lo), Math.sin(la)]; }
 
   /* ---------- camera ---------- */
-  function camera() {
-    var n0 = ll(S.lat0, S.lon0), pos = scale(n0, S.d), fwd = scale(n0, -1);
-    var Z = Math.abs(S.lat0) > 89.5 ? [1, 0, 0] : [0, 0, 1];
+  function camera() { return camFor(S.lat0, S.lon0); }
+  function camFor(lat, lon) {
+    var n0 = ll(lat, lon), pos = scale(n0, S.d), fwd = scale(n0, -1);
+    var Z = Math.abs(lat) > 89.5 ? [1, 0, 0] : [0, 0, 1];
     var up = norm(sub(Z, scale(fwd, dot(Z, fwd)))), right = cross(fwd, up);
     return { pos: pos, fwd: fwd, up: up, right: right, f: (S.H / 2) / S.tanHalf };
   }
@@ -464,9 +465,71 @@
 
   /* ---------- loop ---------- */
   var lastSky = 0, lastRead = 0, raf = 0;
+  /* ---------- the sky, where things truly are ----------
+     deep-sky objects: J2000 RA/Dec, precessed to date like the stars; Mars: J2000 from its elements;
+     the Moon: equator of date, placed at its distance, so its parallax from this camera is real */
+  function skyEcef(o, date) {
+    var ms = date.getTime(), u, dist = 0;
+    if (o.moon) { var m = window.vx.eph.moonDir(ms); u = m.u; dist = m.km / 6371.0088; }
+    else if (o.mars) u = mul(precessMatrix(date), window.vx.eph.marsDir(ms).u);
+    else { var ra = o.ra * DEG, de = o.dec * DEG; u = mul(precessMatrix(date), [Math.cos(de) * Math.cos(ra), Math.cos(de) * Math.sin(ra), Math.sin(de)]); }
+    return { e: eciToEcef(u, gmst(date)), dist: dist };
+  }
+  // where an object lands on the stage for a camera: a star at infinity, the Moon at its distance
+  function skyOn(cam, s) {
+    if (s.dist) { var q = project(cam, scale(s.e, s.dist)); return q && { x: q.x, y: q.y }; }
+    var z = dot(s.e, cam.fwd); if (z <= 0.05) return null;
+    return { x: S.W * S.cx + cam.f * dot(s.e, cam.right) / z, y: S.H * S.cy - cam.f * dot(s.e, cam.up) / z };
+  }
+  function skyPoint(o) {
+    var cam = S.cam; if (!cam || !window.vx) return null;
+    var s = skyEcef(o, new Date(simNow())), q = skyOn(cam, s), hidden;
+    if (!q) return { off: true };
+    if (s.dist) hidden = occluded(cam, scale(s.e, s.dist));
+    else { var b = dot(cam.pos, s.e), c = dot(cam.pos, cam.pos) - 1; hidden = b < 0 && b * b - c > 0; }
+    return { x: q.x, y: q.y, hidden: hidden, off: q.x < 0 || q.y < 0 || q.x > S.W || q.y > S.H };
+  }
+  // turn the camera until an object lands on a chosen spot of the stage, where it truly is now: a first guess from
+  // the angle it must sit off the view axis, then Newton steps on the camera's own projection, pole clamp included
+  function lookToward(o, ms, done, at) {
+    var s = skyEcef(o, new Date(simNow())), f = (S.H / 2) / S.tanHalf;
+    if (!at) at = { x: S.W * S.cx + 0.52 * f, y: S.H * S.cy - 0.28 * f };
+    var sx = (at.x - S.W * S.cx) / f, sy = (S.H * S.cy - at.y) / f, a = Math.atan(Math.hypot(sx, sy)), th = Math.atan2(sy, sx), fwd = s.e;
+    for (var i = 0; i < 6; i++) {
+      var Z = Math.abs(fwd[2]) > 0.995 ? [1, 0, 0] : [0, 0, 1], up = norm(sub(Z, scale(fwd, dot(Z, fwd)))), right = cross(fwd, up);
+      var w = add(scale(right, Math.cos(th)), scale(up, Math.sin(th)));
+      fwd = norm(sub(scale(s.e, Math.cos(a)), scale(w, Math.sin(a))));
+    }
+    var lat = Math.max(-85, Math.min(85, -Math.asin(Math.max(-1, Math.min(1, fwd[2]))) / DEG)), lon = Math.atan2(-fwd[1], -fwd[0]) / DEG;
+    for (var k = 0; k < 12; k++) {
+      var p = skyOn(camFor(lat, lon), s); if (!p) break;
+      var ex = p.x - at.x, ey = p.y - at.y; if (ex * ex + ey * ey < 0.25) break;
+      var h = 0.02, pa = skyOn(camFor(lat + h, lon), s), pb = skyOn(camFor(lat, lon + h), s); if (!pa || !pb) break;
+      var j11 = (pa.x - p.x) / h, j21 = (pa.y - p.y) / h, j12 = (pb.x - p.x) / h, j22 = (pb.y - p.y) / h, det = j11 * j22 - j12 * j21;
+      if (Math.abs(det) < 1e-9) break;
+      var dl = (j22 * ex - j12 * ey) / det, dn = (-j21 * ex + j11 * ey) / det, m = Math.max(1, Math.hypot(dl, dn) / 20);
+      lat = Math.max(-85, Math.min(85, lat - dl / m)); lon -= dn / m;
+    }
+    tweenTo({ lat: lat, lon: lon }, ms, done);
+  }
+  // a tween turns the camera to a place and back: eased, the shorter way round
+  function tweenTo(to, ms, done) {
+    if (!to) { if (done) done(); return; }
+    var dl = ((to.lon - S.lon0 + 540) % 360) - 180, far = Math.hypot(to.lat - S.lat0, dl);
+    S.follow = null;
+    S.tween = { a: { lat: S.lat0, lon: S.lon0 }, dLat: to.lat - S.lat0, dLon: dl, t0: performance.now(), ms: reduce ? 0 : Math.max(240, Math.min(ms, 6 * far + 200)), done: done };
+    S.dirty = true; kick();
+  }
+  function stepTween() {
+    var w = S.tween; if (!w) return;
+    var p = w.ms ? Math.min(1, (performance.now() - w.t0) / w.ms) : 1, e = p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+    S.lat0 = Math.max(-85, Math.min(85, w.a.lat + w.dLat * e)); S.lon0 = w.a.lon + w.dLon * e; S.dirty = true;
+    if (p >= 1) { S.tween = null; if (w.done) setTimeout(w.done, 0); }
+  }
   function frame() {
     raf = 0;
     if (!S.visible || document.hidden) return;
+    stepTween();
     var t = simNow(), date = new Date(t), cam = camera(), sun = sunEcef(date);
     S.sats.forEach(function (sat) { sat.state = stateAt(sat, date); });
     if (S.follow && S.follow.state && !S.dragging) { S.lat0 = S.follow.state.lat; S.lon0 = S.follow.state.lon; cam = camera(); S.dirty = true; }
@@ -483,7 +546,7 @@
   // frame budget follows the motion: at x1 a satellite crosses about 0.3 px a second on this globe,
   // so four frames a second are plenty; warps and drags get full frame rate; reduced motion gets one
   function interval() {
-    if (S.dragging || S.warp >= 600) return 0;
+    if (S.dragging || S.tween || S.warp >= 600) return 0;
     if (S.warp >= 60) return 33;
     return reduce ? 1000 : 250;
   }
@@ -594,6 +657,13 @@
     size: function () { return { W: S.W, H: S.H, cx: S.cx, cy: S.cy }; },
     onframe: function (fn) { S.hooks.push(fn); kick(); },
     home: home,
+    // turn to a place (a pin opening), then back to the held view (the popup closing)
+    focus: function (lat, lon, ms, done) { tweenTo({ lat: lat, lon: lon }, ms || 700, done); },
+    sky: skyPoint,
+    // the Earth's radius on the stage, in CSS pixels
+    radius: function () { return (S.H / 2) / S.tanHalf * Math.tan(Math.asin(1 / S.d)); },
+    lookToward: function (o, ms, done, at) { lookToward(o, ms || 900, done, at); },
+    release: function (ms, done) { tweenTo(S.view || (S.place && { lat: S.place.lat, lon: S.place.lng }), ms || 700, done); },
     states: function (t) {
       var d = new Date(t || simNow());
       return S.sats.map(function (x) {

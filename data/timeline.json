@@ -1,0 +1,904 @@
+{
+  "schema": "vortx.timeline.v1",
+  "about": "Every dated milestone on https://vortx.ai/press/, newest first. Each date comes from the record that owns it (a registry, a changelog, a commit, a DOI) and `check` says how the page re-reads it live. Undated items are not here.",
+  "kinds": {
+    "emem": "the emem protocol",
+    "eudr": "eudr.dev",
+    "listing": "where emem is listed",
+    "research": "papers and models",
+    "vortx": "vortx.ai"
+  },
+  "entries": [
+    {
+      "date": "2026-09-25",
+      "kind": "vortx",
+      "verb": "open",
+      "noun": "every sample in place, and run it end to end",
+      "what": "a globe pin, a card or a link opens a live, checked run",
+      "img": "/assets/press/vortx-popup-lusail.webp",
+      "alt": "Lusail in 2017 and 2025, painted from signed pixels in a vortx.ai popup",
+      "proof": [
+        {
+          "t": "open one",
+          "u": "https://vortx.ai/?s=gpnxkvkwz22ug4jeqexggiy63q"
+        }
+      ]
+    },
+    {
+      "date": "2026-09-25",
+      "kind": "vortx",
+      "verb": "encode",
+      "noun": "on device, decode with @emem",
+      "what": "the Earth, its satellites, and one signed fact decoded per visit",
+      "img": "/assets/press/vortx-hero.webp",
+      "alt": "The vortx.ai home page: the Earth with pinned places and a decoded NDVI reading",
+      "proof": [
+        {
+          "t": "vortx.ai",
+          "u": "https://vortx.ai/"
+        }
+      ]
+    },
+    {
+      "date": "2026-09-23",
+      "kind": "emem",
+      "verb": "decide",
+      "noun": "typed decisions from a small open-weights model",
+      "what": "POST /v1/decide, the emem_decide tool",
+      "card": [
+        "POST https://emem.dev/v1/decide",
+        "{ state, questions: [ { kind, ask } ] }",
+        "tool emem_decide"
+      ],
+      "proof": [
+        {
+          "t": "the commit",
+          "u": "https://github.com/Vortx-AI/emem/commit/d7aca59ad1c7e36244b34c075e5cb1b8f8ebc19c"
+        },
+        {
+          "t": "every tool",
+          "u": "https://emem.dev/tools"
+        }
+      ],
+      "check": [
+        {
+          "src": "commit",
+          "repo": "Vortx-AI/emem",
+          "sha": "d7aca59ad1c7e36244b34c075e5cb1b8f8ebc19c"
+        },
+        {
+          "src": "tool",
+          "name": "emem_decide"
+        }
+      ]
+    },
+    {
+      "date": "2026-09-22",
+      "kind": "eudr",
+      "verb": "list",
+      "noun": "eudr.dev on the official MCP Registry",
+      "what": "io.github.Vortx-AI/eudr 1.0.0, remote at eudr.dev/mcp",
+      "card": [
+        "registry.modelcontextprotocol.io",
+        "io.github.Vortx-AI/eudr",
+        "1.0.0 · streamable-http"
+      ],
+      "proof": [
+        {
+          "t": "the registry entry",
+          "u": "https://registry.modelcontextprotocol.io/v0/servers?search=io.github.Vortx-AI/eudr"
+        },
+        {
+          "t": "the plugin",
+          "u": "https://github.com/Vortx-AI/eudr-plugin"
+        }
+      ],
+      "check": {
+        "src": "mcpreg",
+        "name": "io.github.Vortx-AI/eudr",
+        "version": "1.0.0"
+      }
+    },
+    {
+      "date": "2026-09-14",
+      "kind": "eudr",
+      "verb": "ship",
+      "noun": "the eudr plugin for Claude Code",
+      "what": "check plots, compile the Annex II statement, export TRACES XML",
+      "img": "/assets/press/eudr-home.webp",
+      "alt": "eudr.dev: an agent that checks a farm plot against the EU Deforestation Regulation",
+      "proof": [
+        {
+          "t": "the plugin",
+          "u": "https://github.com/Vortx-AI/eudr-plugin"
+        },
+        {
+          "t": "eudr.dev",
+          "u": "https://eudr.dev/"
+        }
+      ],
+      "check": {
+        "src": "commit",
+        "repo": "Vortx-AI/eudr-plugin",
+        "sha": "c084b422de15d62b664b218df82668f70da7880a"
+      }
+    },
+    {
+      "date": "2026-09-07",
+      "kind": "emem",
+      "verb": "federate",
+      "noun": "emem 2.4.0: a stranger can join as a witness",
+      "what": "did:web, independently witnessed log heads",
+      "img": "/assets/press/emem-2.4.0-release-art.webp",
+      "alt": "emem 2.4.0 release art",
+      "proof": [
+        {
+          "t": "the changelog",
+          "u": "https://github.com/Vortx-AI/emem/blob/main/CHANGELOG.md"
+        }
+      ],
+      "check": {
+        "src": "changelog",
+        "version": "2.4.0"
+      }
+    },
+    {
+      "date": "2026-08-27",
+      "kind": "vortx",
+      "verb": "seal",
+      "noun": "vortx.ai: every served file in one blake3 manifest",
+      "what": "and every stated number in a registry CI checks",
+      "card": [
+        "/.well-known/site-manifest.json",
+        "/.well-known/facts.json",
+        "python3 tools/site_manifest.py --verify"
+      ],
+      "proof": [
+        {
+          "t": "the manifest",
+          "u": "https://vortx.ai/.well-known/site-manifest.json"
+        },
+        {
+          "t": "the facts",
+          "u": "https://vortx.ai/.well-known/facts.json"
+        }
+      ]
+    },
+    {
+      "date": "2026-08-26",
+      "kind": "emem",
+      "verb": "see",
+      "noun": "emem 2.3.0: a street camera answers before orbit",
+      "what": "geo.qa's London cameras, each count tied to a signed clip",
+      "img": "/assets/press/geoqa-london.webp",
+      "alt": "geo.qa: London right now, counted from street cameras",
+      "proof": [
+        {
+          "t": "the changelog",
+          "u": "https://github.com/Vortx-AI/emem/blob/main/CHANGELOG.md"
+        },
+        {
+          "t": "geo.qa/london",
+          "u": "https://geo.qa/london"
+        }
+      ],
+      "check": {
+        "src": "changelog",
+        "version": "2.3.0"
+      }
+    },
+    {
+      "date": "2026-08-24",
+      "kind": "listing",
+      "verb": "list",
+      "noun": "emem on the Dify Marketplace",
+      "what": "the vortx-ai/emem plugin",
+      "img": "/assets/press/listing-dify.webp",
+      "alt": "emem's page on the Dify Marketplace",
+      "proof": [
+        {
+          "t": "the listing",
+          "u": "https://marketplace.dify.ai/plugin/vortx-ai/emem"
+        }
+      ],
+      "check": {
+        "src": "dify",
+        "plugin": "vortx-ai/emem"
+      }
+    },
+    {
+      "date": "2026-08-19",
+      "kind": "listing",
+      "verb": "list",
+      "noun": "@emem as a ChatGPT app",
+      "what": "mention @emem in any chat",
+      "img": "/assets/press/listing-chatgpt.webp",
+      "alt": "emem's app page in ChatGPT",
+      "proof": [
+        {
+          "t": "the app",
+          "u": "https://chatgpt.com/plugins/plugin_asdk_app_6a6a0832a59081918b19aec0ddf9ec77"
+        },
+        {
+          "t": "first linked",
+          "u": "https://github.com/Vortx-AI/emem/commit/065658500f0f6b444505957380a52a3fa9f41c5b"
+        }
+      ],
+      "check": {
+        "src": "commit",
+        "repo": "Vortx-AI/emem",
+        "sha": "065658500f0f6b444505957380a52a3fa9f41c5b"
+      }
+    },
+    {
+      "date": "2026-08-18",
+      "kind": "emem",
+      "verb": "open",
+      "noun": "emem 2.2.0: an agent surface agents can read alone",
+      "what": "every tool generated from one registry",
+      "img": "/assets/press/emem-tools.webp",
+      "alt": "emem.dev/tools: every tool, generated from the registry",
+      "proof": [
+        {
+          "t": "the changelog",
+          "u": "https://github.com/Vortx-AI/emem/blob/main/CHANGELOG.md"
+        },
+        {
+          "t": "every tool",
+          "u": "https://emem.dev/tools"
+        }
+      ],
+      "check": {
+        "src": "changelog",
+        "version": "2.2.0"
+      }
+    },
+    {
+      "date": "2026-08-13",
+      "kind": "listing",
+      "verb": "list",
+      "noun": "emem in MuleSoft's Anypoint Exchange",
+      "what": "Vortx AI MCP Server, published by MuleSoft",
+      "img": "/assets/press/listing-mulesoft.webp",
+      "alt": "Vortx AI MCP Server in MuleSoft's Anypoint Exchange",
+      "proof": [
+        {
+          "t": "the listing",
+          "u": "https://anypoint.mulesoft.com/exchange/68e53915-e89b-4e82-b794-12d37982db4c/vortxAi-asset/"
+        }
+      ],
+      "check": {
+        "src": "mulesoft",
+        "asset": "vortxAi-asset"
+      }
+    },
+    {
+      "date": "2026-08-11",
+      "kind": "listing",
+      "verb": "install",
+      "noun": "emem in VS Code, one click",
+      "what": "VS Code's MCP install link",
+      "card": [
+        "vscode: mcp/install",
+        "name=emem",
+        "url=https://emem.dev/mcp"
+      ],
+      "proof": [
+        {
+          "t": "install",
+          "u": "https://insiders.vscode.dev/redirect/mcp/install?name=emem&config=%7B%22type%22%3A%22http%22%2C%22url%22%3A%22https%3A%2F%2Femem.dev%2Fmcp%22%7D"
+        },
+        {
+          "t": "the commit",
+          "u": "https://github.com/Vortx-AI/emem/commit/cd7ce4a86aea83ecbadec5a5fefedc0731ab2869"
+        }
+      ],
+      "check": {
+        "src": "commit",
+        "repo": "Vortx-AI/emem",
+        "sha": "cd7ce4a86aea83ecbadec5a5fefedc0731ab2869"
+      }
+    },
+    {
+      "date": "2026-08-10",
+      "kind": "emem",
+      "verb": "guard",
+      "noun": "emem 2.1.0: a signed allow or deny for a cited claim",
+      "what": "emem-guard, with a machine-readable fix",
+      "img": "/assets/press/emem-guard.webp",
+      "alt": "emem-guard: a signed yes/no server for claims about the physical world",
+      "proof": [
+        {
+          "t": "the changelog",
+          "u": "https://github.com/Vortx-AI/emem/blob/main/CHANGELOG.md"
+        },
+        {
+          "t": "emem-guard",
+          "u": "https://emem.dev/guard"
+        }
+      ],
+      "check": {
+        "src": "changelog",
+        "version": "2.1.0"
+      }
+    },
+    {
+      "date": "2026-08-05",
+      "kind": "emem",
+      "verb": "secure",
+      "noun": "emem 2.0.0: receipt preimage v2, shipped as a major",
+      "what": "a security fix, versioned as a breaking change",
+      "card": [
+        "receipt preimage v2",
+        "ed25519 over blake3",
+        "a major, on purpose"
+      ],
+      "proof": [
+        {
+          "t": "the changelog",
+          "u": "https://github.com/Vortx-AI/emem/blob/main/CHANGELOG.md"
+        }
+      ],
+      "check": {
+        "src": "changelog",
+        "version": "2.0.0"
+      }
+    },
+    {
+      "date": "2026-08-05",
+      "kind": "listing",
+      "verb": "rank",
+      "noun": "emem on MCP Toplist",
+      "what": "a public rank for MCP servers",
+      "card": [
+        "mcptoplist.com",
+        "io.github.Vortx-AI/emem"
+      ],
+      "proof": [
+        {
+          "t": "the listing",
+          "u": "https://mcptoplist.com/server/io.github.Vortx-AI%2Femem"
+        },
+        {
+          "t": "first linked",
+          "u": "https://github.com/Vortx-AI/emem/commit/9528f66eee3ea4166857461b36e3d7236c17f781"
+        }
+      ],
+      "check": {
+        "src": "commit",
+        "repo": "Vortx-AI/emem",
+        "sha": "9528f66eee3ea4166857461b36e3d7236c17f781"
+      }
+    },
+    {
+      "date": "2026-07-31",
+      "kind": "emem",
+      "verb": "enrol",
+      "noun": "emem 1.4.0: devices with attested keys",
+      "what": "trace resolve, whitelisted device platforms",
+      "card": [
+        "/v1/enroll_attested",
+        "/v1/trace_resolve",
+        "/v1/device_platforms"
+      ],
+      "proof": [
+        {
+          "t": "the changelog",
+          "u": "https://github.com/Vortx-AI/emem/blob/main/CHANGELOG.md"
+        },
+        {
+          "t": "device platforms",
+          "u": "https://emem.dev/v1/device_platforms"
+        }
+      ],
+      "check": {
+        "src": "changelog",
+        "version": "1.4.0"
+      }
+    },
+    {
+      "date": "2026-07-30",
+      "kind": "listing",
+      "verb": "list",
+      "noun": "emem in the GitHub MCP Registry",
+      "what": "a curated registry agent hosts browse",
+      "img": "/assets/press/listing-github-mcp.webp",
+      "alt": "emem's page in the GitHub MCP Registry",
+      "proof": [
+        {
+          "t": "the listing",
+          "u": "https://github.com/mcp/Vortx-AI/emem"
+        }
+      ],
+      "check": {
+        "src": "ghmcp",
+        "id": "520849b902eb40718b54e1336dced0b0"
+      }
+    },
+    {
+      "date": "2026-07-26",
+      "kind": "emem",
+      "verb": "admit",
+      "noun": "emem 1.3.0: satellites and devices join as members",
+      "what": "each believed only with its OS execution trace",
+      "card": [
+        "telescope · CCTV · drone · robot",
+        "enrolled by key",
+        "believed with evidence"
+      ],
+      "proof": [
+        {
+          "t": "the changelog",
+          "u": "https://github.com/Vortx-AI/emem/blob/main/CHANGELOG.md"
+        },
+        {
+          "t": "substrates",
+          "u": "https://emem.dev/v1/substrates"
+        }
+      ],
+      "check": {
+        "src": "changelog",
+        "version": "1.3.0"
+      }
+    },
+    {
+      "date": "2026-07-26",
+      "kind": "vortx",
+      "verb": "publish",
+      "noun": "an agent card, agents.md and llms.txt",
+      "what": "agents find vortx.ai on their own",
+      "card": [
+        "/.well-known/agent-card.json",
+        "/agents.md",
+        "/llms.txt"
+      ],
+      "proof": [
+        {
+          "t": "the card",
+          "u": "https://vortx.ai/.well-known/agent-card.json"
+        }
+      ]
+    },
+    {
+      "date": "2026-07-21",
+      "kind": "emem",
+      "verb": "measure",
+      "noun": "emem 1.2.0: measured by an outside agent",
+      "what": "an independent benchmark, and a signed outside review",
+      "card": [
+        "independent benchmark",
+        "signed review",
+        "published either way"
+      ],
+      "proof": [
+        {
+          "t": "the changelog",
+          "u": "https://github.com/Vortx-AI/emem/blob/main/CHANGELOG.md"
+        }
+      ],
+      "check": {
+        "src": "changelog",
+        "version": "1.2.0"
+      }
+    },
+    {
+      "date": "2026-07-21",
+      "kind": "listing",
+      "verb": "publish",
+      "noun": "@vortxai/emem on npm",
+      "what": "the TypeScript client",
+      "img": "/assets/press/listing-npm.webp",
+      "alt": "@vortxai/emem on npm",
+      "proof": [
+        {
+          "t": "the package",
+          "u": "https://www.npmjs.com/package/@vortxai/emem"
+        }
+      ],
+      "check": {
+        "src": "npm",
+        "pkg": "@vortxai/emem"
+      }
+    },
+    {
+      "date": "2026-07-16",
+      "kind": "emem",
+      "verb": "attribute",
+      "noun": "emem 1.1.0: field tokens and change attribution",
+      "what": "why a number moved, term by term",
+      "card": [
+        "emem:field:…",
+        "change attribution",
+        "partial results"
+      ],
+      "proof": [
+        {
+          "t": "the changelog",
+          "u": "https://github.com/Vortx-AI/emem/blob/main/CHANGELOG.md"
+        }
+      ],
+      "check": {
+        "src": "changelog",
+        "version": "1.1.0"
+      }
+    },
+    {
+      "date": "2026-07-09",
+      "kind": "emem",
+      "verb": "settle",
+      "noun": "emem 1.0.0: the wire format, stable",
+      "what": "canonical CBOR, ed25519 receipts, cell64 addresses; 3-D worlds from signed facts",
+      "img": "/assets/press/emem-worlds.webp",
+      "alt": "emem.dev/worlds: a 3-D world baked from signed elevation facts",
+      "proof": [
+        {
+          "t": "the changelog",
+          "u": "https://github.com/Vortx-AI/emem/blob/main/CHANGELOG.md"
+        },
+        {
+          "t": "worlds",
+          "u": "https://emem.dev/worlds"
+        }
+      ],
+      "check": {
+        "src": "changelog",
+        "version": "1.0.0"
+      }
+    },
+    {
+      "date": "2026-06-18",
+      "kind": "research",
+      "verb": "demo",
+      "noun": "TerraGround-Verifiable-EO on Hugging Face Spaces",
+      "what": "a Gradio demo of verifiable Earth observation",
+      "card": [
+        "huggingface.co/spaces",
+        "avijeetsingh1608/",
+        "TerraGround-Verifiable-EO"
+      ],
+      "proof": [
+        {
+          "t": "the Space",
+          "u": "https://huggingface.co/spaces/avijeetsingh1608/TerraGround-Verifiable-EO"
+        }
+      ],
+      "check": {
+        "src": "hfspace",
+        "id": "avijeetsingh1608/TerraGround-Verifiable-EO"
+      }
+    },
+    {
+      "date": "2026-06-18",
+      "kind": "vortx",
+      "verb": "relaunch",
+      "noun": "vortx.ai around one verifiable memory of Earth",
+      "what": "for AI agents",
+      "card": [
+        "vortx.ai",
+        "one memory of Earth",
+        "for AI agents"
+      ],
+      "proof": [
+        {
+          "t": "vortx.ai",
+          "u": "https://vortx.ai/"
+        }
+      ]
+    },
+    {
+      "date": "2026-06-17",
+      "kind": "research",
+      "verb": "release",
+      "noun": "TerraGround-Gemma, 12B and E2B LoRAs",
+      "what": "grounding a model in Earth observation",
+      "img": "/assets/press/listing-huggingface.webp",
+      "alt": "TerraGround-Gemma-4-12B-LoRA on Hugging Face",
+      "proof": [
+        {
+          "t": "12B",
+          "u": "https://huggingface.co/avijeetsingh1608/TerraGround-Gemma-4-12B-LoRA"
+        },
+        {
+          "t": "E2B",
+          "u": "https://huggingface.co/avijeetsingh1608/TerraGround-Gemma-4-E2B-LoRA"
+        }
+      ],
+      "check": {
+        "src": "hf",
+        "model": "avijeetsingh1608/TerraGround-Gemma-4-12B-LoRA"
+      }
+    },
+    {
+      "date": "2026-06-15",
+      "kind": "research",
+      "verb": "publish",
+      "noun": "the emem protocol on Zenodo",
+      "what": "two records, two DOIs",
+      "card": [
+        "doi 10.5281/zenodo.20706893",
+        "doi 10.5281/zenodo.20706317",
+        "zenodo.org"
+      ],
+      "proof": [
+        {
+          "t": "the research",
+          "u": "https://doi.org/10.5281/zenodo.20706893"
+        },
+        {
+          "t": "the protocol",
+          "u": "https://doi.org/10.5281/zenodo.20706317"
+        }
+      ],
+      "check": {
+        "src": "zenodo",
+        "id": "20706893"
+      }
+    },
+    {
+      "date": "2026-06-14",
+      "kind": "emem",
+      "verb": "scale",
+      "noun": "emem 0.1.0: geography-scale embeddings and EUDR data",
+      "what": "Sentinel-1 radar, near-real-time EUDR evidence",
+      "card": [
+        "per-geography embeddings",
+        "Sentinel-1 SAR",
+        "EUDR evidence"
+      ],
+      "proof": [
+        {
+          "t": "the changelog",
+          "u": "https://github.com/Vortx-AI/emem/blob/main/CHANGELOG.md"
+        }
+      ],
+      "check": {
+        "src": "changelog",
+        "version": "0.1.0"
+      }
+    },
+    {
+      "date": "2026-06-02",
+      "kind": "listing",
+      "verb": "publish",
+      "noun": "ememdev on PyPI",
+      "what": "the Python client",
+      "card": [
+        "pip install ememdev",
+        "pypi.org/project/ememdev"
+      ],
+      "proof": [
+        {
+          "t": "the package",
+          "u": "https://pypi.org/project/ememdev/"
+        }
+      ],
+      "check": {
+        "src": "pypi",
+        "pkg": "ememdev"
+      }
+    },
+    {
+      "date": "2026-05-30",
+      "kind": "emem",
+      "verb": "connect",
+      "noun": "emem 0.0.9: memory that connects and evolves",
+      "what": "temporal edges, contradiction-fed refinement",
+      "card": [
+        "temporal edges",
+        "contradictions",
+        "refinement loop"
+      ],
+      "proof": [
+        {
+          "t": "the changelog",
+          "u": "https://github.com/Vortx-AI/emem/blob/main/CHANGELOG.md"
+        }
+      ],
+      "check": {
+        "src": "changelog",
+        "version": "0.0.9"
+      }
+    },
+    {
+      "date": "2026-05-14",
+      "kind": "emem",
+      "verb": "verify",
+      "noun": "emem 0.0.6: receipts, checked in the browser",
+      "what": "emem.dev/verify",
+      "img": "/assets/press/emem-verify.webp",
+      "alt": "emem.dev/verify: a receipt verifier that runs in the browser",
+      "proof": [
+        {
+          "t": "the changelog",
+          "u": "https://github.com/Vortx-AI/emem/blob/main/CHANGELOG.md"
+        },
+        {
+          "t": "verify",
+          "u": "https://emem.dev/verify"
+        }
+      ],
+      "check": {
+        "src": "changelog",
+        "version": "0.0.6"
+      }
+    },
+    {
+      "date": "2026-05-05",
+      "kind": "emem",
+      "verb": "open",
+      "noun": "emem 0.0.4: a page that is its own API console",
+      "what": "every visible cell carries its fact",
+      "card": [
+        "data-emem-cell",
+        "data-fact-cid",
+        "copy as curl"
+      ],
+      "proof": [
+        {
+          "t": "the changelog",
+          "u": "https://github.com/Vortx-AI/emem/blob/main/CHANGELOG.md"
+        }
+      ],
+      "check": {
+        "src": "changelog",
+        "version": "0.0.4"
+      }
+    },
+    {
+      "date": "2026-04-28",
+      "kind": "listing",
+      "verb": "list",
+      "noun": "emem on the official MCP Registry",
+      "what": "io.github.Vortx-AI/emem 0.0.2",
+      "card": [
+        "registry.modelcontextprotocol.io",
+        "io.github.Vortx-AI/emem",
+        "0.0.2"
+      ],
+      "proof": [
+        {
+          "t": "the registry entry",
+          "u": "https://registry.modelcontextprotocol.io/v0/servers?search=io.github.Vortx-AI/emem"
+        }
+      ],
+      "check": {
+        "src": "mcpreg",
+        "name": "io.github.Vortx-AI/emem",
+        "version": "0.0.2"
+      }
+    },
+    {
+      "date": "2026-04-26",
+      "kind": "emem",
+      "verb": "open-source",
+      "noun": "emem 0.0.2, Apache-2.0",
+      "what": "the protocol, its primitives, an MCP server, a reference responder",
+      "img": "/assets/press/emem-home.webp",
+      "alt": "emem.dev today",
+      "proof": [
+        {
+          "t": "the source",
+          "u": "https://github.com/Vortx-AI/emem"
+        },
+        {
+          "t": "the changelog",
+          "u": "https://github.com/Vortx-AI/emem/blob/main/CHANGELOG.md"
+        }
+      ],
+      "check": {
+        "src": "changelog",
+        "version": "0.0.2"
+      }
+    }
+  ],
+  "listed": [
+    {
+      "verb": "mention",
+      "where": "ChatGPT",
+      "what": "@emem, an app",
+      "u": "https://chatgpt.com/plugins/plugin_asdk_app_6a6a0832a59081918b19aec0ddf9ec77",
+      "date": "2026-08-19"
+    },
+    {
+      "verb": "install",
+      "where": "GitHub MCP Registry",
+      "what": "io.github.Vortx-AI/emem",
+      "u": "https://github.com/mcp/Vortx-AI/emem",
+      "date": "2026-07-30"
+    },
+    {
+      "verb": "govern",
+      "where": "MuleSoft Anypoint Exchange",
+      "what": "Vortx AI MCP Server",
+      "u": "https://anypoint.mulesoft.com/exchange/68e53915-e89b-4e82-b794-12d37982db4c/vortxAi-asset/",
+      "date": "2026-08-13"
+    },
+    {
+      "verb": "find",
+      "where": "the official MCP Registry",
+      "what": "emem, and eudr",
+      "u": "https://registry.modelcontextprotocol.io/v0/servers?search=Vortx-AI",
+      "date": "2026-04-28"
+    },
+    {
+      "verb": "install",
+      "where": "VS Code",
+      "what": "one click",
+      "u": "https://insiders.vscode.dev/redirect/mcp/install?name=emem&config=%7B%22type%22%3A%22http%22%2C%22url%22%3A%22https%3A%2F%2Femem.dev%2Fmcp%22%7D",
+      "date": "2026-08-11"
+    },
+    {
+      "verb": "plug",
+      "where": "Dify Marketplace",
+      "what": "vortx-ai/emem",
+      "u": "https://marketplace.dify.ai/plugin/vortx-ai/emem",
+      "date": "2026-08-24"
+    },
+    {
+      "verb": "rank",
+      "where": "MCP Toplist",
+      "what": "io.github.Vortx-AI/emem",
+      "u": "https://mcptoplist.com/server/io.github.Vortx-AI%2Femem",
+      "date": "2026-08-05"
+    },
+    {
+      "verb": "find",
+      "where": "Glama",
+      "what": "Vortx-AI/emem",
+      "u": "https://glama.ai/mcp/servers/Vortx-AI/emem"
+    },
+    {
+      "verb": "find",
+      "where": "PulseMCP",
+      "what": "the official emem server",
+      "u": "https://www.pulsemcp.com/servers/emem"
+    },
+    {
+      "verb": "find",
+      "where": "awesome-mcp-servers",
+      "what": "Vortx-AI/emem",
+      "u": "https://github.com/punkpeye/awesome-mcp-servers"
+    },
+    {
+      "verb": "read",
+      "where": "Context7",
+      "what": "vortx-ai/emem docs",
+      "u": "https://context7.com/vortx-ai/emem"
+    },
+    {
+      "verb": "install",
+      "where": "PyPI",
+      "what": "ememdev",
+      "u": "https://pypi.org/project/ememdev/",
+      "date": "2026-06-02"
+    },
+    {
+      "verb": "install",
+      "where": "npm",
+      "what": "@vortxai/emem",
+      "u": "https://www.npmjs.com/package/@vortxai/emem",
+      "date": "2026-07-21"
+    },
+    {
+      "verb": "cite",
+      "where": "Zenodo",
+      "what": "two DOIs",
+      "u": "https://doi.org/10.5281/zenodo.20706893",
+      "date": "2026-06-15"
+    },
+    {
+      "verb": "run",
+      "where": "Hugging Face",
+      "what": "two models, one Space",
+      "u": "https://huggingface.co/avijeetsingh1608",
+      "date": "2026-06-17"
+    }
+  ],
+  "part_of": [
+    "Seraphim Space · Mission 15",
+    "NVIDIA Inception",
+    "AWS Space Accelerator",
+    "Sisu Launchpad",
+    "Qatar Development Bank Accelerator"
+  ]
+}

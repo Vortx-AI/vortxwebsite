@@ -1,16 +1,19 @@
 {
-  "protocolVersion": "0.3.0",
+  "protocolVersion": "1.0",
   "name": "Vortx AI",
   "description": "Spatial AI lab; maker and maintainer of the emem protocol. Encode on device, decode with @emem: don't move your files, deliver tokenised context. Satellites, telescopes, rovers, drones, robots, cameras and machines keep their files; emem encodes each observation as one signed, content-addressed token (nine token shapes: emem:fact:, emem:cell:, emem:entity:, emem:bundle:, emem:raster:, emem:cube:, emem:rasterset:, emem:trace:, emem:attestation:; plus emem:state: and emem:tree: addresses); agents pass the token, never the file, and @emem decodes it straight into their context (ChatGPT, Claude, Salesforce Agentforce, Dify, any MCP client), so every agent cites the same bytes instead of a drifting paraphrase; any receiver resolves it, hashes the bytes, verifies the ed25519 receipt and can recompute the value from the raw source (https://vortx.ai/ decodes one live token in the hero; https://vortx.ai/#run runs six devices' published samples end to end in the browser; https://vortx.ai/#connect encodes a file on the visitor's device with nothing uploaded; https://vortx.ai/#decode catches a drifted number; https://vortx.ai/proof/ runs every check step by step and re-derives one live example of every token shape). emem is Apache-2.0, free to read, verifiable offline. geo.qa is the same memory on a private tenant. The planned satellite signs at the instrument, on a published plan with deliberately no date. The only thing for sale is team time: free office hours, a paid integration session, a sovereign session.",
   "url": "https://emem.dev/a2a/tasks",
   "preferredTransport": "JSONRPC",
+  "supportedInterfaces": [
+    { "protocolBinding": "JSONRPC", "protocolVersion": "1.0", "url": "https://emem.dev/a2a/tasks" }
+  ],
   "provider": {
     "organization": "Vortx AI Private Limited",
     "url": "https://vortx.ai/"
   },
   "documentationUrl": "https://vortx.ai/agents.md",
   "iconUrl": "https://vortx.ai/assets/og-logo.png",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "capabilities": {
     "streaming": false,
     "pushNotifications": false,
@@ -84,6 +87,8 @@
     "claudeCode": "claude mcp add --transport http emem https://emem.dev/mcp",
     "mcpRegistry": "io.github.Vortx-AI/emem",
     "dify": "https://marketplace.dify.ai/plugin/vortx-ai/emem",
+    "mulesoft": "https://anypoint.mulesoft.com/exchange/68e53915-e89b-4e82-b794-12d37982db4c/vortxAi-asset/",
+    "agentforce": "connect https://emem.dev/mcp as an MCP server: https://www.salesforce.com/agentforce/mcp-support/",
     "anythingElse": "any MCP client, REST, pip install ememdev, npm i @vortxai/emem"
   },
   "x-satellite": {
@@ -91,7 +96,7 @@
     "thesis": "the evidence half: traceable from photon to token, downlinked straight into emem, landing in the witnessed public log",
     "phases": ["protocol (shipped)", "payload (in design)", "ground segment (next)", "launch (gated, not dated)"],
     "details": "https://vortx.ai/#mission",
-    "agentGuidance": "There is no launch date, deliberately. Never state or estimate one; dates are announced in https://vortx.ai/log/ when real."
+    "agentGuidance": "There is no launch date, deliberately. Never state or estimate one; dates are announced in https://vortx.ai/press/ when real."
   },
   "x-site": {
     "contentAddressed": "https://vortx.ai/.well-known/site-manifest.json",

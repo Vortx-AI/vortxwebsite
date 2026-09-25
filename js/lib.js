@@ -475,6 +475,36 @@
     var d = ((D % 360) + 360) % 360;
     return { lit: (1 + Math.cos(i * DEG)) / 2, waxing: d < 180, age: d };
   }
+  // where the Moon is: Meeus ch. 47, the main terms of tables 47.A and 47.B, ecliptic of date turned to the
+  // equator of date; a unit vector from the Earth's centre, and the distance above
+  var MOON_L = [[0,0,1,0,6288774],[2,0,-1,0,1274027],[2,0,0,0,658314],[0,0,2,0,213618],[0,1,0,0,-185116],[0,0,0,2,-114332],[2,0,-2,0,58793],
+    [2,-1,-1,0,57066],[2,0,1,0,53322],[2,-1,0,0,45758],[0,1,-1,0,-40923],[1,0,0,0,-34720],[0,1,1,0,-30383],[2,0,0,-2,15327],[0,0,1,2,-12528],
+    [0,0,1,-2,10980],[4,0,-1,0,10675],[0,0,3,0,10034],[4,0,-2,0,8548],[2,1,-1,0,-7888],[2,1,0,0,-6766],[1,0,-1,0,-5163],[1,1,0,0,4987],
+    [2,-1,1,0,4036],[2,0,2,0,3994],[4,0,0,0,3861],[2,0,-3,0,3665],[0,1,-2,0,-2689],[2,0,-1,2,-2602],[2,-1,-2,0,2390],[1,0,1,0,-2348],
+    [2,-2,0,0,2236],[0,1,2,0,-2120],[0,2,0,0,-2069],[2,-2,-1,0,2048],[2,0,1,-2,-1773],[2,0,0,2,-1595],[4,-1,-1,0,1215],[0,0,2,2,-1110],
+    [3,0,-1,0,-892],[2,1,1,0,-810],[4,-1,-2,0,759],[0,2,-1,0,-713],[2,2,-1,0,-700],[2,1,-2,0,691],[2,-1,0,-2,596],[4,0,1,0,549],
+    [0,0,4,0,537],[4,-1,0,0,520],[1,0,-2,0,-487],[2,1,0,-2,-399],[0,0,2,-2,-381],[1,1,1,0,351],[3,0,-2,0,-340],[4,0,-3,0,330],
+    [2,-1,2,0,327],[0,2,1,0,-323],[1,1,-1,0,299],[2,0,3,0,294]];
+  var MOON_B = [[0,0,0,1,5128122],[0,0,1,1,280602],[0,0,1,-1,277693],[2,0,0,-1,173237],[2,0,-1,1,55413],[2,0,-1,-1,46271],[2,0,0,1,32573],
+    [0,0,2,1,17198],[2,0,1,-1,9266],[0,0,2,-1,8822],[2,-1,0,-1,8216],[2,0,-2,-1,4324],[2,0,1,1,4200],[2,1,0,-1,-3359],[2,-1,-1,1,2463],
+    [2,-1,0,1,2211],[2,-1,-1,-1,2065],[0,1,-1,-1,-1870],[4,0,-1,-1,1828],[0,1,0,1,-1794],[0,0,0,3,-1749],[0,1,-1,1,-1565],[1,0,0,1,-1491],
+    [0,1,1,1,-1475],[0,1,1,-1,-1410],[0,1,0,-1,-1344],[1,0,0,-1,-1335],[0,0,3,1,1107],[4,0,0,-1,1021],[4,0,-1,1,833]];
+  function moonDir(ms) {
+    var T = jcent(ms), T2 = T * T, T3 = T2 * T, T4 = T3 * T, s = function (x) { return Math.sin(x * DEG); };
+    var Lp = 218.3164477 + 481267.88123421 * T - 0.0015786 * T2 + T3 / 538841 - T4 / 65194000;
+    var D = 297.8501921 + 445267.1114034 * T - 0.0018819 * T2 + T3 / 545868 - T4 / 113065000;
+    var M = 357.5291092 + 35999.0502909 * T - 0.0001536 * T2 + T3 / 24490000;
+    var Mp = 134.9633964 + 477198.8675055 * T + 0.0087414 * T2 + T3 / 69699 - T4 / 14712000;
+    var F = 93.2720950 + 483202.0175233 * T - 0.0036539 * T2 - T3 / 3526000 + T4 / 863310000;
+    var E = 1 - 0.002516 * T - 0.0000074 * T2, A1 = 119.75 + 131.849 * T, A2 = 53.09 + 479264.290 * T, A3 = 313.45 + 481266.484 * T, sl = 0, sb = 0;
+    MOON_L.forEach(function (r) { sl += r[4] * Math.pow(E, Math.abs(r[1])) * s(r[0] * D + r[1] * M + r[2] * Mp + r[3] * F); });
+    MOON_B.forEach(function (r) { sb += r[4] * Math.pow(E, Math.abs(r[1])) * s(r[0] * D + r[1] * M + r[2] * Mp + r[3] * F); });
+    sl += 3958 * s(A1) + 1962 * s(Lp - F) + 318 * s(A2);
+    sb += -2235 * s(Lp) + 382 * s(A3) + 175 * s(A1 - F) + 175 * s(A1 + F) + 127 * s(Lp - Mp) - 115 * s(Lp + Mp);
+    var l = (Lp + sl / 1e6) * DEG, b = (sb / 1e6) * DEG, e = (23.4392911 - 0.0130042 * T) * DEG;
+    var x = Math.cos(b) * Math.cos(l), y = Math.cos(b) * Math.sin(l), z = Math.sin(b);
+    return { u: [x, y * Math.cos(e) - z * Math.sin(e), y * Math.sin(e) + z * Math.cos(e)], km: moonKm(ms), frame: 'date', lon: (((l / DEG) % 360) + 360) % 360, lat: b / DEG };
+  }
   var KEP = { // [a au, e, I deg, L deg, long. perihelion deg, long. node deg], then rates per Julian century
     emb: [[1.00000261, 0.01671123, -0.00001531, 100.46457166, 102.93768193, 0], [0.00000562, -0.00004392, -0.01294668, 35999.37244981, 0.32327364, 0]],
     mars: [[1.52371034, 0.09339410, 1.84969142, -4.55343205, -23.94362959, 49.55953891], [0.00001847, 0.00007882, -0.00813131, 19140.30268499, 0.44441088, -0.29257343]]
@@ -504,6 +534,11 @@
     return { el: 90 - zen, az: ha > 0 ? (ac + 180) % 360 : (540 - ac) % 360 };
   }
   function marsKm(ms) { var a = helio('mars', ms), b = helio('emb', ms); return Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]) * AU_KM; }
+  // where Mars is, seen from the Earth: the same elements, J2000 ecliptic turned to the J2000 equator
+  function marsDir(ms) {
+    var a = helio('mars', ms), b = helio('emb', ms), v = [a[0] - b[0], a[1] - b[1], a[2] - b[2]], r = Math.hypot(v[0], v[1], v[2]), e = 23.4392911 * DEG;
+    return { u: [v[0] / r, (v[1] * Math.cos(e) - v[2] * Math.sin(e)) / r, (v[1] * Math.sin(e) + v[2] * Math.cos(e)) / r], km: r * AU_KM, frame: 'J2000' };
+  }
   function l2Km(ms) {
     var GMS = 1.32712440018e20, GME = 3.986004418e14, GMM = 4.9028e12, mu = (GME + GMM) / (GMS + GME + GMM), g = Math.cbrt(mu / 3);
     for (var i = 0; i < 30; i++) {
@@ -531,7 +566,7 @@
     utm: utm, epsgZone: epsgZone, preimage: preimage, edVerify: edVerify, verifySTH: verifySTH, verifyRangeHash: verifyRangeHash,
     parsePointer: parsePointer, merkleRoot: merkleRoot, treeLeaf: treeLeaf, treeWalk: treeWalk,
     cborEnc: cborEnc, fromHex: fromHex, merkleV1: merkleV1, checkTrace: checkTrace, entityCid: entityCid, bundleCid: bundleCid, gridDecode: gridDecode,
-    eph: { moonKm: moonKm, moonPhase: moonPhase, marsKm: marsKm, l2Km: l2Km, sun: sun, AU_KM: AU_KM, C_KMS: C_KMS },
+    eph: { moonKm: moonKm, moonPhase: moonPhase, moonDir: moonDir, marsKm: marsKm, marsDir: marsDir, l2Km: l2Km, sun: sun, AU_KM: AU_KM, C_KMS: C_KMS },
     fmtBytes: bytes, group: group, enc: enc, dec: dec,
     // a fetch that never reached its server says so in words; any other error keeps its own message
     why: function (e, host) { var m = String((e && e.message) || e); return /failed to fetch|networkerror|load failed/i.test(m) ? (host || 'the server') + ' did not answer this browser' : m; }

@@ -22,10 +22,12 @@ One structure for people and agents; llms.txt mirrors it line for line.
 - **run** `/#run` · six devices, one published sample each, end to end in the browser
 - **encode** `/#connect` · your file on your device, nothing uploaded; `tools/emem_point.py` on the device
 - **decode** `/#decode` · ask @emem, catch a drifted number, connect @emem to your agent
+- **plug** `/#plug` · every way in, each asked live: MCP `tools/list`, both A2A cards, REST with its ed25519 checked, the OpenAPI spec, the SDKs' newest releases
 - **browse** `/#samples` · the ememdemo catalogue, each note re-checked as it loads
 - **open** `/?s=<cid>` · any sample, opened on the page from a globe pin or a card, run end to end, its picture drawn from bytes checked here
+- **news** `/press/` · every release, upgrade and listing, dated, each date re-read live from its own record; as data: `/data/timeline.json`
 - **check** `/proof/` · every check, step by step
-- **read** `/emem/` protocol · `/geo-qa/` · `/eudr/` · `/propcheck/` · `/trust/` · `/spatial-ai/` · `/research/` · `/log/`
+- **read** `/emem/` protocol · `/geo-qa/` · `/eudr/` · `/propcheck/` · `/trust/` · `/spatial-ai/` · `/research/` · `/press/`
 
 ## run
 
@@ -52,8 +54,10 @@ Each device on the home page runs one published sample; every step is a request 
 - **install** GitHub MCP Registry, one click for VS Code and Copilot · https://github.com/mcp/Vortx-AI/emem
 - **list** official MCP registry · `io.github.Vortx-AI/emem`
 - **plug** Dify · https://marketplace.dify.ai/plugin/vortx-ai/emem
+- **govern** MuleSoft Anypoint Exchange, the Vortx AI MCP Server asset · https://anypoint.mulesoft.com/exchange/68e53915-e89b-4e82-b794-12d37982db4c/vortxAi-asset/
 - **install** SDKs · `pip install ememdev` · `npm i @vortxai/emem`
 - **talk** A2A · card `https://emem.dev/.well-known/agent-card.json` · run `POST https://emem.dev/a2a/tasks`
+- **hand off** to this site's own A2A 1.0 card `https://vortx.ai/.well-known/agent-card.json` · its tasks run on emem.dev
 
 ```json
 { "mcpServers": { "emem": { "type": "http", "url": "https://emem.dev/mcp" } } }
@@ -159,7 +163,7 @@ The protocol is free. Team time is the only thing for sale. Calls are taken by w
 - **shipped** the protocol · signed facts, offline receipts, witnessed log
 - **design** the payload · hardware-held keys, signatures at capture, the payload computer traced under `orbital.satellite.v1`
 - **next** the ground segment · tokens downlink first, straight into the witnessed log
-- **gated** the launch · there is no launch date, deliberately. If asked when it launches: the plan is public at https://vortx.ai/#plan and dates appear in https://vortx.ai/log/ only once real. Never state or estimate a date.
+- **gated** the launch · there is no launch date, deliberately. If asked when it launches: the plan is public at https://vortx.ai/#plan and dates appear in https://vortx.ai/press/ only once real. Never state or estimate a date.
 
 ## verify this site
 

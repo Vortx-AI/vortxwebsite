@@ -133,6 +133,7 @@
     // then the whole run, live
     R = new E.Run({
       log: log, whole: true, live: function () { return g === gen && dlg.open; }, show: function (n, tg) { if (g === gen) show(n, tg); },
+      retag: function (t) { if (g === gen) tag.textContent = t; },
       named: function (ok) { if (g !== gen) return; st.className = 'sc-state ' + (ok ? 'is-ok' : 'is-bad'); st.textContent = ok ? '✓ note' : '✗ name lies'; },
       data: function (kind, v) {
         if (g !== gen) return;
@@ -155,12 +156,23 @@
 
   /* opening, stepping, closing, and the address bar */
   function url(cid) { var u = new URL(location.href); if (cid) u.searchParams.set('s', cid); else u.searchParams.delete('s'); return u.pathname + u.search + u.hash; }
-  function open(item, from) {
+  // it unfolds from the place that opened it (a pin, a card, a link) and folds back there
+  var origin = null, folding = false;
+  function unfold(pt) {
+    origin = null; dlg.classList.remove('is-unfold', 'is-fold');
+    if (!pt || reduce) return;
+    var r = dlg.getBoundingClientRect();
+    origin = Math.round(pt.x - r.left) + 'px ' + Math.round(pt.y - r.top) + 'px';
+    dlg.style.transformOrigin = origin; void dlg.offsetWidth; dlg.classList.add('is-unfold');
+  }
+  function open(item, from, opts) {
     if (!item) return;
     list = (from && from.length ? from : [item]); at = list.indexOf(item); if (at < 0) { list = [item]; at = 0; }
     if (!dlg.open) {
       document.documentElement.classList.add('sp-open');
       dlg.showModal();
+      unfold(opts && opts.from);
+      document.dispatchEvent(new CustomEvent('vx:pop', { detail: { open: true, cid: item.cid } }));
       if (new URL(location.href).searchParams.get('s') !== item.cid) { history.pushState({ sp: item.cid }, '', url(item.cid)); pushed = true; } else pushed = false;
     } else history.replaceState(history.state, '', url(item.cid));
     paint();
@@ -173,10 +185,17 @@
     history.replaceState(null, '', url(null)); finish();
   }
   function finish() {
-    gen++; clearLive(); pushed = false;
-    if (dlg.open) dlg.close();
-    document.documentElement.classList.remove('sp-open');
-    var f = after; after = null; if (f) f();
+    if (folding) return;
+    gen++; pushed = false;
+    var end = function () {
+      folding = false; dlg.classList.remove('is-fold', 'is-unfold'); clearLive();
+      if (dlg.open) dlg.close();
+      document.documentElement.classList.remove('sp-open');
+      document.dispatchEvent(new CustomEvent('vx:pop', { detail: { open: false } }));
+      var f = after; after = null; if (f) f();
+    };
+    if (dlg.open && origin && !reduce) { folding = true; dlg.classList.remove('is-unfold'); void dlg.offsetWidth; dlg.classList.add('is-fold'); setTimeout(end, 230); }
+    else end();
   }
   window.addEventListener('popstate', function () {
     var cid = new URL(location.href).searchParams.get('s');

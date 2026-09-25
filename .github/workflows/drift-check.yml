@@ -19,6 +19,9 @@ on:
       - 'emem/index.html'
       - '.well-known/facts.json'
       - 'tools/drift_check.py'
+      - 'press/index.html'
+      - 'data/timeline.json'
+      - 'tools/gen_press.py'
   schedule:
     - cron: '17 3 * * 1'
   workflow_dispatch:
@@ -40,4 +43,10 @@ jobs:
             python3 tools/drift_check.py --offline
           else
             python3 tools/drift_check.py
+          fi
+      - name: The newsroom renders from its data (push), and every date agrees with its record (schedule, manual)
+        run: |
+          python3 tools/gen_press.py --check
+          if [ "${{ github.event_name }}" != "push" ]; then
+            python3 tools/gen_press.py --verify
           fi

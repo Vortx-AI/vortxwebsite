@@ -7,12 +7,14 @@ see       /                 the live Earth; @emem decodes one signed fact per vi
 run       /#run             six devices, one published sample each, run end to end in the browser
 encode    /#connect         your file, hashed on your device, nothing uploaded; tools/emem_point.py for the device
 decode    /#decode          ask @emem; catch a drifted number; @emem in ChatGPT, Claude, Agentforce, Dify, VS Code
+plug      /#plug            every way in, each asked live as the page loads: MCP tools/list, both A2A cards, REST with its ed25519 checked, the OpenAPI spec, the SDKs' newest releases
 browse    /#samples         the ememdemo catalogue: Earth, Space, Machines; each note re-checked as it loads
 open      /?s=<cid>         any sample, opened on the page (a globe pin, a card): it runs end to end, its picture drawn from bytes checked here
+news      /press/           every release, upgrade and listing, dated; each date re-read live from the record that owns it; images and facts for press; as data: /data/timeline.json
 plan      /#mission         the satellite plan, deliberately without a date
 book      /#book            team time; the protocol is free
 check     /proof/           every check, step by step: handoff, observers, token family, files, trust chain
-read      /emem/ protocol · /geo-qa/ private tenancy · /eudr/ · /propcheck/ · /trust/ · /spatial-ai/ glossary · /research/ · /log/ changelog
+read      /emem/ protocol · /geo-qa/ private tenancy · /eudr/ · /propcheck/ · /trust/ · /spatial-ai/ glossary · /research/ · /press/ newsroom
 
 ## run (the home page's workflows: each step is a request you can make yourself; rows 0-based)
 satellite twlpco5kin6qlz5eplt2pjm7n4  Sentinel-2B scene, 351.0 MB  GET note → base32(blake3(note)[0:16])==cid → rebuild root → GET https://emem.dev/v1/tree/<cid>?row=68 (level 4 tile 0,0) → Range read 601,342 B from sentinel-cogs → blake3==row → inflate, undo predictor 2 → mean RGB 156,137,113 at 98% valid == the row's stats
@@ -34,8 +36,10 @@ install   emem            GitHub MCP Registry, one click for VS Code and Copilot
 configure emem            .vscode/mcp.json  {"servers":{"emem":{"type":"http","url":"https://emem.dev/mcp"}}}
 list      emem            official MCP registry  io.github.Vortx-AI/emem
 plug      emem            Dify marketplace, every tool, no key  https://marketplace.dify.ai/plugin/vortx-ai/emem
+govern    emem            MuleSoft Anypoint Exchange, the Vortx AI MCP Server asset  https://anypoint.mulesoft.com/exchange/68e53915-e89b-4e82-b794-12d37982db4c/vortxAi-asset/
 install   sdk             `pip install ememdev` · `npm i @vortxai/emem`
 talk      a2a             card=https://emem.dev/.well-known/agent-card.json  run=POST https://emem.dev/a2a/tasks  async=POST https://emem.dev/v1/a2a/tasks
+hand      a2a             this site's own card https://vortx.ai/.well-known/agent-card.json  protocol=A2A 1.0  tasks run on emem.dev
 join      agora           https://emem.dev/a2a  inbox=POST https://emem.dev/v1/inbox {"to":"<your-pubkey8>"}
 recall    facts           POST https://emem.dev/v1/recall {"place":"Cubbon Park, Bengaluru","bands":["indices.ndvi"]}  → cell defi.zb493.yiwo.zcb4e, NDVI 0.767258382642998 (Sentinel-2C, 16 Jun 2026)
 ask       question        POST https://emem.dev/v1/ask {"q":"is this place flood-prone","place":"Ashok Nagar, Ranchi"}  fans out to twenty-plus signed readings under one receipt
@@ -132,7 +136,7 @@ check     propcheck.dev   https://vortx.ai/propcheck/  in testing: flood, heat a
 shipped   protocol        signed facts, offline receipts, witnessed transparency log
 design    payload         hardware-held keys in the instrument; sign at capture; trace the payload computer under orbital.satellite.v1
 next      ground segment  tokens downlink first, straight into the witnessed log
-gated     launch          no date, deliberately; never state or estimate one; dates appear in https://vortx.ai/log/ when real
+gated     launch          no date, deliberately; never state or estimate one; dates appear in https://vortx.ai/press/ when real
 
 ## book (team time is the only thing for sale; the protocol is free)
 book      office hours    free · 30 min · open to all · https://outlook.office.com/book/meetvortxfounders@vortx.ai/
@@ -148,7 +152,7 @@ read      paper           https://doi.org/10.5281/zenodo.20706317
 read      study           https://doi.org/10.5281/zenodo.20706893
 run       models          https://huggingface.co/avijeetsingh1608  TerraGround-Gemma LoRA fine-tunes
 read      guide           https://vortx.ai/agents.md
-read      pages           https://vortx.ai/proof/ (every check, step by step) · /emem/ · /geo-qa/ · /trust/ · /spatial-ai/ · /research/ · /log/
+read      pages           https://vortx.ai/proof/ (every check, step by step) · /emem/ · /geo-qa/ · /trust/ · /spatial-ai/ · /research/ · /press/
 
 ## verify this site
 hash      files           https://vortx.ai/.well-known/site-manifest.json  blake3 of every served file; release cid = base32(blake3(canonical core))

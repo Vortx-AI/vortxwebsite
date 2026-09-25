@@ -133,18 +133,20 @@ body.vx {
 .lk:hover { text-decoration: underline; text-underline-offset: 3px; }
 .lk[disabled] { opacity: .5; }
 
-/* ---------- section scaffold ---------- */
-.sec { position: relative; padding: clamp(84px, 11vw, 150px) 0; border-top: 1px solid var(--line); }
+/* ---------- section scaffold: a statement on one line, then the thing itself ---------- */
+.sec { position: relative; padding: clamp(44px, 5.5vw, 80px) 0; border-top: 1px solid var(--line); }
 .sec h2 {
-  margin: 0; max-width: 20ch; font: 400 clamp(38px, 5.4vw, 72px)/1.02 var(--serif); letter-spacing: -0.02em;
+  margin: 0; font: 400 clamp(28px, 3.1vw, 44px)/1.08 var(--serif); letter-spacing: -0.018em;
 }
 .sec h2 em { font-style: italic; color: var(--ink-2); }
-.proof-h { margin: 0; max-width: 16ch; font: 400 clamp(44px, 6vw, 84px)/1 var(--serif); letter-spacing: -0.025em; }
+.proof-h { margin: 0; font: 400 clamp(38px, 4.6vw, 66px)/1.02 var(--serif); letter-spacing: -0.022em; }
 .proof-h em { font-style: italic; color: var(--ink-2); }
 .proof-top { border-top: 0; padding-bottom: 0; }
 .sec-lead { margin: 22px 0 0; max-width: 62ch; color: var(--ink-2); font-size: 17px; }
-.sec-head { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 48px; align-items: end; margin-bottom: 52px; }
-.sec-head .vl { align-self: end; }
+.sec-head { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 20px 48px; align-items: start; margin-bottom: 28px; }
+.sec-head .vl { align-self: start; }
+.proof-top .sec-head { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+.proof-top .sec-head .vl { max-width: 760px; }
 
 /* ---------- hero: the sky, full bleed ---------- */
 .hero { position: relative; overflow: hidden; }
@@ -565,6 +567,10 @@ body.vx.inner .res-date .v { margin-right: 6px; }
 body.vx.inner .vl-page { max-width: 720px; margin: 26px 0 30px; }
 body.vx.inner .vl-page > li { font-size: 16px; }
 body.vx.inner .page-hero .hero-cta { margin-top: 8px; }
+/* the inner pages keep the home page's rhythm: half the air, one line per statement */
+body.vx.inner { --section-y: clamp(44px, 5.5vw, 76px); }
+body.vx.inner .section-head { margin-bottom: clamp(20px, 2.6vw, 30px); }
+body.vx.inner .section-title { font-size: clamp(28px, 3.2vw, 44px); line-height: 1.08; }
 body.vx.inner .section { background: transparent; }
 body.vx.inner .section--tint, body.vx.inner .section--sky { background: var(--deep); }
 body.vx.inner .hero-title, body.vx.inner .section-title, body.vx.inner h1, body.vx.inner h2 { color: var(--ink); font-family: var(--serif); font-weight: 400; letter-spacing: -0.02em; }

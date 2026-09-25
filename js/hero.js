@@ -40,19 +40,49 @@
   var pins = [], cards = [].slice.call(root.querySelectorAll('.hc[data-cid], .hc[data-sat], .hd-card[data-cid]'));
   function el(tag, attrs) { var e = document.createElementNS(NS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); return e; }
   // a pin or a card opens its sample here, in the popup (js/pop.js); the note itself stays one click further
-  function openHere(x, list) { if (window.vxPop) window.vxPop.open(x, list && list.indexOf(x) >= 0 ? list : null); else window.open(NOTE(x.cid), '_blank', 'noopener'); }
+  function centre(el) { var r = el.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; }
+  function openHere(x, list, from) {
+    if (!window.vxPop) { window.open(NOTE(x.cid), '_blank', 'noopener'); return; }
+    window.vxPop.open(x, list && list.indexOf(x) >= 0 ? list : null, from ? { from: centre(from) } : null);
+  }
+  // the Earth turns to the place first, a column of light leaves it, and the sample unfolds from there
+  function openFromPlace(x, list, fallback) {
+    var pin = pins.filter(function (p) { return p.item === x; })[0], O = window.vxOrbit;
+    if (reduce || !x.at || !pin || !O || !O.focus || !window.vxPop || getComputedStyle(pinsEl).display === 'none') { openHere(x, list, pin && !pin.el.classList.contains('is-far') ? pin.el : fallback); return; }
+    stage.classList.add('is-focus'); pin.el.classList.add('is-picked');
+    O.focus(x.at[0], x.at[1], 700, function () {
+      rise(x);
+      setTimeout(function () { openHere(x, list, pin.el); }, 260);
+    });
+  }
+  function rise(x) {
+    var s = onStage(window.vxOrbit.screen(x.at[0], x.at[1])); if (!s || !s.front) return;
+    var d = document.createElement('i'); d.className = 'h3o-rise'; d.setAttribute('aria-hidden', 'true');
+    d.style.left = s.x + 'px'; d.style.top = s.y + 'px'; stage.appendChild(d);
+    setTimeout(function () { d.remove(); }, 1400);
+  }
+  document.addEventListener('vx:pop', function (e) {
+    if (e.detail && e.detail.open) return;
+    pins.forEach(function (p) { p.el.classList.remove('is-picked'); });
+    if (stage.classList.contains('is-focus')) { stage.classList.remove('is-focus'); if (window.vxOrbit && window.vxOrbit.release) window.vxOrbit.release(800); }
+  });
+  var east = [];
   window.vxCatalog.then(function (items) {
     // the popup's arrows travel west to east, around the globe
-    var placed = items.filter(function (x) { return x.at; }), east = placed.slice().sort(function (a, b) { return a.at[1] - b.at[1]; });
-    placed.forEach(function (x) {
+    var placed = items.filter(function (x) { return x.at; });
+    east = placed.slice().sort(function (a, b) { return a.at[1] - b.at[1]; });
+    placed.forEach(function (x, i) {
       var b = document.createElement('button');
-      b.type = 'button'; b.className = 'h3o-pin is-far';
+      b.type = 'button'; b.className = 'h3o-pin is-far' + (reduce ? '' : ' is-landing');
       b.setAttribute('aria-label', x.title + ', open it');
-      b.innerHTML = '<span></span>'; b.firstChild.textContent = x.title;
-      b.addEventListener('click', function () { openHere(x, east); });
+      b.innerHTML = '<span></span><i class="h3o-beam" aria-hidden="true"></i>'; b.firstChild.textContent = x.title;
+      b.style.setProperty('--d', (0.25 + i * 0.09).toFixed(2) + 's');
+      b.addEventListener('click', function () { openFromPlace(x, east); });
       pinsEl.appendChild(b);
       pins.push({ item: x, el: b });
     });
+    // each memory lands where it was observed, one after another; then the pins settle
+    setTimeout(function () { pins.forEach(function (p) { p.el.classList.remove('is-landing'); }); }, 900 + placed.length * 90 + 1200);
     cards.forEach(function (c) {
       var cid = c.getAttribute('data-cid'); if (!cid) return;
       var x = items.filter(function (i) { return i.cid === cid; })[0];
@@ -60,7 +90,7 @@
       c.vxItem = x;
       if (c.tagName === 'A') {
         if (!c.getAttribute('href')) c.setAttribute('href', NOTE(cid));
-        c.addEventListener('click', function (e) { if (window.vxPop && window.vxPop.plain(e)) { e.preventDefault(); openHere(x, east); } });
+        c.addEventListener('click', function (e) { if (window.vxPop && window.vxPop.plain(e)) { e.preventDefault(); if (x.at) openFromPlace(x, east, c); else openHere(x, null, c); } });
       }
       var meta = c.querySelector('[data-meta]');
       if (meta) {
@@ -75,17 +105,6 @@
       checkNote(c, cid);
     });
     tick();
-    // the three verbs below the hero use one real file from the same catalogue
-    var how = document.getElementById('how'), hx = how && items.filter(function (i) { return i.cid === how.getAttribute('data-cid'); })[0];
-    if (hx) {
-      var put = function (k, v) { var e = how.querySelector('[data-how="' + k + '"]'); if (e && v) e.textContent = v; };
-      var tok = 'emem:tree:' + hx.cid + '#row=0';
-      put('size', (hx.kv.size || '').replace(/(\d)([A-Z])/, '$1 $2'));
-      put('src', hx.kv.src ? 'at ' + hx.kv.src : null);
-      put('bytes', vx.enc.encode(tok).length + ' B');
-      put('token', tok);
-      put('tok', hx.kv.tok ? hx.kv.tok.replace('~', '≈') + ' tokens' : null);
-    }
   }).catch(function () {});
 
   function num(v) { var m = String(v || '').replace('~', '').match(/^([\d.]+)([kMB]?)$/); return m ? parseFloat(m[1]) * ({ '': 1, k: 1e3, M: 1e6, B: 1e9 })[m[2]] : null; }
@@ -125,9 +144,11 @@
       p.s = far ? null : s;
     });
     if (getComputedStyle(svg).display === 'none') return;
+    var inSky = stage.classList.contains('is-sky');
     cards.forEach(function (c) {
       var r = c.getBoundingClientRect();
       if (!r.width) return; // hidden at this width: no card, no tether
+      if (inSky && !c.hasAttribute('data-sky')) return; // the Earth has turned away from where these point
       var target = null, isSat = false;
       if (c.vxItem && c.vxItem.at) { var s = onStage(window.vxOrbit.screen(c.vxItem.at[0], c.vxItem.at[1])); if (s && s.front) target = s; }
       var sat = c.getAttribute('data-sat');
@@ -139,7 +160,83 @@
       svg.appendChild(el('path', { d: 'M' + a.x.toFixed(1) + ' ' + a.y.toFixed(1) + ' Q' + mx.toFixed(1) + ' ' + my.toFixed(1) + ' ' + target.x.toFixed(1) + ' ' + target.y.toFixed(1), 'class': isSat ? 'is-sat' : '' }));
       svg.appendChild(el('circle', { cx: target.x.toFixed(1), cy: target.y.toFixed(1), r: isSat ? 8 : 5 }));
     });
+    if (skyKey && skyEl) drawSky(box); else if (obj.style.opacity !== '0') obj.style.opacity = 0;
     if (flight) drawFlight();
+  }
+
+  /* ---------- the sky: each space card knows where its object truly is, now ---------- */
+  var SKY = {
+    M51: { ra: 202.4696, dec: 47.1953, name: 'M51, the Whirlpool', far: '31 million light-years' },
+    NGC3324: { ra: 159.3333, dec: -58.6167, name: 'NGC 3324, Carina', far: '7,600 light-years' },
+    mars: { mars: true, name: 'Mars' },
+    moon: { moon: true, name: 'the Moon' }
+  };
+  var skyKey = null, skyEl = null, skyT = 0, skyAt = 0, LOCK = reduce ? 0 : 700;
+  // the card's own picture rides inside the reticle, at the object's true place (the position is true; the size is not)
+  var obj = document.createElement('i'); obj.className = 'h3o-obj'; obj.setAttribute('aria-hidden', 'true'); stage.appendChild(obj);
+  function farOf(k) {
+    if (k === 'mars') return (vx.eph.marsKm(Date.now()) / 1e6).toFixed(1) + ' million km';
+    if (k === 'moon') return vx.group(Math.round(vx.eph.moonKm(Date.now()))) + ' km';
+    return SKY[k].far;
+  }
+  function dress(node, k) {
+    obj.className = 'h3o-obj' + (k === 'mars' ? ' is-mars' : ''); obj.style.backgroundImage = ''; obj.innerHTML = '';
+    if (k === 'moon') {
+      var cv = document.createElement('canvas'); obj.appendChild(cv);
+      var ph = vx.eph.moonPhase(Date.now()); requestAnimationFrame(function () { drawMoon(cv, ph.lit, ph.waxing); });
+    } else if (k !== 'mars') { var im = node.querySelector('.hc-img'); if (im) obj.style.backgroundImage = im.style.backgroundImage; }
+  }
+  // where every object lands: one clear spot, low and to the right, just off the limb, whatever the screen
+  function spot() {
+    var O = window.vxOrbit, z = O.size(), R = O.radius ? O.radius() : z.H * .33, a = 38 * Math.PI / 180;
+    return { x: z.W * z.cx + 1.32 * R * Math.cos(a), y: z.H * z.cy + 1.32 * R * Math.sin(a) };
+  }
+  function locate(node) {
+    var k = node.getAttribute('data-sky'), O = window.vxOrbit;
+    if (!SKY[k] || !O || !O.lookToward || stage.classList.contains('is-focus')) return;
+    clearTimeout(skyT); skyEl = node;
+    if (skyKey === k) return;
+    skyKey = k; skyAt = 0; dress(node, k); stage.classList.add('is-sky');
+    // the Earth turns until the object is in view; then the reticle locks on
+    O.lookToward(SKY[k], 950, function () {
+      if (skyKey !== k) return;
+      skyAt = performance.now();
+      (function step() { tick(); if (skyKey === k && performance.now() - skyAt < LOCK + 60) requestAnimationFrame(step); })();
+    }, spot());
+  }
+  function unlocate() {
+    clearTimeout(skyT);
+    skyT = setTimeout(function () { if (!skyKey) return; skyKey = null; skyEl = null; skyAt = 0; obj.style.opacity = 0; stage.classList.remove('is-sky'); if (window.vxOrbit) window.vxOrbit.release(1000); tick(); }, 380);
+  }
+  root.querySelectorAll('[data-sky]').forEach(function (node) {
+    node.addEventListener('pointerenter', function (e) { if (e.pointerType !== 'touch') locate(node); });
+    node.addEventListener('pointerleave', function (e) { if (e.pointerType !== 'touch') unlocate(); });
+    node.addEventListener('focusin', function () { locate(node); });
+    node.addEventListener('focusout', unlocate);
+  });
+  function drawSky(box) {
+    var sp = window.vxOrbit && window.vxOrbit.sky && window.vxOrbit.sky(SKY[skyKey]);
+    if (!sp || sp.off) { obj.style.opacity = 0; return; }
+    var p = onStage(sp), g = el('g', { 'class': 'sk' + (sp.hidden ? ' is-hidden' : '') });
+    // turning: a wide, faint ring rides in with the object; arrived: it closes, the ticks slide in, the words fade up
+    var t = !skyAt ? 0 : LOCK ? Math.min(1, (performance.now() - skyAt) / LOCK) : 1, e = 1 - Math.pow(1 - t, 3), R0 = 17 + 26 * (1 - e);
+    g.appendChild(el('circle', { cx: p.x.toFixed(1), cy: p.y.toFixed(1), r: R0.toFixed(1), 'class': 'sk-ring', opacity: (.3 + .7 * e).toFixed(2) }));
+    obj.style.transform = 'translate(' + p.x.toFixed(1) + 'px,' + p.y.toFixed(1) + 'px)'; obj.style.opacity = sp.hidden ? (.35 * e).toFixed(2) : e.toFixed(2);
+    if (skyAt) {
+      [[0, -1], [1, 0], [0, 1], [-1, 0]].forEach(function (d) { var a = R0 + 4, b = R0 + 10; g.appendChild(el('line', { x1: (p.x + d[0] * a).toFixed(1), y1: (p.y + d[1] * a).toFixed(1), x2: (p.x + d[0] * b).toFixed(1), y2: (p.y + d[1] * b).toFixed(1), 'class': 'sk-tick', opacity: e.toFixed(2) })); });
+      var l1 = SKY[skyKey].name, l2 = sp.hidden ? 'behind the Earth from here' : farOf(skyKey) + ' · where it is now';
+      // the words go on whichever side has room
+      var wide = Math.max(l1.length * 7.4, l2.length * 6.4), right = p.x + R0 + 16 + wide < box.width - 12, x = right ? p.x + R0 + 16 : p.x - R0 - 16, fade = Math.max(0, (t - .4) / .6).toFixed(2);
+      var t1 = el('text', { x: x.toFixed(1), y: (p.y - 3).toFixed(1), 'class': 'sk-l', 'text-anchor': right ? 'start' : 'end', opacity: fade }); t1.textContent = l1; g.appendChild(t1);
+      var t2 = el('text', { x: x.toFixed(1), y: (p.y + 12).toFixed(1), 'class': 'sk-l2', 'text-anchor': right ? 'start' : 'end', opacity: fade }); t2.textContent = l2; g.appendChild(t2);
+      var r = skyEl.getBoundingClientRect();
+      if (r.width) {
+        var rr = { left: r.left - box.left, right: r.right - box.left, top: r.top - box.top, bottom: r.bottom - box.top }, a2 = nearestOnRect(rr, p), dx = p.x - a2.x, dy = p.y - a2.y, dd = Math.hypot(dx, dy) || 1;
+        // the tether stops at the ring, not at the picture
+        g.appendChild(el('path', { d: 'M' + a2.x.toFixed(1) + ' ' + a2.y.toFixed(1) + ' L' + (p.x - dx / dd * (R0 + 2)).toFixed(1) + ' ' + (p.y - dy / dd * (R0 + 2)).toFixed(1), 'class': 'sk-t', opacity: e.toFixed(2) }));
+      }
+    }
+    svg.appendChild(g);
   }
   function hook() { if (window.vxOrbit) window.vxOrbit.onframe(tick); else setTimeout(hook, 200); }
   hook();
@@ -197,35 +294,46 @@
       var cb = new Uint8Array(await (await fetch(EMEM + '/v1/facts/' + f.fact_cid, { headers: { accept: 'application/cbor' } })).arrayBuffer());
       var hashOk = vx.cid52(cb) === f.fact_cid, v = ememVerify.verifyReceipt(res.receipt), sigOk = v.ok && (res.receipt.fact_cids || []).indexOf(f.fact_cid) >= 0;
       var src = (vx.cborDecode(cb).sources || [])[0] || {}, sat = (String(src.id || '').match(/S2[ABC]/) || [''])[0];
-      // printed verbatim: an agent that writes 0.756 has rounded, and echo_verify says so
-      var vs = String(f.value), cut = vs.indexOf('.') >= 0 ? vs.indexOf('.') + 4 : vs.length, ve = card.querySelector('[data-d="val"]');
-      ve.textContent = ''; ve.appendChild(document.createTextNode(vs.slice(0, cut)));
-      var tail = document.createElement('span'); tail.className = 'hd-tail'; tail.textContent = vs.slice(cut); ve.appendChild(tail);
-      ve.title = 'the signed value, verbatim: ' + vs;
-      var mt = card.querySelector('[data-d="meta"]'); mt.textContent = '';
-      [place, [day(src.captured_at), sat ? 'Sentinel-' + sat.slice(1) : ''].filter(Boolean).join(' · ')].forEach(function (t, i) { if (i) mt.appendChild(document.createTextNode(' · ')); var sp = document.createElement('span'); sp.textContent = t; mt.appendChild(sp); });
-      var ck = card.querySelector('[data-d="check"]');
-      if (hashOk && sigOk) ck.innerHTML = '<span>bytes ✓ · signature ✓</span> <span>checked in this browser</span>';
-      else ck.textContent = 'check failed: ' + (!hashOk ? 'hash' : 'signature');
-      var tb = card.querySelector('[data-d="tok"]');
-      tb.textContent = tok + ' · '; var n = document.createElement('span'); n.textContent = vx.enc.encode(tok).length + ' bytes'; tb.appendChild(n);
-      set('state', 'just now');
-      card.classList.toggle('is-bad', !(hashOk && sigOk));
+      // printed verbatim: an agent that writes 0.756 has rounded, and echo_verify says so.
+      // It is written when the token reaches @emem, not before: the flight is the decode
+      var vs = String(f.value), ve = card.querySelector('[data-d="val"]');
+      var show = function () {
+        reveal(ve, vs);
+        var mt = card.querySelector('[data-d="meta"]'); mt.textContent = '';
+        [place, [day(src.captured_at), sat ? 'Sentinel-' + sat.slice(1) : ''].filter(Boolean).join(' · ')].forEach(function (t, i) { if (i) mt.appendChild(document.createTextNode(' · ')); var sp = document.createElement('span'); sp.textContent = t; mt.appendChild(sp); });
+        var ck = card.querySelector('[data-d="check"]');
+        if (hashOk && sigOk) ck.innerHTML = '<span>bytes ✓ · signature ✓</span> <span>checked in this browser</span>';
+        else ck.textContent = 'check failed: ' + (!hashOk ? 'hash' : 'signature');
+        var tb = card.querySelector('[data-d="tok"]');
+        tb.textContent = tok + ' · '; var n = document.createElement('span'); n.textContent = vx.enc.encode(tok).length + ' bytes'; tb.appendChild(n);
+        set('state', 'just now');
+        card.classList.toggle('is-bad', !(hashOk && sigOk));
+      };
       window.vxLastToken = tok;
-      fly(sat);
+      set('state', 'decoding · ' + vx.enc.encode(tok).length + ' bytes in flight');
+      fly(sat, show);
     } catch (e) {
       set('state', 'offline'); set('meta', vx.why(e, 'emem.dev') + ' · decode again to retry'); set('check', '');
     }
   }
-  // the token's path: from the place it names to @emem, drawn once
-  function fly(sat) {
-    if (reduce) { hit(); return; }
+  // the token's path: from the place it names to @emem, drawn once; the value is written on arrival
+  function fly(sat, done) {
+    if (reduce) { if (done) done(); hit(); return; }
     flight = { t0: performance.now(), sat: sat };
     (function step() {
       if (!flight) return;
       tick();
-      if (performance.now() - flight.t0 < 1700) requestAnimationFrame(step); else { flight = null; tick(); hit(); }
+      if (performance.now() - flight.t0 < 1700) requestAnimationFrame(step); else { flight = null; tick(); if (done) done(); hit(); }
     })();
+  }
+  // the signed value arrives with the token, verbatim from the first frame: it only comes into focus;
+  // the first three decimals bright, the rest of the value dimmer
+  function reveal(ve, vs) {
+    var cut = vs.indexOf('.') >= 0 ? vs.indexOf('.') + 4 : vs.length;
+    ve.title = 'the signed value, verbatim: ' + vs;
+    ve.textContent = ''; ve.appendChild(document.createTextNode(vs.slice(0, cut)));
+    var tail = document.createElement('span'); tail.className = 'hd-tail'; tail.textContent = vs.slice(cut); ve.appendChild(tail);
+    ve.classList.remove('is-in'); void ve.offsetWidth; ve.classList.add('is-in');
   }
   function hit() { card.classList.add('is-hit'); setTimeout(function () { card.classList.remove('is-hit'); }, 1600); }
   function drawFlight() {
@@ -247,7 +355,7 @@
   if (again) again.addEventListener('click', decode);
   var layers = root.querySelector('[data-layers]');
   if (layers) layers.addEventListener('click', function () {
-    window.vxCatalog.then(function (items) { var x = items.filter(function (i) { return i.cid === card.getAttribute('data-cid'); })[0]; if (x) openHere(x, items.filter(function (i) { return i.at; }).sort(function (a, b) { return a.at[1] - b.at[1]; })); });
+    window.vxCatalog.then(function (items) { var x = items.filter(function (i) { return i.cid === card.getAttribute('data-cid'); })[0]; if (x) openFromPlace(x, east, layers); });
   });
   // decode once the globe has drawn, so the path has somewhere to start
   var started = false;

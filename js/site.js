@@ -53,8 +53,9 @@
   /* copy */
   document.querySelectorAll('[data-copy]').forEach(function (b) {
     b.addEventListener('click', function () {
-      var text = b.getAttribute('data-copy'), was = b.textContent;
-      var ok = function () { b.textContent = 'copied'; b.classList.add('is-copied'); setTimeout(function () { b.textContent = was; b.classList.remove('is-copied'); }, 1500); };
+      if (b.classList.contains('is-copied')) return;
+      var text = b.getAttribute('data-copy'), was = b.innerHTML;
+      var ok = function () { b.textContent = 'copied'; b.classList.add('is-copied'); setTimeout(function () { b.innerHTML = was; b.classList.remove('is-copied'); }, 1500); };
       if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(ok, fallback); else fallback();
       function fallback() {
         var ta = document.createElement('textarea'); ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'absolute'; ta.style.left = '-9999px';
