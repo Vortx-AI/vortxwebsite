@@ -86,7 +86,7 @@
   document.addEventListener('click', function (e) {
     if (pop && pop.contains(e.target)) return;
     var t = e.target.closest && e.target.closest('.v, .kv .k.is-word, [data-term]');
-    if (!t || (t.classList.contains('v') && t.closest(NOT)) || t.closest('.ld-pop')) { close(); return; }
+    if (!t || (!t.classList.contains('k') && t.closest(NOT)) || t.closest('.ld-pop')) { close(); return; }
     var word = (t.getAttribute('data-term') || t.textContent).trim().toLowerCase();
     if (!word || /^emem:/.test(word)) { close(); return; }
     if (at === t) { close(); return; }
@@ -103,12 +103,17 @@
     var p = el('p', 'reading'), seg = function (v, parts) { var sp = el('span'); sp.appendChild(el('b', 'v', v)); parts.forEach(function (x) { sp.appendChild(typeof x === 'string' ? document.createTextNode(x) : x); }); p.appendChild(sp); };
     var a = el('a', 'lk', 'llms.txt'); a.href = '/llms.txt';
     var w = el('a', 'lk', 'the site’s words'); w.href = URL_;
-    seg('read', [' as an agent: this page ≈ ' + tok(main.innerText.length) + ' tokens of text']);
+    var n = el('span', null, '…');
+    seg('read', [' as an agent: this page ≈ ', n, ' context tokens of text, counted when you reach this line']);
     seg('start', [' at ', a, ', ≈ ' + (top ? tok(top) : '…') + ', then one rung at a time']);
     seg('keep', [' ', w, ' aside, ≈ ' + (size ? tok(size) : '…') + ': a page carries their 26-character name, and decodes them when you click a verb']);
     var base = foot.querySelector('.base'); foot.insertBefore(p, base || null);
+    // the live sections fill in as they are seen, so the page is counted when its end is, and again each time
+    var count = function () { n.textContent = tok(main.innerText.length); };
+    count();
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (en) { if (en[0].isIntersecting) count(); }).observe(p);
   }
-  setTimeout(function () { (window.requestIdleCallback || setTimeout)(meter); }, 2500);
+  setTimeout(function () { (window.requestIdleCallback || setTimeout)(meter); }, 1500);
   addEventListener('scroll', function () { if (pop && at) place(at); }, { passive: true, capture: true });
   addEventListener('resize', close);
 })();

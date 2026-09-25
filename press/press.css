@@ -92,7 +92,7 @@
 .tl-ck.is-off { color: var(--claim); }
 .tl-im { margin: 0; min-width: 0; }
 .tl-im a { display: block; overflow: hidden; border-radius: 10px; border: 1px solid var(--line); background: #05080d; }
-.tl-im img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top center; transition: transform .6s var(--ease), filter .6s; filter: saturate(.92); }
+.tl-im > a img { display: block; width: 100%; height: auto; max-height: 460px; object-fit: contain; transition: transform .6s var(--ease), filter .6s; filter: saturate(.92); } /* each picture at its own shape: a release card or a screenshot is never cut mid-word */
 .tl-im a:hover img, .tl-im a:focus-visible img { transform: scale(1.03); filter: none; }
 .tl-card { display: grid; align-content: center; gap: 6px; min-width: 0; aspect-ratio: 16 / 10; padding: 18px 20px; border-radius: 10px; border: 1px solid var(--line); background: radial-gradient(120% 90% at 0% 0%, rgba(61, 220, 151, .06), transparent 60%), #05080d; }
 .tl-card code { display: block; font: 400 12px/1.5 var(--mono); color: var(--ink-2); overflow-wrap: anywhere; }

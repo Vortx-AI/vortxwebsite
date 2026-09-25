@@ -44,10 +44,7 @@
     li.firstChild.textContent = verb; li.children[1].textContent = noun;
     Object.keys(kv || {}).forEach(function (k) {
       if (kv[k] === undefined || kv[k] === null || kv[k] === '') return;
-      var i = document.createElement('i'); i.className = 'kv';
-      i.innerHTML = '<span class="k"></span><span class="x"></span>';
-      i.firstChild.textContent = k; i.lastChild.textContent = typeof kv[k] === 'number' && k === 'bytes' ? vx.group(kv[k]) : String(kv[k]);
-      li.appendChild(i);
+      li.appendChild(vx.kv(k, typeof kv[k] === 'number' && k === 'bytes' ? vx.group(kv[k]) : String(kv[k])));
     });
     if (where) { var e = document.createElement('em'); e.textContent = where; li.appendChild(e); }
     log.appendChild(li);
@@ -188,7 +185,7 @@
       var walked = vx.treeWalk(vx.unb32(leaf), t.json.path || []);
       add(log, 'walk', 'row ' + row + ' to root', { hashes: (t.json.path || []).length, of: p.rows.length + ' rows', match: walked === p.fm.root && leaf === t.json.leaf_b32 ? 'root' : 'NO' }, walked === p.fm.root ? 'ok' : 'fail', HERE);
       var rw = p.rows[row];
-      add(log, 'point', 'the chunk', { source: vx.hostOf(p.fm.source), offset: vx.group(rw.offset), length: vx.group(rw.length), file: vx.fmtBytes(+p.fm.bytes) }, 'ok', HERE);
+      add(log, 'point', 'the chunk', { source: vx.hostOf(p.fm.source), offset: vx.group(rw.offset), length: vx.group(rw.length), file: vx.fmtSize(+p.fm.bytes) }, 'ok', HERE);
       return nc === fcid && root2 === p.fm.root && walked === p.fm.root;
     }
   };
@@ -245,6 +242,7 @@
       card.setAttribute('data-state', res === 'claim' ? 'claim' : res ? 'ok' : 'fail');
       var mark = card.querySelector('[data-mark]');
       if (mark) mark.textContent = res === 'claim' ? 'waiting' : res ? 'checked · ' + Math.round(performance.now() - t0) + ' ms' : 'failed';
+      var again = card.querySelector('[data-recheck]'); if (again) again.textContent = 'check again';
     });
   }
   var cards = root.querySelectorAll('[data-kind][data-token]');

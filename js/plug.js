@@ -16,7 +16,16 @@
   var MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   function day(iso) { var d = new Date(iso); return isNaN(d) ? '' : d.getUTCDate() + ' ' + MON[d.getUTCMonth()] + ' ' + d.getUTCFullYear(); }
   function put(k, st, t) { var e = root.querySelector('[data-pl="' + k + '"]'); if (!e) return; e.className = 'pl-s is-' + st; e.textContent = (st === 'ok' ? '✓ ' : '') + t; }
-  function fail(k, host) { return function (e) { put(k, 'off', 'not reached: ' + (window.vx ? vx.why(e, host) : host + ' did not answer')); }; }
+  // a surface that did not answer says so once, quietly, with a way to ask again; it is not a failed check
+  function fail(k, host) {
+    return function (e) {
+      put(k, 'off', 'not reached just now: ' + (window.vx ? vx.why(e, host) : host + ' did not answer'));
+      var s = root.querySelector('[data-pl="' + k + '"]'); if (!s) return;
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'lk pl-retry'; b.textContent = 'try again';
+      b.addEventListener('click', function () { s.className = 'pl-s'; s.textContent = 'asking again'; start(); });
+      s.appendChild(document.createTextNode(' · ')); s.appendChild(b);
+    };
+  }
   function json(u, o) { return fetch(u, o).then(function (r) { if (!r.ok) throw new Error(new URL(u).host + ' answered ' + r.status); return r.json(); }); }
   function start() {
     // MCP: the core loop a client sees on connect, and the whole catalogue behind emem_tools
@@ -30,11 +39,11 @@
     }).catch(fail('mcp', 'emem.dev'));
     // A2A: both cards, as a client reads them
     json(EMEM + '/.well-known/agent-card.json').then(function (j) {
-      put('a2a-emem', 'ok', [j.name + ' ' + (j.version || ''), j.protocolVersion ? 'A2A ' + j.protocolVersion : '', (j.skills || []).length + ' skills'].filter(Boolean).join(' · '));
+      put('a2a-emem', 'ok', [j.name + (j.version ? ' v' + j.version : ''), j.protocolVersion ? 'A2A ' + j.protocolVersion : '', (j.skills || []).length + ' skills'].filter(Boolean).join(' · '));
     }).catch(fail('a2a-emem', 'emem.dev'));
     json('/.well-known/agent-card.json').then(function (j) {
       var sk = (j.skills || []).map(function (x) { return x.name || x.id; }).filter(Boolean), at = j.url ? new URL(j.url).host : '';
-      put('a2a-vortx', 'ok', [j.name + ' ' + (j.version || ''), j.protocolVersion ? 'A2A ' + j.protocolVersion : '', sk.length + ' skills' + (at ? ', run on ' + at : '')].filter(Boolean).join(' · '));
+      put('a2a-vortx', 'ok', [j.name + (j.version ? ' v' + j.version : ''), j.protocolVersion ? 'A2A ' + j.protocolVersion : '', sk.length + ' skills' + (at ? ', run on ' + at : '')].filter(Boolean).join(' · '));
       var e = root.querySelector('[data-pl="a2a-vortx"]'); if (e) e.title = sk.join(' · ');
     }).catch(fail('a2a-vortx', 'vortx.ai'));
     // REST: one call, and its signature checked here

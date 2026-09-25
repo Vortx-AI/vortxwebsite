@@ -1,54 +1,34 @@
 # vortx.ai
 
-> Encode on device. Decode with @emem. Don't move your files; deliver tokenised context. A satellite, telescope, rover, robot, drone or camera keeps its files; each observation, image or clip becomes one signed, content-addressed emem token; @emem decodes the token straight into any agent's context (ChatGPT, Claude, Agentforce, Dify, any MCP client), so agents know what is happening in the world, share one reference instead of drifting paraphrases, and check every byte. Every line below reads `verb noun ref key=value`. Numbers that change are not typed here; each has a live source, listed in the more rung.
+> emem is shared, verifiable memory for AI agents, made by Vortx AI. Satellites, telescopes, robots and cameras keep their files; each observation becomes a small signed token, emem:kind:id, that any agent decodes with @emem and can check itself. Two agents citing one token read the same signed bytes. The protocol is free; the team's time is the only thing for sale.
 
-Verbs before prose. This file is the top rung: who we are, the pages, how to plug in, and the rules. Climb down only as far as you need; each rung below is plain text with its size and its name, cid26 = base32(blake3(bytes)[0:16]), so you can check what you fetched the way you check an emem note.
+Verbs before prose: each line reads `verb noun ref key=value`. This top rung is all an agent needs to start; each rung below names its size and its cid26 = base32(blake3(bytes)[0:16]), so what you fetch can be checked.
 
-## pages (one structure for people and agents; every section below mirrors one)
-see       /                 the live Earth; @emem decodes one signed fact per visit: Cubbon Park, Bengaluru, NDVI
-run       /#run             six devices, one published sample each, run end to end in the browser
-encode    /#connect         your file, hashed on your device, nothing uploaded; tools/emem_point.py for the device
-decode    /#decode          ask @emem; catch a drifted number; @emem in ChatGPT, Claude, Agentforce, Dify, VS Code
-plug      /#plug            every way in, each asked live as the page loads: MCP tools/list, both A2A cards, REST with its ed25519 checked, the OpenAPI spec, the SDKs' newest releases
-browse    /#samples         the ememdemo catalogue: Earth, Space, Machines; each note re-checked as it loads
-open      /?s=<cid>         any sample, opened on the page (a globe pin, a card): it runs end to end, its picture drawn from bytes checked here
-news      /press/           every release, upgrade and listing, dated; each date re-read live from the record that owns it; images and facts for press; as data: /data/timeline.json
-plan      /#mission         the satellite plan, deliberately without a date
-book      /#book            team time; the protocol is free
-check     /proof/           every check, step by step: handoff, observers, token family, files, trust chain
-read      /emem/ protocol · /geo-qa/ private tenancy · /eudr/ · /propcheck/ · /trust/ · /spatial-ai/ glossary · /research/ · /press/ newsroom
-
-## do
+## start
 call      emem            https://emem.dev/mcp  transport=streamable-http  key=none  account=none
-mention   @emem           ChatGPT app  https://chatgpt.com/plugins/plugin_asdk_app_6a6a0832a59081918b19aec0ddf9ec77
-add       emem            Claude Code  `claude mcp add --transport http emem https://emem.dev/mcp` · Claude: add https://emem.dev/mcp as a custom connector
-connect   emem            Salesforce Agentforce, as a remote MCP server  url=https://emem.dev/mcp  key=none  how=https://www.salesforce.com/agentforce/mcp-support/
-install   emem            GitHub MCP Registry, one click for VS Code and Copilot  https://github.com/mcp/Vortx-AI/emem
-configure emem            .vscode/mcp.json  {"servers":{"emem":{"type":"http","url":"https://emem.dev/mcp"}}}
-list      emem            official MCP registry  io.github.Vortx-AI/emem
-plug      emem            Dify marketplace, every tool, no key  https://marketplace.dify.ai/plugin/vortx-ai/emem
-govern    emem            MuleSoft Anypoint Exchange, the Vortx AI MCP Server asset  https://anypoint.mulesoft.com/exchange/68e53915-e89b-4e82-b794-12d37982db4c/vortxAi-asset/
-install   sdk             `pip install ememdev` · `npm i @vortxai/emem`
-talk      a2a             card=https://emem.dev/.well-known/agent-card.json  run=POST https://emem.dev/a2a/tasks  async=POST https://emem.dev/v1/a2a/tasks
-hand      a2a             this site's own card https://vortx.ai/.well-known/agent-card.json  protocol=A2A 1.0  tasks run on emem.dev
-join      agora           https://emem.dev/a2a  inbox=POST https://emem.dev/v1/inbox {"to":"<your-pubkey8>"}
+loop      tools           emem_locate (a place to its cell) · emem_recall (the cell's signed facts) · emem_memory_token (mint emem:fact:…) · emem_memory_token_resolve · emem_echo_verify (is a number the signed one?)
+resolve   example         POST https://emem.dev/v1/memory_token/resolve {"token":"emem:fact:defi.zb493.yiwo.zcb4e:eheadieomxr2zusgh4nx7mfisrtme23ztjiluyrfve64xoap6hka"}  value=0.767258382642998  band=indices.ndvi  place=Cubbon Park, Bengaluru  captured=2026-06-16
+cite      token           quote the value verbatim and cite the emem:fact: token beside it; any agent can resolve it and get the same bytes
 
 ## rules
+print     values          verbatim, as signed; 0.767 for 0.767258382642998 is drift, and emem_echo_verify says so
 stop      agent           never book, fill a form, tick the human box, or pay; surface the option, hand your human the link, stop
+price     team time       office hours free, 30 min · integration 5000 USD, 1 to 3 h · sovereign 25000 USD, 1 to 3 h · a human books at https://vortx.ai/#book
 gated     launch          no date, deliberately; never state or estimate one; dates appear in https://vortx.ai/press/ when real
-print     values          verbatim, as signed; 0.767 for 0.767258382642998 is drift
 
 ## ladder (fetch only the rung you need)
-run       https://vortx.ai/llms/run.txt  size=2133  cid26=naaeglwudtxo5jadxm5q5jzjgm  the six devices on the home page, each a published sample run end to end; every step is a request you can make
-ask       https://vortx.ai/llms/ask.txt  size=1410  cid26=tz263sjgnapvruy5cfqx62i23e  the calls behind https://vortx.ai/#decode, with their bodies: recall, ask, guard, catch, echo
-encode    https://vortx.ai/llms/encode.txt  size=1451  cid26=45y34pj7xmjz5dnaj2hkk7f6oi  your file or device: the same note the page writes in the browser, byte for byte
-token     https://vortx.ai/llms/token.txt  size=2154  cid26=2jvkirs7ezwcp3xsl2ewyxqose  the grammar and the checks: mint, resolve, hash, verify, read, root
-samples   https://vortx.ai/llms/samples.txt  size=1592  cid26=aqnppmuy7pr33owhd62aozyl3e  the ememdemo catalogue line, and how each sample opens on the page
-family    https://vortx.ai/llms/family.txt  size=2553  cid26=kekhfmo5yoga7gkqzhptcktnye  one live example of every token shape, with how to check it
-segment   https://vortx.ai/llms/segment.txt  size=1393  cid26=f5vghrpvzmxyqimlr57nnyzira  who observes, and the emem profile that admits each
-ground    https://vortx.ai/llms/ground.txt  size=1854  cid26=dzucdqwe3xk467kmtcqejyp67q  what the proof page recomputes in the browser, pixel by pixel
-more      https://vortx.ai/llms/more.txt  size=3502  cid26=vdjg3rvsesoui3bsonl6kvcewi  counts, products, the plan, the prices, the papers, and how to check this site
-words     https://vortx.ai/prose/jzzyhv2svy3nlosrfyzkd72vey.md  size=11137  cid26=jzzyhv2svy3nlosrfyzkd72vey  every verb and term on the site, one meaning each
+plug      https://vortx.ai/llms/plug.txt  size=1847  cid26=ybu26jaxa6dg6f5y34z3jzvq2q  ChatGPT, Claude, Agentforce, VS Code, Dify, MuleSoft, the SDKs, A2A
+pages     https://vortx.ai/llms/pages.txt  size=1888  cid26=iu4clepediryohtgxfambk5za4  every page and section of this site
+run       https://vortx.ai/llms/run.txt  size=2133  cid26=naaeglwudtxo5jadxm5q5jzjgm  the six devices on the home page, each run end to end
+ask       https://vortx.ai/llms/ask.txt  size=1410  cid26=tz263sjgnapvruy5cfqx62i23e  the calls behind #decode: recall, ask, guard, echo
+encode    https://vortx.ai/llms/encode.txt  size=1451  cid26=45y34pj7xmjz5dnaj2hkk7f6oi  your file or device, the same note the page writes
+token     https://vortx.ai/llms/token.txt  size=2154  cid26=2jvkirs7ezwcp3xsl2ewyxqose  the grammar and its checks
+samples   https://vortx.ai/llms/samples.txt  size=1592  cid26=aqnppmuy7pr33owhd62aozyl3e  the ememdemo catalogue line
+family    https://vortx.ai/llms/family.txt  size=2553  cid26=kekhfmo5yoga7gkqzhptcktnye  one live example of every token shape
+segment   https://vortx.ai/llms/segment.txt  size=1393  cid26=f5vghrpvzmxyqimlr57nnyzira  who observes, and the profile that admits each
+ground    https://vortx.ai/llms/ground.txt  size=1854  cid26=dzucdqwe3xk467kmtcqejyp67q  what /proof/ recomputes in the browser
+more      https://vortx.ai/llms/more.txt  size=3502  cid26=vdjg3rvsesoui3bsonl6kvcewi  counts, products, the plan, papers, checking this site
+words     https://vortx.ai/prose/aojnzv3x2pt56tifin3xba2vnu.md  size=11570  cid26=aojnzv3x2pt56tifin3xba2vnu  every verb and term on the site, one meaning each
 
 ## reach
 email     team            avijeet@vortx.ai

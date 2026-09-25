@@ -53,11 +53,13 @@
   }
   Run.prototype.ms = function () { return Math.round(performance.now() - this.t0); };
   Run.prototype.ok = function (b) { this.checks++; if (b) this.passed++; return b; };
+  // a check that passed with something worth saying: shown beside the score, never hidden inside it
+  Run.prototype.note = function (t) { (this.notes = this.notes || []).push(t); };
   Run.prototype.stale = function () { return !this.live(); };
   Run.prototype.line = function (v, n, kv, st, where) {
     var li = el('li', 'is-' + (st || 'ok'));
     li.appendChild(el('b', 'v', v)); li.appendChild(el('span', 'n', n));
-    Object.keys(kv || {}).forEach(function (k) { if (kv[k] == null || kv[k] === '') return; var i = el('i', 'kv'); i.appendChild(el('span', 'k', k)); i.appendChild(el('span', 'x', String(kv[k]))); li.appendChild(i); });
+    Object.keys(kv || {}).forEach(function (k) { if (kv[k] == null || kv[k] === '') return; li.appendChild(vx.kv(k, kv[k])); });
     if (where !== null) li.appendChild(el('em', null, [where, (this.ms() / 1000).toFixed(1) + ' s'].filter(Boolean).join(' · ')));
     if (this.log) this.log.appendChild(li);
     return li;
@@ -409,12 +411,25 @@
     var tb = vx.enc.encode(f.bundle).length;
     R.line('send', 'one token for every reading', { token: f.bundle, bytes: tb }, 'info', 'to any agent');
     var j = await R.get('/v1/memory_bundle/' + f.bundle); if (R.stale()) return { tb: tb };
-    var signed = signedByEmem(j.receipt), cidOk = vx.bundleCid(j.citations || [], j.purpose) === f.bundle.split(':').pop();
-    var out = facts.filter(function (a) { return (j.fact_cids || []).indexOf(a.cid) < 0; }), inside = facts.length - out.length, good = R.ok(signed && cidOk && !out.length);
-    // a reading the bundle does not hold is named, with the one the bundle holds for that layer instead
-    var held = out.map(function (a) { var c = (j.citations || []).filter(function (c) { return c.band === a.band; })[0]; return a.band + (c ? ', the bundle holds ' + (c.resolved_tslot ? 'the ' + new Date(c.resolved_tslot * 864e5).toISOString().slice(0, 10) + ' reading' : 'another reading') : ''); });
-    R.line('decode', '@emem opens the bundle', { signature: signed ? 'ed25519 ✓' : 'INVALID', name: cidOk ? 'recomputed ✓' : 'NO', readings: inside + ' of ' + facts.length + ' inside' + (out.length ? '' : ' ✓'), outside: held.slice(0, 3).join(', ') }, good ? 'ok' : 'fail', 'emem.dev, checked here');
-    R.data('outside', out.map(function (a) { return a.cid; }));
+    var signed = signedByEmem(j.receipt), cidOk = vx.bundleCid(j.citations || [], j.purpose) === f.bundle.split(':').pop(), good = R.ok(signed && cidOk);
+    R.line('decode', '@emem opens the bundle', { signature: signed ? 'ed25519 ✓' : 'INVALID', name: cidOk ? 'recomputed ✓' : 'NO', holds: (j.citations || []).length + ' readings' }, good ? 'ok' : 'fail', 'emem.dev, checked here');
+    // every reading the note shows must be bound by the bundle. A layer the bundle binds at an earlier date, with the
+    // note showing a newer signed reading, is bound but stale: said plainly, not failed. A layer it does not bind fails.
+    var out = facts.filter(function (a) { return (j.fact_cids || []).indexOf(a.cid) < 0; }), DAY = function (t) { return vx.fmtDay(t * 864e5); };
+    var why = await Promise.all(out.map(async function (a) {
+      var c = (j.citations || []).filter(function (c) { return c.band === a.band; })[0];
+      if (!c || !c.resolved_tslot) return { a: a, bound: false };
+      var fj = await R.get('/v1/facts/' + a.cid).catch(function () { return null; });
+      return { a: a, bound: !!(fj && fj.tslot > c.resolved_tslot), note: fj && fj.tslot, held: c.resolved_tslot };
+    }));
+    if (R.stale()) return { tb: tb };
+    var loose = why.filter(function (w) { return !w.bound; }), stale = why.filter(function (w) { return w.bound; }), bound = R.ok(!loose.length);
+    var kv = { layers: (facts.length - loose.length) + ' of ' + facts.length + ' bound' + (loose.length ? '' : ' ✓') };
+    if (loose.length) kv['not bound'] = loose.slice(0, 3).map(function (w) { return w.a.band; }).join(', ');
+    if (stale.length) kv['newer here'] = stale.slice(0, 2).map(function (w) { return w.a.band + ' ' + DAY(w.note) + ', the bundle binds ' + DAY(w.held); }).join('; ');
+    R.line('check', 'every reading, bound by the bundle', kv, !bound ? 'fail' : stale.length ? 'warn' : 'ok', 'emem.dev, checked here');
+    if (stale.length) R.note(stale.length === 1 ? stale[0].a.label + ' is newer here than in its bundle' : stale.length + ' readings are newer here than in their bundle');
+    R.data('outside', loose.map(function (w) { return w.a.cid; })); R.data('newer', stale.map(function (w) { return w.a.cid; }));
     var pick = facts.filter(function (a) { return a.band === 'indices.ndvi'; })[0] || facts[0];
     if (pick) await echo(R, pick);
     return { tb: tb };
@@ -568,7 +583,7 @@
     while ((m = re.exec(text))) files.push({ path: m[1].replace(/%7C/g, '|'), url: m[2], size: +m[3], hash: m[4] });
     var leaves = files.map(function (a) { return { url: a.url, offset: 0, length: a.size, hash: vx.b32(vx.blake3(vx.enc.encode(a.path + '\n' + a.size + '\n' + a.hash))) }; });
     var rooted = R.ok(!!f.root && vx.merkleRoot(leaves) === f.root);
-    R.line('capture', vx.hostOf(f.source || ''), { files: files.length, size: vx.fmtBytes(+f.bytes || 0), kind: f.kind }, 'info', 'the note');
+    R.line('capture', vx.hostOf(f.source || ''), { files: files.length, size: vx.fmtSize(+f.bytes || 0), kind: f.kind }, 'info', 'the note');
     R.line('encode', 'the listing, not the files', { name: named ? 'blake3 ✓' : 'LIES', root: rooted ? 'rebuilt ✓' : 'NO' }, named && rooted ? 'ok' : 'fail', 'this browser');
     R.data('files', files);
     if (!named) return {};
@@ -616,13 +631,14 @@
     }
     var nt = x && tokOf(x.kv.tok), rt = x && tokOf(x.kv.raw);
     if (nt && rt) {
-      box.appendChild(bar('file to a model', 1, tk(rt) + ' tokens as raw bytes', 'is-raw'));
-      box.appendChild(bar('note to a model', nt / rt, tk(nt) + ' tokens · ' + Math.round(rt / nt).toLocaleString('en-US') + '× less', 'is-tok'));
+      box.appendChild(bar('file to a model', 1, tk(rt) + ' context tokens as raw bytes', 'is-raw'));
+      box.appendChild(bar('note to a model', nt / rt, tk(nt) + ' context tokens · ' + Math.round(rt / nt).toLocaleString('en-US') + '× less', 'is-tok'));
     }
     if ((out.fileB && out.tb) || (nt && rt)) box.appendChild(el('p', 'run-scale', 'bars to scale'));
     var s = el('p', 'run-score ' + (R.passed === R.checks ? 'is-ok' : 'is-fail'));
     s.textContent = R.passed + ' of ' + R.checks + ' checks passed in your browser · ' + vx.fmtBytes(R.L.total) + ' fetched in all, from ' + Object.keys(R.L.hosts).join(', ');
     box.appendChild(s);
+    (R.notes || []).forEach(function (t) { box.appendChild(el('p', 'run-score is-note', '! ' + t)); });
   }
 
   window.vxEngine = { NOTE: NOTE, Run: Run, auto: auto, pointer: pointer, camera: camera, trace: trace, echo: echo, tally: tally, tokOf: tokOf, tk: tk, front: front, el: el };

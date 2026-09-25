@@ -563,6 +563,17 @@
     return (n >= 100 ? n.toFixed(0) : n >= 10 ? n.toFixed(1) : n.toFixed(2)) + ' ' + u[i];
   }
   function group(n) { return Number(n).toLocaleString('en-US'); }
+  // a key and its value, the separator written as text, not drawn by CSS: an agent, a screen reader and a
+  // copy all read "bytes=43", never "bytes43"; the trailing space keeps the next pair apart
+  function kv(k, v, sep) {
+    var i = document.createElement('i'), a = document.createElement('span'), b = document.createElement('span');
+    i.className = 'kv'; a.className = 'k'; a.textContent = k; b.className = 'x'; b.textContent = v == null ? '' : String(v);
+    i.appendChild(a); i.appendChild(document.createTextNode(sep || '=')); i.appendChild(b); i.appendChild(document.createTextNode(' '));
+    return i;
+  }
+  // a day as the site writes it everywhere: 16 Jun 2026 (UTC)
+  var MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  function day(t) { var d = new Date(t); return isNaN(d) ? '' : d.getUTCDate() + ' ' + MON[d.getUTCMonth()] + ' ' + d.getUTCFullYear(); }
 
   root.vx = {
     hostOf: hostOf, b32: b32, unb32: unb32, hex: hex, blake3: blake3, cid52: cid52, cid26: cid26, cat: cat,
@@ -572,7 +583,7 @@
     parsePointer: parsePointer, merkleRoot: merkleRoot, treeLeaf: treeLeaf, treeWalk: treeWalk,
     cborEnc: cborEnc, fromHex: fromHex, merkleV1: merkleV1, checkTrace: checkTrace, entityCid: entityCid, bundleCid: bundleCid, gridDecode: gridDecode,
     eph: { moonKm: moonKm, moonPhase: moonPhase, moonDir: moonDir, marsKm: marsKm, marsDir: marsDir, l2Km: l2Km, sun: sun, AU_KM: AU_KM, C_KMS: C_KMS },
-    fmtBytes: bytes, fmtSize: size, group: group, enc: enc, dec: dec,
+    fmtBytes: bytes, fmtSize: size, fmtDay: day, group: group, enc: enc, dec: dec, kv: kv,
     // a fetch that never reached its server says so in words; any other error keeps its own message
     why: function (e, host) { var m = String((e && e.message) || e); return /failed to fetch|networkerror|load failed/i.test(m) ? (host || 'the server') + ' did not answer this browser' : m; }
   };

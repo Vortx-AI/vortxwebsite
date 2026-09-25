@@ -49,7 +49,7 @@
     if (!file) return;
     if (worker) worker.terminate();
     out.classList.add('is-on');
-    $('[data-enc="name"]').textContent = file.name + ' · ' + vx.fmtBytes(file.size);
+    $('[data-enc="name"]').textContent = file.name + ' · ' + vx.fmtSize(file.size);
     $('[data-enc="state"]').textContent = 'hashing on this device…';
     $('.enc-prog u').style.width = '0%';
     $('[data-enc="addr"]').textContent = '…';
@@ -80,9 +80,9 @@
     $('.enc-prog u').style.width = '100%';
     $('[data-enc="state"]').textContent = 'encoded in ' + (r.ms / 1000).toFixed(1) + ' s · ' + r.kind + ' · ' + r.hashed + ' of ' + r.units + ' ranges hashed · nothing left this device' + (after ? ' · stamped after log head ' + vx.group(sth.tree_size) : '');
     // to scale: the file and what it would cost a model as raw bytes are full bars; the note is a sliver
-    bar('.is-file', 1, vx.fmtBytes(r.size) + ', stays here');
-    bar('.is-raw', 1, '~' + tk(rawTok) + ' tokens as raw bytes');
-    bar('.is-tok', noteTok / rawTok, '~' + tk(noteTok) + ' tokens · ' + Math.round(rawTok / noteTok).toLocaleString('en-US') + '× less');
+    bar('.is-file', 1, vx.fmtSize(r.size) + ', stays here');
+    bar('.is-raw', 1, '~' + tk(rawTok) + ' context tokens as raw bytes');
+    bar('.is-tok', noteTok / rawTok, '~' + tk(noteTok) + ' context tokens · ' + Math.round(rawTok / noteTok).toLocaleString('en-US') + '× less');
     $('[data-enc="addr"]').textContent = tok;
     $('[data-enc="root"]').textContent = 'root ' + r.root;
     var a = $('[data-enc="note"]');

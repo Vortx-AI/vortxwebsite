@@ -1,12 +1,12 @@
 # agents.md · vortx.ai
 
 For AI agents. Lines read `verb noun ref key=value`; prose appears only where a rule needs its reason.
-Siblings: https://vortx.ai/llms.txt (the top rung: start there, about 1.5k tokens, and climb down one rung at a time) · https://vortx.ai/.well-known/agent-card.json (A2A card). This guide is the long form, every rung at once.
+Siblings: https://vortx.ai/llms.txt (the top rung: start there, it states its own size, and climb down one rung at a time) · https://vortx.ai/.well-known/agent-card.json (A2A card). This guide is the long form, every rung at once.
 Words: every verb on vortx.ai means one thing; the meanings are one note, named by its blake3 like an emem note, listed as `words` in llms.txt.
 
 ## what
 
-- **is** vortx.ai · spatial AI lab · builds emem, the external memory of the physical world
+- **is** vortx.ai · spatial AI lab · builds emem: shared, verifiable memory for AI agents, the external memory of the physical world
 - **say** Encode on device. Decode with @emem. Don't move your files; deliver tokenised context.
 - **capture** satellites, telescopes, rovers, drones, robots and machines observe (Sentinel-2 anchors the open record today)
 - **encode** in orbit or on any device: each observation → one fact, keyed cell64 × band × tslot, named `base32(blake3(canonical CBOR))`, signed ed25519
@@ -27,6 +27,7 @@ One structure for people and agents; llms.txt mirrors it line for line.
 - **browse** `/#samples` · the ememdemo catalogue, each note re-checked as it loads
 - **open** `/?s=<cid>` · any sample, opened on the page from a globe pin or a card, run end to end, its picture drawn from bytes checked here
 - **news** `/press/` · every release, upgrade and listing, dated, each date re-read live from its own record; as data: `/data/timeline.json`
+- **watch** `/press/#watch` · the story on camera from the Seraphim Space pitch (Vimeo, 19 Jun 2025), in five chapters, each video dated by its platform
 - **check** `/proof/` · every check, step by step
 - **read** `/emem/` protocol · `/geo-qa/` · `/eudr/` · `/propcheck/` · `/trust/` · `/spatial-ai/` · `/research/` · `/press/`
 

@@ -19,7 +19,7 @@
       var n = el('span', 'n'); n.appendChild(el('strong', null, p.slug.replace(/-/g, ' '))); n.appendChild(document.createTextNode(' · ' + p.camera_name));
       li.appendChild(n);
       [['counted', what || 'nothing in frame'], ['clip', p.newest ? ago(p.newest) : ''], ['sha256', (p.clip_sha256 || '').slice(0, 12) + '…']].forEach(function (kv) {
-        if (!kv[1]) return; var i = el('i', 'kv'); i.appendChild(el('span', 'k', kv[0])); i.appendChild(el('span', 'x', kv[1])); li.appendChild(i);
+        if (!kv[1]) return; li.appendChild(vx.kv(kv[0], kv[1]));
       });
       box.appendChild(li);
     });

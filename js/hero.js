@@ -66,7 +66,7 @@
     pins.forEach(function (p) { p.el.classList.remove('is-picked'); });
     if (stage.classList.contains('is-focus')) { stage.classList.remove('is-focus'); if (window.vxOrbit && window.vxOrbit.release) window.vxOrbit.release(800); }
   });
-  var east = [];
+  var east = [], featured = cards.map(function (c) { return c.getAttribute('data-cid'); }).filter(Boolean);
   window.vxCatalog.then(function (items) {
     // the popup's arrows travel west to east, around the globe
     var placed = items.filter(function (x) { return x.at; });
@@ -77,9 +77,9 @@
       b.setAttribute('aria-label', x.title + ', open it');
       b.innerHTML = '<span></span><i class="h3o-beam" aria-hidden="true"></i>'; b.firstChild.textContent = x.title;
       b.style.setProperty('--d', (0.25 + i * 0.09).toFixed(2) + 's');
-      b.addEventListener('click', function () { openFromPlace(x, east); });
+      b.addEventListener('click', function () { if (b.vxPile && b.vxPile.length > 1) pick(b, b.vxPile); else openFromPlace(x, east); });
       pinsEl.appendChild(b);
-      pins.push({ item: x, el: b });
+      pins.push({ item: x, el: b, lead: featured.indexOf(x.cid) >= 0 });
     });
     // each memory lands where it was observed, one after another; then the pins settle
     setTimeout(function () { pins.forEach(function (p) { p.el.classList.remove('is-landing'); }); }, 900 + placed.length * 90 + 1200);
@@ -95,10 +95,10 @@
       var meta = c.querySelector('[data-meta]');
       if (meta) {
         // the ememdemo token line, from the catalogue's own fields
-        var parts = [], tk = num(x.kv.tok), rw = num(x.kv.raw);
+        var parts = c.getAttribute('data-by') ? [c.getAttribute('data-by')] : [], tk = num(x.kv.tok), rw = num(x.kv.raw);
         if (x.kv.size) parts.push(x.kv.size.replace(/(\d)([A-Z])/, '$1 $2'));
         else if (x.kv.years) parts.push(x.kv.years.replace('-', '–'));
-        if (tk) parts.push('agent reads <b>' + x.kv.tok + ' tokens</b>');
+        if (tk) parts.push('agent reads <b>' + x.kv.tok + ' context tokens</b>');
         if (tk && rw) parts.push(Math.round(rw / tk).toLocaleString('en-US') + '× less');
         meta.innerHTML = parts.join(' · ');
       }
@@ -118,6 +118,59 @@
       b.title = ok ? 'this note hashes to its name, checked in your browser' : 'the bytes do not hash to the name';
     }).catch(function () { b.textContent = 'unreachable'; b.title = 'not checked: emem.dev could not be reached, which is not a failed check'; });
   }
+  // places observed a few kilometres apart land on the same pixels: those pins become one, marked with
+  // how many it holds, and a click on it lists them (a featured memory leads its pile)
+  var PILE = 20, picker = null;
+  function pile() {
+    var order = pins.filter(function (p) { return p.s; }).sort(function (a, b) { return (b.lead ? 1 : 0) - (a.lead ? 1 : 0); }), heads = [];
+    pins.forEach(function (p) { p.pile = null; });
+    order.forEach(function (p) {
+      var h = heads.filter(function (q) { return Math.hypot(q.s.x - p.s.x, q.s.y - p.s.y) < PILE; })[0];
+      if (h) h.pile.push(p); else { p.pile = [p]; heads.push(p); }
+    });
+    pins.forEach(function (p) {
+      var n = p.pile ? p.pile.length : 0, merged = !!p.s && !p.pile;
+      p.el.classList.toggle('is-merged', merged);
+      p.el.classList.toggle('is-pile', n > 1);
+      p.el.vxPile = n > 1 ? p.pile.map(function (q) { return q.item; }) : null;
+      var label = n > 1 ? p.item.title + ' and ' + (n - 1) + ' more here' : p.item.title;
+      var aria = n > 1 ? n + ' memories here: ' + p.pile.map(function (q) { return q.item.title; }).join('; ') + '. List them' : p.item.title + ', open it';
+      if (p.el.firstChild.textContent !== label) p.el.firstChild.textContent = label;
+      if (p.el.getAttribute('aria-label') !== aria) p.el.setAttribute('aria-label', aria);
+      if (n > 1) p.el.setAttribute('data-n', n); else p.el.removeAttribute('data-n');
+      if (merged) p.el.tabIndex = -1; else p.el.removeAttribute('tabindex');
+    });
+    if (picker) { if (!picker.pin.vxPile || picker.pin.classList.contains('is-far')) unpick(); else at(picker); }
+  }
+  function at(pk) {
+    var r = pk.pin.getBoundingClientRect(), sb = stage.getBoundingClientRect(), left = r.left - sb.left + r.width / 2;
+    pk.box.style.top = (r.top - sb.top + r.height / 2) + 'px';
+    if (left > sb.width / 2) { pk.box.style.left = ''; pk.box.style.right = (sb.width - left + 16) + 'px'; } else { pk.box.style.right = ''; pk.box.style.left = (left + 16) + 'px'; }
+  }
+  function pick(pin, list) {
+    if (picker && picker.pin === pin) { unpick(); return; }
+    unpick();
+    var box = document.createElement('div'); box.className = 'h3o-pick'; box.setAttribute('role', 'dialog'); box.setAttribute('aria-label', list.length + ' memories at this spot');
+    var h = document.createElement('p'); h.className = 'h3o-pick-h'; h.innerHTML = '<b class="v">open</b> '; h.appendChild(document.createTextNode(list.length + ' memories, observed here'));
+    box.appendChild(h);
+    list.forEach(function (x) {
+      var b = document.createElement('button'); b.type = 'button';
+      var t = document.createElement('span'); t.textContent = x.title; b.appendChild(t);
+      var k = document.createElement('i'); k.textContent = [x.verb, x.kind].filter(Boolean).join(' '); b.appendChild(k);
+      b.addEventListener('click', function () { unpick(); openFromPlace(x, east); });
+      box.appendChild(b);
+    });
+    stage.appendChild(box); pin.classList.add('is-open'); pin.setAttribute('aria-expanded', 'true');
+    picker = { box: box, pin: pin }; at(picker);
+    var first = box.querySelector('button'); if (first) first.focus({ preventScroll: true });
+  }
+  function unpick() {
+    if (!picker) return;
+    picker.box.remove(); picker.pin.classList.remove('is-open'); picker.pin.setAttribute('aria-expanded', 'false');
+    picker = null;
+  }
+  document.addEventListener('click', function (e) { if (picker && !picker.box.contains(e.target) && !picker.pin.contains(e.target)) unpick(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && picker) { var p = picker.pin; unpick(); p.focus({ preventScroll: true }); } });
   function nearestOnRect(r, p) {
     var x = Math.max(r.left, Math.min(p.x, r.right)), y = Math.max(r.top, Math.min(p.y, r.bottom));
     if (x > r.left && x < r.right && y > r.top && y < r.bottom) {
@@ -143,6 +196,7 @@
       if (s) { p.el.style.left = s.x + 'px'; p.el.style.top = s.y + 'px'; p.el.classList.toggle('is-l', s.x > box.width / 2); }
       p.s = far ? null : s;
     });
+    pile();
     if (getComputedStyle(svg).display === 'none') return;
     var inSky = stage.classList.contains('is-sky');
     cards.forEach(function (c) {
@@ -152,7 +206,7 @@
       var target = null, isSat = false;
       if (c.vxItem && c.vxItem.at) { var s = onStage(window.vxOrbit.screen(c.vxItem.at[0], c.vxItem.at[1])); if (s && s.front) target = s; }
       var sat = c.getAttribute('data-sat');
-      if (sat) { target = onStage(window.vxOrbit.sat(sat)); isSat = true; var w = c.querySelector('[data-where]'); if (w) w.textContent = target ? 'there it is now, in orbit' : 'on the far side of the Earth right now'; }
+      if (sat) { target = onStage(window.vxOrbit.sat(sat)); isSat = true; var w = c.querySelector('[data-where]'); if (w) w.textContent = target ? 'Hubble, there now, in orbit' : 'Hubble is behind the Earth right now'; }
       c.classList.toggle('is-far', !target && !!c.vxItem && !!c.vxItem.at);
       if (!target) return;
       var rr = { left: r.left - box.left, right: r.right - box.left, top: r.top - box.top, bottom: r.bottom - box.top };
@@ -196,7 +250,7 @@
     if (!SKY[k] || !O || !O.lookToward || stage.classList.contains('is-focus')) return;
     clearTimeout(skyT); skyEl = node;
     if (skyKey === k) return;
-    skyKey = k; skyAt = 0; dress(node, k); stage.classList.add('is-sky');
+    skyKey = k; skyAt = 0; dress(node, k); stage.classList.add('is-sky'); if (back) back.hidden = false;
     // the Earth turns until the object is in view; then the reticle locks on
     O.lookToward(SKY[k], 950, function () {
       if (skyKey !== k) return;
@@ -206,8 +260,11 @@
   }
   function unlocate() {
     clearTimeout(skyT);
-    skyT = setTimeout(function () { if (!skyKey) return; skyKey = null; skyEl = null; skyAt = 0; obj.style.opacity = 0; stage.classList.remove('is-sky'); if (window.vxOrbit) window.vxOrbit.release(1000); tick(); }, 380);
+    skyT = setTimeout(home, 380);
   }
+  function home() { if (back) back.hidden = true; if (!skyKey) return; skyKey = null; skyEl = null; skyAt = 0; obj.style.opacity = 0; stage.classList.remove('is-sky'); if (window.vxOrbit) window.vxOrbit.release(1000); tick(); }
+  var back = root.querySelector('[data-sky-back]');
+  if (back) back.addEventListener('click', function () { clearTimeout(skyT); if (document.activeElement && document.activeElement.blur) document.activeElement.blur(); home(); });
   root.querySelectorAll('[data-sky]').forEach(function (node) {
     node.addEventListener('pointerenter', function (e) { if (e.pointerType !== 'touch') locate(node); });
     node.addEventListener('pointerleave', function (e) { if (e.pointerType !== 'touch') unlocate(); });
@@ -278,12 +335,14 @@
   var card = root.querySelector('.hd-card'), flight = null;
   async function jpost(path, body) { var r = await fetch(EMEM + path, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) }); if (!r.ok) throw new Error('emem.dev answered ' + r.status); return r.json(); }
   function set(k, v) { var e = card.querySelector('[data-d="' + k + '"]'); if (e) e.textContent = v; }
+  // the heading says only what has happened: decoding while the token is in flight, decoded once it lands
+  function head(h, st) { set('head', '@emem ' + h); set('state', st); }
   var MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   function day(iso) { var d = new Date(iso); return isNaN(d) ? '' : d.getUTCDate() + ' ' + MON[d.getUTCMonth()] + ' ' + d.getUTCFullYear(); }
   async function decode() {
     if (!card) return;
     var cell = card.getAttribute('data-cell'), place = card.getAttribute('data-place');
-    set('state', 'decoding…');
+    head('decoding', '…');
     try {
       var rc = await jpost('/v1/recall', { cell: cell, bands: ['indices.ndvi'] });
       var cap = function (f) { return ((f.sources || [])[0] || {}).captured_at || ''; };
@@ -306,14 +365,14 @@
         else ck.textContent = 'check failed: ' + (!hashOk ? 'hash' : 'signature');
         var tb = card.querySelector('[data-d="tok"]');
         tb.textContent = tok + ' · '; var n = document.createElement('span'); n.textContent = vx.enc.encode(tok).length + ' bytes'; tb.appendChild(n);
-        set('state', 'just now');
+        head('decoded', '· just now');
         card.classList.toggle('is-bad', !(hashOk && sigOk));
       };
       window.vxLastToken = tok;
-      set('state', 'decoding · ' + vx.enc.encode(tok).length + ' bytes in flight');
+      head('decoding', '· ' + vx.enc.encode(tok).length + ' bytes in flight');
       fly(sat, show);
     } catch (e) {
-      set('state', 'offline'); set('meta', vx.why(e, 'emem.dev') + ' · decode again to retry'); set('check', '');
+      head('not reached', '· offline'); set('meta', vx.why(e, 'emem.dev') + ' · decode again to retry'); set('check', '');
     }
   }
   // the token's path: from the place it names to @emem, drawn once; the value is written on arrival
@@ -365,12 +424,13 @@
 
   /* ---------- the live strip ---------- */
   var live = root.querySelector('[data-live-orbits]'), COL = { S2A: '#8fb8ff', S2B: '#ff9f7a', S2C: '#cda8ff', HST: '#f2f4f7', ISS: '#b9c3cf' };
+  var FULL = { S2A: 'Sentinel-2A', S2B: 'Sentinel-2B', S2C: 'Sentinel-2C', HST: 'the Hubble Space Telescope', ISS: 'the International Space Station' };
   function strip() {
     if (!live || !window.vxOrbit || !window.vxOrbit.elements()) return;
     var st = window.vxOrbit.states(), el2 = window.vxOrbit.elements(), ep = Math.max.apply(null, st.map(function (s) { return s.epoch; }));
     var age = (Date.now() - ep) / 3600e3;
-    live.innerHTML = st.map(function (s) { return '<span><span class="dot" style="background:' + (COL[s.short] || '#fff') + '"></span>' + s.short + ' <i>' + Math.round(s.alt) + ' km</i></span>'; }).join('') +
-      '<span>orbits: ' + (el2.from.indexOf('snapshot') >= 0 ? 'dated snapshot' : 'CelesTrak') + ', <i>' + (age < 48 ? age.toFixed(0) + ' h' : (age / 24).toFixed(0) + ' d') + ' old</i> · SGP4 in this browser</span>';
+    live.innerHTML = st.map(function (s) { return '<span title="' + (FULL[s.short] || s.short) + ', ' + Math.round(s.alt) + ' km up now"><span class="dot" style="background:' + (COL[s.short] || '#fff') + '"></span>' + s.short + ' <i>' + Math.round(s.alt) + ' km</i></span>'; }).join('') +
+      '<span title="positions propagated with SGP4 in this browser, from ' + (el2.from.indexOf('snapshot') >= 0 ? 'a dated snapshot of the published orbital elements' : 'orbital elements fetched from CelesTrak') + '">computed here from orbits <i>' + (age < 48 ? age.toFixed(0) + ' h' : (age / 24).toFixed(0) + ' d') + ' old</i></span>';
   }
   setInterval(strip, 2000); document.addEventListener('vx:elements', strip);
 })();

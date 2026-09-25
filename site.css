@@ -62,7 +62,7 @@ body.vx {
 .alias { position: absolute; top: 0; left: 0; width: 1px; height: 1px; pointer-events: none; }
 
 /* ---------- verbs, the one convention ---------- */
-.v { font: 600 0.78em/1 var(--mono); letter-spacing: 0.02em; color: var(--ok); text-transform: lowercase; }
+.v { font: 600 max(10.5px, 0.78em)/1 var(--mono); letter-spacing: 0.02em; color: var(--ok); text-transform: lowercase; } /* the verb leads the line: never smaller than the text it leads */
 .v.is-claim { color: var(--claim); }
 .mono { font-family: var(--mono); }
 
@@ -79,7 +79,6 @@ body.vx {
 .vl i, .vl .x { font-style: normal; }
 .vl .live { font: 500 12.5px var(--mono); color: var(--ink-2); }
 .vl .kv { font: 400 12.5px var(--mono); color: var(--ink-3); margin-right: 10px; overflow-wrap: anywhere; }
-.vl .kv .k::after { content: '='; }
 .vl .kv .x { color: var(--ink-2); }
 
 /* ---------- top bar ---------- */
@@ -123,6 +122,9 @@ body.vx {
 .vx .btn-lit:hover { background: #fff; border-color: #fff; color: var(--void); }
 .btn-sm { height: 34px; padding: 0 12px; font-size: 12.5px; }
 .btn .v { color: inherit; font-size: 1em; opacity: .7; }
+/* a <button> and a link styled as one read in the same face: the verb stands out by weight, not by a second font */
+.vx button.btn { font: 500 14px var(--mono); letter-spacing: 0; }
+.vx button.btn-sm { font-size: 12.5px; }
 .chip {
   display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px; border-radius: 99px;
   border: 1px solid var(--line-2); background: transparent; cursor: pointer; color: var(--ink-2);
@@ -137,6 +139,10 @@ body.vx {
 
 /* ---------- section scaffold: a statement on one line, then the thing itself ---------- */
 .sec { position: relative; padding: clamp(44px, 5.5vw, 80px) 0; border-top: 1px solid var(--line); }
+/* a long page's own sections, in a row under its heading */
+.pf-idx { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 18px; }
+.pf-idx a { padding: 5px 11px; border: 1px solid var(--line-2); border-radius: 999px; font: 500 12px var(--mono); color: var(--ink-2); text-decoration: none; transition: color .2s, border-color .2s; }
+.pf-idx a:hover, .pf-idx a:focus-visible { color: var(--ink); border-color: var(--ink-3); }
 .sec h2 {
   margin: 0; font: 400 clamp(28px, 3.1vw, 44px)/1.08 var(--serif); letter-spacing: -0.018em;
 }
@@ -234,7 +240,6 @@ body.vx {
 .vlog li.is-fail .v { color: var(--fail); }
 .vlog li .n { color: var(--ink); }
 .vlog li .kv { font-style: normal; color: var(--ink-3); min-width: 0; overflow-wrap: anywhere; }
-.vlog li .kv .k::after { content: '='; }
 .vlog li .kv .x { color: var(--ink-2); }
 .vlog li .why { flex-basis: 100%; font-style: normal; color: var(--ink-3); }
 .vlog li em { margin-left: auto; font-style: normal; color: var(--ink-3); font-size: 11px; }
@@ -292,7 +297,6 @@ body.vx {
 .fl-line .n { color: var(--ink-2); }
 .fl-line .t { color: var(--ink); font: 400 15px var(--sans); }
 .fl-line .kv { font-style: normal; }
-.fl-line .kv .k::after { content: '='; }
 .fl-line .kv .x { color: var(--ink-2); }
 .fl-bar { position: relative; height: 5px; margin: 9px 0 2px; max-width: 520px; }
 .fl-bar i { position: absolute; left: 0; top: 0; height: 5px; border-radius: 3px; }
@@ -384,7 +388,6 @@ a.door:hover { background: var(--panel-2); }
 .chain h3 { margin: 0 0 6px; font: 400 28px/1.12 var(--serif); letter-spacing: -0.01em; }
 .ch-live { margin: 4px 0 0; font: 400 12.5px/1.65 var(--mono); color: var(--ink-3); }
 .ch-live .kv { font-style: normal; margin-right: 6px; overflow-wrap: anywhere; }
-.ch-live .kv .k::after { content: ': '; }
 .ch-live .kv .x { color: var(--ink); }
 .ch-live q.said { display: block; margin: 8px 0; font: 400 18px/1.4 var(--serif); color: var(--ink-2); quotes: '\201C' '\201D'; }
 .ch-live [data-mark].is-ok { color: var(--ok); }
@@ -416,7 +419,7 @@ a.door:hover { background: var(--panel-2); }
 .tiers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 .tier { display: flex; flex-direction: column; gap: 12px; padding: 22px; border: 1px solid var(--line); border-radius: var(--r); background: var(--deep); }
 .tier .price { font: 400 44px/1 var(--serif); letter-spacing: -0.02em; }
-.tier .price small { font: 500 12px var(--mono); color: var(--ink-3); margin-left: 6px; letter-spacing: 0; }
+.tier .price small { font: 500 12px var(--mono); color: var(--ink-3); letter-spacing: 0; }
 .tier h3 { margin: 0; font: 500 17px var(--sans); display: flex; gap: 10px; align-items: baseline; }
 .tier h3 .v { font-size: 13px; }
 .tier .vl > li { grid-template-columns: 4.4em minmax(0, 1fr); font-size: 13.5px; padding: 7px 0; }
@@ -612,6 +615,9 @@ body.vx.inner .btn-ghost, body.vx.inner .btn-quiet { background: transparent; co
 body.vx.inner .pillar, body.vx.inner .fact, body.vx.inner .step, body.vx.inner .res-item, body.vx.inner .qa-item, body.vx.inner .contact-card, body.vx.inner .contact-box, body.vx.inner .model, body.vx.inner .paper { background: #0a0f17; border-color: var(--line); box-shadow: none; }
 body.vx.inner .breadcrumb, body.vx.inner .breadcrumb a { color: var(--ink-3); font-family: var(--mono); font-size: 12px; }
 body.vx.inner .policy-page h1 { color: var(--ink); }
+body.vx.inner .policy-page .contact-card h3 { font: 500 16px/1.35 var(--sans); letter-spacing: 0; color: var(--ink); }
+body.vx.inner .policy-page .contact-card h3 .v { margin-right: 6px; }
+body.vx.inner .policy-page .contact-box strong { color: var(--ink); }
 body.vx.inner main a:not(.btn):not(.door):not(.prod) { color: var(--signal); }
 body.vx.inner svg [fill="#ffffff"], body.vx.inner svg [fill="#fff"] { fill: #0d131c; }
 
@@ -657,3 +663,5 @@ body.vx.inner svg [fill="#ffffff"], body.vx.inner svg [fill="#fff"] { fill: #0d1
 .log-list h3:first-child { margin-top: 0; }
 .log-list .log-d { display: block; margin-bottom: 4px; font: 500 11.5px var(--mono); color: var(--ink-3); letter-spacing: 0; }
 .vl code { overflow-wrap: anywhere; word-break: break-word; }
+/* phones: no scroll box inside the page. Agent B's log reads top to bottom, first step first */
+@media (max-width: 720px) { .ho-agent .vlog { max-height: none; overflow: visible; } }

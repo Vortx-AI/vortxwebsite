@@ -122,7 +122,7 @@
     var meta = el('p', 'sc-meta'); meta.appendChild(el('span', 'sc-saved')); if (x.kv.src) meta.appendChild(el('span', null, x.kv.src)); bd.appendChild(meta);
     bd.appendChild(el('p', 'sc-big', big(x)));
     var tk = num(x.kv.tok), rw = num(x.kv.raw), tl = el('p', 'sc-tok');
-    if (tk) { tl.appendChild(document.createTextNode('agent reads ')); tl.appendChild(el('b', null, tok(tk) + ' tokens')); tl.appendChild(document.createTextNode(' (its line ' + tok(count(line)) + ')')); }
+    if (tk) { tl.appendChild(document.createTextNode('agent reads ')); var tb = el('b', null, tok(tk) + ' context tokens'); tb.setAttribute('data-term', 'context tokens'); tl.appendChild(tb); tl.appendChild(document.createTextNode(' (the catalogue line: ' + tok(count(line)) + ')')); }
     if (tk && rw) tl.appendChild(document.createTextNode(' · source ' + tok(rw).slice(1) + ' as raw bytes · ' + Math.round(rw / tk).toLocaleString('en-US') + '× less'));
     bd.appendChild(tl);
     bd.appendChild(el('p', 'sc-verbs', ''));

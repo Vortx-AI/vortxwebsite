@@ -61,6 +61,7 @@
     verdict.className = 'run-verdict ' + (ok ? 'is-ok' : 'is-fail'); verdict.innerHTML = '';
     var b = document.createElement('b'); b.textContent = R.passed + '/' + R.checks + (ok ? ' ✓' : ' ✕'); verdict.appendChild(b);
     [out && out.fileB ? vx.fmtSize(out.fileB) + ' stayed put' : '', out && out.tb ? out.tb + ' bytes moved' : '', nt && rt ? Math.round(rt / nt).toLocaleString('en-US') + '× less to read' : ''].filter(Boolean).forEach(function (t) { var sp = document.createElement('span'); sp.textContent = t; verdict.appendChild(sp); });
+    (R.notes || []).forEach(function (t) { var sp = document.createElement('span'); sp.className = 'is-note'; sp.textContent = '! ' + t; verdict.appendChild(sp); });
     // the storyline under the hero ends on this result
     var sc = document.querySelector('.st [data-st="score"]');
     if (sc && R.checks) {

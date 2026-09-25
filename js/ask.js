@@ -18,13 +18,14 @@
   Asker.prototype.line = function (v, n, kv, state, ms) {
     var li = document.createElement('li'); li.className = 'is-' + (state || 'ok');
     li.innerHTML = '<b class="v"></b><span class="n"></span>'; li.firstChild.textContent = v; li.children[1].textContent = n;
-    Object.keys(kv || {}).forEach(function (k) { if (kv[k] == null || kv[k] === '') return; var i = document.createElement('i'); i.className = 'kv'; i.innerHTML = '<span class="k"></span><span class="x"></span>'; i.firstChild.textContent = k; i.lastChild.textContent = kv[k]; li.appendChild(i); });
+    Object.keys(kv || {}).forEach(function (k) { if (kv[k] == null || kv[k] === '') return; li.appendChild(vx.kv(k, kv[k])); });
     if (ms != null) { var e = document.createElement('em'); e.textContent = (ms / 1000).toFixed(1) + ' s'; li.appendChild(e); }
     this.out.log.appendChild(li); return li;
   };
   Asker.prototype.stage = function (j) {
     var d = j.detail || {}, ms = j.at_ms, o = this.out, self = this;
-    if (j.stage === 'located') { var p = d.place_resolved || {}; this.line('locate', p.label || 'place', { cell: d.cell }, 'ok', ms); }
+    // a name resolves to one cell about 10 m across; when that cell is a named spot, not the name asked, say so
+    if (j.stage === 'located') { var p = d.place_resolved || {}, other = p.input && p.label && p.label.toLowerCase().indexOf(p.input.toLowerCase()) !== 0; this.line('locate', p.label || 'place', { asked: other ? p.input : '', cell: d.cell, size: 'one cell, about 10 m' }, 'ok', ms); }
     else if (j.stage === 'routed') this.line('route', 'the question', { topics: (d.topics || []).slice(0, 4).join(', ') }, 'ok', ms);
     else if (j.stage === 'recalled') this.line('recall', 'signed facts', { facts: j.grounded_total, bands: (d.bands || []).length }, 'ok', ms);
     else if (j.stage === 'splat') {
@@ -41,8 +42,16 @@
     else if (j.stage === 'scored') this.line('score', 'derived values', { evaluated: d.evaluated, produced: d.produced_a_value }, 'ok', ms);
     else if (j.stage === 'answer') {
       var full = String(d.answer || '').replace(/\s*\(\+\d+ more signed readings\)/, '');
-      o.ans.textContent = full.length > 330 ? full.slice(0, full.lastIndexOf(',', 330)) + ' …' : full;
-      if (full.length > 330) { var mo = document.createElement('button'); mo.type = 'button'; mo.className = 'lk'; mo.textContent = ' read all'; mo.onclick = function () { o.ans.textContent = full; }; o.ans.appendChild(mo); }
+      // emem's own verdict sentence ("Scored: …") leads, word for word; the readings it rests on follow, in full on request
+      var sc = /Scored: .*?\.(?=\s|$)/.exec(full), lead = sc ? sc[0] : '', rest = sc ? (full.slice(0, sc.index) + full.slice(sc.index + lead.length)).replace(/\s+/g, ' ').trim() : full;
+      var paint = function (all) {
+        o.ans.textContent = '';
+        if (lead) { var b = document.createElement('b'); b.className = 'ask-lead'; b.textContent = lead; o.ans.appendChild(b); o.ans.appendChild(document.createTextNode(' ')); }
+        var cut = !all && rest.length > 260, body = cut ? rest.slice(0, Math.max(rest.lastIndexOf(',', 260), 120)) + ' …' : rest;
+        o.ans.appendChild(document.createTextNode(body));
+        if (cut) { var mo = document.createElement('button'); mo.type = 'button'; mo.className = 'lk'; mo.textContent = ' read all'; mo.onclick = function () { paint(true); }; o.ans.appendChild(mo); }
+      };
+      paint(false);
       var rc = d.receipt, v = rc && ememVerify.verifyReceipt(rc);
       this.line('verify', 'the answer’s receipt', { ed25519: v && v.ok ? 'valid' : 'unchecked', facts: (d.fact_cids || []).length }, v && v.ok ? 'ok' : 'skip', performance.now() - self.t0);
       var st = ((d.reasoning || {}).states || []).slice(-1)[0];

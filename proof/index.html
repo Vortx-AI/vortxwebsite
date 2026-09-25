@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" data-words="jzzyhv2svy3nlosrfyzkd72vey" data-words-size="11137" data-llms-size="6191">
+<html lang="en" dir="ltr" data-words="aojnzv3x2pt56tifin3xba2vnu" data-words-size="11570" data-llms-size="3651">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -28,17 +28,19 @@
     <div class="wrap">
       <a class="vx-brand" href="/" aria-label="Vortx AI home"><img src="/assets/vortx-logo.png" alt="" width="26" height="26"><span>vortx<b>.ai</b></span></a>
       <nav class="vx-nav" id="nav" data-nav aria-label="Primary">
-        <a href="/">home</a>
-        <a href="#handoff">hand off</a>
-        <a href="#encode">observers</a>
-        <a href="#tokens">tokens</a>
-        <a href="#files">files</a>
-        <a href="#trust">trust</a>
+        <a href="/#run">run</a>
+        <a href="/#connect">encode</a>
+        <a href="/#decode">decode</a>
+        <a href="/#samples">samples</a>
+        <a href="/#plan">plan</a>
+        <a href="/press/">news</a>
+        <a href="/#book">book</a>
+        <a href="/proof/" aria-current="true">proof</a>
         <a class="ext" href="https://emem.dev" target="_blank" rel="noopener">docs</a>
       </nav>
       <div class="vx-status">
-        <a href="https://emem.dev/v1/log/sth" target="_blank" rel="noopener" data-loghead hidden>log <span data-n></span> <span data-mark></span></a>
-        <a href="https://github.com/Vortx-AI/emem" target="_blank" rel="noopener" data-stars hidden></a>
+        <a href="https://emem.dev/v1/log/sth" target="_blank" rel="noopener" data-loghead hidden title="entries in emem’s signed, append-only log; its head’s ed25519 signature is checked in this browser">log <span data-n></span> <span data-mark></span></a>
+        <a href="https://github.com/Vortx-AI/emem" target="_blank" rel="noopener" data-stars hidden title="stars on GitHub for Vortx-AI/emem, read live"></a>
       </div>
       <button class="vx-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="nav">menu</button>
     </div>
@@ -54,6 +56,7 @@
             <li><b class="v">read</b><span class="n">each line: what was checked, and where it ran</span></li>
             <li><b class="v">return</b><span class="n">to <a class="lk" href="/">the overview</a> for what emem does</span></li>
           </ul>
+          <nav class="pf-idx" aria-label="On this page"><a href="#handoff">hand off</a><a href="#observers">observers</a><a href="#tokens">tokens</a><a href="#files">files</a><a href="#trust">trust chain</a></nav>
         </div>
       </div>
     </section>
@@ -134,6 +137,7 @@
 
     <!-- encode: every observer, from Mars to a Linux host -->
     <section class="sec sec-encode" id="encode" aria-labelledby="encode-h">
+      <span class="alias" id="observers" aria-hidden="true"></span>
       <span class="alias" id="encoders" aria-hidden="true"></span><span class="alias" id="segment" aria-hidden="true"></span><!-- older links land here -->
       <div class="wrap">
         <div class="sec-head">
@@ -297,7 +301,7 @@
             <div class="rc-what">
               <h3>Hardware roots <span>edge AI, trusted hosts, secure MCUs, phones</span></h3>
               <ul class="vl">
-                <li><b class="v">root</b><span class="n">each device key in a hardware root of trust</span></li>
+                <li><b class="v">root</b><span class="n">each device key in a hardware root of trust, once vendors publish their anchors</span></li>
                 <li><b class="v">wait</b><span class="n">for the first published vendor anchor; then the first emem:attestation</span></li>
               </ul>
             </div>
@@ -328,7 +332,7 @@
             <p class="tk-binds"><b class="v">binds</b> cell × band × time to the exact signed bytes</p>
             <code class="tk-tok">emem:fact:defi.zb493.yiwo.zcb4e:eheadieomxr2zusgh4nx7mfisrtme23ztjiluyrfve64xoap6hka</code>
             <ol class="vlog" aria-live="polite"></ol>
-            <p class="tk-foot"><span data-mark>waiting for view</span><button class="lk" type="button" data-recheck>check again</button></p>
+            <p class="tk-foot"><span data-mark>checks when it comes into view</span><button class="lk" type="button" data-recheck>check now</button></p>
           </li>
           <li class="tk" id="tk-cell" data-kind="cell" data-token="emem:cell:defi.zb43b.mAga.yiwU">
             <h3><code>emem:cell:</code> a bare place</h3>
@@ -336,21 +340,21 @@
             <code class="tk-tok">emem:cell:defi.zb43b.mAga.yiwU</code>
             <img class="tk-img" data-scene alt="Sentinel-2 true-colour view of the cell's surroundings at Europe's Spaceport, Kourou" width="256" height="256" hidden>
             <ol class="vlog" aria-live="polite"></ol>
-            <p class="tk-foot"><span data-mark>waiting for view</span><button class="lk" type="button" data-recheck>check again</button></p>
+            <p class="tk-foot"><span data-mark>checks when it comes into view</span><button class="lk" type="button" data-recheck>check now</button></p>
           </li>
           <li class="tk" id="tk-entity" data-kind="entity" data-token="emem:entity:5pitnkcnle3cq6yldbffj52zja">
             <h3><code>emem:entity:</code> one object, co-referred</h3>
             <p class="tk-binds"><b class="v">binds</b> an identity anchor, so two agents mean the same thing</p>
             <code class="tk-tok">emem:entity:5pitnkcnle3cq6yldbffj52zja</code>
             <ol class="vlog" aria-live="polite"></ol>
-            <p class="tk-foot"><span data-mark>waiting for view</span><button class="lk" type="button" data-recheck>check again</button></p>
+            <p class="tk-foot"><span data-mark>checks when it comes into view</span><button class="lk" type="button" data-recheck>check now</button></p>
           </li>
           <li class="tk" id="tk-bundle" data-kind="bundle" data-token="emem:bundle:y2k6h2laeo4libfsiebucdw4mu">
             <h3><code>emem:bundle:</code> a case, in one handle</h3>
             <p class="tk-binds"><b class="v">binds</b> which facts are cited; each fact still binds its own bytes</p>
             <code class="tk-tok">emem:bundle:y2k6h2laeo4libfsiebucdw4mu</code>
             <ol class="vlog" aria-live="polite"></ol>
-            <p class="tk-foot"><span data-mark>waiting for view</span><button class="lk" type="button" data-recheck>check again</button></p>
+            <p class="tk-foot"><span data-mark>checks when it comes into view</span><button class="lk" type="button" data-recheck>check now</button></p>
           </li>
           <li class="tk" id="tk-raster" data-kind="raster" data-token="emem:raster:23vfacx23nr3dwki6si4yrolmmp3wr6dtrhjxbw4rihiaafrpyga:s2.B08:20500:sw7lynliwyqfigyw6oqwso64wmulcumifqorfpfogkngjhsqzjpq">
             <h3><code>emem:raster:</code> a field, at native resolution</h3>
@@ -358,7 +362,7 @@
             <code class="tk-tok">emem:raster:23vfacx23nr3dwki6si4yrolmmp3wr6dtrhjxbw4rihiaafrpyga:s2.B08:20500:sw7lynliwyqfigyw6oqwso64wmulcumifqorfpfogkngjhsqzjpq</code>
             <canvas class="tk-img" data-grid aria-label="The verified near-infrared field, decoded in this browser" hidden></canvas>
             <ol class="vlog" aria-live="polite"></ol>
-            <p class="tk-foot"><span data-mark>waiting for view</span><button class="lk" type="button" data-recheck>check again</button></p>
+            <p class="tk-foot"><span data-mark>checks when it comes into view</span><button class="lk" type="button" data-recheck>check now</button></p>
           </li>
           <li class="tk" id="tk-cube" data-kind="cube" data-token="emem:cube:23vfacx23nr3dwki6si4yrolmmp3wr6dtrhjxbw4rihiaafrpyga:s2.B08:20500..20585:ganwwj25obuob3pp7pjtkd4awtihnluotdowe2cqtrj77af5qlna">
             <h3><code>emem:cube:</code> a field over time</h3>
@@ -366,42 +370,42 @@
             <code class="tk-tok">emem:cube:23vfacx23nr3dwki6si4yrolmmp3wr6dtrhjxbw4rihiaafrpyga:s2.B08:20500..20585:ganwwj25obuob3pp7pjtkd4awtihnluotdowe2cqtrj77af5qlna</code>
             <canvas class="tk-img" data-grid aria-label="The change between the two verified slices" hidden></canvas>
             <ol class="vlog" aria-live="polite"></ol>
-            <p class="tk-foot"><span data-mark>waiting for view</span><button class="lk" type="button" data-recheck>check again</button></p>
+            <p class="tk-foot"><span data-mark>checks when it comes into view</span><button class="lk" type="button" data-recheck>check now</button></p>
           </li>
           <li class="tk" id="tk-rasterset" data-kind="rasterset" data-token="emem:rasterset:sml5syqegico2sobfkxjp2o2twwepdwve7753ubkoa5n27y22rba:zu5p3u4r5n5uinu2ghwzjo2272ztjvnnf7cnlt7hiqwxo4cq3hhq">
             <h3><code>emem:rasterset:</code> a whole scene as one handle</h3>
             <p class="tk-binds"><b class="v">binds</b> several fields to the recipe that made them</p>
             <code class="tk-tok">emem:rasterset:sml5syqegico2sobfkxjp2o2twwepdwve7753ubkoa5n27y22rba:zu5p3u4r5n5uinu2ghwzjo2272ztjvnnf7cnlt7hiqwxo4cq3hhq</code>
             <ol class="vlog" aria-live="polite"></ol>
-            <p class="tk-foot"><span data-mark>waiting for view</span><button class="lk" type="button" data-recheck>check again</button></p>
+            <p class="tk-foot"><span data-mark>checks when it comes into view</span><button class="lk" type="button" data-recheck>check now</button></p>
           </li>
           <li class="tk" id="tk-trace" data-kind="trace" data-token="emem:trace:mxyer5c2oxn4ud3xqbtnaxcxhdv4kkxiu67q32inbwxgpa7r3s6a">
             <h3><code>emem:trace:</code> how a machine ran</h3>
             <p class="tk-binds"><b class="v">binds</b> an OS execution trace, signed by the device itself</p>
             <code class="tk-tok">emem:trace:mxyer5c2oxn4ud3xqbtnaxcxhdv4kkxiu67q32inbwxgpa7r3s6a</code>
             <ol class="vlog" aria-live="polite"></ol>
-            <p class="tk-foot"><span data-mark>waiting for view</span><button class="lk" type="button" data-recheck>check again</button></p>
+            <p class="tk-foot"><span data-mark>checks when it comes into view</span><button class="lk" type="button" data-recheck>check now</button></p>
           </li>
           <li class="tk" id="tk-attestation" data-kind="attestation" data-token="emem:attestation:">
             <h3><code>emem:attestation:</code> the hardware behind a key</h3>
             <p class="tk-binds"><b class="v">binds</b> a device key to the root of trust that vouched for it</p>
             <code class="tk-tok">emem:attestation:<span class="tk-none">no token minted yet</span></code>
             <ol class="vlog" aria-live="polite"></ol>
-            <p class="tk-foot"><span data-mark>waiting for view</span><button class="lk" type="button" data-recheck>check again</button></p>
+            <p class="tk-foot"><span data-mark>checks when it comes into view</span><button class="lk" type="button" data-recheck>check now</button></p>
           </li>
           <li class="tk" id="tk-state" data-kind="state" data-token="emem:state:6omzeryht75zyabeajuimcqzm7pzenvy3y6p4irwxdpt7x5ayimq">
             <h3><code>emem:state:</code> one stage of an answer's reasoning</h3>
             <p class="tk-binds"><b class="v">binds</b> the facts a stage grounded and the stage before it: a chain you can walk</p>
             <code class="tk-tok">emem:state:6omzeryht75zyabeajuimcqzm7pzenvy3y6p4irwxdpt7x5ayimq</code>
             <ol class="vlog" aria-live="polite"></ol>
-            <p class="tk-foot"><span data-mark>waiting for view</span><button class="lk" type="button" data-recheck>check again</button></p>
+            <p class="tk-foot"><span data-mark>checks when it comes into view</span><button class="lk" type="button" data-recheck>check now</button></p>
           </li>
           <li class="tk" id="tk-tree" data-kind="tree" data-token="emem:tree:wkxa7tcmw2orf7ujjf5yi66dhe#row=1">
             <h3><code>emem:tree:</code> one row of a huge file</h3>
             <p class="tk-binds"><b class="v">binds</b> a chunk to its note's signed root, in log<sub>2</sub>(n) hashes. Here: Webb's Cosmic Cliffs</p>
             <code class="tk-tok">emem:tree:wkxa7tcmw2orf7ujjf5yi66dhe#row=1</code>
             <ol class="vlog" aria-live="polite"></ol>
-            <p class="tk-foot"><span data-mark>waiting for view</span><button class="lk" type="button" data-recheck>check again</button></p>
+            <p class="tk-foot"><span data-mark>checks when it comes into view</span><button class="lk" type="button" data-recheck>check now</button></p>
           </li>
         </ol>
       </div>
@@ -460,9 +464,9 @@
           <li><b class="v">name</b><div><h3>Every fact by the blake3 of its bytes</h3><p class="ch-live"><a class="lk" href="#handoff">agent B re-hashed one above</a> · 52 characters, no truncation</p></div></li>
           <li><b class="v">sign</b><div><h3>Every answer with ed25519, verified offline</h3><p class="ch-live"><a class="lk" href="#tokens">every receipt on this page checked in this browser</a> · reference verifier <a class="lk" href="https://emem.dev/verify" target="_blank" rel="noopener">emem.dev/verify</a></p></div></li>
           <li><b class="v">log</b><div><h3>Every write into an append-only transparency log</h3><p class="ch-live" data-loghead hidden>RFC 6962 · entries <span data-n></span> · head <span data-mark></span></p></div></li>
-          <li><b class="v">witness</b><div><h3>Outside keys co-sign the log's head</h3><p class="ch-live" data-trust="witness"></p></div></li>
+          <li><b class="v">witness</b><div><h3>Outside keys co-sign the log as it grows</h3><p class="ch-live" data-trust="witness"></p></div></li>
           <li><b class="v">trace</b><div><h3>Every device write with the execution that made it</h3><p class="ch-live"><a class="lk" href="#tk-trace">one trace re-derived in this browser</a> · chain, root, cid, the device's own signature</p></div></li>
-          <li><b class="v">root</b><div><h3>Every device key to a hardware root of trust</h3><p class="ch-live" data-trust="device"></p></div></li>
+          <li><b class="v">root</b><div><h3>Next: every device key to a hardware root of trust</h3><p class="ch-live" data-trust="device"></p></div></li>
           <li><b class="v">tier</b><div><h3>Writes are tiered by reach. Reads are never gated.</h3><p class="ch-live" data-trust="tier"></p></div></li>
           <li><b class="v">score</b><div><h3>A public benchmark that prints its own losses</h3><p class="ch-live" data-trust="score"></p><p class="ch-live"><a class="lk" href="https://emem.dev/scoreboard" target="_blank" rel="noopener">emem.dev/scoreboard</a> · two heats, deliberately not drawn on one track</p></div></li>
         </ol>

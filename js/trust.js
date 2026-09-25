@@ -20,10 +20,9 @@
     el.innerHTML = '';
     parts.forEach(function (p) {
       if (p == null) return;
-      var i = document.createElement(p.q ? 'q' : 'i');
-      i.className = p.q ? 'said' : 'kv';
-      if (p.q) i.textContent = p.q;
-      else { i.innerHTML = '<span class="k"></span><span class="x"></span>'; i.firstChild.textContent = p[0]; i.lastChild.textContent = p[1]; }
+      var i;
+      if (p.q) { i = document.createElement('q'); i.className = 'said'; i.textContent = p.q; }
+      else i = vx.kv(p[0], p[1], el.classList.contains('ch-live') ? ': ' : '=');
       el.appendChild(i);
       el.appendChild(document.createTextNode(' '));
     });

@@ -45,7 +45,7 @@
     return out;
   }
   function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
-  function kvI(k, v) { var i = el('i', 'kv'); i.appendChild(el('span', 'k', k)); i.appendChild(el('span', 'x', v)); return i; }
+  function kvI(k, v) { return vx.kv(k, v); }
   function short(n) { if (n == null) return '?'; if (n >= 1e9) return (n / 1e9).toFixed(1) + 'B'; if (n >= 1e6) return (n / 1e6).toFixed(1) + 'M'; if (n >= 1e3) return (n / 1e3).toFixed(1) + 'k'; return String(Math.round(n)); }
 
   function summarise() {
@@ -56,13 +56,13 @@
     if (!sumEl) return;
     sumEl.innerHTML = '';
     [['count', ptr.length + ' pointers', 'in the live catalogue'], ['address', vx.fmtBytes(size), 'of files, left at their sources'],
-      ['read', '~' + short(tok) + ' tokens', 'to fetch every pointer note'], ['skip', '~' + short(raw) + ' tokens', 'the same bytes would cost as base64']]
+      ['read', '~' + short(tok) + ' context tokens', 'to fetch every pointer note'], ['skip', '~' + short(raw) + ' context tokens', 'the same bytes would cost as base64']]
       .forEach(function (r) {
         var li = el('li'); li.appendChild(el('b', 'v', r[0])); li.appendChild(el('span', 'n', r[1])); li.appendChild(el('span', 'd', r[2])); sumEl.appendChild(li);
       });
     var li = el('li', 'is-ratio'); li.appendChild(el('b', 'v', 'ratio'));
     li.appendChild(el('span', 'n', raw && tok ? Math.round(raw / tok).toLocaleString('en-US') + '×' : '?'));
-    li.appendChild(el('span', 'd', 'fewer tokens than handing a model the files; computed from the catalogue’s own tok and raw fields'));
+    li.appendChild(el('span', 'd', 'fewer context tokens than handing a model the files; computed from the catalogue’s own tok and raw fields'));
     sumEl.appendChild(li);
   }
 
@@ -88,7 +88,7 @@
       head.appendChild(el('b', 'v', x.verb));
       head.appendChild(el('span', 'n', x.kind));
       head.appendChild(el('span', 't', x.title || x.ref));
-      if (x.size) head.appendChild(kvI('size', vx.fmtBytes(x.size)));
+      if (x.size) head.appendChild(kvI('size', vx.fmtSize(x.size)));
       if (x.kv.hashed) head.appendChild(kvI('hashed', x.kv.hashed));
       if (x.kv.src) head.appendChild(kvI('src', x.kv.src));
       if (x.tok) head.appendChild(kvI('tok', '~' + short(x.tok)));
@@ -97,7 +97,7 @@
       if (x.raw && x.tok) {
         var bar = el('div', 'fl-bar'), mx = Math.log10(x.raw), ti = el('i', 'fl-tok'), ri = el('i', 'fl-raw');
         ri.style.width = '100%'; ti.style.width = Math.max(0.8, 100 * Math.log10(Math.max(1, x.tok)) / mx).toFixed(1) + '%';
-        bar.appendChild(ri); bar.appendChild(ti); bar.title = 'log10 tokens: raw bytes vs the pointer note';
+        bar.appendChild(ri); bar.appendChild(ti); bar.title = 'log10 context tokens: raw bytes vs the pointer note';
         li.appendChild(bar);
       }
       var acts = el('div', 'fl-acts');

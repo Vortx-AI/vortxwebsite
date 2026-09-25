@@ -1,0 +1,18 @@
+# vortx.ai: every way to plug in emem
+
+> A rung of https://vortx.ai/llms.txt: each client, registry, marketplace and SDK that reaches emem, with the exact line to use. Verbs first: each line reads `verb noun ref key=value`. None needs a key.
+
+## plug
+call      emem            https://emem.dev/mcp  transport=streamable-http  key=none  account=none
+mention   @emem           ChatGPT app  https://chatgpt.com/plugins/plugin_asdk_app_6a6a0832a59081918b19aec0ddf9ec77
+add       emem            Claude Code  `claude mcp add --transport http emem https://emem.dev/mcp` · Claude: add https://emem.dev/mcp as a custom connector
+connect   emem            Salesforce Agentforce, as a remote MCP server  url=https://emem.dev/mcp  key=none  how=https://www.salesforce.com/agentforce/mcp-support/
+install   emem            GitHub MCP Registry, one click for VS Code and Copilot  https://github.com/mcp/Vortx-AI/emem
+configure emem            .vscode/mcp.json  {"servers":{"emem":{"type":"http","url":"https://emem.dev/mcp"}}}
+list      emem            official MCP registry  io.github.Vortx-AI/emem
+plug      emem            Dify marketplace, every tool, no key  https://marketplace.dify.ai/plugin/vortx-ai/emem
+govern    emem            MuleSoft Anypoint Exchange, the Vortx AI MCP Server asset  https://anypoint.mulesoft.com/exchange/68e53915-e89b-4e82-b794-12d37982db4c/vortxAi-asset/
+install   sdk             `pip install ememdev` · `npm i @vortxai/emem`
+talk      a2a             card=https://emem.dev/.well-known/agent-card.json  run=POST https://emem.dev/a2a/tasks  async=POST https://emem.dev/v1/a2a/tasks
+hand      a2a             this site's own card https://vortx.ai/.well-known/agent-card.json  protocol=A2A 1.0  tasks run on emem.dev
+join      agora           https://emem.dev/a2a  inbox=POST https://emem.dev/v1/inbox {"to":"<your-pubkey8>"}

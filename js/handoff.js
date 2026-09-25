@@ -42,15 +42,12 @@
     var keys = SHOW[m.verb] || Object.keys(m.kv);
     keys.forEach(function (k) {
       if (m.kv[k] === undefined || m.kv[k] === null || m.kv[k] === '') return;
-      var i = document.createElement('i'); i.className = 'kv';
-      var kk = document.createElement('span'); kk.className = 'k'; kk.textContent = k;
-      var vv = document.createElement('span'); vv.className = 'x'; vv.textContent = fmt(k, m.kv[k]);
-      i.appendChild(kk); i.appendChild(vv); li.appendChild(i);
+      li.appendChild(vx.kv(k, fmt(k, m.kv[k])));
     });
     if (m.kv.why && keys.indexOf('why') < 0) { var w = document.createElement('i'); w.className = 'why'; w.textContent = m.kv.why; li.appendChild(w); }
     if (typeof m.t === 'number') { var t = document.createElement('em'); t.textContent = m.t + ' ms'; li.appendChild(t); }
     log.appendChild(li);
-    log.scrollTop = log.scrollHeight;
+    if (log.scrollHeight > log.clientHeight + 1) log.scrollTop = log.scrollHeight; // a desktop log box follows its newest line
     return li;
   }
   function clear(log) { while (log.firstChild) log.removeChild(log.firstChild); }
@@ -129,6 +126,8 @@
   }
   function finish(ok, m) {
     state.running = false; goBtn.disabled = !state.token;
+    // it ran once on its own as it came into view; from here the button runs it again
+    if (goBtn.lastChild && goBtn.lastChild.nodeType === 3) goBtn.lastChild.textContent = ' off again';
     if (state.worker) { state.worker.terminate(); state.worker = null; }
     if (!m) return;
     var x = m.extra || {};
@@ -266,7 +265,7 @@
     ];
     var claim = f.band + '=' + f.value + ' ' + tok;
     reasonEl.innerHTML = '<ul class="vl">' + rows.map(function (r) {
-      return '<li><b class="v">' + r[0] + '</b><span class="n">' + r[1] + ' ' + r[2].map(function (p) { return '<i class="kv"><span class="k">' + p[0] + '</span><span class="x">' + String(p[1]).replace(/[<&]/g, function (c) { return c === '<' ? '&lt;' : '&amp;'; }) + '</span></i>'; }).join(' ') + '</span></li>';
+      return '<li><b class="v">' + r[0] + '</b><span class="n">' + r[1] + ' ' + r[2].map(function (p) { return '<i class="kv"><span class="k">' + p[0] + '</span>=<span class="x">' + String(p[1]).replace(/[<&]/g, function (c) { return c === '<' ? '&lt;' : '&amp;'; }) + '</span></i>'; }).join(' ') + '</span></li>';
     }).join('') + '</ul><p class="lg-foot">claim + citation: ' + vx.group(vx.enc.encode(claim).length) + ' bytes of context' + (src ? ' · imagery left in the archive: ' + vx.fmtBytes(src) : '') + '</p>';
   }
 

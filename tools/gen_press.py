@@ -41,6 +41,26 @@ def link(p):
     return f'<a class="lk" href="{esc(p["u"])}"' + (' target="_blank" rel="noopener"' if ext else "") + f'>{esc(p["t"])}{" ↗" if ext else ""}</a>'
 
 
+def dims(src, fallback):
+    """A picture's real width and height, read from its WebP or PNG header, so the page reserves the right box."""
+    try:
+        b = (ROOT / src.lstrip("/")).read_bytes()[:64]
+    except OSError:
+        return fallback
+    if b[:4] == b"RIFF" and b[8:12] == b"WEBP":
+        c = b[12:16]
+        if c == b"VP8 ":
+            return int.from_bytes(b[26:28], "little") & 0x3FFF, int.from_bytes(b[28:30], "little") & 0x3FFF
+        if c == b"VP8L":
+            v = int.from_bytes(b[21:25], "little")
+            return (v & 0x3FFF) + 1, ((v >> 14) & 0x3FFF) + 1
+        if c == b"VP8X":
+            return int.from_bytes(b[24:27], "little") + 1, int.from_bytes(b[27:30], "little") + 1
+    if b[:8] == b"\x89PNG\r\n\x1a\n":
+        return int.from_bytes(b[16:20], "big"), int.from_bytes(b[20:24], "big")
+    return fallback
+
+
 def mmss(sec):
     sec = int(sec or 0)
     return f"{sec // 60}:{sec % 60:02d}" if sec else ""
@@ -50,8 +70,9 @@ def player(v, big=False):
     """A thumbnail that becomes the platform's player on click; no third-party frame until then."""
     kind = "audio" if v.get("src") else "embed"
     url = v.get("src") or v["embed"]
+    w, h = dims(v["thumb"], (960, 540))
     return (f'<button class="vd{" vd-lg" if big else ""}{" vd-au" if kind == "audio" else ""}" type="button" data-{kind}="{esc(url)}" aria-label="Play: {esc(v["title"])}, on {esc(v["platform"])}">'
-            f'<img src="{esc(v["thumb"])}" alt="" loading="lazy" decoding="async" width="960" height="540">'
+            f'<img src="{esc(v["thumb"])}" alt="" loading="lazy" decoding="async" width="{w}" height="{h}">'
             f'<span class="vd-p" aria-hidden="true"></span>'
             + (f'<span class="vd-t">{mmss(v.get("duration"))}</span>' if v.get("duration") else "")
             + "</button>")
@@ -100,7 +121,7 @@ def entry(e):
     if e.get("video") or e.get("audio"):
         out.append('<figure class="tl-im">' + player(e.get("video") or e["audio"]) + "</figure>")
     elif e.get("img"):
-        out.append(f'<figure class="tl-im"><a href="{esc(e["img"])}" target="_blank" rel="noopener"><img src="{esc(e["img"])}" alt="{esc(e.get("alt", ""))}" loading="lazy" decoding="async" width="1280" height="800"></a></figure>')
+        out.append(f'<figure class="tl-im"><a href="{esc(e["img"])}" target="_blank" rel="noopener"><img src="{esc(e["img"])}" alt="{esc(e.get("alt", ""))}" loading="lazy" decoding="async" width="{dims(e["img"], (1280, 800))[0]}" height="{dims(e["img"], (1280, 800))[1]}"></a></figure>')
     elif e.get("card"):
         out.append('<div class="tl-card" aria-hidden="true">' + "".join(f"<code>{esc(c)}</code>" for c in e["card"]) + "</div>")
     out.append("</li>")

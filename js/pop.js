@@ -42,9 +42,13 @@
   function thumbs() {
     return thumbsP || (thumbsP = fetch('/data/thumbs.json').then(function (r) { return r.json(); }).then(function (j) { var m = {}; (j.thumbs || []).forEach(function (t) { if (t.record) m[t.record] = t; }); return m; }).catch(function () { return {}; }));
   }
+  // the saved picture stays in front when there is one; a single decoded picture rides beside it as an inset,
+  // proof that these bytes were read and drawn here, and a click on it brings it forward
+  function simple() { return live.children.length === 1 && /^(CANVAS|IMG|VIDEO)$/.test(live.firstChild.tagName); }
   function view(v) {
-    var isLive = v === 'live' && live.firstChild;
-    live.hidden = !isLive; pic.hidden = !!isLive; tag.hidden = !isLive; mt.hidden = !live.firstChild;
+    var isLive = v === 'live' && live.firstChild, inset = !isLive && live.firstChild && !pic.classList.contains('is-none') && !!pic.style.backgroundImage && simple();
+    live.hidden = !isLive && !inset; live.classList.toggle('is-inset', !!inset); pic.hidden = !!isLive; tag.hidden = !isLive; mt.hidden = !live.firstChild;
+    if (inset) { live.title = 'decoded here from the checked bytes: open it'; live.setAttribute('role', 'button'); live.tabIndex = 0; } else { live.removeAttribute('title'); live.removeAttribute('role'); live.removeAttribute('tabindex'); }
     mt.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-v') === (isLive ? 'live' : 'saved') ? 'true' : 'false'); });
   }
   function clearLive() {
@@ -54,7 +58,9 @@
   }
   function show(node, t) {
     clearLive(); live.appendChild(node); tag.textContent = t || '';
-    view('live');
+    // with a saved picture to show, a single decoded picture waits as an inset; anything richer comes forward
+    var hasPic = !pic.classList.contains('is-none') && !!pic.style.backgroundImage;
+    view(hasPic && simple() ? 'saved' : 'live');
   }
   // the result first: how many checks passed, here, and how much less an agent reads
   function verdict(R, done) {
@@ -64,6 +70,7 @@
     v.appendChild(el('b', null, done ? R.passed + '/' + R.checks + (R.passed === R.checks ? ' ✓' : ' ✕') : 'checking ' + R.passed + '/' + R.checks));
     v.appendChild(el('span', null, done ? 'checked in your browser' : 'in your browser, now'));
     if (nt && rt) v.appendChild(el('span', null, Math.round(rt / nt).toLocaleString('en-US') + '× less to read'));
+    if (done) (R.notes || []).forEach(function (t) { v.appendChild(el('span', 'is-note', '! ' + t)); });
   }
   function num(v) { var m = String(v || '').replace('~', '').match(/^([\d.]+)([kMB]?)$/); return m ? parseFloat(m[1]) * ({ '': 1, k: 1e3, M: 1e6, B: 1e9 })[m[2]] : null; }
   function big(k) {
@@ -76,6 +83,10 @@
     return '';
   }
 
+  // a unit as people write it; the value beside it stays exactly as signed
+  var UNIT = { degC: '°C', 'ug/m^3': 'µg/m³', 'm^3/m^3': 'm³/m³', metres_above_sea_level: 'm above sea level', percent_canopy_cover: '% canopy cover', percent: '%', lccs_class: 'LCCS class' };
+  function unit(u) { return UNIT[u] || u.replace(/_/g, ' '); }
+
   /* the panels a note's own data fills: readings to tap and check, files to scale */
   function readings(facts) {
     data.innerHTML = ''; if (!facts.length) return;
@@ -86,7 +97,7 @@
       var b = el('button', 'sp-rd'); b.type = 'button'; if (i >= 8) b.hidden = true;
       var cut = f.value.indexOf('.') >= 0 ? f.value.indexOf('.') + 4 : f.value.length, v = el('b', null, f.value.slice(0, cut));
       if (f.value.length > cut) v.appendChild(el('span', 'sp-tail', f.value.slice(cut)));
-      if (f.unit) v.appendChild(el('small', null, ' ' + f.unit.replace(/_/g, ' ')));
+      if (f.unit) v.appendChild(el('small', null, ' ' + unit(f.unit)));
       b.appendChild(el('span', 'k', f.label)); b.appendChild(v); b.appendChild(el('i', null, f.band));
       b.title = f.token; b.setAttribute('data-cid', f.cid);
       b.addEventListener('click', function () {
@@ -141,7 +152,7 @@
       data: function (kind, v) {
         if (g !== gen) return;
         if (kind === 'readings') readings(v); else if (kind === 'files') files(v);
-        else if (kind === 'outside') v.forEach(function (c) { var b = data.querySelector('.sp-rd[data-cid="' + c + '"]'); if (b) { b.classList.add('is-out'); b.hidden = false; } });
+        else if (kind === 'outside' || kind === 'newer') v.forEach(function (c) { var b = data.querySelector('.sp-rd[data-cid="' + c + '"]'); if (b) { b.classList.add(kind === 'newer' ? 'is-newer' : 'is-out'); b.hidden = false; } });
       }
     });
     var mine = R, mo = new MutationObserver(function () { if (g === gen) verdict(mine, false); });
@@ -217,6 +228,8 @@
   $('.sp-prev').addEventListener('click', function () { step(-1); });
   $('.sp-next').addEventListener('click', function () { step(1); });
   mt.addEventListener('click', function (e) { var b = e.target.closest('button'); if (b && !b.disabled) view(b.getAttribute('data-v')); });
+  live.addEventListener('click', function () { if (live.classList.contains('is-inset')) view('live'); });
+  live.addEventListener('keydown', function (e) { if ((e.key === 'Enter' || e.key === ' ') && live.classList.contains('is-inset')) { e.preventDefault(); view('live'); } });
   $('[data-sp-again]').addEventListener('click', function () { paint(); });
   $('[data-sp-copy]').addEventListener('click', function () {
     var b = $('[data-sp-copy]');
@@ -227,7 +240,8 @@
     var it = x, b = $('[data-sp-ask]'); if (!it || !it.at || !asker) return;
     var q = /timelapse/.test(it.kind) ? 'how has this place changed' : /forest/.test(it.kind) ? 'has the forest changed here' : 'what is this place like';
     var place = it.at[0].toFixed(3) + ',' + it.at[1].toFixed(3), mine = gen;
-    askBox.hidden = false; $('[data-sp-q]').textContent = '“' + q + '” · ' + it.at[0].toFixed(3) + ', ' + it.at[1].toFixed(3) + ' · live from emem.dev';
+    // the note is a dated snapshot; the answer is today's memory at this place, so its numbers can differ, each with its own date
+    askBox.hidden = false; $('[data-sp-q]').textContent = '“' + q + '” · ' + it.at[0].toFixed(3) + ', ' + it.at[1].toFixed(3) + ' · live from emem.dev, today: readings can be newer than the note’s, and each says when it was measured';
     b.disabled = true; b.innerHTML = '<span class="v">asking</span> @emem…';
     askBox.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
     asker.ask(q, place).then(function () {

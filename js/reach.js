@@ -117,7 +117,7 @@
         if (!line) return;
         var kv = {}; line.replace(/(\w+)=(\S+)/g, function (_, k, v) { kv[k] = v; });
         var meta = el.querySelector('[data-ptr-meta]');
-        if (meta) meta.textContent = [kv.size || (kv.files ? kv.files + ' files' : ''), kv.src ? 'at ' + kv.src : '', kv.tok ? '→ note ' + kv.tok.replace('~', '≈') + ' tokens' : ''].filter(Boolean).join(' ');
+        if (meta) meta.textContent = [kv.size ? kv.size.replace(/(\d)([KMGT]?B)$/, '$1 $2') : (kv.files ? kv.files + ' files' : ''), kv.src ? 'at ' + kv.src : '', kv.tok ? '→ note ' + kv.tok.replace('~', '≈') + ' context tokens' : ''].filter(Boolean).join(' ');
         var t = el.querySelector('[data-ptr-title]');
         if (t && kv.t) t.textContent = kv.t.replace(/_/g, ' ').replace(/,/g, ', ');
       });
@@ -146,9 +146,7 @@
         li.children[1].textContent = s.short;
         [['id', s.cospar], ['launch', n ? '#' + n + ' of ' + s.cospar.slice(0, 4) : null], ['date', r.LAUNCH_DATE], ['from', (cat.sites || {})[r.LAUNCH_SITE] || r.LAUNCH_SITE]].forEach(function (p) {
           if (!p[1]) return;
-          var i = document.createElement('i'); i.className = 'kv';
-          i.innerHTML = '<span class="k"></span><span class="x"></span>'; i.firstChild.textContent = p[0]; i.lastChild.textContent = p[1];
-          li.children[1].appendChild(document.createTextNode(' ')); li.children[1].appendChild(i);
+          li.children[1].appendChild(document.createTextNode(' ')); li.children[1].appendChild(vx.kv(p[0], p[1]));
         });
         box.appendChild(li);
       });

@@ -1,0 +1,18 @@
+# vortx.ai: the pages
+
+> A rung of https://vortx.ai/llms.txt: every page and section, and what it does. Verbs first: each line reads `verb noun ref key=value`. People and agents read the same structure; each line mirrors one section.
+
+## pages
+see       /                 the live Earth; @emem decodes one signed fact per visit: Cubbon Park, Bengaluru, NDVI
+run       /#run             six devices, one published sample each, run end to end in the browser
+encode    /#connect         your file, hashed on your device, nothing uploaded; tools/emem_point.py for the device
+decode    /#decode          ask @emem; catch a drifted number; @emem in ChatGPT, Claude, Agentforce, Dify, VS Code
+plug      /#plug            every way in, each asked live as the page loads: MCP tools/list, both A2A cards, REST with its ed25519 checked, the OpenAPI spec, the SDKs' newest releases
+browse    /#samples         the ememdemo catalogue: Earth, Space, Machines; each note re-checked as it loads
+open      /?s=<cid>         any sample, opened on the page (a globe pin, a card): it runs end to end, its picture drawn from bytes checked here
+news      /press/           every release, upgrade and listing, dated; each date re-read live from the record that owns it; images and facts for press; as data: /data/timeline.json
+watch     /press/#watch     the story on camera from the Seraphim Space pitch (Vimeo, 19 Jun 2025), in five chapters; each video dated by its platform; as data: videos in /data/timeline.json
+plan      /#plan            the satellite plan, deliberately without a date
+book      /#book            team time; the protocol is free
+check     /proof/           every check, step by step: handoff, observers, token family, files, trust chain
+read      /emem/ protocol · /geo-qa/ private tenancy · /eudr/ · /propcheck/ · /trust/ · /spatial-ai/ glossary · /research/ · /press/ newsroom

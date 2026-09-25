@@ -107,8 +107,8 @@ Put two things side by side, at the same scale.
 ### find
 What a check turned up.
 
-### note
-A caveat to read before relying on a result.
+### caution
+A limit to read before relying on a result.
 
 ### say
 State plainly, every time, what was checked and what was not.
@@ -329,6 +329,12 @@ Held until something outside happens first.
 ### write
 Send us a message.
 
+### fix
+Tell us what broke; a person answers and puts it right.
+
+### book
+Reserve time with the team: office hours are free; integration and sovereign sessions are paid.
+
 ### pitch
 Present Vortx AI to investors and the world.
 
@@ -405,7 +411,11 @@ Also.
 ## terms
 
 ### token
-A short string, a few dozen bytes, that names one signed thing: emem:kind:id.
+A short string, a few dozen bytes, that names one signed thing: emem:kind:id. Not the unit a model counts; that is a context token.
+
+### context tokens
+also: context token
+The unit a language model reads and is billed by, about four characters of text each. An emem token costs a few dozen of them; the file it names would cost millions.
 
 ### note
 A small text file that describes a big file: where it lives, its chunks and their hashes. The note travels; the file stays.
