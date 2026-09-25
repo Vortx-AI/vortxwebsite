@@ -28,7 +28,7 @@
       if (p.length < 3 || !/^[a-z2-7]{26}$/.test(p[2])) return;
       var kv = {}; p.slice(3).forEach(function (x) { var i = x.indexOf('='); if (i > 0) kv[x.slice(0, i)] = x.slice(i + 1); });
       var at = (kv.at || '').split(',').map(Number);
-      out.push({ sec: sec, verb: p[0], kind: p[1], cid: p[2], kv: kv, title: (kv.t || '').replace(/_/g, ' ').replace(/,(?=\S)/g, ', '), at: at.length === 2 && at.every(isFinite) ? at : null });
+      out.push({ sec: sec, line: l.trim(), verb: p[0], kind: p[1], cid: p[2], kv: kv, title: (kv.t || '').replace(/_/g, ' ').replace(/,(?=\S)/g, ', '), at: at.length === 2 && at.every(isFinite) ? at : null });
     });
     return out;
   }
@@ -55,12 +55,15 @@
       if (!c.getAttribute('href')) c.setAttribute('href', NOTE(cid));
       var meta = c.querySelector('[data-meta]');
       if (meta) {
-        var parts = [];
-        if (x.kv.size) parts.push(x.kv.size.replace(/(\d)([A-Z])/, '$1 $2') + ' at source');
-        else if (x.kv.frames) parts.push(x.kv.frames + ' frames' + (x.kv.years ? ' · ' + x.kv.years.replace('-', '–') : ''));
-        if (x.kv.tok) parts.push('agent reads <b>' + x.kv.tok.replace('~', '≈') + ' tokens</b>');
+        // the ememdemo token line, from the catalogue's own fields
+        var parts = [], tk = num(x.kv.tok), rw = num(x.kv.raw);
+        if (x.kv.size) parts.push(x.kv.size.replace(/(\d)([A-Z])/, '$1 $2'));
+        else if (x.kv.years) parts.push(x.kv.years.replace('-', '–'));
+        if (tk) parts.push('agent reads <b>' + x.kv.tok + ' tokens</b>');
+        if (tk && rw) parts.push(Math.round(rw / tk).toLocaleString('en-US') + '× less');
         meta.innerHTML = parts.join(' · ');
       }
+      checkNote(c, cid);
     });
     tick();
     // the three verbs below the hero use one real file from the same catalogue
@@ -76,6 +79,17 @@
     }
   }).catch(function () {});
 
+  function num(v) { var m = String(v || '').replace('~', '').match(/^([\d.]+)([kMB]?)$/); return m ? parseFloat(m[1]) * ({ '': 1, k: 1e3, M: 1e6, B: 1e9 })[m[2]] : null; }
+  // each card re-checks its note as the page loads: base32(blake3(bytes)[0:16]) must equal its name
+  function checkNote(c, cid) {
+    var body = c.querySelector('.hc-body'); if (!body) return;
+    var b = document.createElement('i'); b.className = 'hc-ck'; b.textContent = 'checking'; body.appendChild(b);
+    vx.getBytes(NOTE(cid)).then(function (r) {
+      var ok = vx.cid26(r.bytes) === cid;
+      b.textContent = ok ? '✓ note' : '✗ name lies'; b.className = 'hc-ck ' + (ok ? 'is-ok' : 'is-bad');
+      b.title = ok ? 'this note hashes to its name, checked in your browser' : 'the bytes do not hash to the name';
+    }).catch(function () { b.textContent = 'unreachable'; b.title = 'not checked: emem.dev could not be reached, which is not a failed check'; });
+  }
   function nearestOnRect(r, p) {
     var x = Math.max(r.left, Math.min(p.x, r.right)), y = Math.max(r.top, Math.min(p.y, r.bottom));
     if (x > r.left && x < r.right && y > r.top && y < r.bottom) {
@@ -174,7 +188,11 @@
       var cb = new Uint8Array(await (await fetch(EMEM + '/v1/facts/' + f.fact_cid, { headers: { accept: 'application/cbor' } })).arrayBuffer());
       var hashOk = vx.cid52(cb) === f.fact_cid, v = ememVerify.verifyReceipt(res.receipt), sigOk = v.ok && (res.receipt.fact_cids || []).indexOf(f.fact_cid) >= 0;
       var src = (vx.cborDecode(cb).sources || [])[0] || {}, sat = (String(src.id || '').match(/S2[ABC]/) || [''])[0];
-      set('val', (+f.value).toFixed(3));
+      // printed verbatim: an agent that writes 0.756 has rounded, and echo_verify says so
+      var vs = String(f.value), cut = vs.indexOf('.') >= 0 ? vs.indexOf('.') + 4 : vs.length, ve = card.querySelector('[data-d="val"]');
+      ve.textContent = ''; ve.appendChild(document.createTextNode(vs.slice(0, cut)));
+      var tail = document.createElement('span'); tail.className = 'hd-tail'; tail.textContent = vs.slice(cut); ve.appendChild(tail);
+      ve.title = 'the signed value, verbatim: ' + vs;
       var mt = card.querySelector('[data-d="meta"]'); mt.textContent = '';
       [place, [day(src.captured_at), sat ? 'Sentinel-' + sat.slice(1) : ''].filter(Boolean).join(' · ')].forEach(function (t, i) { if (i) mt.appendChild(document.createTextNode(' · ')); var sp = document.createElement('span'); sp.textContent = t; mt.appendChild(sp); });
       var ck = card.querySelector('[data-d="check"]');

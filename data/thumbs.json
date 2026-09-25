@@ -1,0 +1,286 @@
+{
+ "schema": "vortx.thumbs.v1",
+ "note": "Each picture on vortx.ai is the exact image carried by an ememdemo thumb.v1 note (data:image/webp line), not a re-encode. The page re-checks each one as it comes into view: the thumb note must hash to its name, its of: must equal the record's link, and its image bytes must equal the file here.",
+ "from": "https://vortx-ai.github.io/ememdemo/",
+ "thumbs": [
+  {
+   "of": "https://emem.dev/memories/by_attester/ddzmyzhn/wkxa7tcmw2orf7ujjf5yi66dhe.md",
+   "record": "wkxa7tcmw2orf7ujjf5yi66dhe",
+   "title": "Cosmic Cliffs, Carina",
+   "thumb": "cewrfxewtujjvuibt35yhk6hwi",
+   "frames": 1,
+   "file": "/assets/observations/wkxa7tcmw2orf7ujjf5yi66dhe.webp",
+   "blake3": "odtlfqz23s5w5zgqnyjnuiswwy7wvvr7i4koshezveh2fxhunnbq"
+  },
+  {
+   "of": "https://emem.dev/memories/by_attester/ddzmyzhn/gkc2jap4r47zgs4t2sja4qderu.md",
+   "record": "gkc2jap4r47zgs4t2sja4qderu",
+   "title": "Amazon frontier, 2017–2025",
+   "thumb": "nvps75wnuzshrb7moubmggfzom",
+   "frames": 5,
+   "file": "/assets/observations/gkc2jap4r47zgs4t2sja4qderu.webp",
+   "blake3": "25eemyj56ge3alhnhbdqcwfjqa5622lqlos6dlezoigra3x5x2vq"
+  },
+  {
+   "of": "https://emem.dev/memories/by_attester/ddzmyzhn/7rn7fxbl75o5cijqpnok5oc7rq.md",
+   "record": "7rn7fxbl75o5cijqpnok5oc7rq",
+   "title": "Whirlpool galaxy, M51",
+   "thumb": "3iqb4mw7a2kesxoz5hmfro3mzm",
+   "frames": 1,
+   "file": "/assets/observations/7rn7fxbl75o5cijqpnok5oc7rq.webp",
+   "blake3": "knaws4zyuf5whbigcljvtlva7n53xs74duwry5mta4k6iqdegewa"
+  },
+  {
+   "of": "https://emem.dev/memories/by_attester/ddzmyzhn/twlpco5kin6qlz5eplt2pjm7n4.md",
+   "record": "twlpco5kin6qlz5eplt2pjm7n4",
+   "title": "Bengaluru, true colour",
+   "thumb": "kyibrkevfrxrplwej3iwpnx2sq",
+   "frames": 1,
+   "file": "/assets/observations/twlpco5kin6qlz5eplt2pjm7n4.webp",
+   "blake3": "6x7yb7rcyx3a3vozhdcrukbbhnum63eymv2dq3p2ydkt3geynkfq"
+  },
+  {
+   "of": "https://emem.dev/memories/by_attester/ddzmyzhn/fi67bt4rxkic3ssuag2v2hskly.md",
+   "record": "fi67bt4rxkic3ssuag2v2hskly",
+   "title": "Mars, December 2024",
+   "thumb": "2wxof63h5p3hrmzatw7mam2mom",
+   "frames": 1,
+   "file": "/assets/observations/fi67bt4rxkic3ssuag2v2hskly.webp",
+   "blake3": "jxt4mwjvfutysdqs4o4ap6ezdd4nqe6fz4d6oj2qe2zwwkit2uxa"
+  },
+  {
+   "of": "https://emem.dev/memories/by_attester/ddzmyzhn/jxz6pghlsjbohvx6s5iw6yek4m.md",
+   "record": "jxz6pghlsjbohvx6s5iw6yek4m",
+   "title": "Moon terrain, Kaguya",
+   "thumb": "ygonxs74yb2rwypbfmenzpi3wi",
+   "frames": 1,
+   "file": "/assets/observations/jxz6pghlsjbohvx6s5iw6yek4m.webp",
+   "blake3": "7bikr76oh77zmvtj5jzitfpa4fdnvoxyxadam4czz2eiwonuecka"
+  },
+  {
+   "of": "https://emem.dev/memories/by_attester/ddzmyzhn/ppdqanaf7ufpxedvwdrwuqhf5u.md",
+   "record": "ppdqanaf7ufpxedvwdrwuqhf5u",
+   "title": "The whole Earth's terrain, 30 GB of tiles",
+   "thumb": "nurixabv76sxwnyxfmmfl62sra",
+   "frames": 8,
+   "file": "/assets/observations/ppdqanaf7ufpxedvwdrwuqhf5u.webp",
+   "blake3": "cvxjqomwzrtrqyzfg4mwtntgjc5ajh5zygz7el5acojgotli2fma"
+  },
+  {
+   "of": "https://emem.dev/memories/by_attester/ddzmyzhn/o2iyw5aexedv7sneir7sgng4fm.md",
+   "record": "o2iyw5aexedv7sneir7sgng4fm",
+   "title": "Ozone, 41 years of a climate model",
+   "thumb": "5tzuj4g3ed4cwudrzgk3ym5pri",
+   "frames": 1,
+   "file": "/assets/observations/o2iyw5aexedv7sneir7sgng4fm.webp",
+   "blake3": "6lpkswcdp3q3oxx3uhzmk2lzoxzfpbmjf5mmesujk6pzrr2jo4qq"
+  },
+  {
+   "of": "https://emem.dev/memories/by_attester/ddzmyzhn/qfclw5qafxejoqabrtnjlqbvxu.md",
+   "record": "qfclw5qafxejoqabrtnjlqbvxu",
+   "title": "A train, as 3D Gaussian splats",
+   "thumb": "rfbykggvj6vl7rbhjv77r3leuq",
+   "frames": 1,
+   "file": "/assets/observations/qfclw5qafxejoqabrtnjlqbvxu.webp",
+   "blake3": "axkcrm6h5rjazqzkoikaryerxbkb34awjky6iygj63mscois7wta"
+  },
+  {
+   "of": "https://emem.dev/memories/by_attester/ddzmyzhn/ota6xerxrqzya5txb4jxvzpb2q.md",
+   "record": "ota6xerxrqzya5txb4jxvzpb2q",
+   "title": "Lahaina, before and after fire",
+   "thumb": "mygdg7gl4brrcrxoi6qznesmey",
+   "frames": 4,
+   "file": "/assets/observations/ota6xerxrqzya5txb4jxvzpb2q.webp",
+   "blake3": "rlrc74x5ieul7wz6tn4tqhmmm5sqjgahcmho7y4gc6rmqrws7dvq"
+  },
+  {
+   "of": "https://emem.dev/memories/by_attester/ddzmyzhn/dzhe5a7rsjtnmc35qqwxybys5u.md",
+   "record": "dzhe5a7rsjtnmc35qqwxybys5u",
+   "title": "Amazon forest loss since 2000",
+   "thumb": "36lovkga2wopyooowtwhxufb5e",
+   "frames": 1,
+   "file": "/assets/observations/dzhe5a7rsjtnmc35qqwxybys5u.webp",
+   "blake3": "4o3frhfo3j25rqziw64bev7zvwxbl66a6ln3uxbqaxejogwqafca"
+  },
+  {
+   "of": "https://emem.dev/memories/by_attester/ddzmyzhn/jnt6yrjflrxu3apgde37ykn55e.md",
+   "record": "jnt6yrjflrxu3apgde37ykn55e",
+   "title": "Phoenix: green vs heat",
+   "thumb": "ua4kwtok3hd7txfwxqf5m5nxna",
+   "frames": 1,
+   "file": "/assets/observations/jnt6yrjflrxu3apgde37ykn55e.webp",
+   "blake3": "nhp565u6etshizgy34w6h6v7mdummhdy5fpv2rewd5srmq3br3wa"
+  },
+  {
+   "of": "https://emem.dev/memories/by_attester/ddzmyzhn/2re7jfo2v34uwsqxkmpwxoxesu.md",
+   "record": "2re7jfo2v34uwsqxkmpwxoxesu",
+   "title": "Lion and impala, Kruger",
+   "thumb": "27hlpjpkxhpqc6hrdbhnrz4iyq",
+   "frames": 1,
+   "file": "/assets/observations/2re7jfo2v34uwsqxkmpwxoxesu.webp",
+   "blake3": "ullh4yewuchz4w523zbxlnsmg3y427xpifhujtoljmqp4dwcyzfq"
+  },
+  {
+   "of": "https://emem.dev/memories/by_attester/ddzmyzhn/fdobixnnucctqkn2qtii7kibyq.md",
+   "record": "fdobixnnucctqkn2qtii7kibyq",
+   "title": "Super Pit, Kalgoorlie",
+   "thumb": "pglleylcbtgdaqjnu6tp3tmyym",
+   "frames": 5,
+   "file": "/assets/observations/fdobixnnucctqkn2qtii7kibyq.webp",
+   "blake3": "fmgtnnn252xmmppgd6yo4j3gvjtk2zzyfwntja5rcma7kqcybogq"
+  },
+  {
+   "of": "https://emem.dev/memories/by_attester/ddzmyzhn/bafppksajtcekqt62r3thg3a5u.md",
+   "record": "bafppksajtcekqt62r3thg3a5u",
+   "title": "Maui fires, 50 cm",
+   "thumb": "svp56bfzcmzs46ejbnnozjwgke",
+   "frames": 1,
+   "file": "/assets/observations/bafppksajtcekqt62r3thg3a5u.webp",
+   "blake3": "bugicp3qbgb2ing4ocp7bdhyqzcgiersy4r4kqhs5lofu77od7aq"
+  },
+  {
+   "of": "https://emem.dev/memories/by_attester/ddzmyzhn/sm45gry43cubuqjp2cpu5bit6i.md",
+   "record": "sm45gry43cubuqjp2cpu5bit6i",
+   "title": "Okavango Delta, flood pulse",
+   "thumb": "ni7adlmokfnptpnhjjtitqcc4a",
+   "frames": 5,
+   "file": "/assets/observations/sm45gry43cubuqjp2cpu5bit6i.webp",
+   "blake3": "nqditi2epsyiluj4r7xnbg4s37td3blxk5fcpmsl4rpr7qcwtjna"
+  },
+  {
+   "of": "https://emem.dev/memories/by_attester/ddzmyzhn/ejvovl6sz7d3sugfcrwwie4rma.md",
+   "record": "ejvovl6sz7d3sugfcrwwie4rma",
+   "title": "Dry lake cracks, drone",
+   "thumb": "3bapl3e4yscg5uyf344h4uy55i",
+   "frames": 1,
+   "file": "/assets/observations/ejvovl6sz7d3sugfcrwwie4rma.webp",
+   "blake3": "3ojmkzypq3g2sz6cbwwlo7ken3zrbcjobkrb4muaswcbhviue6kq"
+  },
+  {
+   "of": "https://emem.dev/memories/by_attester/ddzmyzhn/gpnxkvkwz22ug4jeqexggiy63q.md",
+   "record": "gpnxkvkwz22ug4jeqexggiy63q",
+   "title": "Lusail, a city rising",
+   "thumb": "spx3yyqmt77lpp4nv4movoj434",
+   "frames": 5,
+   "file": "/assets/observations/gpnxkvkwz22ug4jeqexggiy63q.webp",
+   "blake3": "mypvjh5pciv3n4w4qzgu7f4f6lvduokxrznvddzvh5d5cdmgnf3a"
+  },
+  {
+   "of": "https://emem.dev/memories/by_attester/ddzmyzhn/cfbt6bctfgnfoun347mgobvkku.md",
+   "record": "cfbt6bctfgnfoun347mgobvkku",
+   "title": "Bengaluru: green vs heat",
+   "thumb": "vn4uunlwa2lr3gywzy6r47bcyy",
+   "frames": 1,
+   "file": "/assets/observations/cfbt6bctfgnfoun347mgobvkku.webp",
+   "blake3": "hy4ffkuam7656dwjvsgbqskrbxdywvjzggladltguuktjk3hnzvq"
+  },
+  {
+   "of": "https://emem.dev/memories/by_attester/ddzmyzhn/ia3cqu7ycf455mjs2vue33cnfi.md",
+   "record": "ia3cqu7ycf455mjs2vue33cnfi",
+   "title": "Cubbon Park, every layer",
+   "thumb": "qh6pp6xrolsy5dh5oepq47anwe",
+   "frames": 1,
+   "file": "/assets/observations/ia3cqu7ycf455mjs2vue33cnfi.webp",
+   "blake3": "kohqffjwra3xqpagxmou3yt2fx7bayi344doqh7behdjisl2h2pq"
+  },
+  {
+   "of": "https://emem.dev/memories/by_attester/ddzmyzhn/t7ebh6s6imxrwdmizebnw52nwe.md",
+   "record": "t7ebh6s6imxrwdmizebnw52nwe",
+   "title": "London street cameras",
+   "thumb": "o7rm7ykhf2zl2tizeo42efc57e",
+   "frames": 6,
+   "file": "/assets/observations/t7ebh6s6imxrwdmizebnw52nwe.webp",
+   "blake3": "5aqyaho5esrllyajdqjpy3zagnckoh4bbol3jk3jnagm3pjpm6rq"
+  },
+  {
+   "of": "https://emem.dev/memories/by_attester/ddzmyzhn/iliojyunnoeoomohc5346n4zrm.md",
+   "record": "iliojyunnoeoomohc5346n4zrm",
+   "title": "Train yard, 1M splats",
+   "thumb": "mmd5cercfth7w2hrze3embbsd4",
+   "frames": 1,
+   "file": "/assets/observations/iliojyunnoeoomohc5346n4zrm.webp",
+   "blake3": "skbhypltgphq6na2xieqbeggq45g6q3q53bz3een5b3epet2hy5q"
+  },
+  {
+   "of": "https://emem.dev/memories/by_attester/ddzmyzhn/4uweu43yaiik2mw5nc4eznztbu.md",
+   "record": "4uweu43yaiik2mw5nc4eznztbu",
+   "title": "Sombrero galaxy",
+   "thumb": "ccruy2iurkmmcfq3pigo6tw4ze",
+   "frames": 1,
+   "file": "/assets/observations/4uweu43yaiik2mw5nc4eznztbu.webp",
+   "blake3": "nwhaqrtwh23webqwomfe3xfjtia35wzkqesg3mydqtziv3qnum6a"
+  },
+  {
+   "of": "https://emem.dev/memories/by_attester/ddzmyzhn/kl23pezpc2lfzuflxgm5qyblxa.md",
+   "record": "kl23pezpc2lfzuflxgm5qyblxa",
+   "title": "Maasai Mara, every layer",
+   "thumb": "7imkvfdiwrcwmjec5hsii2qr4i",
+   "frames": 1,
+   "file": "/assets/observations/kl23pezpc2lfzuflxgm5qyblxa.webp",
+   "blake3": "32m5sunxoicoqvbsrdn47uxunkkxcl4qomk2rfyzlrrtz7xsc3ea"
+  },
+  {
+   "of": "https://emem.dev/memories/by_attester/ddzmyzhn/tm3nwiorldoo7v4uryp65gsonu.md",
+   "record": "tm3nwiorldoo7v4uryp65gsonu",
+   "title": "Near infrared, placed",
+   "thumb": "h4sw7qstpymptyfwiej3me37vy",
+   "frames": 1,
+   "file": "/assets/observations/tm3nwiorldoo7v4uryp65gsonu.webp",
+   "blake3": "ua2goxhk7wrfyc76yvkqeiooxmfzht3mx5hdlevtxsosjj3k74ta"
+  },
+  {
+   "of": "https://emem.dev/memories/by_attester/ddzmyzhn/77e2qubtqktu3hrat7clzeauvu.md",
+   "record": "77e2qubtqktu3hrat7clzeauvu",
+   "title": "Marina Beach, every layer",
+   "thumb": "a5ehkhdhgz4pkgjcg3p4nft6n4",
+   "frames": 1,
+   "file": "/assets/observations/77e2qubtqktu3hrat7clzeauvu.webp",
+   "blake3": "7gxad2pxkxporpxupvterthkwsk4fwcwjcempjzvfvxvdww33wkq"
+  },
+  {
+   "of": "https://emem.dev/memories/by_attester/ddzmyzhn/4o7zgq2ogbs2trae4mdxkxwvq4.md",
+   "record": "4o7zgq2ogbs2trae4mdxkxwvq4",
+   "title": "Port of Rotterdam, every layer",
+   "thumb": "rmruhhy4qp7dvbcoufkgtaocai",
+   "frames": 1,
+   "file": "/assets/observations/4o7zgq2ogbs2trae4mdxkxwvq4.webp",
+   "blake3": "eyp2gunurjkzrndyfld4woghxt6wrww26vo7rukeu5xfhkjeomna"
+  },
+  {
+   "of": "emem:cube:23vfacx23nr3dwki6si4yrolmmp3wr6dtrhjxbw4rihiaafrpyga:s2.B08:20500..20585:ganwwj25obuob3pp7pjtkd4awtihnluotdowe2cqtrj77af5qlna",
+   "record": null,
+   "title": "Cubbon Park, two dates",
+   "thumb": "hsi4mfmv2cpe7of5kr7blbscma",
+   "frames": 1,
+   "file": "/assets/observations/cubbon-park-two-dates.webp",
+   "blake3": "vaqrzfjxdq4r4nzamus65zp5oxdgf6pl6hptb2jldk6xz436hauq"
+  },
+  {
+   "of": "https://emem.dev/memories/by_attester/ddzmyzhn/qcoylkllqzfqnsinn4af5i2mi4.md",
+   "record": "qcoylkllqzfqnsinn4af5i2mi4",
+   "title": "Robot arms, 12 keyframes",
+   "thumb": "n4ggrilp564puezzmriopxssse",
+   "frames": 12,
+   "file": "/assets/observations/qcoylkllqzfqnsinn4af5i2mi4.webp",
+   "blake3": "jbwziebaq4qix6hcqaqpde2i3bj2mqm45ujetqqp52g4v2flstjq"
+  },
+  {
+   "of": "https://emem.dev/memories/by_attester/ddzmyzhn/rcv34ptfbsoynlzs6yjxtchpwe.md",
+   "record": "rcv34ptfbsoynlzs6yjxtchpwe",
+   "title": "A holiday photo, placed",
+   "thumb": "n7c42b47aadn4dujjjk7owz47e",
+   "frames": 1,
+   "file": "/assets/observations/rcv34ptfbsoynlzs6yjxtchpwe.webp",
+   "blake3": "npc4ju64osogj2x37fqkfi5w4r5rwzlyjeuzsuhndxtzab6xhvxa"
+  },
+  {
+   "of": "https://emem.dev/memories/by_attester/ddzmyzhn/elk3oajsbjlws4ad4up7ha7rey.md",
+   "record": "elk3oajsbjlws4ad4up7ha7rey",
+   "title": "CT slice, in HU",
+   "thumb": "cmqw3ycfppltxw6hsoavs7bh4m",
+   "frames": 1,
+   "file": "/assets/observations/elk3oajsbjlws4ad4up7ha7rey.webp",
+   "blake3": "jfuipik2wpjc2jmgx2qtijmsg5ftbgwbvbikz32ozairv5qn6wda"
+  }
+ ]
+}

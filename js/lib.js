@@ -487,6 +487,22 @@
     var cO = Math.cos(O), sO = Math.sin(O), cw = Math.cos(w), sw = Math.sin(w), cI = Math.cos(I), sI = Math.sin(I);
     return [(cw * cO - sw * sO * cI) * px + (-sw * cO - cw * sO * cI) * py, (cw * sO + sw * cO * cI) * px + (-sw * sO + cw * cO * cI) * py, sw * sI * px + cw * sI * py];
   }
+  // the Sun's elevation and azimuth from a place, NOAA's solar calculator formulas (no refraction)
+  function sun(ms, lat, lng) {
+    var R = DEG, T = (ms / 86400000 + 2440587.5 - 2451545) / 36525;
+    var L0 = (280.46646 + T * (36000.76983 + T * 0.0003032)) % 360, M = 357.52911 + T * (35999.05029 - 0.0001537 * T);
+    var e = 0.016708634 - T * (0.000042037 + 0.0000001267 * T);
+    var C = Math.sin(M * R) * (1.914602 - T * (0.004817 + 0.000014 * T)) + Math.sin(2 * M * R) * (0.019993 - 0.000101 * T) + Math.sin(3 * M * R) * 0.000289;
+    var om = 125.04 - 1934.136 * T, lam = L0 + C - 0.00569 - 0.00478 * Math.sin(om * R);
+    var eps = 23 + (26 + (21.448 - T * (46.815 + T * (0.00059 - T * 0.001813))) / 60) / 60 + 0.00256 * Math.cos(om * R);
+    var dec = Math.asin(Math.sin(eps * R) * Math.sin(lam * R)) / R, y = Math.pow(Math.tan(eps * R / 2), 2);
+    var eqt = 4 / R * (y * Math.sin(2 * L0 * R) - 2 * e * Math.sin(M * R) + 4 * e * y * Math.sin(M * R) * Math.cos(2 * L0 * R) - 0.5 * y * y * Math.sin(4 * L0 * R) - 1.25 * e * e * Math.sin(2 * M * R));
+    var d = new Date(ms), mins = d.getUTCHours() * 60 + d.getUTCMinutes() + d.getUTCSeconds() / 60 + d.getUTCMilliseconds() / 60000;
+    var tst = ((mins + eqt + 4 * lng) % 1440 + 1440) % 1440, ha = tst / 4 < 0 ? tst / 4 + 180 : tst / 4 - 180;
+    var zen = Math.acos(Math.sin(lat * R) * Math.sin(dec * R) + Math.cos(lat * R) * Math.cos(dec * R) * Math.cos(ha * R)) / R;
+    var ac = Math.acos(Math.max(-1, Math.min(1, (Math.sin(lat * R) * Math.cos(zen * R) - Math.sin(dec * R)) / (Math.cos(lat * R) * Math.sin(zen * R))))) / R;
+    return { el: 90 - zen, az: ha > 0 ? (ac + 180) % 360 : (540 - ac) % 360 };
+  }
   function marsKm(ms) { var a = helio('mars', ms), b = helio('emb', ms); return Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]) * AU_KM; }
   function l2Km(ms) {
     var GMS = 1.32712440018e20, GME = 3.986004418e14, GMM = 4.9028e12, mu = (GME + GMM) / (GMS + GME + GMM), g = Math.cbrt(mu / 3);
@@ -515,7 +531,7 @@
     utm: utm, epsgZone: epsgZone, preimage: preimage, edVerify: edVerify, verifySTH: verifySTH, verifyRangeHash: verifyRangeHash,
     parsePointer: parsePointer, merkleRoot: merkleRoot, treeLeaf: treeLeaf, treeWalk: treeWalk,
     cborEnc: cborEnc, fromHex: fromHex, merkleV1: merkleV1, checkTrace: checkTrace, entityCid: entityCid, bundleCid: bundleCid, gridDecode: gridDecode,
-    eph: { moonKm: moonKm, moonPhase: moonPhase, marsKm: marsKm, l2Km: l2Km, AU_KM: AU_KM, C_KMS: C_KMS },
+    eph: { moonKm: moonKm, moonPhase: moonPhase, marsKm: marsKm, l2Km: l2Km, sun: sun, AU_KM: AU_KM, C_KMS: C_KMS },
     fmtBytes: bytes, group: group, enc: enc, dec: dec,
     // a fetch that never reached its server says so in words; any other error keeps its own message
     why: function (e, host) { var m = String((e && e.message) || e); return /failed to fetch|networkerror|load failed/i.test(m) ? (host || 'the server') + ' did not answer this browser' : m; }

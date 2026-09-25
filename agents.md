@@ -14,6 +14,34 @@ Siblings: https://vortx.ai/llms.txt (the index) · https://vortx.ai/.well-known/
 - **check** any receiver resolves the token, hashes the bytes, verifies the receipt, and can recompute the value from the raw source
 - **run** geo.qa · the same memory on an organisation's own sensors, private per tenant
 
+## pages
+
+One structure for people and agents; llms.txt mirrors it line for line.
+
+- **see** `/` · the live Earth; @emem decodes one signed fact per visit (Cubbon Park, Bengaluru, NDVI)
+- **run** `/#run` · six devices, one published sample each, end to end in the browser
+- **encode** `/#connect` · your file on your device, nothing uploaded; `tools/emem_point.py` on the device
+- **decode** `/#decode` · ask @emem, catch a drifted number, connect @emem to your agent
+- **browse** `/#samples` · the ememdemo catalogue, each note re-checked as it loads
+- **check** `/proof/` · every check, step by step
+- **read** `/emem/` protocol · `/geo-qa/` · `/eudr/` · `/propcheck/` · `/trust/` · `/spatial-ai/` · `/research/` · `/log/`
+
+## run
+
+Each device on the home page runs one published sample; every step is a request you can make.
+
+| device | sample | row (0-based) | what the browser checks |
+|---|---|---|---|
+| satellite | `twlpco5kin6qlz5eplt2pjm7n4` Sentinel-2B, 351.0 MB | 68, level 4 tile 0,0 | note name, root, `/v1/tree` proof, 601,342 B by Range, blake3; decodes the tile: mean RGB 156, 137, 113, as the note says |
+| telescope | `wkxa7tcmw2orf7ujjf5yi66dhe` Webb, 143.7 MB | 1, strip 0 | the same, from esawebb.org |
+| robot | `qcoylkllqzfqnsinn4af5i2mi4` ALOHA arms, 502.5 MB | 3, frames 5000…5001 | the same, from huggingface.co |
+| drone | `ejvovl6sz7d3sugfcrwwie4rma` OpenAerialMap | 77, level 6 tile 0,0 | the same; decodes the JPEG tile with the header's tables |
+| camera | `t7ebh6s6imxrwdmizebnw52nwe` 12 TfL cameras | aldgate | the clip's sha256 and blake3, geo.qa's ed25519 over the canonical payload, the sun from the signed time and place |
+| machine | `emem:trace:mxyer5c2oxn4ud3xqbtnaxcxhdv4kkxiu67q32inbwxgpa7r3s6a` | · | resolve, verify against `host.counters.v1`, recheck chain, root, device signature |
+
+- **send** one `Range: bytes=a-b` header and nothing else: several hosts refuse CORS preflights
+- **fall back** to `POST https://emem.dev/v1/range_hash {"url","offset","length"}` when a source refuses browsers; it is signed
+
 ## do
 
 - **call** MCP `https://emem.dev/mcp` · no key, no account
@@ -33,19 +61,19 @@ Siblings: https://vortx.ai/llms.txt (the index) · https://vortx.ai/.well-known/
 ```bash
 curl -s -X POST https://emem.dev/v1/recall \
   -H 'content-type: application/json' \
-  -d '{"place":"Bengaluru","bands":["indices.ndvi"]}'
+  -d '{"place":"Cubbon Park, Bengaluru","bands":["indices.ndvi"]}'
+# → cell defi.zb493.yiwo.zcb4e · NDVI 0.767258382642998 · Sentinel-2C, 16 Jun 2026
 ```
 
-## connect
+## encode
 
-A device keeps its files and sends tokens. https://vortx.ai/#connect runs the encode step in the browser, with nothing uploaded.
+A device keeps its files and sends tokens. https://vortx.ai/#connect writes the same note in the browser, byte for byte, with nothing uploaded.
 
 - **install** `pip install blake3 "ememdev[signing]"`
-- **encode** `python3 emem_point.py FILE [--source URL] > FILE.md` · https://vortx.ai/tools/emem_point.py · 4 MiB ranges, a blake3 per range, one Merkle root; the note on stdout, root and token on stderr
+- **encode** `python3 emem_point.py FILE [--source URL] [--stamp] > FILE.md` · https://vortx.ai/tools/emem_point.py · 4 MiB ranges, a blake3 per range, one Merkle root, laid out as the ememdemo pointers; `--stamp` adds emem's log head once its signature verifies
 - **name** the note is `base32(blake3(note)[0:16])`; its token `emem:tree:<cid26>#row=<i>` resolves once the note is published byte for byte
 - **publish** `ememdev write --path /memories/by_attester/<you>/FILE.md --body-file FILE.md` · your own namespace, your key (`ememdev whoami`)
 - **decode** any agent with @emem reads the note, then only the ranges it needs, each checked against its row
-- **check** a device's own execution trace: `POST https://emem.dev/v1/trace_resolve`, then `/v1/trace_verify` · example `emem:trace:mxyer5c2oxn4ud3xqbtnaxcxhdv4kkxiu67q32inbwxgpa7r3s6a`
 - **sign** at capture with a hardware-held key · that is the integration session, below
 
 ## keep
@@ -59,6 +87,7 @@ A device keeps its files and sends tokens. https://vortx.ai/#connect runs the en
 - **resolve** `POST https://emem.dev/v1/memory_token/resolve {"token":"emem:fact:…"}` → fact + receipt
 - **hash** `GET https://emem.dev/v1/facts/<fact_cid>` with `accept: application/cbor` · `base32(blake3(body)) == fact_cid`
 - **verify** the receipt offline · ed25519 over the `emem.preimage.v1` stream · spec `https://emem.dev/v1/verifier_spec` · reference JS `https://emem.dev/emem-verify-core.js`
+- **catch** drift before a person reads it · `POST https://emem.dev/v1/echo_verify {"token":"emem:fact:defi.zb493.yiwo.zcb4e:eheadieomxr2zusgh4nx7mfisrtme23ztjiluyrfve64xoap6hka","claimed_value":"0.767"}` → `rounded`; write values verbatim
 - **gate** a draft before you send it · `POST https://emem.dev/v1/guard/verdict` · a denial carries `fix=refresh_token|remove_reference|contact_admin|cite_observation`
 - **point** a large file without moving it · pointer.v1 notes from https://vortx-ai.github.io/ememdemo/ · read a chunk by HTTP Range and check its blake3 against the row; the Merkle root binds every row
 - **trust** the endpoint over this page when they disagree, and say so
@@ -69,7 +98,7 @@ One live example per shape. https://vortx.ai/proof/#tokens resolves each and re-
 
 | shape | example | recompute |
 |---|---|---|
-| fact | `emem:fact:defi.zb493.xuqA.zcb5f:xksjrrzzdhq6lobc4m62ecmsmoexn7htul5p4vlwbvqwvbuedkiq` | blake3 of `GET /v1/facts/<cid>` (CBOR) == fact_cid; receipt names it |
+| fact | `emem:fact:defi.zb493.yiwo.zcb4e:eheadieomxr2zusgh4nx7mfisrtme23ztjiluyrfve64xoap6hka` (Cubbon Park NDVI) | blake3 of `GET /v1/facts/<cid>` (CBOR) == fact_cid; receipt names it |
 | cell | `emem:cell:defi.zb43b.mAga.yiwU` (Europe's Spaceport, Kourou) | nothing to hash: an address; `GET /v1/cells/<cell64>/info` |
 | entity | `emem:entity:5pitnkcnle3cq6yldbffj52zja` | blake3(`emem.entity.v1\|loc\|` cell64 `\|` kind `\|` label)[0:16] |
 | bundle | `emem:bundle:y2k6h2laeo4libfsiebucdw4mu` | blake3 over the citation list, [0:16] |
@@ -80,6 +109,16 @@ One live example per shape. https://vortx.ai/proof/#tokens resolves each and re-
 | attestation | none backed by a manufacturer yet | vendor anchors are provisional: `GET /v1/device_platforms` |
 | state | `emem:state:6omzeryht75zyabeajuimcqzm7pzenvy3y6p4irwxdpt7x5ayimq` | blake3 of the stored canonical CBOR == address; walk `derived_from` |
 | tree | `emem:tree:wkxa7tcmw2orf7ujjf5yi66dhe#row=1` (Webb, Cosmic Cliffs) | leaf from the note's row, log2(n) hashes to its root |
+
+## samples
+
+Every sample on vortx.ai is an ememdemo sample, kept to its standard.
+
+- **read** the catalogue line: `verb kind cid key=value`, with `tok` (reading the note) and `raw` (the source's bytes as base64)
+- **name** the keeper: machine, third-party, combined or human
+- **check** each note as it loads: `base32(blake3(note)[0:16]) == cid`; unreachable is not a failed check
+- **show** only the picture a `thumb.v1` note carries, byte for byte: https://vortx.ai/data/thumbs.json
+- **print** values verbatim: 0.767 for 0.767258382642998 is drift
 
 ## segment
 

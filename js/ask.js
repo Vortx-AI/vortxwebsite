@@ -7,7 +7,7 @@
 /* global vx, ememVerify */
 (function () {
   'use strict';
-  var root = document.getElementById('ask');
+  var root = document.getElementById('decode');
   if (!root || !window.vx) return;
   var form = root.querySelector('form'), log = root.querySelector('.vlog'), ans = root.querySelector('.ask-ans'), reads = root.querySelector('.ask-reads'), idle = root.querySelector('.ask-idle');
   var ctl = null, t0 = 0;

@@ -118,6 +118,17 @@
     }).catch(function () {});
   }
 
+  /* any sample named on a page re-checks its note as it loads, as the ememdemo gallery does:
+     base32(blake3(bytes)[0:16]) must equal the note's name */
+  if (window.vx) document.querySelectorAll('[data-note-check]').forEach(function (e) {
+    var cid = e.getAttribute('data-note-check');
+    fetch('https://emem.dev/memories/by_attester/ddzmyzhn/' + cid + '.md').then(function (r) { if (!r.ok) throw 0; return r.arrayBuffer(); }).then(function (b) {
+      var ok = vx.cid26(new Uint8Array(b)) === cid;
+      e.textContent = ok ? '✓ note' : '✗ name lies'; e.classList.add(ok ? 'is-ok' : 'is-bad');
+      e.title = ok ? 'this note hashes to its name, checked in your browser' : 'the bytes do not hash to the name';
+    }).catch(function () { e.textContent = 'unreachable'; e.title = 'not checked: emem.dev could not be reached, which is not a failed check'; });
+  });
+
   /* this site's release id */
   var rel = document.querySelector('[data-release]');
   if (rel) fetch('/.well-known/site-manifest.json').then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (m) {

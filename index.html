@@ -131,10 +131,10 @@
     <div class="wrap">
       <a class="vx-brand" href="/" aria-label="Vortx AI home"><img src="/assets/vortx-logo.png" alt="" width="26" height="26"><span>vortx<b>.ai</b></span></a>
       <nav class="vx-nav" id="nav" data-nav aria-label="Primary">
-        <a href="#how">how</a>
-        <a href="#connect">connect</a>
-        <a href="#ask">ask</a>
-        <a href="#archive">archive</a>
+        <a href="#run">run</a>
+        <a href="#connect">encode</a>
+        <a href="#decode">decode</a>
+        <a href="#samples">samples</a>
         <a href="#mission">mission</a>
         <a href="#book">book</a>
         <a href="/proof/">proof</a>
@@ -168,26 +168,26 @@
             <h1 id="hero-h"><span>Encode on device.</span><span>Decode with <span class="at">@emem</span>.</span></h1>
             <p class="h3o-sub">Don't move your files. <b>Deliver tokenised context.</b></p>
             <div class="h3o-acts">
-              <a class="btn btn-lit" href="#connect"><span class="v">encode</span> a file</a>
-              <a class="btn" href="#ask"><span class="v">ask</span> @emem</a>
+              <a class="btn btn-lit" href="#run"><span class="v">run</span> it live</a>
+              <a class="btn" href="#decode"><span class="v">ask</span> @emem</a>
             </div>
           </div>
 
           <a class="hc" data-cid="gpnxkvkwz22ug4jeqexggiy63q" style="left:4.5%;top:52%" target="_blank" rel="noopener">
-            <div class="hc-img hc-strip" data-frames="5" style="background-image:url(/assets/observatory/lusail-a-city-rising.webp)"><span class="hc-yr">2017 → 2025</span></div>
+            <div class="hc-img hc-strip" style="--n:5;background-image:url(/assets/observations/gpnxkvkwz22ug4jeqexggiy63q.webp)"><span class="hc-yr">2017 → 2025</span></div>
             <div class="hc-body"><strong>Lusail, a city rising</strong><span data-meta></span></div>
           </a>
           <a class="hc hc-hide-md" data-cid="sm45gry43cubuqjp2cpu5bit6i" style="left:19%;bottom:72px" target="_blank" rel="noopener">
-            <div class="hc-img hc-strip" data-frames="5" style="background-image:url(/assets/observatory/okavango-delta-flood-pulse.webp)"><span class="hc-yr">2017 → 2025</span></div>
+            <div class="hc-img hc-strip" style="--n:5;background-image:url(/assets/observations/sm45gry43cubuqjp2cpu5bit6i.webp)"><span class="hc-yr">2017 → 2025</span></div>
             <div class="hc-body"><strong>Okavango, the flood pulse</strong><span data-meta></span></div>
           </a>
           <a class="hc hc-sm hc-hide-md" data-cid="7rn7fxbl75o5cijqpnok5oc7rq" data-sat="HST" style="left:61.5%;top:4%" target="_blank" rel="noopener">
-            <div class="hc-img" style="background-image:url(/assets/observatory/whirlpool.webp)"></div>
+            <div class="hc-img" style="background-image:url(/assets/observations/7rn7fxbl75o5cijqpnok5oc7rq.webp)"></div>
             <div class="hc-body"><strong>Whirlpool, from Hubble</strong><span data-where>in orbit</span></div>
           </a>
           <div class="h3o-sky">
             <a class="hc hc-lg" data-cid="wkxa7tcmw2orf7ujjf5yi66dhe" target="_blank" rel="noopener">
-              <div class="hc-img" style="background-image:url(/assets/observatory/carina.webp)"></div>
+              <div class="hc-img" style="background-image:url(/assets/observations/wkxa7tcmw2orf7ujjf5yi66dhe.webp)"></div>
               <div class="hc-body"><strong>Cosmic Cliffs, from Webb</strong><span data-meta></span></div>
             </a>
             <div class="hp" data-planet="mars"><span class="hp-mars" role="img" aria-label="Mars, imaged by Hubble"></span><span><b>Mars</b><i data-p="far">…</i><i data-p="note"></i></span></div>
@@ -195,7 +195,7 @@
           </div>
 
           <div class="hd">
-            <div class="hd-card" data-cid="ia3cqu7ycf455mjs2vue33cnfi" data-cell="defi.zb493.zezo.zcb35" data-place="Cubbon Park, Bengaluru" aria-live="polite">
+            <div class="hd-card" data-cid="ia3cqu7ycf455mjs2vue33cnfi" data-cell="defi.zb493.yiwo.zcb4e" data-place="Cubbon Park, Bengaluru" aria-live="polite">
               <h2>@emem decoded <span data-d="state">waiting</span></h2>
               <div class="hd-val"><span data-d="val">…</span><small>greenness, NDVI</small></div>
               <p class="hd-meta" data-d="meta">Cubbon Park, Bengaluru, from Sentinel-2</p>
@@ -211,27 +211,34 @@
       </div>
     </section>
 
-    <!-- how: three verbs -->
-    <section class="hs" id="how" aria-labelledby="how-h" data-cid="wkxa7tcmw2orf7ujjf5yi66dhe">
+    <!-- run: one real sample per device, end to end, live -->
+    <section class="hs" id="run" aria-labelledby="run-h">
+      <span class="alias" id="how" aria-hidden="true"></span>
       <div class="wrap">
-        <div class="hs-head"><h2 id="how-h">Keep the file. <em>Send the token.</em></h2></div>
-        <ol class="how">
-          <li>
-            <h3>Encode</h3>
-            <p>on your satellite, robot, drone or camera. Each image, clip or reading becomes a signed emem token.</p>
-            <div class="viz"><span class="file" data-how="size">file</span><span>the file stays <b data-how="src">where it was made</b></span></div>
-          </li>
-          <li>
-            <h3>Send</h3>
-            <p>the token, not the file: bytes instead of gigabytes, over any downlink, radio or network.</p>
-            <div class="viz"><span class="tok" data-how="bytes">token</span><span data-how="token">emem:tree:…</span></div>
-          </li>
-          <li>
-            <h3>Decode</h3>
-            <p>with @emem, straight into any AI agent's context: ChatGPT, Claude, Agentforce, Dify, your own.</p>
-            <div class="viz"><img src="/assets/emem-companion.webp" alt="" width="44" height="44" loading="lazy" decoding="async"><span>the agent reads <b class="ok" data-how="tok">a note</b>, and any chunk it needs, checked against its hash</span></div>
-          </li>
-        </ol>
+        <div class="hs-head">
+          <h2 id="run-h">Keep the file. <em>Send the token.</em></h2>
+          <ul class="vl" style="min-width:min(100%,440px)">
+            <li><b class="v">pick</b><span class="n">a device: each one runs a real, published sample</span></li>
+            <li><b class="v">watch</b><span class="n">every step run now, against the real source</span></li>
+            <li><b class="v">count</b><span class="n">what moved, what an agent reads, what checked out</span></li>
+          </ul>
+        </div>
+        <div class="run-f" role="group" aria-label="Devices">
+          <button class="chip" type="button" data-run="satellite" data-cid="twlpco5kin6qlz5eplt2pjm7n4" data-label="level 4 tile 0,0" data-who="Sentinel-2B, 12 May 2026" aria-selected="true">satellite</button>
+          <button class="chip" type="button" data-run="telescope" data-cid="wkxa7tcmw2orf7ujjf5yi66dhe" data-label="strip 0 rows 0…4" data-who="Webb">telescope</button>
+          <button class="chip" type="button" data-run="robot" data-cid="qcoylkllqzfqnsinn4af5i2mi4" data-label="frames 5000…5001 · 100.0 s" data-who="ALOHA arms, high camera">robot</button>
+          <button class="chip" type="button" data-run="drone" data-cid="ejvovl6sz7d3sugfcrwwie4rma" data-label="level 6 tile 0,0" data-who="a drone survey, OpenAerialMap">drone</button>
+          <button class="chip" type="button" data-run="camera" data-cid="t7ebh6s6imxrwdmizebnw52nwe" data-camera data-label="aldgate" data-who="TfL traffic cameras, London, via geo.qa">camera</button>
+          <button class="chip" type="button" data-run="machine" data-trace="emem:trace:mxyer5c2oxn4ud3xqbtnaxcxhdv4kkxiu67q32inbwxgpa7r3s6a" data-who="a Linux host, its own key">machine</button>
+        </div>
+        <div class="run">
+          <figure class="run-fig"><div class="run-pic" role="img" aria-label="the sample's saved picture"></div><figcaption class="run-cap"></figcaption></figure>
+          <div class="run-body">
+            <ol class="vlog run-log" aria-live="polite"></ol>
+            <div class="run-sum"></div>
+            <p class="run-acts"><button class="btn btn-sm" type="button" data-run-again disabled><span class="v">run</span> again</button><a class="lk" data-run-note target="_blank" rel="noopener">open the note</a><button class="lk" type="button" data-run-copy>copy the agent line</button></p>
+          </div>
+        </div>
         <ul class="wins">
           <li><b>know</b><span>what is happening on the ground, from facts machines keep</span></li>
           <li><b>agree</b><span>every agent reads the same bytes: no referential drift</span></li>
@@ -241,23 +248,32 @@
       </div>
     </section>
 
-    <!-- connect: files, satellites, robots, cameras -->
+    <!-- encode: your file, your device -->
     <section class="hs" id="connect" aria-labelledby="connect-h">
+      <span class="alias" id="encode" aria-hidden="true"></span>
       <div class="wrap">
-        <div class="hs-head"><h2 id="connect-h">Connect your device. <em>Keep your files.</em></h2></div>
+        <div class="hs-head">
+          <h2 id="connect-h">Encode yours. <em>Keep your files.</em></h2>
+          <ul class="vl" style="min-width:min(100%,440px)">
+            <li><b class="v">hash</b><span class="n">4 MiB at a time, on your device; nothing is uploaded</span></li>
+            <li><b class="v">publish</b><span class="n">the note, a few kilobytes, in your own namespace</span></li>
+            <li><b class="v">hand</b><span class="n">any agent the token; it reads only the chunks it needs</span></li>
+          </ul>
+        </div>
         <div class="cx">
           <div class="cx-card">
-            <h3>Encode a file, here</h3>
-            <p>Drop an image, a video, a dataset. This browser hashes it. Nothing is uploaded.</p>
-            <label class="drop"><input type="file" aria-label="Choose a file to encode"><span><b>Drop a file</b><span>or click to choose · any size</span></span></label>
+            <h3>here, in this browser</h3>
+            <label class="drop"><input type="file" aria-label="Choose a file to encode"><span><b>Drop a file</b><span>an image, a clip, a dataset · any size · stays here</span></span></label>
+            <label class="enc-stamp"><input type="checkbox" id="enc-stamp"> <span><b class="v">stamp</b> the note with emem's log head, its signature checked here</span></label>
             <div class="enc" aria-live="polite">
               <p class="hd-meta" data-enc="name"></p>
               <div class="enc-prog"><u></u></div>
               <p class="hd-meta" data-enc="state"></p>
               <div class="enc-bars">
                 <div class="enc-bar is-file"><span>the file</span><i><u></u></i><em></em></div>
-                <div class="enc-bar is-raw"><span>fed to a model</span><i><u></u></i><em></em></div>
-                <div class="enc-bar is-tok"><span>its emem note</span><i><u></u></i><em></em></div>
+                <div class="enc-bar is-raw"><span>file to a model</span><i><u></u></i><em></em></div>
+                <div class="enc-bar is-tok"><span>note to a model</span><i><u></u></i><em></em></div>
+                <p class="run-scale">bars to scale</p>
               </div>
               <p class="enc-addr" data-enc="addr"></p>
               <p class="hd-meta" data-enc="root"></p>
@@ -265,7 +281,7 @@
                 <a class="btn btn-sm btn-lit" data-enc="note" href="#connect" download><span class="v">save</span> the note</a>
                 <button class="btn btn-sm" type="button" data-studio><span class="v">publish</span> in the studio</button>
               </div>
-              <p class="cx-note">or publish from the device: <code class="steps-inline" data-enc="cli"></code></p>
+              <p class="cx-note">or from the device: <code class="steps-inline" data-enc="cli"></code></p>
             </div>
             <form class="cx-url" onsubmit="return false">
               <label class="sr-only" for="enc-url">a file's URL</label>
@@ -274,36 +290,39 @@
             </form>
           </div>
           <div class="cx-card">
-            <h3>From your satellite, robot or camera</h3>
+            <h3>on your device</h3>
             <div class="devs" role="group" aria-label="Device">
               <button class="chip" type="button" data-dev="satellite" aria-pressed="true">satellite</button>
+              <button class="chip" type="button" data-dev="telescope" aria-pressed="false">telescope</button>
               <button class="chip" type="button" data-dev="robot" aria-pressed="false">robot</button>
               <button class="chip" type="button" data-dev="drone" aria-pressed="false">drone</button>
-              <button class="chip" type="button" data-dev="camera" aria-pressed="false">camera</button>
-              <button class="chip" type="button" data-dev="machine" aria-pressed="false">any machine</button>
             </div>
             <ol class="steps">
               <li><b class="v">install</b><code>pip install blake3 "ememdev[signing]"</code></li>
-              <li><b class="v">encode</b><code>python3 emem_point.py <span data-devfile>pass-0042.tif</span> &gt; <span data-devfile>pass-0042.tif</span>.md</code></li>
-              <li><b class="v">publish</b><code>ememdev write --path /memories/by_attester/&lt;you&gt;/<span data-devfile>pass-0042.tif</span>.md --body-file <span data-devfile>pass-0042.tif</span>.md</code></li>
+              <li><b class="v">encode</b><code>python3 emem_point.py <span data-devfile>TCI.tif</span> --source <span data-devsrc>…</span> --stamp &gt; <span data-devfile>TCI.tif</span>.md</code></li>
+              <li><b class="v">publish</b><code>ememdev write --path /memories/by_attester/&lt;you&gt;/<span data-devfile>TCI.tif</span>.md --body-file <span data-devfile>TCI.tif</span>.md</code></li>
               <li><b class="v">decode</b><span>any agent with @emem reads the note, then only the chunks it needs</span></li>
             </ol>
-            <p class="cx-note">encodes <span data-devwhat>each downlinked scene, or each tile of it</span> · <a class="lk" href="/tools/emem_point.py" download>emem_point.py</a> runs the same rules as the drop zone</p>
-            <div class="cx-live">
-              <p class="cx-note"><b class="v">check</b> a real device's execution trace, live at emem.dev and again here <button class="btn btn-sm" type="button" data-trace="emem:trace:mxyer5c2oxn4ud3xqbtnaxcxhdv4kkxiu67q32inbwxgpa7r3s6a"><span class="v">run</span> the check</button></p>
-              <ol class="vlog" data-trace-log aria-live="polite"></ol>
-            </div>
-            <p class="cx-note"><b class="v">sign</b> on the device with a hardware-held key: <a class="lk" href="#book">book an integration session</a></p>
+            <p class="cx-note"><b class="v">like</b> <span data-devlike>Sentinel-2B's scene over Bengaluru</span> · <a class="lk" data-devnote target="_blank" rel="noopener">its note</a> · <button class="lk" type="button" data-devrun>watch it run ↑</button></p>
+            <p class="cx-note"><b class="v">get</b> <a class="lk" href="/tools/emem_point.py" download>emem_point.py</a>, one file, the same note the drop zone writes, byte for byte</p>
+            <p class="cx-note"><b class="v">sign</b> at capture with a hardware-held key: <a class="lk" href="#book">book an integration session</a></p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ask: machine-kept facts, not a workflow -->
-    <section class="hs" id="ask" aria-labelledby="ask-h">
-      <span class="alias" id="call" aria-hidden="true"></span><span class="alias" id="connectors" aria-hidden="true"></span><span class="alias" id="shipped" aria-hidden="true"></span>
+    <!-- decode: @emem in the agent you already use -->
+    <section class="hs" id="decode" aria-labelledby="decode-h">
+      <span class="alias" id="ask" aria-hidden="true"></span><span class="alias" id="call" aria-hidden="true"></span><span class="alias" id="connectors" aria-hidden="true"></span><span class="alias" id="shipped" aria-hidden="true"></span>
       <div class="wrap">
-        <div class="hs-head"><h2 id="ask-h">Ask the world. <em>Cite the answer.</em></h2></div>
+        <div class="hs-head">
+          <h2 id="decode-h">Decode with @emem. <em>Cite, never paraphrase.</em></h2>
+          <ul class="vl" style="min-width:min(100%,440px)">
+            <li><b class="v">ask</b><span class="n">the world a question: signed readings answer it, not a workflow someone wrote</span></li>
+            <li><b class="v">catch</b><span class="n">a number an agent got wrong, before a person reads it</span></li>
+            <li><b class="v">plug</b><span class="n">@emem into the agent you already use</span></li>
+          </ul>
+        </div>
         <div class="ask">
           <form class="ask-form">
             <label for="ask-q">question</label>
@@ -328,6 +347,23 @@
             <p class="ask-ans" aria-live="polite"></p>
           </div>
         </div>
+        <div class="drift" id="drift" data-token="emem:fact:defi.zb493.yiwo.zcb4e:eheadieomxr2zusgh4nx7mfisrtme23ztjiluyrfve64xoap6hka">
+          <div class="drift-in">
+            <h3><b class="v">catch</b> drift</h3>
+            <p class="cx-note">an agent's draft about Cubbon Park, citing the reading the hero decodes; pick what it wrote, or edit it</p>
+            <form class="drift-form">
+              <label class="sr-only" for="drift-t">the agent's draft</label>
+              <textarea id="drift-t" rows="3" spellcheck="false"></textarea>
+              <div class="ask-q" role="group" aria-label="What the agent wrote">
+                <button class="chip" type="button" data-claim="0.81">wrote 0.81</button>
+                <button class="chip" type="button" data-claim="0.767">wrote 0.767</button>
+                <button class="chip" type="button" data-claim="0.767258382642998">wrote it verbatim</button>
+              </div>
+              <button class="btn btn-sm" type="submit"><span class="v">check</span> the draft</button>
+            </form>
+          </div>
+          <ol class="vlog drift-log" aria-live="polite"></ol>
+        </div>
         <div class="agents" aria-label="Where @emem already runs">
           <a href="https://chatgpt.com/plugins/plugin_asdk_app_6a6a0832a59081918b19aec0ddf9ec77" target="_blank" rel="noopener" data-track="connector_click" data-where="chatgpt"><b class="v">mention</b> @emem in ChatGPT ↗</a>
           <button type="button" data-copy="claude mcp add --transport http emem https://emem.dev/mcp"><b class="v">add</b> to Claude: copy</button>
@@ -340,20 +376,22 @@
       </div>
     </section>
 
-    <!-- archive: every memory has a world inside -->
-    <section class="hs" id="archive" aria-labelledby="archive-h" data-previews="gkc2jap4r47zgs4t2sja4qderu ppdqanaf7ufpxedvwdrwuqhf5u o2iyw5aexedv7sneir7sgng4fm twlpco5kin6qlz5eplt2pjm7n4 ia3cqu7ycf455mjs2vue33cnfi tm3nwiorldoo7v4uryp65gsonu wkxa7tcmw2orf7ujjf5yi66dhe fi67bt4rxkic3ssuag2v2hskly 7rn7fxbl75o5cijqpnok5oc7rq jxz6pghlsjbohvx6s5iw6yek4m 4uweu43yaiik2mw5nc4eznztbu ota6xerxrqzya5txb4jxvzpb2q bafppksajtcekqt62r3thg3a5u dzhe5a7rsjtnmc35qqwxybys5u jnt6yrjflrxu3apgde37ykn55e gpnxkvkwz22ug4jeqexggiy63q cfbt6bctfgnfoun347mgobvkku 2re7jfo2v34uwsqxkmpwxoxesu sm45gry43cubuqjp2cpu5bit6i kl23pezpc2lfzuflxgm5qyblxa fdobixnnucctqkn2qtii7kibyq ejvovl6sz7d3sugfcrwwie4rma 77e2qubtqktu3hrat7clzeauvu 4o7zgq2ogbs2trae4mdxkxwvq4 iliojyunnoeoomohc5346n4zrm qfclw5qafxejoqabrtnjlqbvxu t7ebh6s6imxrwdmizebnw52nwe">
-      <span class="alias" id="explore" aria-hidden="true"></span>
+    <!-- samples: the ememdemo catalogue, to its own standard -->
+    <section class="hs" id="samples" aria-labelledby="samples-h">
+      <span class="alias" id="archive" aria-hidden="true"></span><span class="alias" id="explore" aria-hidden="true"></span>
       <div class="wrap">
         <div class="hs-head">
-          <h2 id="archive-h">Every memory has <em>a world inside.</em></h2>
+          <h2 id="samples-h">See every sample. <em>Check every note.</em></h2>
           <ul class="vl" style="min-width:min(100%,420px)">
-            <li><b class="v is-claim">send</b><span class="n">the bytes to a model: the amber bar</span></li>
-            <li><b class="v">read</b><span class="n">the emem note instead: the green bar</span></li>
+            <li><b class="v">see</b><span class="n">only the picture its own thumb note carries</span></li>
+            <li><b class="v">check</b><span class="n">each note against its name, in your browser</span></li>
+            <li><b class="v">copy</b><span class="n">the one line an agent reads instead of the file</span></li>
           </ul>
         </div>
-        <div class="arc-f" role="group" aria-label="Filter"></div>
-        <ol class="arc"></ol>
-        <p class="hero-note">live from the <a class="lk" href="https://vortx-ai.github.io/ememdemo/llms.txt" target="_blank" rel="noopener">ememdemo catalogue</a> · previews from each note's own thumbnail record · <a class="lk" href="/proof/#files">check any pointer in your browser</a></p>
+        <div class="sc-f" role="group" aria-label="Filter"></div>
+        <ol class="sc-grid"></ol>
+        <p class="sc-more"><button class="btn btn-sm" type="button" data-more-cards hidden>show all</button></p>
+        <p class="hero-note">live from the <a class="lk" href="https://vortx-ai.github.io/ememdemo/llms.txt" target="_blank" rel="noopener">ememdemo catalogue</a> · <a class="lk" data-more href="https://vortx-ai.github.io/ememdemo/" target="_blank" rel="noopener">the full catalogue</a></p>
       </div>
     </section>
 
@@ -494,7 +532,7 @@
       <div class="cols">
         <div>
           <a class="vx-brand" href="/" aria-label="Vortx AI home"><img src="/assets/vortx-logo.png" alt="" width="26" height="26" loading="lazy"><span>vortx<b>.ai</b></span></a>
-          <p class="tag">The external memory of our physical world. Encoded in orbit, decoded on ground, checked by anyone.</p>
+          <p class="tag">The external memory of our physical world. Encoded on device, decoded with @emem, checked by anyone.</p>
         </div>
         <div><h4>read</h4><a href="https://emem.dev" target="_blank" rel="noopener">docs</a><a href="https://emem.dev/whitepaper.md" target="_blank" rel="noopener">whitepaper</a><a href="/research/">research</a><a href="/emem/">emem protocol</a><a href="/spatial-ai/">spatial AI</a><a href="/log/">lab log</a></div>
         <div><h4>verify</h4><a href="https://emem.dev/verify" target="_blank" rel="noopener">verify a receipt</a><a href="https://emem.dev/v1/log/sth" target="_blank" rel="noopener">log head</a><a href="/trust/">trust &amp; security</a><a href="/.well-known/site-manifest.json">this site's manifest</a><a href="/llms.txt">llms.txt</a><a href="/agents.md">agents.md</a></div>
@@ -514,7 +552,9 @@
   <script src="/js/hero.js" defer></script>
   <script src="/js/connect.js" defer></script>
   <script src="/js/ask.js" defer></script>
-  <script src="/js/archive.js" defer></script>
+  <script src="/js/drift.js" defer></script>
+  <script src="/js/runs.js" defer></script>
+  <script src="/js/samples.js" defer></script>
   <script src="/payments/config.js" defer></script>
   <script src="/payments/checkout.js" defer></script>
 </body>

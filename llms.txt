@@ -2,6 +2,28 @@
 
 > Encode on device. Decode with @emem. Don't move your files; deliver tokenised context. A satellite, telescope, rover, robot, drone or camera keeps its files; each observation, image or clip becomes one signed, content-addressed emem token; @emem decodes the token straight into any agent's context (ChatGPT, Claude, Agentforce, Dify, any MCP client), so agents know what is happening in the world, share one reference instead of drifting paraphrases, and check every byte. Every line below reads `verb noun ref key=value`. Numbers that change are not typed here; each has a live source under `count`.
 
+## pages (one structure for people and agents; every section below mirrors one)
+see       /                 the live Earth; @emem decodes one signed fact per visit: Cubbon Park, Bengaluru, NDVI
+run       /#run             six devices, one published sample each, run end to end in the browser
+encode    /#connect         your file, hashed on your device, nothing uploaded; tools/emem_point.py for the device
+decode    /#decode          ask @emem; catch a drifted number; @emem in ChatGPT, Claude, Agentforce, Dify, VS Code
+browse    /#samples         the ememdemo catalogue: Earth, Space, Machines; each note re-checked as it loads
+plan      /#mission         the satellite plan, deliberately without a date
+book      /#book            team time; the protocol is free
+check     /proof/           every check, step by step: handoff, observers, token family, files, trust chain
+read      /emem/ protocol · /geo-qa/ private tenancy · /eudr/ · /propcheck/ · /trust/ · /spatial-ai/ glossary · /research/ · /log/ changelog
+
+## run (the home page's workflows: each step is a request you can make yourself; rows 0-based)
+satellite twlpco5kin6qlz5eplt2pjm7n4  Sentinel-2B scene, 351.0 MB  GET note → base32(blake3(note)[0:16])==cid → rebuild root → GET https://emem.dev/v1/tree/<cid>?row=68 (level 4 tile 0,0) → Range read 601,342 B from sentinel-cogs → blake3==row → inflate, undo predictor 2 → mean RGB 156,137,113 at 98% valid == the row's stats
+telescope wkxa7tcmw2orf7ujjf5yi66dhe  Webb, Cosmic Cliffs, 143.7 MB  row 1 (strip 0 rows 0…4), 80.0 KB from esawebb.org
+robot     qcoylkllqzfqnsinn4af5i2mi4  ALOHA arms, 502.5 MB MP4  row 3 (frames 5000…5001 · 100.0 s), 15.3 KB from huggingface.co (302 to its CDN)
+drone     ejvovl6sz7d3sugfcrwwie4rma  OpenAerialMap survey  row 77 (level 6 tile 0,0), 13.2 KB; decode = the header row's JPEGTables + the tile
+camera    t7ebh6s6imxrwdmizebnw52nwe  12 TfL cameras via geo.qa  row aldgate: GET clip → sha256 and blake3 == the row → GET https://emem.dev/v1/perception/verify/clip/<sha256> → ed25519 over the canonical payload JSON (sorted keys, no spaces), key yQOKkNB+c+zl9kxxanwcNTZLgtHBsLvQH+q8pECrm/Q= → NOAA sun from the signed lat, lng, captured_at within 0.1° of the note
+machine   emem:trace:mxyer5c2oxn4ud3xqbtnaxcxhdv4kkxiu67q32inbwxgpa7r3s6a  POST /v1/trace_resolve → POST /v1/trace_verify (host.counters.v1 → admit) → chain, root and the device's ed25519, rechecked
+send      Range           a single `Range: bytes=a-b` and no other header: esawebb.org, esahubble.org, oin-hotosm-temp and mux.dev refuse CORS preflights
+fallback  range_hash      POST https://emem.dev/v1/range_hash {"url","offset","length"} when a source refuses browsers; signed, domain emem.range_hash.v1
+count     moved           a token of 26 to 85 bytes instead of the file; each note costs ~1.2k to ~6.1k tokens to read, where the files cost ~91M to ~319M as raw bytes
+
 ## do
 call      emem            https://emem.dev/mcp  transport=streamable-http  key=none  account=none
 mention   @emem           ChatGPT app  https://chatgpt.com/plugins/plugin_asdk_app_6a6a0832a59081918b19aec0ddf9ec77
@@ -14,18 +36,20 @@ plug      emem            Dify marketplace, every tool, no key  https://marketpl
 install   sdk             `pip install ememdev` · `npm i @vortxai/emem`
 talk      a2a             card=https://emem.dev/.well-known/agent-card.json  run=POST https://emem.dev/a2a/tasks  async=POST https://emem.dev/v1/a2a/tasks
 join      agora           https://emem.dev/a2a  inbox=POST https://emem.dev/v1/inbox {"to":"<your-pubkey8>"}
-recall    facts           POST https://emem.dev/v1/recall {"place":"Bengaluru","bands":["indices.ndvi"]}
+recall    facts           POST https://emem.dev/v1/recall {"place":"Cubbon Park, Bengaluru","bands":["indices.ndvi"]}  → cell defi.zb493.yiwo.zcb4e, NDVI 0.767258382642998 (Sentinel-2C, 16 Jun 2026)
 ask       question        POST https://emem.dev/v1/ask {"q":"is this place flood-prone","place":"Ashok Nagar, Ranchi"}  fans out to twenty-plus signed readings under one receipt
 gate      draft           POST https://emem.dev/v1/guard/verdict  deny=PROV_SIG|PROV_BYTES|PROV_DRIFT  fix=refresh_token|remove_reference|contact_admin|cite_observation
+catch     drift           POST https://emem.dev/v1/guard/verdict {"texts":["… NDVI of 0.81 [emem:fact:defi.zb493.yiwo.zcb4e:eheadieomxr2zusgh4nx7mfisrtme23ztjiluyrfve64xoap6hka]"]}  → deny PROV_VALUE fix=correct_value
+echo      number          POST https://emem.dev/v1/echo_verify {"token":"emem:fact:defi.zb493.yiwo.zcb4e:eheadieomxr2zusgh4nx7mfisrtme23ztjiluyrfve64xoap6hka","claimed_value":"0.767"}  → drift=rounded; "0.767258382642998" → matches; print values verbatim
 point     file            https://vortx-ai.github.io/ememdemo/  leaves the bytes at the source, returns a signed pointer note
 
-## connect (a device: satellite, robot, drone, camera, machine; https://vortx.ai/#connect runs steps 2 and 3 in the browser, nothing uploaded)
+## encode (your file or device; https://vortx.ai/#connect writes the same note in the browser, byte for byte, nothing uploaded)
 install   tools           `pip install blake3 "ememdev[signing]"`
-encode    file            `python3 emem_point.py FILE [--source URL] > FILE.md`  https://vortx.ai/tools/emem_point.py  4 MiB ranges, blake3 per range, Merkle root; stdout=the pointer.v1 note, stderr=root and token
+encode    file            `python3 emem_point.py FILE [--source URL] [--stamp] > FILE.md`  https://vortx.ai/tools/emem_point.py  4 MiB ranges, blake3 per range, Merkle root, kind from the first bytes, laid out as the ememdemo pointers; --stamp adds after: sth <size> <root> <signed_at> once the log head verifies
 name      note            cid26=base32(blake3(note)[0:16])  token=emem:tree:<cid26>#row=<i>  resolves once the note is published byte for byte
 publish   note            `ememdev write --path /memories/by_attester/<you>/FILE.md --body-file FILE.md`  your own namespace, signed with your key (`ememdev whoami`)
 decode    token           any agent with @emem reads the note, then fetches only the ranges it needs and checks each against its row
-check     device trace    POST https://emem.dev/v1/trace_resolve then /v1/trace_verify  example=emem:trace:mxyer5c2oxn4ud3xqbtnaxcxhdv4kkxiu67q32inbwxgpa7r3s6a
+example   satellite       `python3 emem_point.py TCI.tif --source https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/43/P/GQ/2026/5/S2B_43PGQ_20260512_0_L2A/TCI.tif --stamp > TCI.tif.md`
 sign      at capture      hardware-held keys on the device: book an integration session (below)
 
 ## token
@@ -35,13 +59,21 @@ hash      fact                           GET https://emem.dev/v1/facts/<fact_cid
 verify    receipt                        ed25519 over blake3("emem.preimage.v1\0" ‖ u32le(len) ‖ "receipt" ‖ tagged segments)  spec=https://emem.dev/v1/verifier_spec  js=https://emem.dev/emem-verify-core.js
 verify    log head                       GET https://emem.dev/v1/log/sth  ed25519 over the emem.translog.sth.v1 preimage {1 tree_size u64be, 2 root, 3 signed_at, 4 responder_pubkey}
 name      nine token shapes              fact (same bytes for everyone) · cell (an address, no body) · entity (a shared name, not shared bytes) · bundle · raster · cube · rasterset · trace · attestation
-note      pointer.v1                     https://emem.dev/memories/by_attester/<pubkey8>/<cid26>.md  cid26=base32(blake3(note)[0:16])
+note      pointer.v1                     https://emem.dev/memories/by_attester/<pubkey8>/<cid26>.md  cid26=base32(blake3(note)[0:16])  (the catalogue header's "base32(blake3(bytes))[0:26]" means this: the first 16 bytes, encoded)
 read      chunk                          GET <source> Range: bytes=<offset>-<offset+length-1>  check=base32(blake3(chunk))==row
-root      pointer                        merkle over leaf=blake3(utf8(url) ‖ u64be(offset) ‖ u64be(length) ‖ hash32), pairs blake3(l‖r), odd node promoted
+root      pointer                        merkle over leaf=blake3(utf8(url) ‖ u64be(offset) ‖ u64be(length) ‖ hash32), pairs blake3(l‖r), odd node promoted; a `·` url is the empty string in the leaf
+chain     feed                           link0=blake3(32 zero bytes ‖ hash0), linki=blake3(link(i-1) ‖ hashi), every row in order; GET /v1/tree does not apply
 hash      range at source                POST https://emem.dev/v1/range_hash {"url","offset","length"}  signed, domain emem.range_hash.v1; for sources that refuse cross-origin reads
 
+## samples (the ememdemo standard, kept on every page; https://vortx-ai.github.io/ememdemo/llms.txt is the catalogue)
+line      catalogue       `verb kind cid key=value`: src size hashed=N/M at tok raw by t; tok=what reading the note costs, raw=the source's bytes as base64 (0.634 tokens per byte)
+keep      by              machine (signed by a system) · third-party (a publisher's file) · combined (joined from several) · human (a person's file)
+check     note            re-checked as each card loads: base32(blake3(note)[0:16])==cid → "✓ note", else "✗ name lies"; unreachable is not a failed check
+show      picture         only the image a thumb.v1 note carries: its name matches, its of: is the record, its data:image line is the file shown; https://vortx.ai/data/thumbs.json maps record → thumb
+print     values          verbatim, as signed; 0.767 for 0.767258382642998 is drift
+
 ## family (one live example per shape; https://vortx.ai/proof/#tokens re-derives each in the browser)
-fact      emem:fact:defi.zb493.xuqA.zcb5f:xksjrrzzdhq6lobc4m62ecmsmoexn7htul5p4vlwbvqwvbuedkiq  check=blake3(GET /v1/facts/<cid> as CBOR)==fact_cid; receipt names the cid
+fact      emem:fact:defi.zb493.yiwo.zcb4e:eheadieomxr2zusgh4nx7mfisrtme23ztjiluyrfve64xoap6hka  Cubbon Park NDVI 0.767258382642998  check=blake3(GET /v1/facts/<cid> as CBOR)==fact_cid; receipt names the cid
 cell      emem:cell:defi.zb43b.mAga.yiwU  Europe's Spaceport, Kourou  GET /v1/cells/<cell64>/info  an address, no body until a fact hangs on it
 entity    emem:entity:5pitnkcnle3cq6yldbffj52zja  GET /v1/entity/<cid>  derive=base32(blake3("emem.entity.v1|loc|"+cell64+"|"+kind+"|"+label)[0:16]), text normalised; an external anchor wins
 bundle    emem:bundle:y2k6h2laeo4libfsiebucdw4mu  GET /v1/memory_bundle/<token>  derive=base32(blake3("emem.memory_bundle.v1|"+purpose+"\n"+per citation "cell|band|tslot|fact_cid\n")[0:16])

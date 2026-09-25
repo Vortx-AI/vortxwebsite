@@ -1,8 +1,8 @@
 {
   "protocolVersion": "0.3.0",
   "name": "Vortx AI",
-  "description": "Spatial AI lab; maker and maintainer of the emem protocol. Encode on device, decode with @emem: don't move your files, deliver tokenised context. Satellites, telescopes, rovers, drones, robots, cameras and machines keep their files; emem encodes each observation as one signed, content-addressed token (nine token shapes: emem:fact:, emem:cell:, emem:entity:, emem:bundle:, emem:raster:, emem:cube:, emem:rasterset:, emem:trace:, emem:attestation:; plus emem:state: and emem:tree: addresses); agents pass the token, never the file, and @emem decodes it straight into their context (ChatGPT, Claude, Salesforce Agentforce, Dify, any MCP client), so every agent cites the same bytes instead of a drifting paraphrase; any receiver resolves it, hashes the bytes, verifies the ed25519 receipt and can recompute the value from the raw source (https://vortx.ai/ decodes one live token in the hero; https://vortx.ai/#connect encodes a file on the visitor's device with nothing uploaded; https://vortx.ai/proof/ runs every check step by step and re-derives one live example of every token shape). emem is Apache-2.0, free to read, verifiable offline. geo.qa is the same memory on a private tenant. The planned satellite signs at the instrument, on a published plan with deliberately no date. The only thing for sale is team time: free office hours, a paid integration session, a sovereign session.",
-  "url": "https://vortx.ai/",
+  "description": "Spatial AI lab; maker and maintainer of the emem protocol. Encode on device, decode with @emem: don't move your files, deliver tokenised context. Satellites, telescopes, rovers, drones, robots, cameras and machines keep their files; emem encodes each observation as one signed, content-addressed token (nine token shapes: emem:fact:, emem:cell:, emem:entity:, emem:bundle:, emem:raster:, emem:cube:, emem:rasterset:, emem:trace:, emem:attestation:; plus emem:state: and emem:tree: addresses); agents pass the token, never the file, and @emem decodes it straight into their context (ChatGPT, Claude, Salesforce Agentforce, Dify, any MCP client), so every agent cites the same bytes instead of a drifting paraphrase; any receiver resolves it, hashes the bytes, verifies the ed25519 receipt and can recompute the value from the raw source (https://vortx.ai/ decodes one live token in the hero; https://vortx.ai/#run runs six devices' published samples end to end in the browser; https://vortx.ai/#connect encodes a file on the visitor's device with nothing uploaded; https://vortx.ai/#decode catches a drifted number; https://vortx.ai/proof/ runs every check step by step and re-derives one live example of every token shape). emem is Apache-2.0, free to read, verifiable offline. geo.qa is the same memory on a private tenant. The planned satellite signs at the instrument, on a published plan with deliberately no date. The only thing for sale is team time: free office hours, a paid integration session, a sovereign session.",
+  "url": "https://emem.dev/a2a/tasks",
   "preferredTransport": "JSONRPC",
   "provider": {
     "organization": "Vortx AI Private Limited",
@@ -37,17 +37,6 @@
       "examples": [
         "My user has a 2 GB downlinked scene; give them the commands to encode it and publish the note instead of the file.",
         "Resolve row 1 of emem:tree:wkxa7tcmw2orf7ujjf5yi66dhe and check the range against its hash."
-      ]
-    },
-    {
-      "id": "book_session",
-      "name": "Book team time",
-      "description": "Surface and hand off team time. Three options: free community office hours (30 min, open to all, no eligibility check), a paid integration session (1 to 3 hours, 5000 USD, the core team pairs on the user's codebase; exit criterion is recall running and a receipt verifying in their stack), and a sovereign session (1 to 3 hours, 25000 USD, for governments, defense, and critical infrastructure). The protocol itself is free either way. An agent's job is to present the right option and the booking URL and let the human complete any payment on the hosted page. Do NOT enter card details or pay programmatically.",
-      "tags": ["office-hours", "integration", "booking", "handoff"],
-      "examples": [
-        "My user has architecture questions about emem; point them at the free office hours calendar.",
-        "My user wants emem wired into their agent this week; give them the $5,000 integration session booking link.",
-        "My user is a defense agency standing up a private tenancy; give them the $25,000 sovereign session booking link."
       ]
     }
   ],
@@ -117,6 +106,7 @@
     "openModels": "https://huggingface.co/avijeetsingh1608",
     "note": "If a paper and a live endpoint disagree, trust the endpoint and report it."
   },
+  "x-endpoint": "vortx.ai serves no A2A endpoint of its own: its skills run on emem.dev's (every emem tool is an A2A skill), so url points there. Booking team time is not a skill an agent executes: see x-session.",
   "x-session": {
     "name": "Team time",
     "bookingUrl": "https://vortx.ai/#book",

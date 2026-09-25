@@ -238,7 +238,6 @@
     if (card.getAttribute('data-state')) return;
     card.setAttribute('data-state', 'run');
     var kind = card.getAttribute('data-kind'), tok = card.getAttribute('data-token'), log = card.querySelector('.vlog');
-    if (kind === 'fact' && window.vxLastToken) { tok = window.vxLastToken; var tc = card.querySelector('.tk-tok'); if (tc) tc.textContent = tok; }
     queue = queue.then(async function () {
       log.innerHTML = '';
       var t0 = performance.now(), res;
@@ -258,11 +257,4 @@
     cards.forEach(function (c) { io.observe(c); });
   } else cards.forEach(run);
   // the handoff above mints a fresh fact token; the fact card re-checks that one when it arrives
-  document.addEventListener('vx:token', function (e) {
-    var c = root.querySelector('[data-kind="fact"]');
-    if (!c || !e.detail || !e.detail.token) return;
-    c.setAttribute('data-token', e.detail.token);
-    var tc = c.querySelector('.tk-tok'); if (tc) tc.textContent = e.detail.token;
-    if (c.getAttribute('data-state')) { c.removeAttribute('data-state'); run(c); }
-  });
 })();

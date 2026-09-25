@@ -4,42 +4,13 @@
   "notes": "Previews extracted from the demo's thumb.v1 notes after checking their 'of' field matches the referenced record. Multi-frame sprites use their first frame. No claim of independent cryptographic verification is made by this import.",
   "heroImages": {
     "from": "Jaya's feat/space-theme branch (commit c0c7ffa), the observatory homepage these hero cards follow",
-    "note": "Larger renders of the same records the archive previews come from; timelapse strips are 320 x 200 frames side by side, in capture order.",
+    "note": "The hero's card pictures are now the exact images the ememdemo thumb.v1 notes carry (data/thumbs.json), re-checked as the page loads. Only the faint deep-field backdrop remains a render of a source image.",
     "files": [
       {
         "file": "assets/observatory/carina.webp",
+        "use": "decorative backdrop behind the hero",
         "memory": "https://emem.dev/memories/by_attester/ddzmyzhn/wkxa7tcmw2orf7ujjf5yi66dhe.md",
-        "title": "Cosmic Cliffs, Carina",
-        "source": "https://esawebb.org/media/archives/images/original/weic2205a.tif",
-        "frames": 1
-      },
-      {
-        "file": "assets/observatory/whirlpool.webp",
-        "memory": "https://emem.dev/memories/by_attester/ddzmyzhn/7rn7fxbl75o5cijqpnok5oc7rq.md",
-        "title": "Whirlpool galaxy, M51",
-        "source": "https://esahubble.org/media/archives/images/original/heic0506a.tif",
-        "frames": 1
-      },
-      {
-        "file": "assets/observatory/mars.webp",
-        "memory": "https://emem.dev/memories/by_attester/ddzmyzhn/fi67bt4rxkic3ssuag2v2hskly.md",
-        "title": "Mars, December 2024",
-        "source": "https://esahubble.org/media/archives/images/original/heic2505b.tif",
-        "frames": 1
-      },
-      {
-        "file": "assets/observatory/lusail-a-city-rising.webp",
-        "memory": "https://emem.dev/memories/by_attester/ddzmyzhn/gpnxkvkwz22ug4jeqexggiy63q.md",
-        "title": "Lusail, a city rising",
-        "source": "timelapse: 25.42, 51.49 | 2017-2025 02",
-        "frames": 5
-      },
-      {
-        "file": "assets/observatory/okavango-delta-flood-pulse.webp",
-        "memory": "https://emem.dev/memories/by_attester/ddzmyzhn/sm45gry43cubuqjp2cpu5bit6i.md",
-        "title": "Okavango Delta, flood pulse",
-        "source": "timelapse: -19.55, 23.05 | 2017-2025 08",
-        "frames": 5
+        "source": "https://esawebb.org/media/archives/images/original/weic2205a.tif"
       }
     ]
   },
