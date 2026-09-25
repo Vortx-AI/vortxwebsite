@@ -1,0 +1,190 @@
+{
+ "schema": "vortx.pictures.v1",
+ "about": "pictures and clips the homepage shows for its samples; see tools/wow_media.py",
+ "pictures": [
+  {
+   "record": "wkxa7tcmw2orf7ujjf5yi66dhe",
+   "title": "Cosmic Cliffs, Carina",
+   "device": "telescope",
+   "by": "Webb",
+   "credit": "NASA, ESA, CSA, and STScI",
+   "licence": "CC BY 4.0",
+   "page": "https://esawebb.org/images/weic2205a/",
+   "note": "https://emem.dev/memories/by_attester/ddzmyzhn/wkxa7tcmw2orf7ujjf5yi66dhe.md",
+   "source": "https://esawebb.org/media/archives/images/original/weic2205a.tif",
+   "method": "the publisher's own JPEG of the same image; the note's file is the archive TIFF",
+   "drawn_from": "https://esawebb.org/media/archives/images/large/weic2205a.jpg",
+   "files": {
+    "640": {
+     "path": "/assets/wow/wkxa7tcmw2orf7ujjf5yi66dhe-640.webp",
+     "bytes": 55044,
+     "cid26": "hs6tboomnhdlvuj5gop3a2cqvm"
+    },
+    "1600": {
+     "path": "/assets/wow/wkxa7tcmw2orf7ujjf5yi66dhe-1600.webp",
+     "bytes": 233474,
+     "cid26": "uhxhxtq6o5nu33zldcvs7vy5vy"
+    }
+   }
+  },
+  {
+   "record": "7rn7fxbl75o5cijqpnok5oc7rq",
+   "title": "Whirlpool galaxy, M51",
+   "device": "telescope",
+   "by": "Hubble",
+   "credit": "NASA, ESA, S. Beckwith (STScI), and The Hubble Heritage Team (STScI/AURA)",
+   "licence": "CC BY 4.0",
+   "page": "https://esahubble.org/images/heic0506a/",
+   "note": "https://emem.dev/memories/by_attester/ddzmyzhn/7rn7fxbl75o5cijqpnok5oc7rq.md",
+   "source": "https://esahubble.org/media/archives/images/original/heic0506a.tif",
+   "method": "the publisher's own JPEG of the same image; the note's file is the archive TIFF",
+   "drawn_from": "https://esahubble.org/media/archives/images/large/heic0506a.jpg",
+   "files": {
+    "640": {
+     "path": "/assets/wow/7rn7fxbl75o5cijqpnok5oc7rq-640.webp",
+     "bytes": 25180,
+     "cid26": "2lxrgnqu63c2lw5vs4g3qxpfga"
+    },
+    "1600": {
+     "path": "/assets/wow/7rn7fxbl75o5cijqpnok5oc7rq-1600.webp",
+     "bytes": 157080,
+     "cid26": "q3esvlvu3ytfpd6543eurchclu"
+    }
+   }
+  },
+  {
+   "record": "4uweu43yaiik2mw5nc4eznztbu",
+   "title": "Sombrero galaxy",
+   "device": "telescope",
+   "by": "Hubble",
+   "credit": "NASA/ESA and The Hubble Heritage Team (STScI/AURA)",
+   "licence": "CC BY 4.0",
+   "page": "https://esahubble.org/images/opo0328a/",
+   "note": "https://emem.dev/memories/by_attester/ddzmyzhn/4uweu43yaiik2mw5nc4eznztbu.md",
+   "source": "https://esahubble.org/media/archives/images/original/opo0328a.tif",
+   "method": "the publisher's own JPEG of the same image; the note's file is the archive TIFF",
+   "drawn_from": "https://esahubble.org/media/archives/images/large/opo0328a.jpg",
+   "files": {
+    "640": {
+     "path": "/assets/wow/4uweu43yaiik2mw5nc4eznztbu-640.webp",
+     "bytes": 12074,
+     "cid26": "qbscoz76oxbs4niukvqgwkqqrq"
+    },
+    "1600": {
+     "path": "/assets/wow/4uweu43yaiik2mw5nc4eznztbu-1600.webp",
+     "bytes": 79586,
+     "cid26": "ebkli7y3jhchbufeqsbhmiq2si"
+    }
+   }
+  },
+  {
+   "record": "fi67bt4rxkic3ssuag2v2hskly",
+   "title": "Mars, December 2024",
+   "device": "telescope",
+   "by": "Hubble",
+   "credit": "NASA, ESA, STScI",
+   "licence": "CC BY 4.0",
+   "page": "https://esahubble.org/images/heic2505b/",
+   "note": "https://emem.dev/memories/by_attester/ddzmyzhn/fi67bt4rxkic3ssuag2v2hskly.md",
+   "source": "https://esahubble.org/media/archives/images/original/heic2505b.tif",
+   "checked": "35 of 35 rows",
+   "method": "drawn from the file's own bytes, after every hashed row of the note was checked",
+   "drawn_from": "https://esahubble.org/media/archives/images/original/heic2505b.tif",
+   "files": {
+    "640": {
+     "path": "/assets/wow/fi67bt4rxkic3ssuag2v2hskly-640.webp",
+     "bytes": 13516,
+     "cid26": "r3vhg6juheykr2n6ffhfrq2w5e"
+    },
+    "1600": {
+     "path": "/assets/wow/fi67bt4rxkic3ssuag2v2hskly-1600.webp",
+     "bytes": 45572,
+     "cid26": "lyrd7qaajkcxjuizix5nmir4ti"
+    }
+   }
+  },
+  {
+   "record": "2re7jfo2v34uwsqxkmpwxoxesu",
+   "title": "Lion and impala, Kruger",
+   "device": "camera",
+   "by": "iNaturalist",
+   "credit": "datadan, iNaturalist",
+   "licence": "CC BY",
+   "page": "https://www.inaturalist.org/observations/39540446",
+   "note": "https://emem.dev/memories/by_attester/ddzmyzhn/2re7jfo2v34uwsqxkmpwxoxesu.md",
+   "source": "https://inaturalist-open-data.s3.amazonaws.com/photos/62738921/original.jpeg",
+   "checked": "2 of 2 rows",
+   "method": "drawn from the file's own bytes, after every hashed row of the note was checked",
+   "drawn_from": "https://inaturalist-open-data.s3.amazonaws.com/photos/62738921/original.jpeg",
+   "files": {
+    "640": {
+     "path": "/assets/wow/2re7jfo2v34uwsqxkmpwxoxesu-640.webp",
+     "bytes": 59992,
+     "cid26": "al2kjwjdtsgsvh47rglbufmhoy"
+    },
+    "1600": {
+     "path": "/assets/wow/2re7jfo2v34uwsqxkmpwxoxesu-1600.webp",
+     "bytes": 255436,
+     "cid26": "dg5djxyvfuf5pbhvy3vrpqppyu"
+    }
+   }
+  },
+  {
+   "record": "ejvovl6sz7d3sugfcrwwie4rma",
+   "title": "Dry lake cracks, drone",
+   "device": "drone",
+   "by": "OpenAerialMap",
+   "credit": "OpenAerialMap contributors",
+   "licence": "CC BY 4.0",
+   "page": "https://openaerialmap.org",
+   "note": "https://emem.dev/memories/by_attester/ddzmyzhn/ejvovl6sz7d3sugfcrwwie4rma.md",
+   "source": "https://oin-hotosm-temp.s3.amazonaws.com/58e86e18cfbcc90010aca440/0/86052d9a-8c9b-4ca3-a836-02894f322464.tif",
+   "checked": "78 of 78 rows",
+   "method": "drawn from the file's own bytes, after every hashed row of the note was checked",
+   "drawn_from": "https://oin-hotosm-temp.s3.amazonaws.com/58e86e18cfbcc90010aca440/0/86052d9a-8c9b-4ca3-a836-02894f322464.tif",
+   "files": {
+    "640": {
+     "path": "/assets/wow/ejvovl6sz7d3sugfcrwwie4rma-640.webp",
+     "bytes": 7548,
+     "cid26": "qkk3t2wr6nbx3gbtwtshats7aa"
+    },
+    "1600": {
+     "path": "/assets/wow/ejvovl6sz7d3sugfcrwwie4rma-1600.webp",
+     "bytes": 45292,
+     "cid26": "nsj64ti5c2dvxebt6rsn5oyowi"
+    }
+   }
+  },
+  {
+   "record": "qcoylkllqzfqnsinn4af5i2mi4",
+   "title": "Robot arms, the coffee task",
+   "device": "robot",
+   "by": "ALOHA",
+   "credit": "LeRobot, aloha_static_coffee",
+   "licence": "MIT",
+   "page": "https://huggingface.co/datasets/lerobot/aloha_static_coffee",
+   "note": "https://emem.dev/memories/by_attester/ddzmyzhn/qcoylkllqzfqnsinn4af5i2mi4.md",
+   "source": "https://huggingface.co/datasets/lerobot/aloha_static_coffee/resolve/main/videos/observation.images.cam_high/chunk-000/file-000.mp4",
+   "checked": "3 of 14 rows: the header, the index and the first frames",
+   "method": "cut from the file's own bytes: its index and first frames, each row checked against the note",
+   "drawn_from": "https://huggingface.co/datasets/lerobot/aloha_static_coffee/resolve/main/videos/observation.images.cam_high/chunk-000/file-000.mp4",
+   "files": {
+    "loop_webm": {
+     "path": "/assets/wow/qcoylkllqzfqnsinn4af5i2mi4-loop.webm",
+     "bytes": 204060,
+     "cid26": "wieqjfisjjropdvfn6clm3tbny"
+    },
+    "loop_mp4": {
+     "path": "/assets/wow/qcoylkllqzfqnsinn4af5i2mi4-loop.mp4",
+     "bytes": 109331,
+     "cid26": "ucb4myrn4b4ii5zvqxh6sbujlu"
+    },
+    "640": {
+     "path": "/assets/wow/qcoylkllqzfqnsinn4af5i2mi4-640.webp",
+     "bytes": 15386,
+     "cid26": "7fwi4e2myytdi724w5ohatbwy4"
+    }
+   }
+  }
+ ]
+}

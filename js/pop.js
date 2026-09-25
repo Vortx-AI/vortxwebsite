@@ -50,6 +50,8 @@
     live.hidden = !isLive && !inset; live.classList.toggle('is-inset', !!inset); pic.hidden = !!isLive; tag.hidden = !isLive; mt.hidden = !live.firstChild;
     if (inset) { live.title = 'decoded here from the checked bytes: open it'; live.setAttribute('role', 'button'); live.tabIndex = 0; } else { live.removeAttribute('title'); live.removeAttribute('role'); live.removeAttribute('tabindex'); }
     mt.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-v') === (isLive ? 'live' : 'saved') ? 'true' : 'false'); });
+
+    pic.querySelectorAll('video').forEach(function (v) { if (isLive) v.pause(); else { var p = v.play(); if (p && p.catch) p.catch(function () {}); } });
   }
   function clearLive() {
     live.querySelectorAll('video').forEach(function (v) { v.pause(); });
@@ -137,13 +139,25 @@
     dlg.querySelectorAll('.sp-go').forEach(function (b) { b.hidden = list.length < 2; });
     var note = $('[data-sp-note]'); note.href = E.NOTE(x.cid);
     askReset(); $('[data-sp-ask]').hidden = !x.at || !asker;
-    // the saved picture: only the one its own thumb note carries
+    // the picture in front: a sharper one of the same file where the site has one (data/pictures.json), saying
+    // how it was made and whose it is; else only the one its own thumb note carries
     pic.className = 'sp-pic'; pic.style.backgroundImage = ''; pic.style.removeProperty('--n'); pic.innerHTML = '';
     pic.setAttribute('aria-label', x.title + ', its saved picture');
-    var t = (await thumbs())[x.cid]; if (g !== gen) return;
-    if (t) { pic.style.backgroundImage = 'url(' + t.file + ')'; if (t.frames > 1 && !reduce) { pic.classList.add('is-sprite'); pic.style.setProperty('--n', t.frames); } else if (t.frames > 1) { pic.classList.add('is-last'); pic.style.setProperty('--n', t.frames); } }
+    var t = (await thumbs())[x.cid], w = (await vx.pictures())[x.cid]; if (g !== gen) return;
+    var sharp = w && w.files && (w.files['1600'] || w.files['640']), sv = mt.querySelector('[data-v="saved"]');
+    if (sharp) {
+      pic.style.backgroundImage = 'url(' + sharp.path + ')'; pic.classList.add('is-sharp');
+      if (w.files.loop_webm && !reduce) {
+        var v = document.createElement('video'); v.muted = true; v.loop = true; v.playsInline = true; v.autoplay = true; v.poster = sharp.path; v.setAttribute('aria-hidden', 'true');
+        [['loop_webm', 'video/webm'], ['loop_mp4', 'video/mp4']].forEach(function (f) { if (w.files[f[0]]) { var so = document.createElement('source'); so.src = w.files[f[0]].path; so.type = f[1]; v.appendChild(so); } });
+        pic.appendChild(v);
+      }
+      var cr = el('span', 'sp-cr', w.credit + ' · ' + w.licence); cr.title = w.method + (w.checked ? ': ' + w.checked + ' checked' : ''); pic.appendChild(cr);
+      pic.setAttribute('aria-label', x.title + '. ' + w.method + (w.checked ? ', ' + w.checked + ' checked' : '') + '. ' + w.credit + ', ' + w.licence);
+    } else if (t) { pic.style.backgroundImage = 'url(' + t.file + ')'; if (t.frames > 1 && !reduce) { pic.classList.add('is-sprite'); pic.style.setProperty('--n', t.frames); } else if (t.frames > 1) { pic.classList.add('is-last'); pic.style.setProperty('--n', t.frames); } }
     else { pic.classList.add('is-none'); pic.appendChild(el('span', null, x.verb + ' ' + x.kind)); }
-    mt.querySelector('[data-v="saved"]').disabled = !t;
+    sv.disabled = !t && !sharp; sv.textContent = sharp ? 'picture' : 'thumbnail';
+    sv.title = sharp ? 'a sharper picture of this file: ' + w.method : 'the picture saved with the catalogue';
     // then the whole run, live
     R = new E.Run({
       log: log, whole: true, live: function () { return g === gen && dlg.open; }, show: function (n, tg) { if (g === gen) show(n, tg); },

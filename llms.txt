@@ -1,6 +1,6 @@
 # vortx.ai
 
-> emem is shared, verifiable memory for AI agents, made by Vortx AI. Satellites, telescopes, robots and cameras keep their files; each observation becomes a small signed token, emem:kind:id, that any agent decodes with @emem and can check itself. Two agents citing one token read the same signed bytes. The protocol is free; the team's time is the only thing for sale.
+> emem is shared, verifiable memory for AI agents, made by Vortx AI. Telescopes, satellites, cameras, drones and robots keep their files; each observation becomes a small signed token, emem:kind:id, that any agent decodes with @emem and can check itself. Two agents citing one token read the same signed bytes. The protocol is free; the team's time is the only thing for sale.
 
 Verbs before prose: each line reads `verb noun ref key=value`. This top rung is all an agent needs to start; each rung below names its size and its cid26 = base32(blake3(bytes)[0:16]), so what you fetch can be checked.
 

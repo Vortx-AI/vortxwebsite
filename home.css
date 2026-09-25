@@ -4,17 +4,19 @@
    ============================================================ */
 
 /* ---------- hero: the Earth in the middle of everything it remembers ---------- */
-.h3o { position: relative; overflow: hidden; background: radial-gradient(900px 600px at 55% 58%, rgba(40, 86, 150, .16), transparent 70%); }
+.h3o { position: relative; overflow: hidden; overflow: clip; background: radial-gradient(900px 600px at 55% 58%, rgba(40, 86, 150, .16), transparent 70%); }
 .h3o-stage { position: relative; height: calc(100svh - 60px); min-height: 700px; max-height: 1100px; }
 .h3o-deep { position: absolute; right: -4%; top: -2%; width: 60%; height: 56%; pointer-events: none;
   background: url('/assets/observatory/carina.webp') 50% 45% / cover; opacity: .26; filter: saturate(.75);
   -webkit-mask-image: radial-gradient(ellipse at 64% 42%, #000 8%, rgba(0,0,0,.55) 36%, transparent 68%); mask-image: radial-gradient(ellipse at 64% 42%, #000 8%, rgba(0,0,0,.55) 36%, transparent 68%); }
-.h3o .orbit { position: absolute; inset: 0; --cx: .55; --cy: .56; }
+.h3o .orbit { position: absolute; inset: 0; --cx: .57; --cy: .56; --fit: .8; }
 .h3o .orbit [data-over] { cursor: grab; }
 .h3o-links { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3; overflow: visible; }
 .h3o-links path { fill: none; stroke: rgba(232, 237, 242, .38); stroke-width: 1; }
 .h3o-links path.is-sat { stroke: rgba(242, 244, 247, .5); stroke-dasharray: 2 4; }
 .h3o-links circle { fill: none; stroke: rgba(232, 237, 242, .8); stroke-width: 1.2; }
+.h3o-links path.is-hot { stroke: rgba(61, 220, 151, .8); stroke-width: 1.4; }
+.h3o-links circle.is-hot { stroke: var(--ok); stroke-width: 1.6; }
 .h3o-links .pk { fill: var(--ok); stroke: none; filter: drop-shadow(0 0 6px rgba(61, 220, 151, .9)); }
 .h3o-links .pk-l { fill: var(--ok); font: 600 10px var(--mono); }
 .h3o-pins { position: absolute; inset: 0; pointer-events: none; z-index: 3; }
@@ -67,51 +69,81 @@
 .h3o-sub { margin: 18px 0 0; font: 400 clamp(18px, 1.6vw, 23px)/1.35 var(--sans); color: var(--ink-2); letter-spacing: -.01em; text-shadow: 0 1px 18px rgba(0, 0, 0, .8); }
 .h3o-sub b { color: var(--ink); font-weight: 500; }
 /* the noun under the verbs: what emem is, who keeps what, and what is for sale */
-.h3o-what { margin: 14px 0 0; max-width: 470px; font: 400 14.5px/1.5 var(--sans); color: var(--ink-2); text-shadow: 0 1px 14px rgba(0, 0, 0, .9); }
+.h3o-what { margin: 14px 0 0; max-width: 500px; font: 400 14.5px/1.5 var(--sans); color: var(--ink-2); text-shadow: 0 1px 14px rgba(0, 0, 0, .9); }
 .h3o-what b { color: var(--ok); font-weight: 600; }
 .vx .h3o-what .lk { font: inherit; color: var(--ink); text-decoration: underline; text-decoration-color: rgba(232, 237, 242, .3); text-underline-offset: 3px; }
 .vx .h3o-what .lk:hover { text-decoration-color: currentColor; }
 .h3o-acts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
 
-/* the memory cards around the Earth */
-.hc { position: absolute; z-index: 4; width: clamp(170px, 14vw, 230px); display: block; text-decoration: none; color: var(--ink);
-  background: rgba(8, 12, 19, .78); border: 1px solid rgba(232, 237, 242, .14); border-radius: 10px; overflow: hidden;
-  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: 0 20px 50px rgba(0, 0, 0, .45); transition: border-color .25s, transform .3s var(--ease), opacity .4s; }
-.hc:hover, .hc:focus-visible { border-color: rgba(232, 237, 242, .4); transform: translateY(-2px); }
-.hc.is-far { opacity: .45; }
-.hc-img { position: relative; aspect-ratio: 16 / 10; background: #05080d center / cover no-repeat; }
+/* the ring: devices around the Earth. A card is a pill until it is opened; it finds its own place, and it can be dragged anywhere */
+.h3o-in > .h3o-ring { position: absolute; inset: 0; z-index: 4; pointer-events: none; }
+.hc { position: absolute; left: 0; top: 0; z-index: 4; display: block; width: max-content; max-width: 300px; color: var(--ink); pointer-events: auto; user-select: none; -webkit-user-select: none;
+  transform: translate3d(var(--x, 0), var(--y, 0), 0); opacity: 0; visibility: hidden;
+  background: rgba(8, 12, 19, .8); border: 1px solid rgba(232, 237, 242, .14); border-radius: 28px; overflow: hidden;
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: 0 16px 40px rgba(0, 0, 0, .42);
+  transition: transform .55s var(--ease), opacity .45s var(--ease) var(--d, 0s), visibility .45s var(--d, 0s), border-color .25s, box-shadow .25s; }
+.hc:not(.is-placed) { transition: none; }
+.hc.is-placed { opacity: 1; visibility: visible; }
+.hc.is-out { opacity: 0; visibility: hidden; pointer-events: none; }
+.hc:hover, .hc:focus-within { border-color: rgba(232, 237, 242, .38); }
+.hc.is-drag { transition: none; cursor: grabbing; border-color: rgba(232, 237, 242, .5); box-shadow: 0 26px 60px rgba(0, 0, 0, .6); }
+@media (pointer: fine) { .hc { cursor: grab; } }
+.hc-main { display: flex; align-items: center; gap: 10px; padding: 6px 42px 6px 6px; color: inherit; text-decoration: none; cursor: inherit; }
+.hc-main:focus-visible { outline: 2px solid var(--ok); outline-offset: -2px; border-radius: inherit; }
+.hc-pic { position: relative; display: block; flex: none; width: 40px; height: 40px; border-radius: 50%; overflow: hidden; background: #05080d center / cover no-repeat; }
+.hc-pic video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.hc-pic.is-mars { background-size: 246% auto; background-position: 91.5% 50%; }
+.hc-pic.is-moon { background: #04070b; }
+.hc-pic.is-moon canvas { position: absolute; top: 0; left: 50%; height: 100%; width: auto; aspect-ratio: 1; transform: translateX(-50%); display: block; }
 .hc-strip { background-size: calc(var(--n) * 100%) 100%; background-position: 0 0; animation: sc-sprite calc(var(--n) * .6s) steps(var(--n), jump-none) infinite; }
-.hc-yr { position: absolute; left: 8px; bottom: 6px; font: 600 10.5px var(--mono); color: #fff; text-shadow: 0 1px 4px #000; }
-.hc-body { padding: 9px 11px 10px; }
-.hc-body strong { display: block; font: 500 13.5px/1.3 var(--sans); letter-spacing: -.01em; }
-.hc-body span { display: block; margin-top: 3px; font: 400 10.5px/1.45 var(--mono); color: var(--ink-3); }
-.hc-body span b { color: var(--ok); font-weight: 500; }
-.hc-ck { display: block; margin-top: 4px; font: 400 10.5px var(--mono); font-style: normal; color: var(--ink-3); }
+.hc-yr { position: absolute; left: 8px; top: 7px; display: none; font: 600 10.5px var(--mono); color: #fff; text-shadow: 0 1px 4px #000; }
+.hc-t { display: flex; flex-direction: column; min-width: 0; }
+.hc-t i { font: 400 10.5px/1.35 var(--mono); font-style: normal; color: var(--ink-3); white-space: nowrap; }
+.hc-t strong { font: 500 13px/1.3 var(--sans); letter-spacing: -.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* its place is on the far side of the Earth now: pointing at the card turns the Earth to it */
+.hc.is-far .hc-pic { outline: 1px dashed rgba(255, 190, 90, .7); outline-offset: 2px; }
+.hc.is-far.is-open .hc-pic { outline: 0; }
+.hc-tog { position: absolute; right: 8px; top: 50%; z-index: 1; width: 26px; height: 26px; margin-top: -13px; padding: 0; display: grid; place-items: center; border-radius: 50%;
+  border: 1px solid rgba(232, 237, 242, .2); background: rgba(4, 7, 11, .62); color: var(--ink-2); font: 400 15px/1 var(--mono); cursor: pointer; transition: color .2s, border-color .2s, background .2s; }
+.hc-tog::before { content: '+'; }
+.hc-tog[aria-expanded="true"]::before { content: '−'; }
+.hc-tog:hover, .hc-tog:focus-visible { color: var(--ink); border-color: rgba(232, 237, 242, .5); background: rgba(4, 7, 11, .88); }
+.hc-more { display: none; padding: 8px 12px 10px; font: 400 10.5px/1.5 var(--mono); color: var(--ink-3); }
+.hc-more > span { display: block; }
+.hc-more [data-meta] { min-height: 3em; }
+.hc-more b { color: var(--ok); font-weight: 500; }
+.hc-cr { display: block; margin-top: 5px; font: 400 10.5px/1.4 var(--mono); color: var(--ink-3); }
+.hc-ck { display: block; margin-top: 3px; font: 400 10.5px var(--mono); font-style: normal; color: var(--ink-3); }
+.hc-cr .hc-ck { display: inline; margin: 0 6px 0 0; }
 .hc-ck.is-ok { color: var(--ok); }
 .hc-ck.is-bad { color: var(--fail); }
-.hc-lg { width: clamp(220px, 19vw, 300px); }
-/* the sky on the right: Webb's deep field, then Mars and the Moon tonight, in one column so they never collide */
-.h3o-sky { position: absolute; z-index: 4; right: max(24px, 3.5%); top: 7%; width: clamp(220px, 19vw, 300px); display: flex; flex-direction: column; gap: 10px; }
-.h3o-sky .hc { position: relative; width: 100%; margin-bottom: 6px; }
-.hc-sm { width: clamp(130px, 10vw, 160px); }
-.hc-sm .hc-body strong { font-size: 12px; }
-
-/* planets: Mars from Hubble, the Moon at its phase tonight */
-.hp { display: flex; align-items: center; gap: 12px; font: 400 10.5px/1.45 var(--mono); color: var(--ink-3); }
-.hp b { display: block; font: 500 12.5px var(--sans); color: var(--ink); }
-.hp i { display: block; font-style: normal; color: var(--ink-2); }
-.hp i + i { color: var(--ink-3); }
-.hp-mars { width: 48px; height: 48px; flex: none; border-radius: 50%; background: url('/assets/observations/fi67bt4rxkic3ssuag2v2hskly.webp') -2px -9px / 110px auto no-repeat; box-shadow: 0 0 22px rgba(255, 140, 90, .25); }
-.hp canvas { width: 48px; height: 48px; flex: none; }
+/* opened: the picture leads, and the words sit on it */
+.hc.is-open { width: clamp(224px, 17vw, 262px); border-radius: 12px; }
+.hc.is-open .hc-main { display: block; position: relative; padding: 0; }
+.hc.is-open .hc-pic { width: 100%; height: auto; aspect-ratio: 16 / 10; border-radius: 0; }
+.hc.is-open .hc-pic.is-mars { background-size: 160% auto; background-position: 100% 50%; }
+.hc.is-open .hc-t { position: absolute; left: 0; right: 0; bottom: 0; padding: 28px 12px 9px; background: linear-gradient(180deg, transparent, rgba(4, 7, 11, .9)); }
+.hc.is-open .hc-t i { color: var(--ink-2); }
+.hc.is-open .hc-t strong { white-space: normal; }
+.hc.is-open .hc-tog { top: 8px; margin-top: 0; }
+.hc.is-open .hc-more, .hc.is-open .hc-yr { display: block; }
+.h3o-tidy { pointer-events: auto; font-size: 12px; }
 
 /* @emem, decoding */
 .hd { position: absolute; z-index: 5; right: max(24px, 3.5%); bottom: 8%; display: flex; align-items: flex-end; gap: 6px; }
-.hd-bot { width: clamp(110px, 9vw, 150px); height: auto; filter: drop-shadow(0 14px 30px rgba(0, 0, 0, .6)); animation: hover 6s ease-in-out infinite; }
+.hd-bot { width: clamp(96px, 7.5vw, 126px); height: auto; filter: drop-shadow(0 14px 30px rgba(0, 0, 0, .6)); animation: hover 6s ease-in-out infinite; }
 @keyframes hover { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-.hd-card { width: clamp(280px, 21vw, 310px); padding: 12px 14px; margin-bottom: 18px; border-radius: 12px; background: rgba(8, 12, 19, .86); border: 1px solid rgba(61, 220, 151, .35);
+.hd-card { width: clamp(300px, 24vw, 350px); padding: 12px 14px; margin-bottom: 18px; border-radius: 12px; background: rgba(8, 12, 19, .86); border: 1px solid rgba(61, 220, 151, .35);
   backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: 0 18px 50px rgba(0, 0, 0, .5); transition: border-color .4s, box-shadow .4s; }
 .hd-card.is-hit { border-color: var(--ok); box-shadow: 0 0 0 1px rgba(61, 220, 151, .4), 0 18px 50px rgba(0, 0, 0, .5); }
-.hd-card h2 { margin: 0 0 6px; font: 500 12.5px var(--mono); color: var(--ok); }
+.hd-card h2 { margin: 0 0 6px; font: 500 12.5px var(--mono); color: var(--ok); position: relative; padding-right: 30px; }
+.hd-card .hc-tog { right: -6px; }
+/* shut, the card keeps what was decoded and drops how */
+.hd.is-shut .hd-meta, .hd.is-shut .hd-tok { display: none; }
+.hd.is-shut .hd-card { margin-bottom: 26px; }
+.hd.is-placed { left: 0; top: 0; right: auto; bottom: auto; transform: translate3d(var(--x, 0), var(--y, 0), 0); }
+.hd.is-drag { transition: none; }
+@media (pointer: fine) { .hd-card h2 { cursor: grab; } .hd.is-drag .hd-card h2 { cursor: grabbing; } }
 .hd-card h2 [data-d="state"] { color: var(--ink-3); font-weight: 400; }
 .hd-val { font: 400 30px/1.05 var(--serif); letter-spacing: -.01em; }
 .hd-val .hd-tail { font-size: .55em; color: var(--ink-3); letter-spacing: 0; }
@@ -122,6 +154,13 @@
 .hd-meta span, .hd-acts { white-space: nowrap; }
 .hd-acts .lk { font-size: 12px; }
 .hd-tok { margin: 8px 0 0; padding: 6px 8px; border-radius: 6px; background: rgba(0, 0, 0, .35); font: 400 10px/1.4 var(--mono); color: var(--ok); word-break: break-all; }
+/* the decoded lines keep their room before they arrive, so nothing around the card moves when they do */
+.hd-tok:empty { min-height: 54px; background: rgba(0, 0, 0, .18); }
+/* the place and date take two lines once decoded, and the check two: they are kept from the start, so the card
+   never grows after the devices around it have found their places */
+.hd-card [data-d="meta"] { min-height: 33px; }
+.hd-card [data-d="check"] span { display: block; }
+.hd-card [data-d="check"]:empty { min-height: 33px; }
 .hd-tok span { white-space: nowrap; color: var(--ink-2); }
 
 /* the live orbit strip */
@@ -133,18 +172,15 @@
 .h3o-hint { margin: 0 0 0 auto; font: 400 11px var(--mono); color: var(--ink-3); pointer-events: auto; }
 .h3o-back { margin-left: auto; min-height: 34px; padding: 6px 14px; font-size: 12.5px; pointer-events: auto; }
 .h3o-hint:has(~ .h3o-back:not([hidden])) { display: none; }
-.h3o-copy, .h3o-sky, .hd, .h3o-live, .h3o-hint, .h3o-links, .h3o-deep { transition: opacity .5s var(--ease); }
-.h3o-stage.is-focus .hc, .h3o-stage.is-focus .h3o-sky, .h3o-stage.is-focus .hd, .h3o-stage.is-focus .h3o-copy, .h3o-stage.is-focus .h3o-links,
+.h3o-copy, .h3o-ring, .hd, .h3o-live, .h3o-hint, .h3o-links, .h3o-deep { transition: opacity .5s var(--ease); }
+.h3o-stage.is-focus .h3o-ring, .h3o-stage.is-focus .hc, .h3o-stage.is-focus .hd, .h3o-stage.is-focus .h3o-copy, .h3o-stage.is-focus .h3o-links,
 .h3o-stage.is-focus .h3o-live, .h3o-stage.is-focus .h3o-hint { opacity: .06; pointer-events: none; }
 .h3o-stage.is-focus .h3o-pin:not(.is-picked):not(.is-far) { opacity: .3; }
 /* a space card turns the Earth until its object is in view, beside the limb, where it truly is now */
 .h3o-stage.is-sky .hc:not([data-sky]), .h3o-stage.is-sky .h3o-hint { opacity: .12; }
 .h3o-stage.is-sky .hd { opacity: .04; }
 .h3o-stage.is-sky .h3o-deep { opacity: .1; }
-.h3o-stage.is-sky .hp[data-sky]:not(:hover):not(:focus-visible), .h3o-stage.is-sky .h3o-sky .hc:not(:hover):not(:focus-within) { opacity: .55; }
-.hp[data-sky] { cursor: crosshair; border-radius: 10px; transition: opacity .3s, background .3s; }
-.hp[data-sky]:hover, .hp[data-sky]:focus-visible { background: rgba(255, 255, 255, .04); }
-.hc[data-sky] { cursor: crosshair; }
+.h3o-stage.is-sky .hc[data-sky]:not(:hover):not(:focus-within) { opacity: .55; }
 .h3o-links .sk-ring { fill: none; stroke: var(--ok); stroke-width: 1.3; }
 .h3o-links .sk-tick { stroke: var(--ok); stroke-width: 1.3; stroke-linecap: round; }
 .h3o-links .sk-l, .h3o-links .sk-l2 { paint-order: stroke; stroke: rgba(4, 7, 11, .85); stroke-width: 4px; stroke-linejoin: round; }
@@ -155,11 +191,11 @@
 .h3o-links .sk.is-hidden .sk-l2 { fill: var(--claim); }
 .h3o-obj { position: absolute; left: 0; top: 0; z-index: 3; width: 28px; height: 28px; margin: -14px 0 0 -14px; border-radius: 50%; overflow: hidden; pointer-events: none; opacity: 0;
   background: #05080d center / cover no-repeat; box-shadow: 0 0 0 1px rgba(4, 7, 11, .9), 0 0 22px rgba(61, 220, 151, .35); transition: opacity .3s; }
-.h3o-obj.is-mars { background: url('/assets/observations/fi67bt4rxkic3ssuag2v2hskly.webp') -1px -5px / 64px auto no-repeat; }
+.h3o-obj.is-mars { background: url('/assets/wow/fi67bt4rxkic3ssuag2v2hskly-640.webp') 91.5% 50% / 246% auto no-repeat; }
 .h3o-obj canvas { width: 100%; height: 100%; }
 
 /* ---------- sections: one line of statement, one line of verbs, then the thing itself ---------- */
-.hs { position: relative; padding: clamp(44px, 5.5vw, 76px) 0; border-top: 1px solid var(--line); }
+.hs { position: relative; padding: clamp(40px, 4.6vw, 64px) 0; border-top: 1px solid var(--line); }
 .hs h2 { margin: 0; font: 400 clamp(28px, 3.2vw, 44px)/1.08 var(--serif); letter-spacing: -.018em; }
 .hs h2 em { font-style: italic; color: var(--ink-2); }
 .hs-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 40px; margin-bottom: 24px; }
@@ -204,7 +240,10 @@
 .st-cred .lk { font-size: 12px; }
 
 /* connect */
-.cx { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 16px; align-items: start; }
+.cx { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 16px; align-items: stretch; }
+/* the two panels end together: the drop zone takes the room the device steps need */
+.cx > .cx-card:first-child { display: flex; flex-direction: column; }
+.cx > .cx-card:first-child > .drop { flex: 1 1 auto; }
 .cx-card { border: 1px solid var(--line); border-radius: 14px; background: var(--deep); padding: 22px; min-width: 0; }
 .cx-card h3 { margin: 0 0 6px; font: 400 28px/1.1 var(--serif); }
 .cx-card > p { margin: 0 0 16px; color: var(--ink-2); font-size: 15px; }
@@ -281,7 +320,9 @@
 .run-verdict.is-off, .run-verdict.is-off span { color: var(--claim); }
 .run-log { min-height: 212px; }
 .run.is-running .run-log::after, #run.is-running .run-log::after { content: 'running…'; display: block; padding: 8px 0; font: 400 11px var(--mono); color: var(--ink-3); }
-.run-sum { display: grid; gap: 7px; margin-top: 14px; }
+.run-side { min-width: 0; }
+.run-sum { display: grid; gap: 7px; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); }
+.run-sum:empty { display: none; }
 .run-bar { display: grid; grid-template-columns: 9.5em minmax(0, 1fr) auto; gap: 10px; align-items: center; font: 400 11.5px var(--mono); color: var(--ink-3); }
 .run-bar i { display: block; height: 7px; border-radius: 4px; background: rgba(255, 255, 255, .06); overflow: hidden; }
 .run-bar u { display: block; height: 100%; background: rgba(255, 196, 107, .55); transition: width .8s var(--ease); }
@@ -402,7 +443,10 @@ html.sp-open { overflow: hidden; }
 .sp::backdrop { background: rgba(2, 4, 7, .78); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
 .sp-in { display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr); height: 100%; }
 .sp-media { position: relative; min-height: 0; display: grid; place-items: center; background: #03060a; border-right: 1px solid var(--line); overflow: hidden; }
-.sp-pic { width: 100%; aspect-ratio: 16 / 10; max-height: 100%; background: #03060a center / cover no-repeat; }
+.sp-pic { position: relative; width: 100%; aspect-ratio: 16 / 10; max-height: 100%; background: #03060a center / cover no-repeat; }
+.sp-pic video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+/* whose the picture is, and its licence, on the picture; how it was made, on hover */
+.sp-cr { position: absolute; left: 12px; bottom: 12px; z-index: 1; max-width: calc(64% - 24px); padding: 3px 7px; border-radius: 5px; background: rgba(4, 7, 11, .72); font: 400 10.5px/1.4 var(--mono); color: var(--ink-2); }
 .sp-pic.is-sprite { background-size: calc(var(--n) * 100%) 100%; background-position: 0 0; animation: sc-sprite calc(var(--n) * .9s) steps(var(--n), jump-none) infinite; }
 .sp-pic.is-last { background-size: calc(var(--n) * 100%) 100%; background-position: 100% 0; }
 .sp-pic.is-none { display: grid; place-items: center; font: 400 clamp(22px, 2.6vw, 34px)/1.1 var(--serif); color: var(--ink-3); background: repeating-linear-gradient(135deg, rgba(255, 255, 255, .025) 0 12px, transparent 12px 24px); }
@@ -524,26 +568,42 @@ html.sp-open { overflow: hidden; }
 
 /* ---------- responsive ---------- */
 @media (max-width: 1180px) {
-  .hc-hide-md { display: none; }
   .plug { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .h3o .orbit { --cx: .5; --fit: .86; }
+  .h3o .orbit { --cx: .56; --cy: .6; --fit: .74; }
 }
 /* laptops: less height than the sky column and the decoded card need at full size */
 @media (min-width: 901px) and (max-height: 820px) {
-  .h3o-sky .hc-img { aspect-ratio: 2 / 1; }
   .hd { bottom: 5%; }
 }
 @media (max-width: 900px) {
   .h3o-stage { height: auto; min-height: 0; max-height: none; display: flex; flex-direction: column; }
   .h3o-deep { width: 100%; height: 40%; top: 18%; right: 0; opacity: .2; }
-  .h3o .orbit { position: relative; inset: auto; order: 2; width: 100%; aspect-ratio: 1 / 1; --cx: .5; --cy: .5; }
+  .h3o .orbit { position: relative; inset: auto; order: 2; width: 100%; height: min(100vw, 580px); --cx: .5; --cy: .5; }
   .h3o-in { display: contents; }
   .h3o-copy { position: relative; left: auto; top: auto; order: 1; width: var(--wrap); margin: 28px auto 0; max-width: none; }
-  .h3o .hc, .h3o .h3o-sky, .h3o .h3o-links { display: none; }
-  .h3o .hd { position: relative; order: 3; width: var(--wrap); margin: -8px auto 0; right: auto; bottom: auto; justify-content: center; }
-  .h3o-foot { position: relative; order: 4; left: auto; right: auto; bottom: auto; width: var(--wrap); margin: 16px auto 20px; }
+  .h3o .h3o-links { display: none; }
+  /* the devices, as one row to swipe under the Earth; a tap opens the sample */
+  .h3o-in > .h3o-ring { position: relative; inset: auto; order: 3; display: flex; gap: 10px; width: 100%; margin: -6px 0 0; padding: 2px max(16px, calc((100% - var(--wrap)) / 2)) 14px;
+    overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-padding: 0 16px; pointer-events: auto; scrollbar-width: none; }
+  .h3o-ring::-webkit-scrollbar { display: none; }
+  .h3o-ring .hc, .h3o-ring .hc.is-open, .h3o-ring .hc.is-out { position: relative; flex: 0 0 138px; width: 138px; max-width: none; transform: none; opacity: 1; visibility: visible; pointer-events: auto;
+    border-radius: 12px; scroll-snap-align: start; cursor: pointer; transition: border-color .25s; }
+  .h3o-ring .hc .hc-main { display: block; position: static; padding: 0; }
+  .h3o-ring .hc .hc-pic, .h3o-ring .hc.is-open .hc-pic { width: 100%; height: auto; aspect-ratio: 16 / 10; border-radius: 0; outline: 0; }
+  .h3o-ring .hc .hc-pic.is-mars, .h3o-ring .hc.is-open .hc-pic.is-mars { background-size: 160% auto; background-position: 100% 50%; }
+  .h3o-ring .hc .hc-t, .h3o-ring .hc.is-open .hc-t { position: static; padding: 7px 9px 9px; background: none; }
+  .h3o-ring .hc.is-open .hc-t i { color: var(--ink-3); }
+  .h3o-ring .hc .hc-t strong { font-size: 12.5px; white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+  .h3o-ring .hc-tog, .h3o-ring .hc .hc-more, .h3o-ring .hc.is-open .hc-more, .h3o-ring .hc.is-open .hc-yr, .h3o-ring .hc-yr, .h3o-tidy { display: none; }
+  .h3o .hd { position: relative; order: 4; width: var(--wrap); margin: 4px auto 0; right: auto; bottom: auto; justify-content: center; transform: none; }
+  .hd-card h2 { cursor: auto; }
+  .h3o-foot { position: relative; order: 5; left: auto; right: auto; bottom: auto; width: var(--wrap); margin: 16px auto 20px; }
   .h3o-hint { display: none; }
   .cx, .ask, .bb, .run, .drift { grid-template-columns: 1fr; }
+  /* one column: the picture, the verdict, the steps, then what moved, then what to do next */
+  .run { row-gap: 12px; }
+  .run-side, .run-body { display: contents; }
+  .run-fig { order: 1; } .run-verdict { order: 2; margin: 4px 0 0; } .run-log { order: 3; } .run-sum { order: 4; margin-top: 4px; } .run-acts { order: 5; margin-top: 4px; }
   .st { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 18px; }
   .st::before, .st::after { display: none; }
   .arc, .sc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }

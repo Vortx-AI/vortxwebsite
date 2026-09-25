@@ -2,8 +2,10 @@
  *
  *   pins     every Earth observation in the live ememdemo catalogue, at its own at=lat,lng; a pin opens
  *            its sample here, in the popup (js/pop.js), where it runs end to end
- *   cards    featured memories, each tethered to its pin; Hubble's image to Hubble, where it is now; each
- *            opens in the popup too, and a middle-click still opens the note itself
+ *   ring     one sample per device (telescope, satellite, camera, drone, robot, and the Moon and Mars
+ *            tonight), each tethered to where it observed: Hubble's image to Hubble, where it is now.
+ *            A card is a pill until it is opened; each finds its own place around the Earth, clear of
+ *            the words and of each other, and can be dragged anywhere; the page remembers where
  *   planets  Mars (distance, light time) and the Moon (distance, phase) from vx.eph, recomputed now
  *   decode   @emem decodes one live token: recall, mint, resolve, hash the CBOR, verify the receipt,
  *            all in this browser; then the token's path from its place to @emem is drawn once
@@ -17,7 +19,11 @@
   var stage = root.querySelector('.h3o-stage'), svg = root.querySelector('.h3o-links'), pinsEl = root.querySelector('.h3o-pins');
   var EMEM = 'https://emem.dev', NOTE = function (cid) { return EMEM + '/memories/by_attester/ddzmyzhn/' + cid + '.md'; };
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var PHONE = window.matchMedia ? matchMedia('(max-width: 900px)') : { matches: false };
   var NS = 'http://www.w3.org/2000/svg';
+  // the hero clips what spills past its edges; a browser without overflow: clip could still scroll it sideways to show
+  // a focused card, and every position on the stage would slide with it
+  root.addEventListener('scroll', function () { if (root.scrollLeft || root.scrollTop) { root.scrollLeft = 0; root.scrollTop = 0; } });
 
   /* ---------- the catalogue, shared with the archive below ---------- */
   function parse(txt) {
@@ -37,7 +43,9 @@
   window.vxCatalog = window.vxCatalog || fetch('https://vortx-ai.github.io/ememdemo/llms.txt').then(function (r) { return r.text(); }).then(parse);
 
   /* ---------- pins and tethers ---------- */
-  var pins = [], cards = [].slice.call(root.querySelectorAll('.hc[data-cid], .hc[data-sat], .hd-card[data-cid]'));
+  var ringEl = root.querySelector('[data-ring]'), ring = ringEl ? [].slice.call(ringEl.querySelectorAll('.hc')) : [];
+  var card = root.querySelector('.hd-card'), hd = root.querySelector('.hd');
+  var pins = [], cards = ring.concat(card && card.hasAttribute('data-cid') ? [card] : []);
   function el(tag, attrs) { var e = document.createElementNS(NS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); return e; }
   // a pin or a card opens its sample here, in the popup (js/pop.js); the note itself stays one click further
   function centre(el) { var r = el.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; }
@@ -49,6 +57,7 @@
   function openFromPlace(x, list, fallback) {
     var pin = pins.filter(function (p) { return p.item === x; })[0], O = window.vxOrbit;
     if (reduce || !x.at || !pin || !O || !O.focus || !window.vxPop || getComputedStyle(pinsEl).display === 'none') { openHere(x, list, pin && !pin.el.classList.contains('is-far') ? pin.el : fallback); return; }
+    clearTimeout(peekT); peeking = null;
     stage.classList.add('is-focus'); pin.el.classList.add('is-picked');
     O.focus(x.at[0], x.at[1], 700, function () {
       rise(x);
@@ -66,7 +75,7 @@
     pins.forEach(function (p) { p.el.classList.remove('is-picked'); });
     if (stage.classList.contains('is-focus')) { stage.classList.remove('is-focus'); if (window.vxOrbit && window.vxOrbit.release) window.vxOrbit.release(800); }
   });
-  var east = [], featured = cards.map(function (c) { return c.getAttribute('data-cid'); }).filter(Boolean);
+  var east = [], featured = cards.map(function (c) { return c.getAttribute('data-cid'); }).filter(Boolean), known = false;
   window.vxCatalog.then(function (items) {
     // the popup's arrows travel west to east, around the globe
     var placed = items.filter(function (x) { return x.at; });
@@ -88,14 +97,13 @@
       var x = items.filter(function (i) { return i.cid === cid; })[0];
       if (!x) return;
       c.vxItem = x;
-      if (c.tagName === 'A') {
-        if (!c.getAttribute('href')) c.setAttribute('href', NOTE(cid));
-        c.addEventListener('click', function (e) { if (window.vxPop && window.vxPop.plain(e)) { e.preventDefault(); if (x.at) openFromPlace(x, east, c); else openHere(x, null, c); } });
-      }
+      var a = c.querySelector('a.hc-main');
+      // on a phone the strip sits under the globe, out of its view: the sample opens at once, where the tap was
+      if (a) a.addEventListener('click', function (e) { if (window.vxPop && window.vxPop.plain(e)) { e.preventDefault(); if (x.at && !PHONE.matches) openFromPlace(x, east, c); else openHere(x, x.at ? east : null, c); } });
       var meta = c.querySelector('[data-meta]');
       if (meta) {
         // the ememdemo token line, from the catalogue's own fields
-        var parts = c.getAttribute('data-by') ? [c.getAttribute('data-by')] : [], tk = num(x.kv.tok), rw = num(x.kv.raw);
+        var parts = [], tk = num(x.kv.tok), rw = num(x.kv.raw);
         if (x.kv.size) parts.push(x.kv.size.replace(/(\d)([A-Z])/, '$1 $2'));
         else if (x.kv.years) parts.push(x.kv.years.replace('-', '–'));
         if (tk) parts.push('agent reads <b>' + x.kv.tok + ' context tokens</b>');
@@ -104,14 +112,17 @@
       }
       checkNote(c, cid);
     });
+    known = true; settle();
     tick();
-  }).catch(function () {});
+  }).catch(function () { known = true; settle(); });
 
   function num(v) { var m = String(v || '').replace('~', '').match(/^([\d.]+)([kMB]?)$/); return m ? parseFloat(m[1]) * ({ '': 1, k: 1e3, M: 1e6, B: 1e9 })[m[2]] : null; }
   // each card re-checks its note as the page loads: base32(blake3(bytes)[0:16]) must equal its name
   function checkNote(c, cid) {
-    var body = c.querySelector('.hc-body'); if (!body) return;
-    var b = document.createElement('i'); b.className = 'hc-ck'; b.textContent = 'checking'; body.appendChild(b);
+    var body = c.querySelector('.hc-more'); if (!body) return;
+    // the check leads the credit line; it is in the markup already, so the card's size does not change when it lands
+    var b = body.querySelector('.hc-ck');
+    if (!b) { b = document.createElement('i'); b.className = 'hc-ck'; b.textContent = 'checking'; body.appendChild(b); }
     vx.getBytes(NOTE(cid)).then(function (r) {
       var ok = vx.cid26(r.bytes) === cid;
       b.textContent = ok ? '✓ note' : '✗ name lies'; b.className = 'hc-ck ' + (ok ? 'is-ok' : 'is-bad');
@@ -188,6 +199,7 @@
     if (!box.width) return;
     var gb = globe ? globe.getBoundingClientRect() : box;
     off = { x: gb.left - box.left, y: gb.top - box.top };
+    if (!laid && window.vxOrbit.size().W > 1) settle();
     while (svg.firstChild) svg.removeChild(svg.firstChild);
     pins.forEach(function (p) {
       var s = onStage(window.vxOrbit.screen(p.item.at[0], p.item.at[1]));
@@ -201,22 +213,263 @@
     var inSky = stage.classList.contains('is-sky');
     cards.forEach(function (c) {
       var r = c.getBoundingClientRect();
-      if (!r.width) return; // hidden at this width: no card, no tether
+      if (!r.width || c.classList.contains('is-out') || (c.classList.contains('hc') && !c.classList.contains('is-placed'))) return; // not on the stage: no tether
       if (inSky && !c.hasAttribute('data-sky')) return; // the Earth has turned away from where these point
       var target = null, isSat = false;
       if (c.vxItem && c.vxItem.at) { var s = onStage(window.vxOrbit.screen(c.vxItem.at[0], c.vxItem.at[1])); if (s && s.front) target = s; }
       var sat = c.getAttribute('data-sat');
-      if (sat) { target = onStage(window.vxOrbit.sat(sat)); isSat = true; var w = c.querySelector('[data-where]'); if (w) w.textContent = target ? 'Hubble, there now, in orbit' : 'Hubble is behind the Earth right now'; }
-      c.classList.toggle('is-far', !target && !!c.vxItem && !!c.vxItem.at);
+      if (sat) { target = onStage(window.vxOrbit.sat(sat)); isSat = true; var w = c.querySelector('[data-where]'); if (w) w.textContent = target ? 'Hubble is there now, in orbit' : 'Hubble is behind the Earth now'; }
+      var far = !target && !!c.vxItem && !!c.vxItem.at;
+      if (far !== c.classList.contains('is-far')) { c.classList.toggle('is-far', far); if (far) c.title = 'Its place is on the far side of the Earth now: point at this card to turn the Earth there'; else c.removeAttribute('title'); }
       if (!target) return;
       var rr = { left: r.left - box.left, right: r.right - box.left, top: r.top - box.top, bottom: r.bottom - box.top };
       var a = nearestOnRect(rr, target), mx = (a.x + target.x) / 2, my = (a.y + target.y) / 2 - 24;
-      svg.appendChild(el('path', { d: 'M' + a.x.toFixed(1) + ' ' + a.y.toFixed(1) + ' Q' + mx.toFixed(1) + ' ' + my.toFixed(1) + ' ' + target.x.toFixed(1) + ' ' + target.y.toFixed(1), 'class': isSat ? 'is-sat' : '' }));
-      svg.appendChild(el('circle', { cx: target.x.toFixed(1), cy: target.y.toFixed(1), r: isSat ? 8 : 5 }));
+      svg.appendChild(el('path', { d: 'M' + a.x.toFixed(1) + ' ' + a.y.toFixed(1) + ' Q' + mx.toFixed(1) + ' ' + my.toFixed(1) + ' ' + target.x.toFixed(1) + ' ' + target.y.toFixed(1), 'class': (isSat ? 'is-sat' : '') + (c === hot ? ' is-hot' : '') }));
+      svg.appendChild(el('circle', { cx: target.x.toFixed(1), cy: target.y.toFixed(1), r: isSat ? 8 : 5, 'class': c === hot ? 'is-hot' : '' }));
     });
     if (skyKey && skyEl) drawSky(box); else if (obj.style.opacity !== '0') obj.style.opacity = 0;
     if (flight) drawFlight();
   }
+
+  /* ---------- the ring: each card finds its own place, opens, closes, and goes where it is dragged ---------- */
+  var copy = root.querySelector('.h3o-copy'), foot = root.querySelector('.h3o-foot'), tidy = root.querySelector('[data-tidy]');
+  var KEY = 'vx.hero.v2', saved = {}, laid = false, hot = null, zTop = 10;
+  try { saved = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { saved = {}; }
+  function keep() { try { if (Object.keys(saved).length) localStorage.setItem(KEY, JSON.stringify(saved)); else localStorage.removeItem(KEY); } catch (e) {} if (tidy) tidy.hidden = !Object.keys(saved).length; }
+  function idOf(c) { return c === hd ? 'decode' : c.getAttribute('data-cid'); }
+  function isOpen(c) { return c === hd ? !hd.classList.contains('is-shut') : c.classList.contains('is-open'); }
+  function setOpen(c, on) {
+    if (c === hd) hd.classList.toggle('is-shut', !on); else c.classList.toggle('is-open', on);
+    var t = c.querySelector('.hc-tog'); if (t) t.setAttribute('aria-expanded', on ? 'true' : 'false');
+  }
+  function stageBox() { var b = stage.getBoundingClientRect(); return { W: b.width, H: b.height, l: b.left, t: b.top }; }
+  function put(c, x, y) {
+    var b = stageBox(), w = c.offsetWidth, h = c.offsetHeight;
+    x = Math.max(8, Math.min(b.W - w - 8, x)); y = Math.max(8, Math.min(b.H - h - 8, y));
+    c.vxAt = { x: x, y: y };
+    c.style.setProperty('--x', Math.round(x) + 'px'); c.style.setProperty('--y', Math.round(y) + 'px');
+    if (c === hd) hd.classList.add('is-placed');
+  }
+  function raise(c) { c.style.zIndex = ++zTop; }
+  function byDefault(c) { return c === hd || c.hasAttribute('data-open'); }
+  // only what the viewer changed is kept: a card back in its own state, where the page put it, is forgotten
+  function remember(c) {
+    var b = stageBox(), s = {};
+    if (isOpen(c) !== byDefault(c)) s.open = isOpen(c);
+    if (c.vxMoved && c.vxAt) { s.open = isOpen(c); s.x = +(c.vxAt.x / b.W).toFixed(4); s.y = +(c.vxAt.y / b.H).toFixed(4); }
+    if (Object.keys(s).length) saved[idOf(c)] = s; else { delete saved[idOf(c)]; c.vxUser = false; }
+    keep();
+  }
+  // where the Earth is on the stage, and how big; without the globe (its scripts did not load), the middle of the stage
+  function geo() {
+    var O = window.vxOrbit, b = stageBox();
+    if (O && O.radius && O.size().W > 1) { var z = O.size(); return { x: off.x + z.W * z.cx, y: off.y + z.H * z.cy, R: O.radius() }; }
+    return { x: b.W * .57, y: b.H * .56, R: Math.min(b.W, b.H) * .3 };
+  }
+  // which way a card wants to sit: toward its pin, when that is in view; else where it says. A satellite moves,
+  // so its card keeps its own place and only its tether follows it: the ring is the same on every visit
+  function prefer(c, g) {
+    var O = window.vxOrbit, s = null;
+    if (!O || c.hasAttribute('data-sat')) return parseFloat(c.getAttribute('data-at')) || 0;
+    if (c.vxItem && c.vxItem.at) { s = onStage(O.screen(c.vxItem.at[0], c.vxItem.at[1])); if (s && !s.front) s = null; }
+    if (s && Math.hypot(s.x - g.x, s.y - g.y) > 24) return Math.atan2(s.y - g.y, s.x - g.x) * 180 / Math.PI;
+    return parseFloat(c.getAttribute('data-at')) || 0;
+  }
+  // the point a card's tether runs to, if it has one in view now
+  function aim(c) {
+    var O = window.vxOrbit, s = null; if (!O) return null;
+    if (c.hasAttribute('data-sat')) s = onStage(O.sat(c.getAttribute('data-sat')));
+    else if (c.vxItem && c.vxItem.at) { s = onStage(O.screen(c.vxItem.at[0], c.vxItem.at[1])); if (s && !s.front) s = null; }
+    return s;
+  }
+  // does the segment p-q pass through the box? (Liang-Barsky)
+  function cuts(p, q, t) {
+    var dx = q.x - p.x, dy = q.y - p.y, a = 0, b = 1, P = [-dx, dx, -dy, dy], Q = [p.x - t.l, t.r - p.x, p.y - t.t, t.b - p.y];
+    for (var i = 0; i < 4; i++) {
+      if (!P[i]) { if (Q[i] < 0) return false; continue; }
+      var r = Q[i] / P[i];
+      if (P[i] < 0) { if (r > b) return false; if (r > a) a = r; } else { if (r < a) return false; if (r < b) b = r; }
+    }
+    return b - a > .02;
+  }
+  // around the Earth, nearest first: the angle a card wants, then a little either side, then a little further out;
+  // a place whose tether would cross another card, or sit across another card's tether, costs more
+  function layout() {
+    if (!ring.length) return;
+    if (PHONE.matches) { ring.forEach(function (c) { c.classList.remove('is-out'); c.classList.add('is-placed'); }); if (hd) hd.classList.remove('is-placed'); return; }
+    var b = stageBox(); if (!b.W) return;
+    var g = geo(), R = g.R, taken = [], lines = [];
+    var rect = function (e, m) { var r = e.getBoundingClientRect(); return { l: r.left - b.l - m, t: r.top - b.t - m, r: r.right - b.l + m, b: r.bottom - b.t + m }; };
+    if (copy) taken.push(rect(copy, 14));
+    // the orbit strip fills in after the cards are placed, and can wrap to two lines: keep the whole band clear
+    if (foot) { var fr = rect(foot, 6); fr.t = Math.min(fr.t, b.H - 52); fr.l = Math.min(fr.l, 12); fr.r = Math.max(fr.r, b.W - 12); taken.push(fr); }
+    if (hd) { var sh = saved.decode; if (hd.vxMoved && sh && isFinite(sh.x)) put(hd, sh.x * b.W, sh.y * b.H); taken.push(rect(hd, 12)); }
+    ring.forEach(function (c) {
+      var s = saved[idOf(c)];
+      if (c.vxMoved && s && isFinite(s.x)) { c.classList.remove('is-out'); put(c, s.x * b.W, s.y * b.H); taken.push(rect(c, 8)); var m = aim(c); if (m) lines.push([{ x: c.vxAt.x + c.offsetWidth / 2, y: c.vxAt.y + c.offsetHeight / 2 }, m]); }
+    });
+    var todo = ring.filter(function (c) { return !c.vxMoved; });
+    todo.forEach(function (c) { if (!c.vxUser) setOpen(c, c.hasAttribute('data-open')); });
+    // the big ones first, then the ones with a tether to draw, then the rest (sorted in the loop below)
+    function hits(q) { return taken.some(function (t) { return q.r > t.l && q.l < t.r && q.b > t.t && q.t < t.b; }); }
+    function find(c) {
+      var w = c.offsetWidth, h = c.offsetHeight, p = prefer(c, g), m = c.vxAim, best = null;
+      for (var pass = 0; pass < 2 && !best; pass++) {
+        var r0 = R * (pass ? .88 : 1.1), pen = pass ? 60 : 0;
+        for (var k = 0; k <= 180; k += 5) {
+          for (var sg = 1; sg >= -1; sg -= 2) {
+            if (!k && sg < 0) continue;
+            var a = (p + sg * k) * Math.PI / 180, ca = Math.cos(a), sa = Math.sin(a), sup = Math.abs(ca) * w / 2 + Math.abs(sa) * h / 2;
+            for (var e = 0; e <= 280; e += 20) {
+              var d = r0 + sup + e, x = g.x + d * ca - w / 2, y = g.y + d * sa - h / 2, q = { l: x, t: y, r: x + w, b: y + h };
+              if (x < 12 || y < 12 || q.r > b.W - 12 || q.b > b.H - 12 || hits(q)) continue;
+              var sc = k + e * .15 + pen, mid = { x: x + w / 2, y: y + h / 2 };
+              if (m && taken.some(function (t) { return cuts(mid, m, t); })) sc += 45;
+              if (lines.some(function (l) { return cuts(l[0], l[1], q); })) sc += 45;
+              if (!best || sc < best.s) best = { l: x, t: y, w: w, h: h, s: sc };
+              break;
+            }
+          }
+          if (best && best.s <= k + pen) break; // nothing further round can beat it
+        }
+      }
+      return best;
+    }
+    // every device on the stage beats a big picture: when one is left off, the default-open cards close, last first
+    var base = taken.slice(), baseLines = lines.slice(), auto = todo.filter(function (c) { return !c.vxUser && c.hasAttribute('data-open'); });
+    for (var tries = 0; tries <= auto.length; tries++) {
+      taken = base.slice(); lines = baseLines.slice();
+      auto.forEach(function (c, i) { setOpen(c, i < auto.length - tries); });
+      todo.forEach(function (c) { c.vxAim = c.hasAttribute('data-sat') ? null : aim(c); });
+      todo.sort(function (a, c) { return (isOpen(c) - isOpen(a)) || ((c.vxAim ? 1 : 0) - (a.vxAim ? 1 : 0)) || (ring.indexOf(a) - ring.indexOf(c)); });
+      var out = 0;
+      todo.forEach(function (c) {
+        var f = find(c);
+        // no good room to open it here: it waits as a pill instead
+        if (isOpen(c) && !c.vxUser && (!f || f.s > 60)) { setOpen(c, false); var f2 = find(c); if (f2 || !f) f = f2; else setOpen(c, true); }
+        if (!f) { c.classList.add('is-out'); out++; return; }
+        c.classList.remove('is-out');
+        put(c, f.l, f.t);
+        taken.push({ l: f.l - 10, t: f.t - 10, r: f.l + f.w + 10, b: f.t + f.h + 10 });
+        if (c.vxAim) lines.push([{ x: f.l + f.w / 2, y: f.t + f.h / 2 }, c.vxAim]);
+      });
+      if (!out) break;
+    }
+    if (!laid) {
+      laid = true;
+      void stage.offsetWidth;
+      // the devices land around the Earth one after another
+      requestAnimationFrame(function () {
+        ring.forEach(function (c, i) { c.style.setProperty('--d', (reduce ? 0 : .15 + i * .07).toFixed(2) + 's'); c.classList.add('is-placed'); });
+        setTimeout(function () { ring.forEach(function (c) { c.style.removeProperty('--d'); }); tick(); }, 1400);
+      });
+    }
+    tick();
+  }
+  // first placement: once the globe has a size and the catalogue has said where each pin is (or has taken too long)
+  var slow = false;
+  setTimeout(function () { slow = true; settle(); }, 2500);
+  function settle() { if (!laid && (known || slow) && (slow || (window.vxOrbit && window.vxOrbit.size().W > 1))) layout(); }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { if (laid) layout(); });
+  var reT = 0;
+  window.addEventListener('resize', function () { clearTimeout(reT); reT = setTimeout(function () { if (laid) layout(); else settle(); }, 150); });
+  if (PHONE.addEventListener) PHONE.addEventListener('change', function () { if (laid) layout(); });
+
+  // open or close a card; it grows away from the Earth, keeping the corner nearest it where it was, and closing
+  // puts it back where it was before it opened
+  function flip(c) {
+    var was = c.getBoundingClientRect(), b = stageBox(), on = !isOpen(c), home = !on && c.vxBefore;
+    c.vxUser = true; setOpen(c, on);
+    if (home) put(c, home.x, home.y);
+    else if (!PHONE.matches && c.vxAt && (c !== hd || hd.classList.contains('is-placed'))) {
+      if (on) c.vxBefore = { x: c.vxAt.x, y: c.vxAt.y };
+      var now = c.getBoundingClientRect(), g = geo();
+      var mx = was.left - b.l + was.width / 2, my = was.top - b.t + was.height / 2;
+      put(c, mx < g.x ? c.vxAt.x + was.width - now.width : c.vxAt.x, my < g.y ? c.vxAt.y + was.height - now.height : c.vxAt.y);
+    }
+    if (!on) c.vxBefore = null;
+    if (c.hasAttribute('data-planet')) planets();
+    raise(c); remember(c); tick();
+  }
+  // a drag moves the card and says so; a press that does not move is still a click
+  function draggable(c, handle) {
+    var st = null;
+    handle.addEventListener('pointerdown', function (e) {
+      if (e.button !== 0 || e.pointerType === 'touch' || PHONE.matches) return;
+      if (e.target.closest('.hc-tog, [data-decode], [data-layers]')) return;
+      var b = stageBox(), r = c.getBoundingClientRect();
+      st = { id: e.pointerId, x: e.clientX, y: e.clientY, l: r.left - b.l, t: r.top - b.t, on: false };
+    });
+    handle.addEventListener('pointermove', function (e) {
+      if (!st || e.pointerId !== st.id) return;
+      var dx = e.clientX - st.x, dy = e.clientY - st.y;
+      if (!st.on) {
+        if (Math.hypot(dx, dy) < 5) return;
+        st.on = true; c.classList.add('is-drag'); raise(c); unpeek();
+        try { handle.setPointerCapture(e.pointerId); } catch (x) {}
+      }
+      put(c, st.l + dx, st.t + dy); tick();
+    });
+    function end(e) {
+      if (!st || e.pointerId !== st.id) return;
+      var moved = st.on; st = null;
+      if (!moved) return;
+      c.classList.remove('is-drag'); c.vxMoved = true; c.vxBefore = null; remember(c);
+      c.vxDragged = true; setTimeout(function () { c.vxDragged = false; }, 0);
+    }
+    handle.addEventListener('pointerup', end);
+    handle.addEventListener('pointercancel', end);
+    handle.addEventListener('dragstart', function (e) { e.preventDefault(); });
+    handle.addEventListener('click', function (e) { if (c.vxDragged) { e.preventDefault(); e.stopImmediatePropagation(); } }, true);
+  }
+  ring.concat(hd ? [hd] : []).forEach(function (c) {
+    var s = saved[idOf(c)];
+    if (s && typeof s.open === 'boolean') { c.vxUser = true; setOpen(c, s.open); } else setOpen(c, byDefault(c));
+    if (s && isFinite(s.x) && isFinite(s.y)) c.vxMoved = true;
+    var t = c.querySelector('.hc-tog');
+    if (t) t.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); flip(c); });
+    draggable(c, c === hd ? card.querySelector('h2') : c);
+    c.addEventListener('pointerenter', function (e) { if (e.pointerType !== 'touch') { hot = c; tick(); } });
+    c.addEventListener('pointerleave', function () { if (hot === c) { hot = null; tick(); } });
+  });
+  keep();
+  if (tidy) tidy.addEventListener('click', function () {
+    saved = {}; keep();
+    ring.concat(hd ? [hd] : []).forEach(function (c) { c.vxMoved = false; c.vxUser = false; c.vxBefore = null; c.style.zIndex = ''; setOpen(c, byDefault(c)); });
+    if (hd) { hd.classList.remove('is-placed'); hd.style.removeProperty('--x'); hd.style.removeProperty('--y'); }
+    planets(); layout();
+  });
+
+  // a card whose place is on the far side of the Earth: pointing at it turns the Earth until it is in view
+  var peekT = 0, peeking = null;
+  function peek(c) {
+    var x = c.vxItem, O = window.vxOrbit;
+    if (!x || !x.at || !O || !O.focus || PHONE.matches || stage.classList.contains('is-focus') || stage.classList.contains('is-sky')) return;
+    clearTimeout(peekT);
+    if (peeking === c) return;
+    if (!c.classList.contains('is-far')) return;
+    peeking = c; O.focus(x.at[0], x.at[1], 900);
+  }
+  function unpeek() {
+    clearTimeout(peekT);
+    if (!peeking) return;
+    peekT = setTimeout(function () { peeking = null; if (!stage.classList.contains('is-focus') && window.vxOrbit) window.vxOrbit.release(900); }, 380);
+  }
+  ring.forEach(function (c) {
+    if (c.hasAttribute('data-sky') || c.hasAttribute('data-sat')) return;
+    c.addEventListener('pointerenter', function (e) { if (e.pointerType !== 'touch' && !c.classList.contains('is-drag')) peek(c); });
+    c.addEventListener('pointerleave', function (e) { if (e.pointerType !== 'touch') unpeek(); });
+    c.addEventListener('focusin', function () { peek(c); });
+    c.addEventListener('focusout', unpeek);
+  });
+
+  // the robot's own camera plays while it can be seen, and never for a reader who asked for less motion
+  root.querySelectorAll('.hc-pic video').forEach(function (v) {
+    if (reduce || !('IntersectionObserver' in window)) return;
+    new IntersectionObserver(function (en) {
+      en.forEach(function (x) { if (x.isIntersecting) { v.preload = 'auto'; var p = v.play(); if (p && p.catch) p.catch(function () {}); } else v.pause(); });
+    }, { threshold: .2 }).observe(v);
+  });
 
   /* ---------- the sky: each space card knows where its object truly is, now ---------- */
   var SKY = {
@@ -238,7 +491,7 @@
     if (k === 'moon') {
       var cv = document.createElement('canvas'); obj.appendChild(cv);
       var ph = vx.eph.moonPhase(Date.now()); requestAnimationFrame(function () { drawMoon(cv, ph.lit, ph.waxing); });
-    } else if (k !== 'mars') { var im = node.querySelector('.hc-img'); if (im) obj.style.backgroundImage = im.style.backgroundImage; }
+    } else if (k !== 'mars') { var im = node.querySelector('.hc-pic'); if (im) obj.style.backgroundImage = im.style.backgroundImage; }
   }
   // where every object lands: one clear spot, low and to the right, just off the limb, whatever the screen
   function spot() {
@@ -247,7 +500,7 @@
   }
   function locate(node) {
     var k = node.getAttribute('data-sky'), O = window.vxOrbit;
-    if (!SKY[k] || !O || !O.lookToward || stage.classList.contains('is-focus')) return;
+    if (!SKY[k] || !O || !O.lookToward || stage.classList.contains('is-focus') || node.classList.contains('is-drag') || PHONE.matches) return;
     clearTimeout(skyT); skyEl = node;
     if (skyKey === k) return;
     skyKey = k; skyAt = 0; dress(node, k); stage.classList.add('is-sky'); if (back) back.hidden = false;
@@ -295,13 +548,13 @@
     }
     svg.appendChild(g);
   }
-  function hook() { if (window.vxOrbit) window.vxOrbit.onframe(tick); else setTimeout(hook, 200); }
+  function hook() { if (window.vxOrbit) { window.vxOrbit.onframe(tick); settle(); } else setTimeout(hook, 200); }
   hook();
-  window.addEventListener('resize', function () { setTimeout(tick, 60); });
 
   /* ---------- Mars and the Moon, now ---------- */
   function light(s) { if (s < 60) return s.toFixed(2) + ' s'; var m = Math.floor(s / 60); return m + ' min ' + Math.round(s - 60 * m) + ' s'; }
   function drawMoon(cv, k, waxing) {
+    if (!cv) return;
     var dpr = Math.min(window.devicePixelRatio || 1, 2), S = cv.clientWidth || 48;
     cv.width = S * dpr; cv.height = S * dpr;
     var c = cv.getContext('2d'), r = S / 2 - 2, cx = S / 2, cy = S / 2;
@@ -321,18 +574,18 @@
   function planets() {
     var now = Date.now(), m = root.querySelector('[data-planet="mars"]'), mo = root.querySelector('[data-planet="moon"]');
     var put = function (e, k, v) { var x = e.querySelector('[data-p="' + k + '"]'); if (x) x.textContent = v; };
-    if (m) { var d = vx.eph.marsKm(now); put(m, 'far', (d / 1e6).toFixed(1) + ' million km away'); put(m, 'note', 'light takes ' + light(d / vx.eph.C_KMS)); }
+    if (m) { var d = vx.eph.marsKm(now); put(m, 'far', (d / 1e6).toFixed(1) + ' million km away'); put(m, 'note', 'light takes ' + light(d / vx.eph.C_KMS) + ' from Mars now'); }
     if (mo) {
       var dm = vx.eph.moonKm(now), ph = vx.eph.moonPhase(now);
       put(mo, 'far', vx.group(Math.round(dm)) + ' km away');
-      put(mo, 'note', Math.round(ph.lit * 100) + '% lit, ' + (ph.waxing ? 'waxing' : 'waning'));
+      put(mo, 'note', 'tonight: ' + Math.round(ph.lit * 100) + '% lit, ' + (ph.waxing ? 'waxing' : 'waning') + ', computed here');
       drawMoon(mo.querySelector('canvas'), ph.lit, ph.waxing);
     }
   }
   planets(); setInterval(planets, 60000);
 
   /* ---------- @emem decodes one live token ---------- */
-  var card = root.querySelector('.hd-card'), flight = null;
+  var flight = null;
   async function jpost(path, body) { var r = await fetch(EMEM + path, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) }); if (!r.ok) throw new Error('emem.dev answered ' + r.status); return r.json(); }
   function set(k, v) { var e = card.querySelector('[data-d="' + k + '"]'); if (e) e.textContent = v; }
   // the heading says only what has happened: decoding while the token is in flight, decoded once it lands

@@ -28,6 +28,9 @@ on:
       - 'prose/**'
       - 'llms/**'
       - 'tools/gen_words.py'
+      - 'data/pictures.json'
+      - 'assets/wow/**'
+      - 'tools/wow_media.py'
   schedule:
     - cron: '17 3 * * 1'
   workflow_dispatch:
@@ -60,3 +63,5 @@ jobs:
           if [ "${{ github.event_name }}" != "push" ]; then
             python3 tools/gen_press.py --verify
           fi
+      - name: Every picture and clip the homepage shows hashes to the name data/pictures.json gives it
+        run: python3 tools/wow_media.py --check

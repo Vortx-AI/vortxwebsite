@@ -6,7 +6,9 @@
  *   line     the live catalogue line (vortx-ai.github.io/ememdemo/llms.txt): verb, kind, size, tok, raw, by
  *   picture  only the image a record's thumb.v1 note carries (data/thumbs.json), never an invented one;
  *            re-checked as it comes into view: the thumb hashes to its name, its of: is this record,
- *            and its image bytes are the file this page shows
+ *            and its image bytes are the file this page shows. Where the site has a sharper picture of
+ *            the same file (data/pictures.json, tools/wow_media.py), that one is shown instead, with whose
+ *            it is and its licence on it, and re-checked against the name that list gives it
  *   check    the note: base32(blake3(bytes)[0:16]) must equal its name → ✓ note, ✗ name lies, unreachable
  *   verbs    hashed N of M, rooted, placed, stamped …, from the note's own front matter
  */
@@ -21,7 +23,8 @@
     space: 'Space', robotics: 'Machines', drones: 'Machines', cameras: 'Machines', gatherings: 'Machines', '3d': 'Machines' };
   var KEEP = { machine: 'machine', 'third-party': 'third party', combined: 'combined', human: 'human' };
   var KEEP_T = { machine: 'signed by a system', 'third party': 'a publisher’s file', combined: 'joined from several', human: 'a person’s file' };
-  var filter = root.getAttribute('data-filter') || 'All', items = [], thumbs = {}, expanded = false;
+  var filter = root.getAttribute('data-filter') || 'All', items = [], thumbs = {}, pics = {}, expanded = false;
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   // first, the samples this page already uses: the hero's place, then one per device the run above checks
   var FIRST = ['ia3cqu7ycf455mjs2vue33cnfi', 'twlpco5kin6qlz5eplt2pjm7n4', 'wkxa7tcmw2orf7ujjf5yi66dhe', 'qcoylkllqzfqnsinn4af5i2mi4', 'ejvovl6sz7d3sugfcrwwie4rma', 't7ebh6s6imxrwdmizebnw52nwe'];
   var moreBtn = root.querySelector('[data-more-cards]');
@@ -107,10 +110,28 @@
     } catch (e) { pic.title = 'picture not re-checked: emem.dev could not be reached'; }
   }
 
+  // the sharper picture: it hashes to the name data/pictures.json gives it, or it is hidden
+  async function sharpCheck(w, f, card) {
+    var pic = card.querySelector('.sc-pic');
+    try {
+      var ok = await vx.pictureOk(f);
+      pic.classList.toggle('is-bad', !ok);
+      pic.title = ok ? w.method + (w.checked ? ' (' + w.checked + ' checked)' : '') + '; this file hashes to the name data/pictures.json gives it' : 'this picture does not hash to its name, so it is hidden';
+    } catch (e) { pic.title = 'picture not re-checked: this site could not be reached'; }
+  }
   function card(x) {
-    var li = el('li', 'sc'), t = thumbs[x.cid], line = x.line;
+    var li = el('li', 'sc'), t = thumbs[x.cid], w = pics[x.cid], sharp = w && w.files && w.files['640'], line = x.line;
     var pic = el('a', 'sc-pic'); pic.href = NOTE(x.cid); pic.target = '_blank'; pic.rel = 'noopener'; here(pic, x);
-    if (t) { pic.style.backgroundImage = 'url(' + t.file + ')'; if (t.frames > 1) { pic.classList.add('is-sprite'); pic.style.setProperty('--n', t.frames); } pic.setAttribute('aria-label', x.title + ', its saved picture'); }
+    if (sharp) {
+      pic.style.backgroundImage = 'url(' + sharp.path + ')'; pic.classList.add('is-sharp');
+      pic.setAttribute('aria-label', x.title + '. ' + w.method + '. ' + w.credit + ', ' + w.licence);
+      if (w.files.loop_webm && !reduce) {
+        var v = document.createElement('video'); v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'none'; v.poster = sharp.path; v.setAttribute('aria-hidden', 'true');
+        [['loop_webm', 'video/webm'], ['loop_mp4', 'video/mp4']].forEach(function (f) { if (w.files[f[0]]) { var so = document.createElement('source'); so.src = w.files[f[0]].path; so.type = f[1]; v.appendChild(so); } });
+        pic.appendChild(v); if (clips) clips.observe(v);
+      }
+      pic.appendChild(el('span', 'sc-cr', w.credit + ' · ' + w.licence));
+    } else if (t) { pic.style.backgroundImage = 'url(' + t.file + ')'; if (t.frames > 1) { pic.classList.add('is-sprite'); pic.style.setProperty('--n', t.frames); } pic.setAttribute('aria-label', x.title + ', its saved picture'); }
     else { pic.classList.add('is-none'); pic.appendChild(el('span', null, 'no saved picture')); }
     li.appendChild(pic);
     var bd = el('div', 'sc-bd'), head = el('p', 'sc-head');
@@ -132,9 +153,13 @@
     var op = el('a', 'lk', 'note ↗'); op.href = NOTE(x.cid); op.target = '_blank'; op.rel = 'noopener';
     acts.appendChild(rn); acts.appendChild(document.createTextNode(' · ')); acts.appendChild(cp); acts.appendChild(document.createTextNode(' · ')); acts.appendChild(op); bd.appendChild(acts);
     li.appendChild(bd);
-    li.vxRun = function () { queue.push(function () { return check(x, li); }); if (t) queue.push(function () { return picture(t, li); }); pump(); };
+    li.vxRun = function () { queue.push(function () { return check(x, li); }); if (sharp) queue.push(function () { return sharpCheck(w, sharp, li); }); else if (t) queue.push(function () { return picture(t, li); }); pump(); };
     return li;
   }
+  // a clip plays only while it can be seen
+  var clips = 'IntersectionObserver' in window ? new IntersectionObserver(function (en) {
+    en.forEach(function (e) { var v = e.target; if (e.isIntersecting) { v.preload = 'auto'; var p = v.play(); if (p && p.catch) p.catch(function () {}); } else v.pause(); });
+  }, { threshold: .25 }) : null;
   var io = 'IntersectionObserver' in window ? new IntersectionObserver(function (en) {
     en.forEach(function (e) { if (e.isIntersecting) { io.unobserve(e.target); e.target.vxRun(); } });
   }, { rootMargin: '300px' }) : null;
@@ -158,8 +183,9 @@
   }
   if (moreBtn) moreBtn.addEventListener('click', function () { expanded = true; render(); });
   function start() {
-    Promise.all([window.vxCatalog || Promise.reject(new Error('no catalogue')), fetch('/data/thumbs.json').then(function (r) { return r.json(); }).catch(function () { return { thumbs: [] }; })]).then(function (r) {
+    Promise.all([window.vxCatalog || Promise.reject(new Error('no catalogue')), fetch('/data/thumbs.json').then(function (r) { return r.json(); }).catch(function () { return { thumbs: [] }; }), vx.pictures ? vx.pictures() : {}]).then(function (r) {
       (r[1].thumbs || []).forEach(function (t) { if (t.record) thumbs[t.record] = t; });
+      pics = r[2] || {};
       var all = r[0];
       items = all.filter(function (x) { return GROUP[x.sec] && /^[a-z2-7]{26}$/.test(x.cid); }).map(function (x) { x.group = GROUP[x.sec]; return x; });
       // the page's own samples first, then pictures, as the demo leads with them

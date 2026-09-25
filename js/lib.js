@@ -575,6 +575,17 @@
   var MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   function day(t) { var d = new Date(t); return isNaN(d) ? '' : d.getUTCDate() + ' ' + MON[d.getUTCMonth()] + ' ' + d.getUTCFullYear(); }
 
+  // the sharper pictures the site shows for some samples (data/pictures.json, made by tools/wow_media.py): each
+  // file is named there by base32(blake3(bytes)[0:16]), with how it was made, whose it is and its licence
+  var picsP = null;
+  function pictures() {
+    return picsP || (picsP = fetch('/data/pictures.json').then(function (r) { return r.json(); }).then(function (j) {
+      var m = {}; (j.pictures || []).forEach(function (p) { if (p.record) m[p.record] = p; }); return m;
+    }).catch(function () { return {}; }));
+  }
+  // does the file this browser was served hash to the name the list gives it?
+  function pictureOk(f) { return fetch(f.path).then(function (r) { return r.arrayBuffer(); }).then(function (b) { return cid26(new Uint8Array(b)) === f.cid26; }); }
+
   root.vx = {
     hostOf: hostOf, b32: b32, unb32: unb32, hex: hex, blake3: blake3, cid52: cid52, cid26: cid26, cat: cat,
     cborDecode: cborDecode, Ledger: Ledger, getBytes: getBytes, range: range, headSize: headSize,
@@ -584,6 +595,7 @@
     cborEnc: cborEnc, fromHex: fromHex, merkleV1: merkleV1, checkTrace: checkTrace, entityCid: entityCid, bundleCid: bundleCid, gridDecode: gridDecode,
     eph: { moonKm: moonKm, moonPhase: moonPhase, moonDir: moonDir, marsKm: marsKm, marsDir: marsDir, l2Km: l2Km, sun: sun, AU_KM: AU_KM, C_KMS: C_KMS },
     fmtBytes: bytes, fmtSize: size, fmtDay: day, group: group, enc: enc, dec: dec, kv: kv,
+    pictures: pictures, pictureOk: pictureOk,
     // a fetch that never reached its server says so in words; any other error keeps its own message
     why: function (e, host) { var m = String((e && e.message) || e); return /failed to fetch|networkerror|load failed/i.test(m) ? (host || 'the server') + ' did not answer this browser' : m; }
   };
