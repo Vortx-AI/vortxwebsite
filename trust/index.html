@@ -49,12 +49,13 @@
     <div class="wrap">
       <a class="vx-brand" href="/" aria-label="Vortx AI home"><img src="/assets/vortx-logo.png" alt="" width="26" height="26"><span>vortx<b>.ai</b></span></a>
       <nav class="vx-nav" id="nav" data-nav aria-label="Primary">
-        <a href="/#watch">watch</a>
-        <a href="/#handoff">hand off</a>
-        <a href="/#files">point</a>
-        <a href="/#call">call</a>
-        <a href="/#plan">plan</a>
+        <a href="/#how">how</a>
+        <a href="/#connect">connect</a>
+        <a href="/#ask">ask</a>
+        <a href="/#archive">archive</a>
+        <a href="/#mission">mission</a>
         <a href="/#book">book</a>
+        <a href="/proof/">proof</a>
         <a class="ext" href="https://emem.dev" target="_blank" rel="noopener">docs</a>
       </nav>
       <div class="vx-status">
@@ -82,7 +83,7 @@
       <div class="wrap" style="max-width:780px;">
         <div class="prose reveal">
           <h2>What "verifiable" means here</h2>
-          <p>Every fact emem serves is signed with an ed25519 key and addressed by a blake3 hash taken over the fact itself. To check one, you recompute the hash and verify the signature against the responder's public key. This works offline: you never have to call us back or take the server's word. A fact your agent cites is a fact you, or an auditor, can re-pull and confirm independently. You can try it on the <a href="/#handoff">home page</a> in about ten seconds.</p>
+          <p>Every fact emem serves is signed with an ed25519 key and addressed by a blake3 hash taken over the fact itself. To check one, you recompute the hash and verify the signature against the responder's public key. This works offline: you never have to call us back or take the server's word. A fact your agent cites is a fact you, or an auditor, can re-pull and confirm independently. You can try it on the <a href="/proof/#handoff">home page</a> in about ten seconds.</p>
 
           <h2>The tenancy boundary</h2>
           <p>For <a href="/geo-qa/">geo.qa</a>, the line that matters is the one around your data. It is enforced per organisation, in the query layer, on every read and every write: not as a setting and not as a promise in a contract. The open emem layer is wired in underneath for public facts, so an agent can combine a public reading with one of your private ones in a single answer, while your private context never crosses the boundary.</p>

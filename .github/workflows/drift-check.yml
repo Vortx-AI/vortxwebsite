@@ -13,6 +13,7 @@ on:
     branches: [main]
     paths:
       - 'index.html'
+      - 'proof/index.html'
       - 'llms.txt'
       - 'agents.md'
       - 'emem/index.html'

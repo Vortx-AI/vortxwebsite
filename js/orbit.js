@@ -9,6 +9,9 @@
  *               turned by sidereal time: the sky behind the Earth is the real sky
  *   earth       NASA Blue Marble (day) and Black Marble (night), public domain
  *   next pass   the next daylight pass that puts a place inside the 290 km swath
+ *   rings       (data-mode="rings") each satellite's orbit, one period propagated with
+ *               SGP4 and drawn against the Earth's current orientation; the half that
+ *               passes behind the globe is hidden by a ray test, not by a mask
  * Nothing on this canvas is placed by hand.
  */
 /* global satellite, vx */
@@ -36,8 +39,11 @@
     sats: [], stars: [], place: null, follow: null, warp: 1, simAt: Date.now(), realAt: performance.now(),
     lat0: 13, lon0: 78, d: 3.25, tanHalf: Math.tan(23 * DEG), dragging: false, dirty: true, lastTrack: 0,
     elements: null, visible: true, dpr: Math.min(window.devicePixelRatio || 1, 1.75), W: 0, H: 0, next: null,
-    cx: 0.5, cy: 0.5  // where the Earth's centre sits on the stage, as fractions; the stylesheet decides per layout
+    cx: 0.5, cy: 0.5,  // where the Earth's centre sits on the stage, as fractions; the stylesheet decides per layout
+    mode: stage.getAttribute('data-mode') || 'tracks', view: null, cam: null, hooks: []
   };
+  // a fixed view (data-view="lat,lon") holds the camera still, so pinned places stay where their cards point
+  (function () { var v = (stage.getAttribute('data-view') || '').split(',').map(Number); if (v.length === 2 && v.every(isFinite)) { S.view = { lat: v[0], lon: v[1] }; S.lat0 = v[0]; S.lon0 = v[1]; } })();
 
   /* ---------- time ---------- */
   function simNow() { return S.simAt + (performance.now() - S.realAt) * S.warp; }
@@ -155,6 +161,20 @@
     if (!pv || !pv.position || typeof pv.position === 'boolean') return null;
     var g = gmst(date), e = satellite.eciToEcf(pv.position, g), geo = satellite.eciToGeodetic(pv.position, g);
     return { p: [e.x / RE, e.y / RE, e.z / RE], lat: satellite.degreesLat(geo.latitude), lon: satellite.degreesLong(geo.longitude), alt: geo.height, v: Math.hypot(pv.velocity.x, pv.velocity.y, pv.velocity.z) };
+  }
+  // one full period of each orbit, rotated into the Earth frame of the moment t: the ring the satellite flies now
+  function computeRings(t) {
+    var g = gmst(new Date(t));
+    S.sats.forEach(function (sat) {
+      var P = 2 * Math.PI / sat.rec.no * 60000, pts = [];
+      for (var k = 0; k <= 180; k++) {
+        var d = new Date(t + (k / 180 - 0.5) * P), pv = satellite.propagate(sat.rec, d);
+        if (!pv || !pv.position || typeof pv.position === 'boolean') continue;
+        pts.push(scale(eciToEcef([pv.position.x, pv.position.y, pv.position.z], g), 1 / RE));
+      }
+      sat.ring = pts;
+    });
+    S.lastRing = t;
   }
   function computeTracks(t) {
     S.sats.forEach(function (sat) {
@@ -323,7 +343,19 @@
     S.sats.forEach(function (sat) {
       var col = COLORS[sat.short] || '#ddd';
       var img = isImager(sat);
-      if (sat.track.length && img) {
+      if (S.mode === 'rings') {
+        // the orbit in space: bright where it passes in front of the Earth, gone where the Earth hides it
+        var ring = sat.ring || [];
+        ox.strokeStyle = col; ox.lineWidth = img ? 1.1 : 0.9;
+        for (var r = 1; r < ring.length; r++) {
+          var a0 = ring[r - 1], a1 = ring[r];
+          if (occluded(cam, a0) || occluded(cam, a1)) continue;
+          var q0 = project(cam, a0), q1 = project(cam, a1); if (!q0 || !q1) continue;
+          ox.globalAlpha = img ? 0.42 : 0.3;
+          ox.beginPath(); ox.moveTo(q0.x, q0.y); ox.lineTo(q1.x, q1.y); ox.stroke();
+        }
+      }
+      if (sat.track.length && img && S.mode !== 'rings') {
         // swath: the 290 km ribbon the imager sweeps; brighter where the ground is sunlit (MSI images in daylight)
         var e = swathEdges(sat.track);
         [e[0], e[1]].forEach(function (edge) {
@@ -335,7 +367,7 @@
           });
         });
       }
-      if (sat.track.length) {
+      if (sat.track.length && S.mode !== 'rings') {
         trackPath(cam, sat.track, 1.001, function (seg) {
           for (var i = 1; i < seg.length; i++) {
             var fut = seg[i].k > 0;
@@ -346,10 +378,11 @@
           ox.setLineDash([]);
         });
       }
-      var st = sat.state; if (!st) return;
+      var st = sat.state; sat.screen = null; if (!st) return;
       var q = project(cam, st.p); if (!q || occluded(cam, st.p)) return;
+      sat.screen = { x: q.x, y: q.y };
       var sp = project(cam, norm(st.p));
-      if (sp && surfaceVisible(cam, norm(st.p))) { ox.globalAlpha = 0.35; ox.strokeStyle = col; ox.lineWidth = 0.8; ox.beginPath(); ox.moveTo(q.x, q.y); ox.lineTo(sp.x, sp.y); ox.stroke(); }
+      if (sp && surfaceVisible(cam, norm(st.p)) && S.mode !== 'rings') { ox.globalAlpha = 0.35; ox.strokeStyle = col; ox.lineWidth = 0.8; ox.beginPath(); ox.moveTo(q.x, q.y); ox.lineTo(sp.x, sp.y); ox.stroke(); }
       ox.globalAlpha = 1;
       var gr = ox.createRadialGradient(q.x, q.y, 0, q.x, q.y, 14); gr.addColorStop(0, col); gr.addColorStop(1, 'rgba(0,0,0,0)');
       ox.fillStyle = gr; ox.globalAlpha = 0.5; ox.beginPath(); ox.arc(q.x, q.y, 14, 0, 2 * Math.PI); ox.fill();
@@ -358,7 +391,7 @@
       ox.font = '600 11px ' + mono(); ox.fillStyle = col;
       ox.fillText(sat.short, q.x + 9, q.y - 8);
     });
-    if (S.place) {
+    if (S.place && S.mode !== 'rings') {
       var P = ll(S.place.lat, S.place.lng);
       if (surfaceVisible(cam, P)) {
         var q = project(cam, P);
@@ -396,7 +429,7 @@
     // the stylesheet places the Earth (--cx, --cy); keep the orbit shell (1.13 R, above the ISS and Sentinel-2) inside the nearest edge
     var cs = getComputedStyle(stage);
     S.cx = parseFloat(cs.getPropertyValue('--cx')) || 0.5; S.cy = parseFloat(cs.getPropertyValue('--cy')) || 0.5;
-    var room = Math.min(S.W * S.cx, S.W * (1 - S.cx), S.H * S.cy, S.H * (1 - S.cy)) * 0.96;
+    var room = Math.min(S.W * S.cx, S.W * (1 - S.cx), S.H * S.cy, S.H * (1 - S.cy)) * (parseFloat(cs.getPropertyValue('--fit')) || 0.96);
     var f = room / Math.tan(Math.asin(1.13 / S.d) * 1.04);
     S.tanHalf = (S.H / 2) / f;
     S.dirty = true;
@@ -438,10 +471,13 @@
     S.sats.forEach(function (sat) { sat.state = stateAt(sat, date); });
     if (S.follow && S.follow.state && !S.dragging) { S.lat0 = S.follow.state.lat; S.lon0 = S.follow.state.lon; cam = camera(); S.dirty = true; }
     if (Math.abs(t - S.lastTrack) > 20000) computeTracks(t);
+    if (S.mode === 'rings' && Math.abs(t - (S.lastRing || 0)) > 20000) computeRings(t);
+    S.cam = cam;
     if (gl) drawEarth(cam, sun);
     if (S.dirty || performance.now() - lastSky > 4000) { drawSky(cam, date); lastSky = performance.now(); S.dirty = false; }
     if (gl) drawOver(cam, t); else drawFlat(t);
     if (performance.now() - lastRead > 500) { updateReadout(t, sun); lastRead = performance.now(); }
+    for (var h = 0; h < S.hooks.length; h++) { try { S.hooks[h](); } catch (e) {} }
     schedule();
   }
   // frame budget follows the motion: at x1 a satellite crosses about 0.3 px a second on this globe,
@@ -472,7 +508,8 @@
   });
   function endDrag() { drag = null; S.dragging = false; }
   over.addEventListener('pointerup', endDrag); over.addEventListener('pointercancel', endDrag);
-  over.addEventListener('dblclick', function () { if (S.place) { S.lat0 = S.place.lat; S.lon0 = S.place.lng; S.follow = null; S.dirty = true; markControls(); kick(); } });
+  function home() { var h = S.view || (S.place && { lat: S.place.lat, lon: S.place.lng }); if (h) { S.lat0 = h.lat; S.lon0 = h.lon; S.follow = null; S.dirty = true; markControls(); kick(); } }
+  over.addEventListener('dblclick', home);
   over.addEventListener('keydown', function (e) {
     var m = { ArrowLeft: [0, -5], ArrowRight: [0, 5], ArrowUp: [5, 0], ArrowDown: [-5, 0] }[e.key];
     if (!m) return; e.preventDefault(); S.follow = null; S.lat0 = Math.max(-85, Math.min(85, S.lat0 + m[0])); S.lon0 += m[1]; S.dirty = true; markControls(); kick();
@@ -495,7 +532,7 @@
   // the handoff tells the sky which place it is looking at
   function setPlace(p) {
     S.place = p; S.next = null;
-    if (!S.follow) { S.lat0 = p.lat; S.lon0 = p.lng; }
+    if (!S.follow && !S.view) { S.lat0 = p.lat; S.lon0 = p.lng; }
     S.dirty = true; kick();
     nextPass(p, Date.now(), function (best) { S.next = best || { none: true }; lastRead = 0; kick(); });
   }
@@ -532,8 +569,9 @@
     S.elements = el; S.sats = parseTLE(el.txt);
     stage.setAttribute('data-sats', S.sats.map(function (s) { return s.short; }).join(' '));
     computeTracks(simNow());
+    if (S.mode === 'rings') computeRings(simNow());
     // open on the satellite over the day side (the optical imager works in daylight), until the visitor steers
-    if (!S.user) {
+    if (!S.user && !S.view) {
       var d0 = new Date(simNow()), sun0 = sunEcef(d0), pick = null, best = 0;
       S.sats.filter(isImager).forEach(function (sat) { var st = stateAt(sat, d0); if (st) { var el = dot(norm(st.p), sun0); if (el > best) { best = el; pick = sat; } } });
       if (pick) S.follow = pick;
@@ -546,6 +584,16 @@
   window.vxOrbit = {
     now: simNow,
     elements: function () { return S.elements; },
+    // where a place on the Earth, or a satellite, sits on the stage right now (CSS pixels)
+    screen: function (lat, lon) {
+      if (!S.cam) return null;
+      var P = ll(lat, lon), q = project(S.cam, P);
+      return q && { x: q.x, y: q.y, front: surfaceVisible(S.cam, P) };
+    },
+    sat: function (short) { var x = S.sats.filter(function (s) { return s.short === short; })[0]; return x && x.screen; },
+    size: function () { return { W: S.W, H: S.H, cx: S.cx, cy: S.cy }; },
+    onframe: function (fn) { S.hooks.push(fn); kick(); },
+    home: home,
     states: function (t) {
       var d = new Date(t || simNow());
       return S.sats.map(function (x) {

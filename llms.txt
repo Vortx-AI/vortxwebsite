@@ -1,6 +1,6 @@
 # vortx.ai
 
-> Encode in orbit, or on any device; decode on ground. Vortx AI builds emem: a satellite, telescope, rover or machine keeps its data; each observation becomes one signed, content-addressed fact; @emem streams its token straight into an agent's reasoning; any receiver checks every byte. Every line below reads `verb noun ref key=value`. Numbers that change are not typed here; each has a live source under `count`.
+> Encode on device. Decode with @emem. Don't move your files; deliver tokenised context. A satellite, telescope, rover, robot, drone or camera keeps its files; each observation, image or clip becomes one signed, content-addressed emem token; @emem decodes the token straight into any agent's context (ChatGPT, Claude, Agentforce, Dify, any MCP client), so agents know what is happening in the world, share one reference instead of drifting paraphrases, and check every byte. Every line below reads `verb noun ref key=value`. Numbers that change are not typed here; each has a live source under `count`.
 
 ## do
 call      emem            https://emem.dev/mcp  transport=streamable-http  key=none  account=none
@@ -19,6 +19,15 @@ ask       question        POST https://emem.dev/v1/ask {"q":"is this place flood
 gate      draft           POST https://emem.dev/v1/guard/verdict  deny=PROV_SIG|PROV_BYTES|PROV_DRIFT  fix=refresh_token|remove_reference|contact_admin|cite_observation
 point     file            https://vortx-ai.github.io/ememdemo/  leaves the bytes at the source, returns a signed pointer note
 
+## connect (a device: satellite, robot, drone, camera, machine; https://vortx.ai/#connect runs steps 2 and 3 in the browser, nothing uploaded)
+install   tools           `pip install blake3 "ememdev[signing]"`
+encode    file            `python3 emem_point.py FILE [--source URL] > FILE.md`  https://vortx.ai/tools/emem_point.py  4 MiB ranges, blake3 per range, Merkle root; stdout=the pointer.v1 note, stderr=root and token
+name      note            cid26=base32(blake3(note)[0:16])  token=emem:tree:<cid26>#row=<i>  resolves once the note is published byte for byte
+publish   note            `ememdev write --path /memories/by_attester/<you>/FILE.md --body-file FILE.md`  your own namespace, signed with your key (`ememdev whoami`)
+decode    token           any agent with @emem reads the note, then fetches only the ranges it needs and checks each against its row
+check     device trace    POST https://emem.dev/v1/trace_resolve then /v1/trace_verify  example=emem:trace:mxyer5c2oxn4ud3xqbtnaxcxhdv4kkxiu67q32inbwxgpa7r3s6a
+sign      at capture      hardware-held keys on the device: book an integration session (below)
+
 ## token
 mint      emem:fact:<cell64>:<fact_cid>   len=83..85  fact_cid=base32(blake3(canonical CBOR)), 52 chars, never truncated
 resolve   token                          POST https://emem.dev/v1/memory_token/resolve {"token":"emem:fact:…"}  returns fact + receipt; 409 if the cell and the bytes disagree
@@ -31,7 +40,7 @@ read      chunk                          GET <source> Range: bytes=<offset>-<off
 root      pointer                        merkle over leaf=blake3(utf8(url) ‖ u64be(offset) ‖ u64be(length) ‖ hash32), pairs blake3(l‖r), odd node promoted
 hash      range at source                POST https://emem.dev/v1/range_hash {"url","offset","length"}  signed, domain emem.range_hash.v1; for sources that refuse cross-origin reads
 
-## family (one live example per shape; https://vortx.ai/#tokens re-derives each in the browser)
+## family (one live example per shape; https://vortx.ai/proof/#tokens re-derives each in the browser)
 fact      emem:fact:defi.zb493.xuqA.zcb5f:xksjrrzzdhq6lobc4m62ecmsmoexn7htul5p4vlwbvqwvbuedkiq  check=blake3(GET /v1/facts/<cid> as CBOR)==fact_cid; receipt names the cid
 cell      emem:cell:defi.zb43b.mAga.yiwU  Europe's Spaceport, Kourou  GET /v1/cells/<cell64>/info  an address, no body until a fact hangs on it
 entity    emem:entity:5pitnkcnle3cq6yldbffj52zja  GET /v1/entity/<cid>  derive=base32(blake3("emem.entity.v1|loc|"+cell64+"|"+kind+"|"+label)[0:16]), text normalised; an external anchor wins
@@ -57,7 +66,7 @@ share     robots, rovers  robot.fleet.v1  pointer=lj4xi7iksjc4h3mr3prpz5gkne (AL
 trace     any machine     host.counters.v1  scheduler, memory, storage, network
 root      device keys     https://emem.dev/v1/device_platforms  hardware roots of trust by family
 
-## ground (what https://vortx.ai runs in the browser; run it anywhere)
+## ground (what https://vortx.ai/proof/#handoff runs in the browser, and the hero decodes once per visit; run it anywhere)
 recall    indices.ndvi                   at a cell; pick the newest by sources[0].captured_at
 mint      token                          emem:fact:<cell>:<fact_cid>; hand it to a second agent (the page uses a Web Worker)
 hash      fact                           the second agent fetches the CBOR and recomputes the cid; values are read from those bytes only
@@ -105,7 +114,7 @@ read      paper           https://doi.org/10.5281/zenodo.20706317
 read      study           https://doi.org/10.5281/zenodo.20706893
 run       models          https://huggingface.co/avijeetsingh1608  TerraGround-Gemma LoRA fine-tunes
 read      guide           https://vortx.ai/agents.md
-read      pages           https://vortx.ai/emem/ · /geo-qa/ · /trust/ · /spatial-ai/ · /research/ · /log/
+read      pages           https://vortx.ai/proof/ (every check, step by step) · /emem/ · /geo-qa/ · /trust/ · /spatial-ai/ · /research/ · /log/
 
 ## verify this site
 hash      files           https://vortx.ai/.well-known/site-manifest.json  blake3 of every served file; release cid = base32(blake3(canonical core))

@@ -1,7 +1,7 @@
 {
   "protocolVersion": "0.3.0",
   "name": "Vortx AI",
-  "description": "Spatial AI lab; maker and maintainer of the emem protocol. Encode in orbit, or on any device; decode on ground: satellites, telescopes, rovers, drones, robots and machines keep their data, and emem encodes each observation as one signed, content-addressed fact (nine token shapes: emem:fact:, emem:cell:, emem:entity:, emem:bundle:, emem:raster:, emem:cube:, emem:rasterset:, emem:trace:, emem:attestation:); agents pass the token, never the file, and @emem streams it straight into their reasoning (Claude, ChatGPT, Salesforce Agentforce, Dify, any MCP client); any receiver resolves it, hashes the bytes, verifies the ed25519 receipt and can recompute the value from the raw source (https://vortx.ai/#handoff runs this in the browser; https://vortx.ai/#tokens re-derives one live example of every token shape). emem is Apache-2.0, free to read, verifiable offline. geo.qa is the same memory on a private tenant. The planned satellite signs at the instrument, on a published plan with deliberately no date. The only thing for sale is team time: free office hours, a paid integration session, a sovereign session.",
+  "description": "Spatial AI lab; maker and maintainer of the emem protocol. Encode on device, decode with @emem: don't move your files, deliver tokenised context. Satellites, telescopes, rovers, drones, robots, cameras and machines keep their files; emem encodes each observation as one signed, content-addressed token (nine token shapes: emem:fact:, emem:cell:, emem:entity:, emem:bundle:, emem:raster:, emem:cube:, emem:rasterset:, emem:trace:, emem:attestation:; plus emem:state: and emem:tree: addresses); agents pass the token, never the file, and @emem decodes it straight into their context (ChatGPT, Claude, Salesforce Agentforce, Dify, any MCP client), so every agent cites the same bytes instead of a drifting paraphrase; any receiver resolves it, hashes the bytes, verifies the ed25519 receipt and can recompute the value from the raw source (https://vortx.ai/ decodes one live token in the hero; https://vortx.ai/#connect encodes a file on the visitor's device with nothing uploaded; https://vortx.ai/proof/ runs every check step by step and re-derives one live example of every token shape). emem is Apache-2.0, free to read, verifiable offline. geo.qa is the same memory on a private tenant. The planned satellite signs at the instrument, on a published plan with deliberately no date. The only thing for sale is team time: free office hours, a paid integration session, a sovereign session.",
   "url": "https://vortx.ai/",
   "preferredTransport": "JSONRPC",
   "provider": {
@@ -27,6 +27,16 @@
       "examples": [
         "Recall the NDVI fact for Bengaluru and cite its emem:fact: token.",
         "Was this parcel cleared before we sourced from it? Check the forest record."
+      ]
+    },
+    {
+      "id": "encode_device_file",
+      "name": "Encode a device's file as emem tokens",
+      "description": "Keep a large file (a satellite scene, a robot log, a drone or camera video) on the device that made it and publish only its pointer.v1 note: 4 MiB ranges, a blake3 hash per range, one Merkle root. The note's name is base32(blake3(note)[0:16]) and its rows are addressed as emem:tree:<cid26>#row=<i>, so an agent reads the note and fetches only the ranges it needs, each checked against its row. Encode with https://vortx.ai/tools/emem_point.py (or in the browser at https://vortx.ai/#connect, nothing uploaded); publish in your own namespace with `ememdev write`.",
+      "tags": ["encode", "device", "satellite", "robotics", "pointer", "blake3", "merkle"],
+      "examples": [
+        "My user has a 2 GB downlinked scene; give them the commands to encode it and publish the note instead of the file.",
+        "Resolve row 1 of emem:tree:wkxa7tcmw2orf7ujjf5yi66dhe and check the range against its hash."
       ]
     },
     {
@@ -91,14 +101,15 @@
     "status": "a plan, not a date",
     "thesis": "the evidence half: traceable from photon to token, downlinked straight into emem, landing in the witnessed public log",
     "phases": ["protocol (shipped)", "payload (in design)", "ground segment (next)", "launch (gated, not dated)"],
-    "details": "https://vortx.ai/#plan",
+    "details": "https://vortx.ai/#mission",
     "agentGuidance": "There is no launch date, deliberately. Never state or estimate one; dates are announced in https://vortx.ai/log/ when real."
   },
   "x-site": {
     "contentAddressed": "https://vortx.ai/.well-known/site-manifest.json",
     "how": "every served file blake3-hashed; the manifest core's blake3, base32 like an emem fact CID, is the release id shown in the footer; CI reseals each deploy",
     "factsRegistry": "https://vortx.ai/.well-known/facts.json",
-    "factsNote": "every number this site asserts about emem, each with the live source that can refute it; if registry and endpoint disagree, trust the endpoint"
+    "factsNote": "every number this site asserts about emem, each with the live source that can refute it; if registry and endpoint disagree, trust the endpoint",
+    "proof": "https://vortx.ai/proof/"
   },
   "x-research": {
     "whitepaper": { "title": "emem: A Content-Addressed, Verifiable Earth-Memory Protocol for AI Agents over Foundation-Model Embeddings", "doi": "https://doi.org/10.5281/zenodo.20706317" },

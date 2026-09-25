@@ -34,6 +34,33 @@
     if (b) b.style.width = Math.max(1.5, Math.min(100, 100 * Math.log10(Math.max(1, d)) / MAX_LOG)).toFixed(1) + '%';
   }
 
+  /* ---------- orbiters, when this page has no globe to ask ---------- */
+  // the same elements the globe uses: CelesTrak copies it cached, else the dated snapshot; SGP4 here
+  var own = null;
+  function ownOrbits() {
+    if (window.vxOrbit || !window.satellite) return;
+    var txt = '';
+    try { ['s2', 'hst', 'iss'].forEach(function (k) { var c = JSON.parse(localStorage.getItem('vx-tle-' + k) || 'null'); if (c && Date.now() - c.at < 2 * 3600e3) txt += c.txt + '\n'; }); } catch (e) {}
+    (/^1 \d{5}/m.test(txt) ? Promise.resolve(txt) : fetch('/data/tle.txt').then(function (r) { return r.text(); })).then(function (t) {
+      var L = t.split(/\r?\n/).filter(function (l) { return l.trim(); }), sats = [];
+      for (var i = 0; i + 2 < L.length; i++) if (L[i + 1][0] === '1' && L[i + 2][0] === '2') {
+        var id = L[i + 1].slice(9, 17).trim(), yy = +id.slice(0, 2);
+        sats.push({ short: L[i].trim().replace('SENTINEL-', 'S').replace(/\s*\(.*\)$/, ''), norad: +L[i + 1].slice(2, 7), cospar: id ? (yy < 57 ? 2000 + yy : 1900 + yy) + '-' + id.slice(2, 5) + id.slice(5) : '', rec: satellite.twoline2satrec(L[i + 1], L[i + 2]) });
+        i += 2;
+      }
+      own = function (ms) {
+        var d = new Date(ms || Date.now()), g = satellite.gstime(d);
+        return sats.map(function (x) {
+          var pv = satellite.propagate(x.rec, d); if (!pv || !pv.position || typeof pv.position === 'boolean') return null;
+          var geo = satellite.eciToGeodetic(pv.position, g);
+          return { short: x.short, norad: x.norad, cospar: x.cospar, alt: geo.height, v: Math.hypot(pv.velocity.x, pv.velocity.y, pv.velocity.z) };
+        }).filter(Boolean);
+      };
+      document.dispatchEvent(new CustomEvent('vx:elements', { detail: { from: 'reach' } }));
+      tick();
+    }).catch(function () {});
+  }
+
   /* ---------- distances ---------- */
   var BODY = { mars: E.marsKm, l2: E.l2Km, moon: E.moonKm };
   function tick() {
@@ -44,8 +71,8 @@
         d = BODY[k](now);
         if (k === 'mars') extra = 'reply ' + light(2 * d / C) + ' round trip';
         if (k === 'mars') set(el, '[data-au]', (d / E.AU_KM).toFixed(4) + ' AU');
-      } else if (k === 'orbit' && window.vxOrbit) {
-        var want = el.getAttribute('data-short').split(','), st = window.vxOrbit.states(now).filter(function (s) { return want.indexOf(s.short) >= 0; });
+      } else if (k === 'orbit' && (window.vxOrbit || own)) {
+        var want = el.getAttribute('data-short').split(','), st = (window.vxOrbit ? window.vxOrbit.states(now) : own(now)).filter(function (s) { return want.indexOf(s.short) >= 0; });
         if (!st.length) return;
         var alts = st.map(function (s) { return s.alt; }), lo = Math.min.apply(null, alts), hi = Math.max.apply(null, alts);
         d = (lo + hi) / 2;
@@ -104,7 +131,8 @@
     Promise.all([
       new Promise(function (res) {
         if (window.vxOrbit && window.vxOrbit.elements()) return res(window.vxOrbit.states());
-        document.addEventListener('vx:elements', function () { res(window.vxOrbit ? window.vxOrbit.states() : []); }, { once: true });
+        if (own) return res(own());
+        document.addEventListener('vx:elements', function () { res(window.vxOrbit ? window.vxOrbit.states() : own ? own() : []); }, { once: true });
       }),
       fetch('/data/satcat.json').then(function (r) { return r.json(); }).catch(function () { return null; })
     ]).then(function (v) {
@@ -133,7 +161,7 @@
   var timer = 0, started = false;
   function start() {
     if (started) return; started = true;
-    tick(); profiles(); pointers(); launches();
+    ownOrbits(); tick(); profiles(); pointers(); launches();
   }
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function (en) {

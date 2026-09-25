@@ -1,0 +1,400 @@
+{
+  "reference": "https://vortx-ai.github.io/ememdemo/",
+  "imported": "2026-09-24",
+  "notes": "Previews extracted from the demo's thumb.v1 notes after checking their 'of' field matches the referenced record. Multi-frame sprites use their first frame. No claim of independent cryptographic verification is made by this import.",
+  "heroImages": {
+    "from": "Jaya's feat/space-theme branch (commit c0c7ffa), the observatory homepage these hero cards follow",
+    "note": "Larger renders of the same records the archive previews come from; timelapse strips are 320 x 200 frames side by side, in capture order.",
+    "files": [
+      {
+        "file": "assets/observatory/carina.webp",
+        "memory": "https://emem.dev/memories/by_attester/ddzmyzhn/wkxa7tcmw2orf7ujjf5yi66dhe.md",
+        "title": "Cosmic Cliffs, Carina",
+        "source": "https://esawebb.org/media/archives/images/original/weic2205a.tif",
+        "frames": 1
+      },
+      {
+        "file": "assets/observatory/whirlpool.webp",
+        "memory": "https://emem.dev/memories/by_attester/ddzmyzhn/7rn7fxbl75o5cijqpnok5oc7rq.md",
+        "title": "Whirlpool galaxy, M51",
+        "source": "https://esahubble.org/media/archives/images/original/heic0506a.tif",
+        "frames": 1
+      },
+      {
+        "file": "assets/observatory/mars.webp",
+        "memory": "https://emem.dev/memories/by_attester/ddzmyzhn/fi67bt4rxkic3ssuag2v2hskly.md",
+        "title": "Mars, December 2024",
+        "source": "https://esahubble.org/media/archives/images/original/heic2505b.tif",
+        "frames": 1
+      },
+      {
+        "file": "assets/observatory/lusail-a-city-rising.webp",
+        "memory": "https://emem.dev/memories/by_attester/ddzmyzhn/gpnxkvkwz22ug4jeqexggiy63q.md",
+        "title": "Lusail, a city rising",
+        "source": "timelapse: 25.42, 51.49 | 2017-2025 02",
+        "frames": 5
+      },
+      {
+        "file": "assets/observatory/okavango-delta-flood-pulse.webp",
+        "memory": "https://emem.dev/memories/by_attester/ddzmyzhn/sm45gry43cubuqjp2cpu5bit6i.md",
+        "title": "Okavango Delta, flood pulse",
+        "source": "timelapse: -19.55, 23.05 | 2017-2025 08",
+        "frames": 5
+      }
+    ]
+  },
+  "earthTexture": {
+    "land": "https://raw.githubusercontent.com/turban/webgl-earth/master/images/2_no_clouds_4k.jpg",
+    "clouds": "https://raw.githubusercontent.com/turban/webgl-earth/master/images/fair_clouds_4k.png",
+    "credit": "NASA Blue Marble imagery; public mirror in turban/webgl-earth. Land and clouds composited into one 1536 × 768 WebP texture."
+  },
+  "observations": [
+    {
+      "title": "Cosmic Cliffs, Carina",
+      "category": "space",
+      "tag": "Webb · 144 MB",
+      "url": "https://emem.dev/memories/by_attester/ddzmyzhn/wkxa7tcmw2orf7ujjf5yi66dhe.md",
+      "source": "https://esawebb.org/media/archives/images/original/weic2205a.tif",
+      "preview": "assets/observations/wkxa7tcmw2orf7ujjf5yi66dhe.webp",
+      "thumb": "https://emem.dev/memories/by_attester/ddzmyzhn/cewrfxewtujjvuibt35yhk6hwi.md",
+      "frames": 1
+    },
+    {
+      "title": "Amazon frontier, 2017–2025",
+      "category": "earth",
+      "tag": "timelapse",
+      "url": "https://emem.dev/memories/by_attester/ddzmyzhn/gkc2jap4r47zgs4t2sja4qderu.md",
+      "source": "timelapse: -9.73, -63.03",
+      "preview": "assets/observations/gkc2jap4r47zgs4t2sja4qderu.webp",
+      "thumb": "https://emem.dev/memories/by_attester/ddzmyzhn/nvps75wnuzshrb7moubmggfzom.md",
+      "frames": 5
+    },
+    {
+      "title": "Whirlpool galaxy, M51",
+      "category": "space",
+      "tag": "Hubble · 215 MB",
+      "url": "https://emem.dev/memories/by_attester/ddzmyzhn/7rn7fxbl75o5cijqpnok5oc7rq.md",
+      "source": "https://esahubble.org/media/archives/images/original/heic0506a.tif",
+      "preview": "assets/observations/7rn7fxbl75o5cijqpnok5oc7rq.webp",
+      "thumb": "https://emem.dev/memories/by_attester/ddzmyzhn/3iqb4mw7a2kesxoz5hmfro3mzm.md",
+      "frames": 1
+    },
+    {
+      "title": "Bengaluru, true colour",
+      "category": "earth",
+      "tag": "Sentinel-2 · 351 MB",
+      "url": "https://emem.dev/memories/by_attester/ddzmyzhn/twlpco5kin6qlz5eplt2pjm7n4.md",
+      "source": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/43/P/GQ/2026/5/S2B_43PGQ_20260512_0_L2A/TCI.tif",
+      "preview": "assets/observations/twlpco5kin6qlz5eplt2pjm7n4.webp",
+      "thumb": "https://emem.dev/memories/by_attester/ddzmyzhn/kyibrkevfrxrplwej3iwpnx2sq.md",
+      "frames": 1
+    },
+    {
+      "title": "Mars, December 2024",
+      "category": "space",
+      "tag": "Hubble",
+      "url": "https://emem.dev/memories/by_attester/ddzmyzhn/fi67bt4rxkic3ssuag2v2hskly.md",
+      "source": "https://esahubble.org/media/archives/images/original/heic2505b.tif",
+      "preview": "assets/observations/fi67bt4rxkic3ssuag2v2hskly.webp",
+      "thumb": "https://emem.dev/memories/by_attester/ddzmyzhn/2wxof63h5p3hrmzatw7mam2mom.md",
+      "frames": 1
+    },
+    {
+      "title": "Moon terrain, Kaguya",
+      "category": "space",
+      "tag": "USGS · hillshade",
+      "url": "https://emem.dev/memories/by_attester/ddzmyzhn/jxz6pghlsjbohvx6s5iw6yek4m.md",
+      "source": "https://astrogeo-ard.s3.us-west-2.amazonaws.com/astrogeo-ard/moon/kaguya/terrain_camera/usgs_dtms/TC2W2B0_01_00608S446E2621__TC1W2B0_01_00608S451E2621/TC2W2B0_01_00608S446E2621__TC1W2B0_01_00608S451E2621_ba-aligned-DEM-hs.tif",
+      "preview": "assets/observations/jxz6pghlsjbohvx6s5iw6yek4m.webp",
+      "thumb": "https://emem.dev/memories/by_attester/ddzmyzhn/ygonxs74yb2rwypbfmenzpi3wi.md",
+      "frames": 1
+    },
+    {
+      "title": "The whole Earth's terrain, 30 GB of tiles",
+      "category": "earth",
+      "tag": "PMTiles · 30.5 GB",
+      "url": "https://emem.dev/memories/by_attester/ddzmyzhn/ppdqanaf7ufpxedvwdrwuqhf5u.md",
+      "source": "https://r2-public.protomaps.com/protomaps-sample-datasets/terrarium_z9.pmtiles",
+      "preview": "assets/observations/ppdqanaf7ufpxedvwdrwuqhf5u.webp",
+      "thumb": "https://emem.dev/memories/by_attester/ddzmyzhn/nurixabv76sxwnyxfmmfl62sra.md",
+      "frames": 8
+    },
+    {
+      "title": "Ozone, 41 years of a climate model",
+      "category": "earth",
+      "tag": "NetCDF · 1.05 GB",
+      "url": "https://emem.dev/memories/by_attester/ddzmyzhn/o2iyw5aexedv7sneir7sgng4fm.md",
+      "source": "https://huggingface.co/datasets/CEMAC/netcdf_test_files/resolve/main/o3_AERmon_GISS-E2-1-G_piClim-O3_r1i1p3f1_gn_195001-199012.nc",
+      "preview": "assets/observations/o2iyw5aexedv7sneir7sgng4fm.webp",
+      "thumb": "https://emem.dev/memories/by_attester/ddzmyzhn/5tzuj4g3ed4cwudrzgk3ym5pri.md",
+      "frames": 1
+    },
+    {
+      "title": "Hurricane Katrina, the weather model run",
+      "category": "earth",
+      "tag": "NetCDF-4 · 848 MB",
+      "url": "https://emem.dev/memories/by_attester/ddzmyzhn/boupyjevzwv6qlj2q477tvmkmi.md",
+      "source": "https://huggingface.co/datasets/CEMAC/netcdf_test_files/resolve/main/wrfout_d01_2005-08-28_000000.nc",
+      "preview": null,
+      "frames": 1
+    },
+    {
+      "title": "Autzen, 10.6 million lidar points",
+      "category": "earth",
+      "tag": "COPC · 81 MB",
+      "url": "https://emem.dev/memories/by_attester/ddzmyzhn/jjyznjvil64vzygbs6mxceszbu.md",
+      "source": "https://s3.amazonaws.com/hobu-lidar/autzen-classified.copc.laz",
+      "preview": null,
+      "frames": 1
+    },
+    {
+      "title": "A train, as 3D Gaussian splats",
+      "category": "earth",
+      "tag": "3DGS PLY · 139 MB",
+      "url": "https://emem.dev/memories/by_attester/ddzmyzhn/qfclw5qafxejoqabrtnjlqbvxu.md",
+      "source": "https://huggingface.co/johnowhitaker/gaussian_splatter_models/resolve/main/train/point_cloud/iteration_7000/point_cloud.ply",
+      "preview": "assets/observations/qfclw5qafxejoqabrtnjlqbvxu.webp",
+      "thumb": "https://emem.dev/memories/by_attester/ddzmyzhn/rfbykggvj6vl7rbhjv77r3leuq.md",
+      "frames": 1
+    },
+    {
+      "title": "Every US county, with its spatial index",
+      "category": "earth",
+      "tag": "FlatGeobuf · 8 MB",
+      "url": "https://emem.dev/memories/by_attester/ddzmyzhn/aqq3465nvlazh7xzy7jkiqii4q.md",
+      "source": "https://flatgeobuf.org/test/data/UScounties.fgb",
+      "preview": null,
+      "frames": 1
+    },
+    {
+      "title": "Lahaina, before and after fire",
+      "category": "earth",
+      "tag": "timelapse",
+      "url": "https://emem.dev/memories/by_attester/ddzmyzhn/ota6xerxrqzya5txb4jxvzpb2q.md",
+      "source": "timelapse: 20.878, -156.683 | 2022-2025 09",
+      "preview": "assets/observations/ota6xerxrqzya5txb4jxvzpb2q.webp",
+      "thumb": "https://emem.dev/memories/by_attester/ddzmyzhn/mygdg7gl4brrcrxoi6qznesmey.md",
+      "frames": 4
+    },
+    {
+      "title": "Amazon forest loss since 2000",
+      "category": "earth",
+      "tag": "forest grid",
+      "url": "https://emem.dev/memories/by_attester/ddzmyzhn/dzhe5a7rsjtnmc35qqwxybys5u.md",
+      "source": "forest: -9.73, -63.03",
+      "preview": "assets/observations/dzhe5a7rsjtnmc35qqwxybys5u.webp",
+      "thumb": "https://emem.dev/memories/by_attester/ddzmyzhn/36lovkga2wopyooowtwhxufb5e.md",
+      "frames": 1
+    },
+    {
+      "title": "Phoenix: green vs heat",
+      "category": "earth",
+      "tag": "city grid",
+      "url": "https://emem.dev/memories/by_attester/ddzmyzhn/jnt6yrjflrxu3apgde37ykn55e.md",
+      "source": "city: Phoenix, Arizona",
+      "preview": "assets/observations/jnt6yrjflrxu3apgde37ykn55e.webp",
+      "thumb": "https://emem.dev/memories/by_attester/ddzmyzhn/ua4kwtok3hd7txfwxqf5m5nxna.md",
+      "frames": 1
+    },
+    {
+      "title": "Lion and impala, Kruger",
+      "category": "earth",
+      "tag": "iNaturalist",
+      "url": "https://emem.dev/memories/by_attester/ddzmyzhn/2re7jfo2v34uwsqxkmpwxoxesu.md",
+      "source": "https://www.inaturalist.org/observations/39540446",
+      "preview": "assets/observations/2re7jfo2v34uwsqxkmpwxoxesu.webp",
+      "thumb": "https://emem.dev/memories/by_attester/ddzmyzhn/27hlpjpkxhpqc6hrdbhnrz4iyq.md",
+      "frames": 1
+    },
+    {
+      "title": "Super Pit, Kalgoorlie",
+      "category": "earth",
+      "tag": "timelapse",
+      "url": "https://emem.dev/memories/by_attester/ddzmyzhn/fdobixnnucctqkn2qtii7kibyq.md",
+      "source": "timelapse: -30.777, 121.506",
+      "preview": "assets/observations/fdobixnnucctqkn2qtii7kibyq.webp",
+      "thumb": "https://emem.dev/memories/by_attester/ddzmyzhn/pglleylcbtgdaqjnu6tp3tmyym.md",
+      "frames": 5
+    },
+    {
+      "title": "Maui fires, 50 cm",
+      "category": "earth",
+      "tag": "Maxar · 71 MB",
+      "url": "https://emem.dev/memories/by_attester/ddzmyzhn/bafppksajtcekqt62r3thg3a5u.md",
+      "source": "https://maxar-opendata.s3.amazonaws.com/events/Maui-Hawaii-fires-Aug-23/ard/04/122000330310/2023-08-12/105001003590C300-visual.tif",
+      "preview": "assets/observations/bafppksajtcekqt62r3thg3a5u.webp",
+      "thumb": "https://emem.dev/memories/by_attester/ddzmyzhn/svp56bfzcmzs46ejbnnozjwgke.md",
+      "frames": 1
+    },
+    {
+      "title": "Okavango Delta, flood pulse",
+      "category": "earth",
+      "tag": "timelapse",
+      "url": "https://emem.dev/memories/by_attester/ddzmyzhn/sm45gry43cubuqjp2cpu5bit6i.md",
+      "source": "timelapse: -19.55, 23.05 | 2017-2025 08",
+      "preview": "assets/observations/sm45gry43cubuqjp2cpu5bit6i.webp",
+      "thumb": "https://emem.dev/memories/by_attester/ddzmyzhn/ni7adlmokfnptpnhjjtitqcc4a.md",
+      "frames": 5
+    },
+    {
+      "title": "Dry lake cracks, drone",
+      "category": "earth",
+      "tag": "OpenAerialMap · 38 MB",
+      "url": "https://emem.dev/memories/by_attester/ddzmyzhn/ejvovl6sz7d3sugfcrwwie4rma.md",
+      "source": "https://oin-hotosm-temp.s3.amazonaws.com/58e86e18cfbcc90010aca440/0/86052d9a-8c9b-4ca3-a836-02894f322464.tif",
+      "preview": "assets/observations/ejvovl6sz7d3sugfcrwwie4rma.webp",
+      "thumb": "https://emem.dev/memories/by_attester/ddzmyzhn/3bapl3e4yscg5uyf344h4uy55i.md",
+      "frames": 1
+    },
+    {
+      "title": "Lusail, a city rising",
+      "category": "earth",
+      "tag": "timelapse",
+      "url": "https://emem.dev/memories/by_attester/ddzmyzhn/gpnxkvkwz22ug4jeqexggiy63q.md",
+      "source": "timelapse: 25.42, 51.49 | 2017-2025 02",
+      "preview": "assets/observations/gpnxkvkwz22ug4jeqexggiy63q.webp",
+      "thumb": "https://emem.dev/memories/by_attester/ddzmyzhn/spx3yyqmt77lpp4nv4movoj434.md",
+      "frames": 5
+    },
+    {
+      "title": "Bengaluru: green vs heat",
+      "category": "earth",
+      "tag": "city grid",
+      "url": "https://emem.dev/memories/by_attester/ddzmyzhn/cfbt6bctfgnfoun347mgobvkku.md",
+      "source": "city: Bengaluru",
+      "preview": "assets/observations/cfbt6bctfgnfoun347mgobvkku.webp",
+      "thumb": "https://emem.dev/memories/by_attester/ddzmyzhn/vn4uunlwa2lr3gywzy6r47bcyy.md",
+      "frames": 1
+    },
+    {
+      "title": "Cubbon Park, every layer",
+      "category": "earth",
+      "tag": "world",
+      "url": "https://emem.dev/memories/by_attester/ddzmyzhn/ia3cqu7ycf455mjs2vue33cnfi.md",
+      "source": "world: Cubbon Park, Bengaluru",
+      "preview": "assets/observations/ia3cqu7ycf455mjs2vue33cnfi.webp",
+      "thumb": "https://emem.dev/memories/by_attester/ddzmyzhn/qh6pp6xrolsy5dh5oepq47anwe.md",
+      "frames": 1
+    },
+    {
+      "title": "London street cameras",
+      "category": "earth",
+      "tag": "CCTV · geo.qa",
+      "url": "https://emem.dev/memories/by_attester/ddzmyzhn/t7ebh6s6imxrwdmizebnw52nwe.md",
+      "source": "cameras: London",
+      "preview": "assets/observations/t7ebh6s6imxrwdmizebnw52nwe.webp",
+      "thumb": "https://emem.dev/memories/by_attester/ddzmyzhn/o7rm7ykhf2zl2tizeo42efc57e.md",
+      "frames": 6
+    },
+    {
+      "title": "Train yard, 1M splats",
+      "category": "earth",
+      "tag": "splats",
+      "url": "https://emem.dev/memories/by_attester/ddzmyzhn/iliojyunnoeoomohc5346n4zrm.md",
+      "source": "https://huggingface.co/cakewalk/splat-data/resolve/main/train.splat",
+      "preview": "assets/observations/iliojyunnoeoomohc5346n4zrm.webp",
+      "thumb": "https://emem.dev/memories/by_attester/ddzmyzhn/mmd5cercfth7w2hrze3embbsd4.md",
+      "frames": 1
+    },
+    {
+      "title": "Sombrero galaxy",
+      "category": "space",
+      "tag": "Hubble · 180 MB",
+      "url": "https://emem.dev/memories/by_attester/ddzmyzhn/4uweu43yaiik2mw5nc4eznztbu.md",
+      "source": "https://esahubble.org/media/archives/images/original/opo0328a.tif",
+      "preview": "assets/observations/4uweu43yaiik2mw5nc4eznztbu.webp",
+      "thumb": "https://emem.dev/memories/by_attester/ddzmyzhn/ccruy2iurkmmcfq3pigo6tw4ze.md",
+      "frames": 1
+    },
+    {
+      "title": "Maasai Mara, every layer",
+      "category": "earth",
+      "tag": "world",
+      "url": "https://emem.dev/memories/by_attester/ddzmyzhn/kl23pezpc2lfzuflxgm5qyblxa.md",
+      "source": "world: Maasai Mara National Reserve, Kenya",
+      "preview": "assets/observations/kl23pezpc2lfzuflxgm5qyblxa.webp",
+      "thumb": "https://emem.dev/memories/by_attester/ddzmyzhn/7imkvfdiwrcwmjec5hsii2qr4i.md",
+      "frames": 1
+    },
+    {
+      "title": "Near infrared, placed",
+      "category": "earth",
+      "tag": "COG · 238 MB",
+      "url": "https://emem.dev/memories/by_attester/ddzmyzhn/tm3nwiorldoo7v4uryp65gsonu.md",
+      "source": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/43/P/GQ/2026/5/S2B_43PGQ_20260512_0_L2A/B08.tif",
+      "preview": "assets/observations/tm3nwiorldoo7v4uryp65gsonu.webp",
+      "thumb": "https://emem.dev/memories/by_attester/ddzmyzhn/h4sw7qstpymptyfwiej3me37vy.md",
+      "frames": 1
+    },
+    {
+      "title": "One satellite scene, 21 files",
+      "category": "earth",
+      "tag": "S3 folder",
+      "url": "https://emem.dev/memories/by_attester/ddzmyzhn/ytrbmovcooav45okmof7pxt3bi.md",
+      "source": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/43/P/GQ/2026/5/S2B_43PGQ_20260512_0_L2A/",
+      "preview": null,
+      "frames": 1
+    },
+    {
+      "title": "Chennai flood risk",
+      "category": "earth",
+      "tag": "ask",
+      "url": "ask: flood risk in Chennai",
+      "preview": null,
+      "frames": 1
+    },
+    {
+      "title": "Marina Beach, every layer",
+      "category": "earth",
+      "tag": "world",
+      "url": "https://emem.dev/memories/by_attester/ddzmyzhn/77e2qubtqktu3hrat7clzeauvu.md",
+      "source": "world: Marina Beach, Chennai",
+      "preview": "assets/observations/77e2qubtqktu3hrat7clzeauvu.webp",
+      "thumb": "https://emem.dev/memories/by_attester/ddzmyzhn/a5ehkhdhgz4pkgjcg3p4nft6n4.md",
+      "frames": 1
+    },
+    {
+      "title": "Port of Rotterdam, every layer",
+      "category": "earth",
+      "tag": "world",
+      "url": "https://emem.dev/memories/by_attester/ddzmyzhn/4o7zgq2ogbs2trae4mdxkxwvq4.md",
+      "source": "world: Port of Rotterdam",
+      "preview": "assets/observations/4o7zgq2ogbs2trae4mdxkxwvq4.webp",
+      "thumb": "https://emem.dev/memories/by_attester/ddzmyzhn/rmruhhy4qp7dvbcoufkgtaocai.md",
+      "frames": 1
+    },
+    {
+      "title": "Cubbon Park, two dates",
+      "category": "earth",
+      "tag": "emem:cube",
+      "url": "emem:cube:23vfacx23nr3dwki6si4yrolmmp3wr6dtrhjxbw4rihiaafrpyga:s2.B08:20500..20585:ganwwj25obuob3pp7pjtkd4awtihnluotdowe2cqtrj77af5qlna",
+      "preview": "assets/observations/cubbon-park-two-dates.webp",
+      "thumb": "https://emem.dev/memories/by_attester/ddzmyzhn/hsi4mfmv2cpe7of5kr7blbscma.md",
+      "frames": 1
+    },
+    {
+      "title": "Bengaluru elevation",
+      "category": "earth",
+      "tag": "emem:fact",
+      "url": "emem:fact:defi.zb493.xuqA.zcb5f:tdwp3aax6gqfkcdw4mah52fp7dxarelspo7gzte4eyrhpisafcjq",
+      "preview": null,
+      "frames": 1
+    },
+    {
+      "title": "Bengaluru, one handle",
+      "category": "earth",
+      "tag": "emem:bundle",
+      "url": "emem:bundle:y2k6h2laeo4libfsiebucdw4mu",
+      "preview": null,
+      "frames": 1
+    },
+    {
+      "title": "Amazon, one identity",
+      "category": "earth",
+      "tag": "emem:entity",
+      "url": "emem:entity:5pitnkcnle3cq6yldbffj52zja",
+      "preview": null,
+      "frames": 1
+    }
+  ]
+}

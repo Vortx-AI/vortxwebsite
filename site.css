@@ -139,6 +139,9 @@ body.vx {
   margin: 0; max-width: 20ch; font: 400 clamp(38px, 5.4vw, 72px)/1.02 var(--serif); letter-spacing: -0.02em;
 }
 .sec h2 em { font-style: italic; color: var(--ink-2); }
+.proof-h { margin: 0; max-width: 16ch; font: 400 clamp(44px, 6vw, 84px)/1 var(--serif); letter-spacing: -0.025em; }
+.proof-h em { font-style: italic; color: var(--ink-2); }
+.proof-top { border-top: 0; padding-bottom: 0; }
 .sec-lead { margin: 22px 0 0; max-width: 62ch; color: var(--ink-2); font-size: 17px; }
 .sec-head { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 48px; align-items: end; margin-bottom: 52px; }
 .sec-head .vl { align-self: end; }

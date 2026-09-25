@@ -6,11 +6,12 @@ Siblings: https://vortx.ai/llms.txt (the index) · https://vortx.ai/.well-known/
 ## what
 
 - **is** vortx.ai · spatial AI lab · builds emem, the external memory of the physical world
+- **say** Encode on device. Decode with @emem. Don't move your files; deliver tokenised context.
 - **capture** satellites, telescopes, rovers, drones, robots and machines observe (Sentinel-2 anchors the open record today)
 - **encode** in orbit or on any device: each observation → one fact, keyed cell64 × band × tslot, named `base32(blake3(canonical CBOR))`, signed ed25519
 - **hold** the data where it was captured; only the token moves: `emem:fact:<cell64>:<fact_cid>`, 83 to 85 bytes
-- **stream** @emem puts the token straight into the agent's reasoning, in Claude, ChatGPT, Agentforce, Dify and any MCP client
-- **decode** any receiver resolves the token, hashes the bytes, verifies the receipt, and can recompute the value from the raw source
+- **decode** @emem puts the token straight into the agent's context, in ChatGPT, Claude, Agentforce, Dify and any MCP client: the agent knows what is happening, cites one reference instead of a drifting paraphrase, and talks to other agents and people by token
+- **check** any receiver resolves the token, hashes the bytes, verifies the receipt, and can recompute the value from the raw source
 - **run** geo.qa · the same memory on an organisation's own sensors, private per tenant
 
 ## do
@@ -35,6 +36,18 @@ curl -s -X POST https://emem.dev/v1/recall \
   -d '{"place":"Bengaluru","bands":["indices.ndvi"]}'
 ```
 
+## connect
+
+A device keeps its files and sends tokens. https://vortx.ai/#connect runs the encode step in the browser, with nothing uploaded.
+
+- **install** `pip install blake3 "ememdev[signing]"`
+- **encode** `python3 emem_point.py FILE [--source URL] > FILE.md` · https://vortx.ai/tools/emem_point.py · 4 MiB ranges, a blake3 per range, one Merkle root; the note on stdout, root and token on stderr
+- **name** the note is `base32(blake3(note)[0:16])`; its token `emem:tree:<cid26>#row=<i>` resolves once the note is published byte for byte
+- **publish** `ememdev write --path /memories/by_attester/<you>/FILE.md --body-file FILE.md` · your own namespace, your key (`ememdev whoami`)
+- **decode** any agent with @emem reads the note, then only the ranges it needs, each checked against its row
+- **check** a device's own execution trace: `POST https://emem.dev/v1/trace_resolve`, then `/v1/trace_verify` · example `emem:trace:mxyer5c2oxn4ud3xqbtnaxcxhdv4kkxiu67q32inbwxgpa7r3s6a`
+- **sign** at capture with a hardware-held key · that is the integration session, below
+
 ## keep
 
 - **keep** the `emem:fact:` token for anything you verified, before your context compacts. It re-hydrates to the exact signed bytes, for you or any other agent, later.
@@ -52,7 +65,7 @@ curl -s -X POST https://emem.dev/v1/recall \
 
 ## family
 
-One live example per shape. https://vortx.ai/#tokens resolves each and re-derives it in the browser; the line says what to recompute.
+One live example per shape. https://vortx.ai/proof/#tokens resolves each and re-derives it in the browser; the line says what to recompute.
 
 | shape | example | recompute |
 |---|---|---|

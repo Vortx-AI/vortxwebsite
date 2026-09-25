@@ -49,12 +49,13 @@
     <div class="wrap">
       <a class="vx-brand" href="/" aria-label="Vortx AI home"><img src="/assets/vortx-logo.png" alt="" width="26" height="26"><span>vortx<b>.ai</b></span></a>
       <nav class="vx-nav" id="nav" data-nav aria-label="Primary">
-        <a href="/#watch">watch</a>
-        <a href="/#handoff">hand off</a>
-        <a href="/#files">point</a>
-        <a href="/#call">call</a>
-        <a href="/#plan">plan</a>
+        <a href="/#how">how</a>
+        <a href="/#connect">connect</a>
+        <a href="/#ask">ask</a>
+        <a href="/#archive">archive</a>
+        <a href="/#mission">mission</a>
         <a href="/#book">book</a>
+        <a href="/proof/">proof</a>
         <a class="ext" href="https://emem.dev" target="_blank" rel="noopener">docs</a>
       </nav>
       <div class="vx-status">
@@ -108,7 +109,7 @@
           <h2 class="qa-q">How does a fact get verified?</h2>
           <div class="qa-a">
             <p class="lead-def">Each fact carries an ed25519 signature and a blake3 content hash. Anyone can recompute the hash and check the signature offline, without trusting the server that served it.</p>
-            <p>The hash is taken over the fact itself, so the address you ask for and the answer you get are bound together. Change either, and the hash stops matching. The signature ties the fact to the responder that produced it. Put together, an agent that quotes a fact is also handing you a receipt you can re-pull and check yourself. You can try it on the <a href="/#handoff">home page</a>.</p>
+            <p>The hash is taken over the fact itself, so the address you ask for and the answer you get are bound together. Change either, and the hash stops matching. The signature ties the fact to the responder that produced it. Put together, an agent that quotes a fact is also handing you a receipt you can re-pull and check yourself. You can try it on the <a href="/proof/#handoff">home page</a>.</p>
           </div>
         </div>
 
@@ -121,7 +122,7 @@
         </div>
 
         <div style="margin-top:40px;" class="reveal">
-          <a href="/#handoff" class="btn btn-primary btn-lg">See a signed fact
+          <a href="/proof/#handoff" class="btn btn-primary btn-lg">See a signed fact
             <svg class="arrow" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
           <a href="/emem/" class="btn btn-quiet" style="margin-left:14px;">Read about emem →</a>

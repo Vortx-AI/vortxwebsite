@@ -464,6 +464,17 @@
     MOON_R.forEach(function (r) { s += r[4] * Math.pow(E, Math.abs(r[1])) * Math.cos((r[0] * D + r[1] * M + r[2] * Mp + r[3] * F) * DEG); });
     return 385000.56 + s / 1000;
   }
+  // the Moon's phase: Meeus eq. 48.4 for the phase angle, from the same fundamental arguments
+  function moonPhase(ms) {
+    var T = jcent(ms), T2 = T * T, T3 = T2 * T, T4 = T3 * T;
+    var D = 297.8501921 + 445267.1114034 * T - 0.0018819 * T2 + T3 / 545868 - T4 / 113065000;
+    var M = 357.5291092 + 35999.0502909 * T - 0.0001536 * T2 + T3 / 24490000;
+    var Mp = 134.9633964 + 477198.8675055 * T + 0.0087414 * T2 + T3 / 69699 - T4 / 14712000;
+    var s = function (x) { return Math.sin(x * DEG); };
+    var i = 180 - D - 6.289 * s(Mp) + 2.100 * s(M) - 1.274 * s(2 * D - Mp) - 0.658 * s(2 * D) - 0.214 * s(2 * Mp) - 0.110 * s(D);
+    var d = ((D % 360) + 360) % 360;
+    return { lit: (1 + Math.cos(i * DEG)) / 2, waxing: d < 180, age: d };
+  }
   var KEP = { // [a au, e, I deg, L deg, long. perihelion deg, long. node deg], then rates per Julian century
     emb: [[1.00000261, 0.01671123, -0.00001531, 100.46457166, 102.93768193, 0], [0.00000562, -0.00004392, -0.01294668, 35999.37244981, 0.32327364, 0]],
     mars: [[1.52371034, 0.09339410, 1.84969142, -4.55343205, -23.94362959, 49.55953891], [0.00001847, 0.00007882, -0.00813131, 19140.30268499, 0.44441088, -0.29257343]]
@@ -504,7 +515,9 @@
     utm: utm, epsgZone: epsgZone, preimage: preimage, edVerify: edVerify, verifySTH: verifySTH, verifyRangeHash: verifyRangeHash,
     parsePointer: parsePointer, merkleRoot: merkleRoot, treeLeaf: treeLeaf, treeWalk: treeWalk,
     cborEnc: cborEnc, fromHex: fromHex, merkleV1: merkleV1, checkTrace: checkTrace, entityCid: entityCid, bundleCid: bundleCid, gridDecode: gridDecode,
-    eph: { moonKm: moonKm, marsKm: marsKm, l2Km: l2Km, AU_KM: AU_KM, C_KMS: C_KMS },
-    fmtBytes: bytes, group: group, enc: enc, dec: dec
+    eph: { moonKm: moonKm, moonPhase: moonPhase, marsKm: marsKm, l2Km: l2Km, AU_KM: AU_KM, C_KMS: C_KMS },
+    fmtBytes: bytes, group: group, enc: enc, dec: dec,
+    // a fetch that never reached its server says so in words; any other error keeps its own message
+    why: function (e, host) { var m = String((e && e.message) || e); return /failed to fetch|networkerror|load failed/i.test(m) ? (host || 'the server') + ' did not answer this browser' : m; }
   };
 })(typeof globalThis !== 'undefined' ? globalThis : this);
