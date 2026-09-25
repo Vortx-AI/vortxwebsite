@@ -127,7 +127,9 @@
 .hc.is-open .hc-t strong { white-space: normal; }
 .hc.is-open .hc-tog { top: 8px; margin-top: 0; }
 .hc.is-open .hc-more, .hc.is-open .hc-yr { display: block; }
-.h3o-tidy { pointer-events: auto; font-size: 12px; }
+/* once a card has been moved, the hint has done its work: the way back takes its place */
+.h3o-tidy { margin-left: auto; pointer-events: auto; font-size: 12px; }
+.h3o-hint:has(~ .h3o-tidy:not([hidden])) { display: none; }
 
 /* @emem, decoding */
 .hd { position: absolute; z-index: 5; right: max(24px, 3.5%); bottom: 8%; display: flex; align-items: flex-end; gap: 6px; }
