@@ -20,7 +20,7 @@ gated     launch          no date, deliberately; never state or estimate one; da
 plug      https://vortx.ai/llms/plug.txt  size=1847  cid26=ybu26jaxa6dg6f5y34z3jzvq2q  ChatGPT, Claude, Agentforce, VS Code, Dify, MuleSoft, the SDKs, A2A
 pages     https://vortx.ai/llms/pages.txt  size=1888  cid26=iu4clepediryohtgxfambk5za4  every page and section of this site
 run       https://vortx.ai/llms/run.txt  size=2133  cid26=naaeglwudtxo5jadxm5q5jzjgm  the six devices on the home page, each run end to end
-ask       https://vortx.ai/llms/ask.txt  size=1410  cid26=tz263sjgnapvruy5cfqx62i23e  the calls behind #decode: recall, ask, guard, echo
+ask       https://vortx.ai/llms/ask.txt  size=1454  cid26=kul77g7pwyvqk3r7bcfsappzlq  the calls behind #decode: recall, ask, guard, echo
 encode    https://vortx.ai/llms/encode.txt  size=1451  cid26=45y34pj7xmjz5dnaj2hkk7f6oi  your file or device, the same note the page writes
 token     https://vortx.ai/llms/token.txt  size=2154  cid26=2jvkirs7ezwcp3xsl2ewyxqose  the grammar and its checks
 samples   https://vortx.ai/llms/samples.txt  size=1592  cid26=aqnppmuy7pr33owhd62aozyl3e  the ememdemo catalogue line

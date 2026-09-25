@@ -35,7 +35,7 @@
   document.body.appendChild(dlg);
   var $ = function (s) { return dlg.querySelector(s); };
   var pic = $('.sp-pic'), live = $('.sp-live'), tag = $('.sp-tag'), mt = $('.sp-mt'), log = $('.sp-log'), data = $('.sp-data'), sum = $('.sp-sum');
-  var list = [], at = 0, gen = 0, R = null, x = null, after = null, pushed = false, thumbsP = null;
+  var list = [], at = 0, gen = 0, R = null, x = null, after = null, pushed = false, thumbsP = null, exact = '';
   var askBox = $('.sp-ask'), asker = window.vxAsk ? window.vxAsk({ log: $('.sp-ask-log'), reads: askBox.querySelector('.ask-reads'), ans: askBox.querySelector('.ask-ans') }) : null;
   function askReset() { if (asker) asker.stop(); askBox.hidden = true; var b = $('[data-sp-ask]'); b.disabled = false; b.innerHTML = '<span class="v">ask</span> @emem about this place'; }
 
@@ -123,7 +123,7 @@
   }
 
   async function paint() {
-    x = list[at]; var g = ++gen, k = x.kv;
+    x = list[at]; var g = ++gen, k = x.kv; exact = '';
     clearLive(); log.innerHTML = ''; data.innerHTML = ''; sum.innerHTML = '';
     view('saved');
     $('.sc-tag').textContent = x.verb + ' ' + x.kind;
@@ -152,6 +152,7 @@
       data: function (kind, v) {
         if (g !== gen) return;
         if (kind === 'readings') readings(v); else if (kind === 'files') files(v);
+        else if (kind === 'at') exact = String(v).replace(/\s+/g, '');
         else if (kind === 'outside' || kind === 'newer') v.forEach(function (c) { var b = data.querySelector('.sp-rd[data-cid="' + c + '"]'); if (b) { b.classList.add(kind === 'newer' ? 'is-newer' : 'is-out'); b.hidden = false; } });
       }
     });
@@ -239,9 +240,10 @@
   $('[data-sp-ask]').addEventListener('click', function () {
     var it = x, b = $('[data-sp-ask]'); if (!it || !it.at || !asker) return;
     var q = /timelapse/.test(it.kind) ? 'how has this place changed' : /forest/.test(it.kind) ? 'has the forest changed here' : 'what is this place like';
-    var place = it.at[0].toFixed(3) + ',' + it.at[1].toFixed(3), mine = gen;
+    // the note's own point when it has one: three decimals can land in the next 10 m cell, with other readings
+    var place = exact || it.at[0].toFixed(3) + ',' + it.at[1].toFixed(3), mine = gen;
     // the note is a dated snapshot; the answer is today's memory at this place, so its numbers can differ, each with its own date
-    askBox.hidden = false; $('[data-sp-q]').textContent = '“' + q + '” · ' + it.at[0].toFixed(3) + ', ' + it.at[1].toFixed(3) + ' · live from emem.dev, today: readings can be newer than the note’s, and each says when it was measured';
+    askBox.hidden = false; $('[data-sp-q]').textContent = '“' + q + '” · ' + place.replace(',', ', ') + (exact ? ', the note’s own cell' : '') + ' · live from emem.dev, today: readings can be newer than the note’s, and each says when it was measured';
     b.disabled = true; b.innerHTML = '<span class="v">asking</span> @emem…';
     askBox.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
     asker.ask(q, place).then(function () {

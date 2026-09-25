@@ -405,6 +405,7 @@
     var text = vx.dec.decode(nb), f = front(text), facts = readings(text), named = R.ok(vx.cid26(nb) === r.cid); R.named(named);
     var layers = facts.reduce(function (s, a) { if (s.indexOf(a.sec) < 0) s.push(a.sec); return s; }, []).length;
     R.line('capture', (f.place || (x && x.title) || '').split(',')[0], { readings: facts.length, layers: layers, at: f.at }, 'info', 'the note');
+    if (f.at) R.data('at', f.at);
     R.line('encode', 'the note, not the readings', { name: named ? 'blake3 ✓' : 'LIES' }, named ? 'ok' : 'fail', 'this browser');
     R.data('readings', facts);
     if (!named || !f.bundle) return {};

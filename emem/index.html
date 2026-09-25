@@ -136,7 +136,7 @@
 <pre><code><span class="tok-cmd">curl</span> -s <span class="tok-url">https://emem.dev/v1/recall</span> \
   -H 'content-type: application/json' \
   -d '{"cell":"defi.zb493.yiwo.zcb4e","bands":["indices.ndvi"]}'
-<span style="color:var(--ink-faint)"># → NDVI 0.767258382642998, captured 16 Jun 2026 by Sentinel-2C, fact_cid eheadieomxr2…, one ed25519 receipt</span></code></pre>
+<span style="color:var(--ink-faint)"># → every signed NDVI reading at the cell, each with its date, scene and fact_cid, under one ed25519 receipt; the newest is decoded live on the home page</span></code></pre>
           </div>
           <h3><b class="v">check</b> the bytes → their blake3 is the fact's name</h3>
           <div class="codeblock">

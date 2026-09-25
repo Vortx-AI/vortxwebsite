@@ -69,7 +69,7 @@ Each device on the home page runs one published sample; every step is a request 
 curl -s -X POST https://emem.dev/v1/recall \
   -H 'content-type: application/json' \
   -d '{"place":"Cubbon Park, Bengaluru","bands":["indices.ndvi"]}'
-# → cell defi.zb493.yiwo.zcb4e · NDVI 0.767258382642998 · Sentinel-2C, 16 Jun 2026
+# → cell defi.zb493.yiwo.zcb4e · every signed NDVI reading, each dated; quote the newest verbatim, with its emem:fact: token
 ```
 
 ## encode

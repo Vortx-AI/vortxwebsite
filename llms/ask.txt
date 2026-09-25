@@ -3,7 +3,7 @@
 > A rung of https://vortx.ai/llms.txt: the calls behind https://vortx.ai/#decode, with their bodies: recall, ask, guard, catch, echo. Verbs first: each line reads `verb noun ref key=value`.
 
 ## ask (the calls behind the decode section)
-recall    facts           POST https://emem.dev/v1/recall {"place":"Cubbon Park, Bengaluru","bands":["indices.ndvi"]}  → cell defi.zb493.yiwo.zcb4e, NDVI 0.767258382642998 (Sentinel-2C, 16 Jun 2026)
+recall    facts           POST https://emem.dev/v1/recall {"place":"Cubbon Park, Bengaluru","bands":["indices.ndvi"]}  → cell defi.zb493.yiwo.zcb4e, every signed NDVI reading with its date; the newest is decoded live at https://vortx.ai/#hero
 ask       question        POST https://emem.dev/v1/ask {"q":"is this place flood-prone","place":"Ashok Nagar, Ranchi"}  fans out to twenty-plus signed readings under one receipt
 gate      draft           POST https://emem.dev/v1/guard/verdict  deny=PROV_SIG|PROV_BYTES|PROV_DRIFT  fix=refresh_token|remove_reference|contact_admin|cite_observation
 catch     drift           POST https://emem.dev/v1/guard/verdict {"texts":["… NDVI of 0.81 [emem:fact:defi.zb493.yiwo.zcb4e:eheadieomxr2zusgh4nx7mfisrtme23ztjiluyrfve64xoap6hka]"]}  → deny PROV_VALUE fix=correct_value
