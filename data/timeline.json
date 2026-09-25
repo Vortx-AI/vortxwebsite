@@ -6,7 +6,8 @@
     "eudr": "eudr.dev",
     "listing": "where emem is listed",
     "research": "papers and models",
-    "vortx": "vortx.ai"
+    "vortx": "vortx.ai",
+    "video": "a video about Vortx AI or emem, dated by its platform"
   },
   "entries": [
     {
@@ -789,6 +790,141 @@
         "src": "changelog",
         "version": "0.0.2"
       }
+    },
+    {
+      "date": "2025-06-17",
+      "kind": "vortx",
+      "verb": "tell",
+      "noun": "what if AI could imagine Earth better than satellites",
+      "what": "the first episode of Earth Intelligence, a podcast by Avijeet Singh on what became Vortx AI",
+      "audio": {
+        "src": "https://content.rss.com/episodes/334645/2078053/earth-intelligence-ai-synthesizes-reality-without-satellites/2025_06_17_15_17_13_13f8d84f-2609-4237-8090-d3ea388e0581.mp3",
+        "title": "What if AI could imagine Earth better than Satellites",
+        "thumb": "/assets/press/podcast-earth-intelligence.webp",
+        "duration": 352,
+        "platform": "Apple Podcasts"
+      },
+      "proof": [
+        {
+          "t": "listen on Apple Podcasts",
+          "u": "https://podcasts.apple.com/us/podcast/what-if-ai-could-imagine-earth-better-than-satellites/id1821250628?i=1000713278641"
+        }
+      ],
+      "check": {
+        "src": "itunes",
+        "id": "1821250628",
+        "episode": "What if AI could imagine Earth better than Satellites"
+      }
+    },
+    {
+      "date": "2025-06-19",
+      "kind": "video",
+      "verb": "pitch",
+      "noun": "Vortx AI, in Mission 15 at Seraphim Space",
+      "what": "the pitch film Seraphim Space published for its Mission 15 cohort: where this timeline starts",
+      "video": "vimeo:1094736991",
+      "proof": [
+        {
+          "t": "watch on Vimeo",
+          "u": "https://vimeo.com/1094736991"
+        }
+      ],
+      "check": {
+        "src": "vimeo",
+        "id": "1094736991"
+      }
+    },
+    {
+      "date": "2025-12-27",
+      "kind": "video",
+      "verb": "build",
+      "noun": "geo.qa, asked in plain words",
+      "what": "an index for a place, answered as a number: Ulsoor Lake's NDWI",
+      "video": "youtube:XzTMkGIe18Q",
+      "proof": [
+        {
+          "t": "watch on YouTube",
+          "u": "https://www.youtube.com/watch?v=XzTMkGIe18Q"
+        }
+      ],
+      "check": {
+        "src": "youtube",
+        "id": "XzTMkGIe18Q",
+        "title": "geo.qa conversational indices calculations"
+      }
+    },
+    {
+      "date": "2026-07-30",
+      "kind": "video",
+      "verb": "plug",
+      "noun": "emem inside ChatGPT and Claude, on camera",
+      "what": "a signed observation and its receipt, asked for in a chat",
+      "video": "youtube:VLrBdCCcrWw",
+      "proof": [
+        {
+          "t": "ChatGPT",
+          "u": "https://www.youtube.com/watch?v=VLrBdCCcrWw"
+        },
+        {
+          "t": "Claude",
+          "u": "https://www.youtube.com/watch?v=KR6gSwQ6A7I"
+        }
+      ],
+      "check": {
+        "src": "youtube",
+        "id": "VLrBdCCcrWw",
+        "title": "emem MCP ×  OpenAI Chatgpt"
+      }
+    },
+    {
+      "date": "2026-08-11",
+      "kind": "video",
+      "verb": "catch",
+      "noun": "many agents, one question, no referential drift",
+      "what": "nine agents answer one question, each citing the same signed facts",
+      "video": "youtube:L12opo7uyH8",
+      "proof": [
+        {
+          "t": "watch on YouTube",
+          "u": "https://www.youtube.com/watch?v=L12opo7uyH8"
+        }
+      ],
+      "check": {
+        "src": "youtube",
+        "id": "L12opo7uyH8",
+        "title": "many agents, one question, no referential drift - is the house making me sick"
+      }
+    },
+    {
+      "date": "2026-09-08",
+      "kind": "video",
+      "verb": "decide",
+      "noun": "emem in the field: rail, finance, farms, navigation",
+      "what": "agents decide on signed evidence: a rail alignment, a $40M tranche, variable-rate watering, a route",
+      "video": "youtube:yw2ceN2dJ3c",
+      "proof": [
+        {
+          "t": "rail",
+          "u": "https://www.youtube.com/watch?v=yw2ceN2dJ3c"
+        },
+        {
+          "t": "finance",
+          "u": "https://www.youtube.com/watch?v=8Frg8X7pRfk"
+        },
+        {
+          "t": "farms",
+          "u": "https://www.youtube.com/watch?v=E796tNJI8TM"
+        },
+        {
+          "t": "navigation",
+          "u": "https://www.youtube.com/watch?v=vRHA0UHGk2I"
+        }
+      ],
+      "check": {
+        "src": "youtube",
+        "id": "yw2ceN2dJ3c",
+        "title": "Evidence-Grounded Railway Alignment using emem"
+      }
     }
   ],
   "listed": [
@@ -900,5 +1036,270 @@
     "AWS Space Accelerator",
     "Sisu Launchpad",
     "Qatar Development Bank Accelerator"
+  ],
+  "chapters": [
+    {
+      "verb": "pitch",
+      "noun": "where it started: Mission 15 at Seraphim Space"
+    },
+    {
+      "verb": "build",
+      "noun": "geo.qa, the first product: ask a place in plain words"
+    },
+    {
+      "verb": "plug",
+      "noun": "emem inside the agent you already use"
+    },
+    {
+      "verb": "catch",
+      "noun": "drift, caught: many agents, one referent"
+    },
+    {
+      "verb": "decide",
+      "noun": "decisions on signed evidence, in the field"
+    }
+  ],
+  "videos": [
+    {
+      "id": "vimeo:1094736991",
+      "chapter": "pitch",
+      "platform": "Vimeo",
+      "by": "Seraphim Space",
+      "title": "Mission 15: VortX AI",
+      "date": "2025-06-19",
+      "duration": 199,
+      "url": "https://vimeo.com/1094736991",
+      "embed": "https://player.vimeo.com/video/1094736991",
+      "thumb": "/assets/press/video-vimeo-1094736991.webp",
+      "check": {
+        "src": "vimeo",
+        "id": "1094736991"
+      },
+      "what": "the film Seraphim Space made for its Mission 15 cohort, where this timeline starts; two days earlier, the first episode of Earth Intelligence, a podcast"
+    },
+    {
+      "id": "youtube:XzTMkGIe18Q",
+      "chapter": "build",
+      "platform": "YouTube",
+      "by": "@vortxai",
+      "title": "geo.qa conversational indices calculations",
+      "date": "2025-12-27",
+      "url": "https://www.youtube.com/watch?v=XzTMkGIe18Q",
+      "embed": "https://www.youtube-nocookie.com/embed/XzTMkGIe18Q",
+      "thumb": "/assets/press/video-yt-XzTMkGIe18Q.webp",
+      "check": {
+        "src": "youtube",
+        "id": "XzTMkGIe18Q",
+        "title": "geo.qa conversational indices calculations"
+      }
+    },
+    {
+      "id": "youtube:LTWOo61TxmI",
+      "chapter": "build",
+      "platform": "YouTube",
+      "by": "@vortxai",
+      "title": "geo.qa bangalore geocode demo",
+      "date": "2025-12-27",
+      "url": "https://www.youtube.com/watch?v=LTWOo61TxmI",
+      "embed": "https://www.youtube-nocookie.com/embed/LTWOo61TxmI",
+      "thumb": "/assets/press/video-yt-LTWOo61TxmI.webp",
+      "check": {
+        "src": "youtube",
+        "id": "LTWOo61TxmI",
+        "title": "geo.qa bangalore geocode demo"
+      }
+    },
+    {
+      "id": "youtube:VLrBdCCcrWw",
+      "chapter": "plug",
+      "platform": "YouTube",
+      "by": "@emem_dev",
+      "title": "emem MCP ×  OpenAI Chatgpt",
+      "date": "2026-07-30",
+      "url": "https://www.youtube.com/watch?v=VLrBdCCcrWw",
+      "embed": "https://www.youtube-nocookie.com/embed/VLrBdCCcrWw",
+      "thumb": "/assets/press/video-yt-VLrBdCCcrWw.webp",
+      "check": {
+        "src": "youtube",
+        "id": "VLrBdCCcrWw",
+        "title": "emem MCP ×  OpenAI Chatgpt"
+      }
+    },
+    {
+      "id": "youtube:KR6gSwQ6A7I",
+      "chapter": "plug",
+      "platform": "YouTube",
+      "by": "@emem_dev",
+      "title": "emem MCP ×  Anthropic Claude",
+      "date": "2026-07-30",
+      "url": "https://www.youtube.com/watch?v=KR6gSwQ6A7I",
+      "embed": "https://www.youtube-nocookie.com/embed/KR6gSwQ6A7I",
+      "thumb": "/assets/press/video-yt-KR6gSwQ6A7I.webp",
+      "check": {
+        "src": "youtube",
+        "id": "KR6gSwQ6A7I",
+        "title": "emem MCP ×  Anthropic Claude"
+      }
+    },
+    {
+      "id": "youtube:td0yFCK29po",
+      "chapter": "plug",
+      "platform": "YouTube",
+      "by": "@emem_dev",
+      "title": "emem MCP × Visual Studio Code",
+      "date": "2026-07-31",
+      "url": "https://www.youtube.com/watch?v=td0yFCK29po",
+      "embed": "https://www.youtube-nocookie.com/embed/td0yFCK29po",
+      "thumb": "/assets/press/video-yt-td0yFCK29po.webp",
+      "check": {
+        "src": "youtube",
+        "id": "td0yFCK29po",
+        "title": "emem MCP × Visual Studio Code"
+      }
+    },
+    {
+      "id": "youtube:mfNDR5SZLIM",
+      "chapter": "plug",
+      "platform": "YouTube",
+      "by": "@emem_dev",
+      "title": "emem plugin on Chatgpt",
+      "date": "2026-08-19",
+      "url": "https://www.youtube.com/watch?v=mfNDR5SZLIM",
+      "embed": "https://www.youtube-nocookie.com/embed/mfNDR5SZLIM",
+      "thumb": "/assets/press/video-yt-mfNDR5SZLIM.webp",
+      "check": {
+        "src": "youtube",
+        "id": "mfNDR5SZLIM",
+        "title": "emem plugin on Chatgpt"
+      }
+    },
+    {
+      "id": "youtube:0gH-1Qepv24",
+      "chapter": "plug",
+      "platform": "YouTube",
+      "by": "@emem_dev",
+      "title": "emem × Dify: A Workflow That Stops Referential Drift",
+      "date": "2026-09-08",
+      "url": "https://www.youtube.com/watch?v=0gH-1Qepv24",
+      "embed": "https://www.youtube-nocookie.com/embed/0gH-1Qepv24",
+      "thumb": "/assets/press/video-yt-0gH-1Qepv24.webp",
+      "check": {
+        "src": "youtube",
+        "id": "0gH-1Qepv24",
+        "title": "emem × Dify: A Workflow That Stops Referential Drift"
+      }
+    },
+    {
+      "id": "youtube:L12opo7uyH8",
+      "chapter": "catch",
+      "platform": "YouTube",
+      "by": "@vortxai",
+      "title": "many agents, one question, no referential drift - is the house making me sick",
+      "date": "2026-08-11",
+      "url": "https://www.youtube.com/watch?v=L12opo7uyH8",
+      "embed": "https://www.youtube-nocookie.com/embed/L12opo7uyH8",
+      "thumb": "/assets/press/video-yt-L12opo7uyH8.webp",
+      "check": {
+        "src": "youtube",
+        "id": "L12opo7uyH8",
+        "title": "many agents, one question, no referential drift - is the house making me sick"
+      }
+    },
+    {
+      "id": "youtube:1hqpvxl5YKw",
+      "chapter": "catch",
+      "platform": "YouTube",
+      "by": "@vortxai",
+      "title": "referential drift resolution by emem",
+      "date": "2026-08-16",
+      "url": "https://www.youtube.com/watch?v=1hqpvxl5YKw",
+      "embed": "https://www.youtube-nocookie.com/embed/1hqpvxl5YKw",
+      "thumb": "/assets/press/video-yt-1hqpvxl5YKw.webp",
+      "check": {
+        "src": "youtube",
+        "id": "1hqpvxl5YKw",
+        "title": "referential drift resolution by emem"
+      }
+    },
+    {
+      "id": "youtube:ajGu5IovxIM",
+      "chapter": "catch",
+      "platform": "YouTube",
+      "by": "@vortxai",
+      "title": "emem guard",
+      "date": "2026-08-17",
+      "url": "https://www.youtube.com/watch?v=ajGu5IovxIM",
+      "embed": "https://www.youtube-nocookie.com/embed/ajGu5IovxIM",
+      "thumb": "/assets/press/video-yt-ajGu5IovxIM.webp",
+      "check": {
+        "src": "youtube",
+        "id": "ajGu5IovxIM",
+        "title": "emem guard"
+      }
+    },
+    {
+      "id": "youtube:yw2ceN2dJ3c",
+      "chapter": "decide",
+      "platform": "YouTube",
+      "by": "@emem_dev",
+      "title": "Evidence-Grounded Railway Alignment using emem",
+      "date": "2026-09-08",
+      "url": "https://www.youtube.com/watch?v=yw2ceN2dJ3c",
+      "embed": "https://www.youtube-nocookie.com/embed/yw2ceN2dJ3c",
+      "thumb": "/assets/press/video-yt-yw2ceN2dJ3c.webp",
+      "check": {
+        "src": "youtube",
+        "id": "yw2ceN2dJ3c",
+        "title": "Evidence-Grounded Railway Alignment using emem"
+      }
+    },
+    {
+      "id": "youtube:8Frg8X7pRfk",
+      "chapter": "decide",
+      "platform": "YouTube",
+      "by": "@emem_dev",
+      "title": "emem:  Signed Satellite Evidence Gates a $40M Tranche",
+      "date": "2026-09-08",
+      "url": "https://www.youtube.com/watch?v=8Frg8X7pRfk",
+      "embed": "https://www.youtube-nocookie.com/embed/8Frg8X7pRfk",
+      "thumb": "/assets/press/video-yt-8Frg8X7pRfk.webp",
+      "check": {
+        "src": "youtube",
+        "id": "8Frg8X7pRfk",
+        "title": "emem:  Signed Satellite Evidence Gates a $40M Tranche"
+      }
+    },
+    {
+      "id": "youtube:E796tNJI8TM",
+      "chapter": "decide",
+      "platform": "YouTube",
+      "by": "@emem_dev",
+      "title": "emem × ChatGPT: Signed satellite NDVI to variable-rate watering",
+      "date": "2026-09-08",
+      "url": "https://www.youtube.com/watch?v=E796tNJI8TM",
+      "embed": "https://www.youtube-nocookie.com/embed/E796tNJI8TM",
+      "thumb": "/assets/press/video-yt-E796tNJI8TM.webp",
+      "check": {
+        "src": "youtube",
+        "id": "E796tNJI8TM",
+        "title": "emem × ChatGPT: Signed satellite NDVI to variable-rate watering"
+      }
+    },
+    {
+      "id": "youtube:vRHA0UHGk2I",
+      "chapter": "decide",
+      "platform": "YouTube",
+      "by": "@emem_dev",
+      "title": "emem × ChatGPT :  Evidence-Bound Autonomous Navigation",
+      "date": "2026-09-08",
+      "url": "https://www.youtube.com/watch?v=vRHA0UHGk2I",
+      "embed": "https://www.youtube-nocookie.com/embed/vRHA0UHGk2I",
+      "thumb": "/assets/press/video-yt-vRHA0UHGk2I.webp",
+      "check": {
+        "src": "youtube",
+        "id": "vRHA0UHGk2I",
+        "title": "emem × ChatGPT :  Evidence-Bound Autonomous Navigation"
+      }
+    }
   ]
 }

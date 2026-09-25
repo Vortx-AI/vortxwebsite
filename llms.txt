@@ -48,7 +48,7 @@ family    https://vortx.ai/llms/family.txt  size=2553  cid26=kekhfmo5yoga7gkqzhp
 segment   https://vortx.ai/llms/segment.txt  size=1393  cid26=f5vghrpvzmxyqimlr57nnyzira  who observes, and the emem profile that admits each
 ground    https://vortx.ai/llms/ground.txt  size=1854  cid26=dzucdqwe3xk467kmtcqejyp67q  what the proof page recomputes in the browser, pixel by pixel
 more      https://vortx.ai/llms/more.txt  size=3502  cid26=vdjg3rvsesoui3bsonl6kvcewi  counts, products, the plan, the prices, the papers, and how to check this site
-words     https://vortx.ai/prose/fkusgwlixxtdgfdjjqta5t5qp4.md  size=10845  cid26=fkusgwlixxtdgfdjjqta5t5qp4  every verb and term on the site, one meaning each
+words     https://vortx.ai/prose/jzzyhv2svy3nlosrfyzkd72vey.md  size=11137  cid26=jzzyhv2svy3nlosrfyzkd72vey  every verb and term on the site, one meaning each
 
 ## reach
 email     team            avijeet@vortx.ai

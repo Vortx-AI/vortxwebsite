@@ -329,6 +329,12 @@ Held until something outside happens first.
 ### write
 Send us a message.
 
+### pitch
+Present Vortx AI to investors and the world.
+
+### tell
+Explain the work in our own voice: a talk, a podcast.
+
 ## the record
 
 ### ship
@@ -454,6 +460,9 @@ How much was read or moved.
 
 ### state
 One stage of an answer's reasoning, chained to the stage before.
+
+### tokenised context
+Tokens in an agent's context instead of files: each a few dozen bytes that name signed facts the agent can check, then read only the parts it needs.
 
 ### @emem
 The connector that decodes tokens inside ChatGPT, Claude, Agentforce, Dify or any MCP client.

@@ -11,6 +11,8 @@
  *   commit     the commit that first linked a listing: its committer date
  *   mulesoft   MuleSoft's Anypoint Exchange: the asset's createdDate
  *   vimeo      a Vimeo video's upload_date, from Vimeo's own oEmbed record
+ *   youtube    that YouTube still lists the video under its title (its date is re-read from YouTube weekly in CI)
+ *   itunes     a podcast episode's releaseDate, from Apple's lookup
  *   tool       a tool that must be live on emem.dev now
  * A record that says another date is a failed check; a record that does not answer is not checked, and says so.
  * The numbers at the top are read live too.
@@ -49,7 +51,13 @@
 
   /* ---------- videos: the platform's player loads only when asked, in place ---------- */
   root.addEventListener('click', function (e) {
-    var b = e.target.closest && e.target.closest('.vd[data-embed]'); if (!b) return;
+    var b = e.target.closest && e.target.closest('.vd[data-embed], .vd[data-audio]'); if (!b) return;
+    if (b.hasAttribute('data-audio')) {
+      var fig = document.createElement('div'), img = b.querySelector('img'), au = document.createElement('audio');
+      fig.className = 'vd-au-on'; if (img) fig.appendChild(img.cloneNode());
+      au.controls = true; au.autoplay = true; au.preload = 'none'; au.src = b.getAttribute('data-audio'); au.setAttribute('aria-label', b.getAttribute('aria-label').replace(/^Play: /, ''));
+      fig.appendChild(au); b.replaceWith(fig); return;
+    }
     var f = document.createElement('iframe'), u = b.getAttribute('data-embed');
     f.src = u + (u.indexOf('?') < 0 ? '?' : '&') + 'autoplay=1&dnt=1'; f.title = b.getAttribute('aria-label').replace(/^Play: /, '');
     f.allow = 'autoplay; fullscreen; picture-in-picture'; f.setAttribute('allowfullscreen', ''); f.className = 'vd-f' + (b.classList.contains('vd-lg') ? ' vd-lg' : '');
@@ -94,10 +102,12 @@
     dify: function (c) { return get('https://marketplace.dify.ai/api/v1/plugins/' + c.plugin).then(function (j) { var p = (j.data || {}).plugin || {}; return { who: 'the Dify Marketplace', date: p.created_at && p.created_at.slice(0, 10) }; }); },
     commit: function (c) { return get('https://api.github.com/repos/' + c.repo + '/commits/' + c.sha).then(function (j) { var d = j.commit && j.commit.committer && j.commit.committer.date; return { who: 'GitHub', date: d && d.slice(0, 10) }; }); },
     vimeo: function (c) { return get('https://vimeo.com/api/oembed.json?url=' + encodeURIComponent('https://vimeo.com/' + c.id)).then(function (j) { return { who: 'Vimeo', date: j.upload_date && j.upload_date.slice(0, 10) }; }); },
+    youtube: function (c) { return get('https://www.youtube.com/oembed?format=json&url=' + encodeURIComponent('https://www.youtube.com/watch?v=' + c.id)).then(function (j) { var ok = j.title === c.title; return { who: 'YouTube', live: ok, name: 'it', t: ok ? 'YouTube lists it now; the date is re-read from YouTube weekly' : 'YouTube lists another title now' }; }); },
+    itunes: function (c) { return get('https://itunes.apple.com/lookup?entity=podcastEpisode&id=' + c.id).then(function (j) { var e = (j.results || []).filter(function (r) { return r.trackName === c.episode; })[0]; return { who: 'Apple Podcasts', date: e && e.releaseDate && e.releaseDate.slice(0, 10) }; }); },
     mulesoft: function (c) { return get('https://anypoint.mulesoft.com/exchange/api/v2/assets?search=emem&limit=20').then(function (j) { var a = (Array.isArray(j) ? j : []).filter(function (x) { return x.assetId === c.asset; })[0]; return { who: 'MuleSoft Exchange', date: a && a.createdDate && a.createdDate.slice(0, 10) }; }); },
     tool: function (c) { return get('https://emem.dev/v1/tools').then(function (j) { var t = j.tools || j; return { who: 'emem.dev', live: (Array.isArray(t) ? t : []).some(function (x) { return x.name === c.name; }), name: c.name }; }); }
   };
-  var HOST = { changelog: 'raw.githubusercontent.com', mcpreg: 'registry.modelcontextprotocol.io', ghmcp: 'api.mcp.github.com', pypi: 'pypi.org', npm: 'registry.npmjs.org', zenodo: 'zenodo.org', hf: 'huggingface.co', hfspace: 'huggingface.co', dify: 'marketplace.dify.ai', commit: 'api.github.com', tool: 'emem.dev', mulesoft: 'anypoint.mulesoft.com', vimeo: 'vimeo.com' };
+  var HOST = { changelog: 'raw.githubusercontent.com', mcpreg: 'registry.modelcontextprotocol.io', ghmcp: 'api.mcp.github.com', pypi: 'pypi.org', npm: 'registry.npmjs.org', zenodo: 'zenodo.org', hf: 'huggingface.co', hfspace: 'huggingface.co', dify: 'marketplace.dify.ai', commit: 'api.github.com', tool: 'emem.dev', mulesoft: 'anypoint.mulesoft.com', vimeo: 'vimeo.com', youtube: 'youtube.com', itunes: 'itunes.apple.com' };
 
   var done = 0, okN = 0, sum = root.querySelector('[data-checked]');
   function check(li) {
@@ -107,7 +117,7 @@
     return Promise.all(specs.map(function (c) {
       var f = SRC[c.src]; if (!f) return Promise.resolve({ st: 'off', t: 'no reader for ' + c.src });
       return f(c).then(function (r) {
-        if ('live' in r) return r.live ? { st: 'ok', t: r.name + ' is live on ' + r.who + ' now' } : { st: 'bad', t: r.name + ' is not on ' + r.who };
+        if ('live' in r) return r.live ? { st: 'ok', t: r.t || r.name + ' is live on ' + r.who + ' now' } : { st: 'bad', t: r.t || r.name + ' is not on ' + r.who };
         if (!r.date) return { st: 'bad', t: r.who + ' has no such record' };
         return r.date === want ? { st: 'ok', t: r.who + ' says ' + day(r.date) } : { st: 'bad', t: r.who + ' says ' + day(r.date) };
       }, function (e) { return { st: 'off', t: 'not checked: ' + why(e, HOST[c.src]) }; });
@@ -128,11 +138,23 @@
   /* ---------- the listing wall: each date that a record owns, marked when it agrees ---------- */
   var byDate = {};
   rows.forEach(function (li) { if (li.hasAttribute('data-check') && /^(listing|research|video)$/.test(li.getAttribute('data-kind'))) byDate[li.getAttribute('data-date')] = li; });
-  var wall = [].slice.call(root.querySelectorAll('.ls-grid time[datetime], .wv time[datetime]'));
+  var wall = [].slice.call(root.querySelectorAll('.ls-grid time[datetime]'));
   var obs = new MutationObserver(function () {
     wall.forEach(function (t) { var li = byDate[t.getAttribute('datetime')]; if (li && li.classList.contains('is-ok')) t.classList.add('is-ok'); });
   });
   rows.forEach(function (li) { obs.observe(li, { attributes: true, attributeFilter: ['class'] }); });
+
+  /* ---------- the video wall: each card re-reads its own record ---------- */
+  var cards = [].slice.call(root.querySelectorAll('.wv[data-check]'));
+  (function wallNext() {
+    var fig = cards.shift(); if (!fig) return;
+    var c; try { c = JSON.parse(fig.getAttribute('data-check')); } catch (e) { return wallNext(); }
+    var f = SRC[c.src], t = fig.querySelector('time'); if (!f || !t) return wallNext();
+    f(c).then(function (r) {
+      if ('live' in r) { if (r.live) t.classList.add('is-listed'); t.title = r.t; }
+      else if (r.date && r.date === t.getAttribute('datetime')) { t.classList.add('is-ok'); t.title = r.who + ' says ' + day(r.date); }
+    }, function () {}).then(wallNext);
+  })();
 
   /* ---------- the numbers, live ---------- */
   function put(k, v) {

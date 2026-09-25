@@ -1,7 +1,7 @@
 /* ladder.js: verbs before prose. Every verb on vortx.ai means one thing; click one to read it.
  *
  *   rung 0  the line as shown: verb, noun, fact, picture
- *   rung 1  what the verb (or a term in a log line) means, from the site's words
+ *   rung 1  what the verb (or a term: in a log line, or marked data-term in the text) means, from the site's words
  *   rung 2  every word, in the note itself
  *
  * The words live in one note, served at /prose/<cid>.md and named by its own hash: base32 of the
@@ -85,12 +85,12 @@
 
   document.addEventListener('click', function (e) {
     if (pop && pop.contains(e.target)) return;
-    var t = e.target.closest && e.target.closest('.v, .kv .k.is-word');
+    var t = e.target.closest && e.target.closest('.v, .kv .k.is-word, [data-term]');
     if (!t || (t.classList.contains('v') && t.closest(NOT)) || t.closest('.ld-pop')) { close(); return; }
-    var word = t.textContent.trim().toLowerCase();
+    var word = (t.getAttribute('data-term') || t.textContent).trim().toLowerCase();
     if (!word || /^emem:/.test(word)) { close(); return; }
     if (at === t) { close(); return; }
-    show(t, word, t.classList.contains('k') ? 'term' : 'verb');
+    show(t, word, t.classList.contains('k') || t.hasAttribute('data-term') ? 'term' : 'verb');
   });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
 

@@ -48,25 +48,37 @@ def mmss(sec):
 
 def player(v, big=False):
     """A thumbnail that becomes the platform's player on click; no third-party frame until then."""
-    return (f'<button class="vd{" vd-lg" if big else ""}" type="button" data-embed="{esc(v["embed"])}" aria-label="Play: {esc(v["title"])}, on {esc(v["platform"])}">'
-            f'<img src="{esc(v["thumb"])}" alt="" loading="lazy" decoding="async" width="1280" height="720">'
+    kind = "audio" if v.get("src") else "embed"
+    url = v.get("src") or v["embed"]
+    return (f'<button class="vd{" vd-lg" if big else ""}{" vd-au" if kind == "audio" else ""}" type="button" data-{kind}="{esc(url)}" aria-label="Play: {esc(v["title"])}, on {esc(v["platform"])}">'
+            f'<img src="{esc(v["thumb"])}" alt="" loading="lazy" decoding="async" width="960" height="540">'
             f'<span class="vd-p" aria-hidden="true"></span>'
             + (f'<span class="vd-t">{mmss(v.get("duration"))}</span>' if v.get("duration") else "")
             + "</button>")
 
 
-def watch(videos):
-    """The video wall, a whole section; nothing at all until there is a video to show."""
+def watch(videos, chapters):
+    """The video wall, a whole section, one row per chapter; nothing at all until there is a video to show."""
     if not videos:
         return ""
     rows = []
-    for v in sorted(videos, key=lambda x: x["date"]):
-        d = day(v["date"])
-        rows.append(f'<li><figure class="wv">{player(v, True)}<figcaption><b class="v">{esc(v["verb"])}</b> <strong>{esc(v["noun"])}</strong>'
-                    f'<span>{esc(v["by"])} · <time datetime="{esc(v["date"])}">{d.day} {MON[d.month - 1][:3]} {d.year}</time> · <a class="lk" href="{esc(v["url"])}" target="_blank" rel="noopener">{esc(v["platform"])} ↗</a></span></figcaption></figure></li>')
+    for ch in chapters:
+        vs = sorted((v for v in videos if v.get("chapter") == ch["verb"]), key=lambda x: x["date"])
+        if not vs:
+            continue
+        cards = []
+        for v in vs:
+            d = day(v["date"])
+            chk = f" data-check='{esc(json.dumps(v['check'], separators=(',', ':')))}'" if v.get("check") else ""
+            what = f'<em>{esc(v["what"])}</em>' if v.get("what") else ""
+            cards.append(f'<li><figure class="wv"{chk}>{player(v, len(vs) == 1)}<figcaption><strong>{esc(v["title"])}</strong>{what}'
+                         f'<span>{esc(v["by"])} · <time datetime="{esc(v["date"])}">{d.day} {MON[d.month - 1][:3]} {d.year}</time> · <a class="lk" href="{esc(v["url"])}" target="_blank" rel="noopener">{esc(v["platform"])} ↗</a></span></figcaption></figure></li>')
+        rows.append(f'<div class="wv-ch{" is-one" if len(vs) == 1 else ""}"><h3><b class="v">{esc(ch["verb"])}</b> {esc(ch["noun"])}</h3>\n<ul class="wv-grid">\n' + "\n".join(cards) + "\n</ul></div>")
     return ('    <section class="section nr-sec" id="watch" aria-labelledby="watch-h">\n      <div class="wrap">\n'
-            '        <h2 class="nr-h" id="watch-h"><b class="v">watch</b> Vortx AI and emem, on camera</h2>\n'
-            '<ul class="wv-grid">\n' + "\n".join(rows) + "\n</ul>\n      </div>\n    </section>")
+            f'        <h2 class="nr-h" id="watch-h"><b class="v">watch</b> Vortx AI and emem, on camera</h2>\n'
+            + "\n".join(rows) +
+            '\n        <p class="nr-part"><b class="v">see</b> every video: <a class="lk" href="https://www.youtube.com/@vortxai" target="_blank" rel="noopener">@vortxai ↗</a> <a class="lk" href="https://www.youtube.com/@emem_dev" target="_blank" rel="noopener">@emem_dev ↗</a></p>\n'
+            "      </div>\n    </section>")
 
 
 def entry(e):
@@ -85,8 +97,8 @@ def entry(e):
     if checks:
         out.append('<p class="tl-ck">checking against its source…</p>')
     out.append("</div>")
-    if e.get("video"):
-        out.append('<figure class="tl-im">' + player(e["video"]) + "</figure>")
+    if e.get("video") or e.get("audio"):
+        out.append('<figure class="tl-im">' + player(e.get("video") or e["audio"]) + "</figure>")
     elif e.get("img"):
         out.append(f'<figure class="tl-im"><a href="{esc(e["img"])}" target="_blank" rel="noopener"><img src="{esc(e["img"])}" alt="{esc(e.get("alt", ""))}" loading="lazy" decoding="async" width="1280" height="800"></a></figure>')
     elif e.get("card"):
@@ -118,7 +130,7 @@ def listed(items):
 def render(page, data):
     vids = {v["id"]: v for v in data.get("videos", [])}
     entries = [dict(e, video=vids[e["video"]]) if isinstance(e.get("video"), str) else e for e in data["entries"]]
-    for name, body in (("listed", listed(data["listed"])), ("watch", watch(data.get("videos", []))), ("timeline", timeline(entries))):
+    for name, body in (("listed", listed(data["listed"])), ("watch", watch(data.get("videos", []), data.get("chapters", []))), ("timeline", timeline(entries))):
         page, n = re.subn(rf"(<!-- {name}:start -->).*?(<!-- {name}:end -->)", lambda m: m.group(1) + "\n" + (body + "\n" if body else "") + m.group(2), page, flags=re.S)
         if n != 1:
             sys.exit(f"press/index.html: expected one {name} marker pair, found {n}")
@@ -178,9 +190,35 @@ def read_date(c, memo):
         j = get("https://vimeo.com/api/oembed.json?url=" + quote("https://vimeo.com/" + c["id"], safe=""))
         return (j.get("upload_date") or "")[:10] or None
     if src == "youtube":
-        page = get("https://www.youtube.com/watch?v=" + c["id"], True)
-        m = re.search(r'itemprop="(?:uploadDate|datePublished)" content="(\d{4}-\d{2}-\d{2})', page) or re.search(r'"(?:uploadDate|publishDate)":"(\d{4}-\d{2}-\d{2})', page)
-        return m and m.group(1)
+        # the date YouTube shows a viewer whose clock is UTC; a page that does not answer is not a failed check
+        import urllib.request
+        body = json.dumps({"context": {"client": {"clientName": "WEB", "clientVersion": "2.20260924.01.00", "timeZone": "UTC", "utcOffsetMinutes": 0}}, "videoId": c["id"]}).encode()
+        req = urllib.request.Request("https://www.youtube.com/youtubei/v1/next", data=body, headers={"content-type": "application/json", "User-Agent": "vortx-timeline-check"})
+        with urllib.request.urlopen(req, timeout=30) as r:
+            j = json.loads(r.read().decode("utf-8"))
+        found = []
+
+        def walk(o):
+            if isinstance(o, dict):
+                v = o.get("videoPrimaryInfoRenderer")
+                if v:
+                    found.append((v.get("dateText") or {}).get("simpleText") or "")
+                for x in o.values():
+                    walk(x)
+            elif isinstance(o, list):
+                for x in o:
+                    walk(x)
+        walk(j)
+        m = found and re.search(r"([A-Z][a-z]{2} \d{1,2}, \d{4})", found[0])
+        if not m:
+            raise ValueError("YouTube showed no date")
+        from datetime import datetime
+        return datetime.strptime(m.group(1), "%b %d, %Y").date().isoformat()
+    if src == "itunes":
+        for r in get("https://itunes.apple.com/lookup?id=" + c["id"] + "&entity=podcastEpisode").get("results", []):
+            if r.get("trackName") == c["episode"]:
+                return (r.get("releaseDate") or "")[:10] or None
+        return None
     if src == "tool":
         t = get("https://emem.dev/v1/tools"); t = t.get("tools", t) if isinstance(t, dict) else t
         return "live" if any(x.get("name") == c["name"] for x in t) else None

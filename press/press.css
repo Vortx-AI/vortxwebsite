@@ -34,6 +34,20 @@
 .wv figcaption span { font: 400 11px/1.5 var(--mono); color: var(--ink-3); }
 .wv figcaption .lk { font-size: 11px; }
 .wv time.is-ok::after { content: ' ✓'; color: var(--ok); }
+.wv time.is-listed::after { content: ' · listed ✓'; color: var(--ok); }
+.wv-ch { margin: 0 0 26px; }
+.wv-ch h3 { margin: 0 0 12px; font: 400 20px/1.2 var(--serif); letter-spacing: -.01em; color: var(--ink); }
+.wv-ch h3 .v { font-size: 11.5px; margin-right: 8px; vertical-align: 3px; }
+.wv-ch.is-one .wv-grid { grid-template-columns: minmax(0, 1fr); }
+.wv-ch.is-one .wv { display: grid; grid-template-columns: minmax(0, 640px) minmax(0, 1fr); gap: 12px 28px; align-items: end; }
+.wv-ch.is-one figcaption { margin: 0 0 6px; gap: 8px; }
+.wv-ch.is-one figcaption strong { font: 400 30px/1.1 var(--serif); letter-spacing: -.01em; }
+.wv figcaption em { font: 400 13px/1.5 var(--sans); font-style: normal; color: var(--ink-2); max-width: 46ch; }
+@media (max-width: 900px) { .wv-ch.is-one .wv { grid-template-columns: minmax(0, 1fr); } }
+.vd-au img { object-fit: contain; background: #05080d; }
+.vd-au-on { display: grid; gap: 8px; }
+.vd-au-on img { width: 100%; aspect-ratio: 16 / 10; object-fit: contain; border-radius: 10px; border: 1px solid var(--line); background: #05080d; }
+.vd-au-on audio { width: 100%; }
 .vd { position: relative; display: block; width: 100%; padding: 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: #05080d; cursor: pointer; }
 .vd img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; filter: saturate(.9) brightness(.82); transition: transform .5s var(--ease), filter .4s; }
 .vd:hover img, .vd:focus-visible img { transform: scale(1.03); filter: none; }
