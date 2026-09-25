@@ -550,6 +550,11 @@
   }
 
   /* ---------- formatting ---------- */
+  // a file's size, as the ememdemo notes state it: one decimal from a megabyte up (351.0 MB)
+  function size(n) {
+    if (n == null || !isFinite(n) || n < 1e6) return bytes(n);
+    return n >= 1e9 ? (n / 1e9).toFixed(1) + ' GB' : (n / 1e6).toFixed(1) + ' MB';
+  }
   function bytes(n) {
     if (n == null || !isFinite(n)) return '?';
     if (n < 1024) return n + ' B';
@@ -567,7 +572,7 @@
     parsePointer: parsePointer, merkleRoot: merkleRoot, treeLeaf: treeLeaf, treeWalk: treeWalk,
     cborEnc: cborEnc, fromHex: fromHex, merkleV1: merkleV1, checkTrace: checkTrace, entityCid: entityCid, bundleCid: bundleCid, gridDecode: gridDecode,
     eph: { moonKm: moonKm, moonPhase: moonPhase, moonDir: moonDir, marsKm: marsKm, marsDir: marsDir, l2Km: l2Km, sun: sun, AU_KM: AU_KM, C_KMS: C_KMS },
-    fmtBytes: bytes, group: group, enc: enc, dec: dec,
+    fmtBytes: bytes, fmtSize: size, group: group, enc: enc, dec: dec,
     // a fetch that never reached its server says so in words; any other error keeps its own message
     why: function (e, host) { var m = String((e && e.message) || e); return /failed to fetch|networkerror|load failed/i.test(m) ? (host || 'the server') + ' did not answer this browser' : m; }
   };

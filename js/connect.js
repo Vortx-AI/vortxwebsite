@@ -96,6 +96,14 @@
     ['dragleave', 'drop'].forEach(function (t) { drop.addEventListener(t, function () { drop.classList.remove('is-over'); }); });
     drop.addEventListener('drop', function (e) { e.preventDefault(); if (e.dataTransfer && e.dataTransfer.files[0]) encode(e.dataTransfer.files[0]); });
   }
+  // no file at hand: encode one this site serves, through exactly the same path as a dropped file
+  var ours = $('[data-enc-ours]');
+  if (ours) ours.addEventListener('click', function () {
+    var u = ours.getAttribute('data-enc-ours'); ours.disabled = true;
+    fetch(u).then(function (r) { if (!r.ok) throw new Error('vortx.ai answered ' + r.status); return r.blob(); }).then(function (b) {
+      ours.disabled = false; encode(new File([b], u.split('/').pop(), { type: b.type || 'image/webp' }));
+    }, function () { ours.disabled = false; });
+  });
   var where = $('#enc-where');
   if (where) where.addEventListener('change', function () { if (last) show(last); });
   var stampBox = $('#enc-stamp');
@@ -112,8 +120,17 @@
     var b = e.target.closest && e.target.closest('[data-studio]');
     if (!b) return;
     e.preventDefault();
-    var fromUrl = b.getAttribute('data-studio') === 'url' ? ($('#enc-url') || {}).value : '';
-    studio((fromUrl || '').trim());
+    if (b.getAttribute('data-studio') === 'url') {
+      // encode in place needs the file's address first: say so where the address goes
+      var inp = $('#enc-url'), u = inp ? inp.value.trim() : '';
+      if (!/^https?:\/\/\S+$/i.test(u)) {
+        if (inp) { inp.setAttribute('aria-invalid', 'true'); inp.placeholder = 'paste a file’s https:// URL first: a scene, a video, a model…'; inp.focus(); }
+        return;
+      }
+      if (inp) inp.removeAttribute('aria-invalid');
+      studio(u); return;
+    }
+    studio('');
   });
   if (dlg) {
     dlg.addEventListener('close', function () { frame.removeAttribute('src'); });

@@ -1,0 +1,16 @@
+# vortx.ai · family
+
+> A rung of https://vortx.ai/llms.txt: one live example of every token shape, with how to check it. Verbs first: each line reads `verb noun ref key=value`.
+
+## family (one live example per shape; https://vortx.ai/proof/#tokens re-derives each in the browser)
+fact      emem:fact:defi.zb493.yiwo.zcb4e:eheadieomxr2zusgh4nx7mfisrtme23ztjiluyrfve64xoap6hka  Cubbon Park NDVI 0.767258382642998  check=blake3(GET /v1/facts/<cid> as CBOR)==fact_cid; receipt names the cid
+cell      emem:cell:defi.zb43b.mAga.yiwU  Europe's Spaceport, Kourou  GET /v1/cells/<cell64>/info  an address, no body until a fact hangs on it
+entity    emem:entity:5pitnkcnle3cq6yldbffj52zja  GET /v1/entity/<cid>  derive=base32(blake3("emem.entity.v1|loc|"+cell64+"|"+kind+"|"+label)[0:16]), text normalised; an external anchor wins
+bundle    emem:bundle:y2k6h2laeo4libfsiebucdw4mu  GET /v1/memory_bundle/<token>  derive=base32(blake3("emem.memory_bundle.v1|"+purpose+"\n"+per citation "cell|band|tslot|fact_cid\n")[0:16])
+raster    emem:raster:23vfacx23nr3dwki6si4yrolmmp3wr6dtrhjxbw4rihiaafrpyga:s2.B08:20500:sw7lynliwyqfigyw6oqwso64wmulcumifqorfpfogkngjhsqzjpq  POST /v1/raster/resolve  check=blake3(GET /v1/artifacts/<artifact_cid>)==artifact_cid; each anchor == grid[row*w+col]; grid=EMEMGRD1, 64-byte header, f32le rows
+cube      emem:cube:23vfacx23nr3dwki6si4yrolmmp3wr6dtrhjxbw4rihiaafrpyga:s2.B08:20500..20585:ganwwj25obuob3pp7pjtkd4awtihnluotdowe2cqtrj77af5qlna  POST /v1/cube/resolve  check=each slice as a raster
+rasterset emem:rasterset:sml5syqegico2sobfkxjp2o2twwepdwve7753ubkoa5n27y22rba:zu5p3u4r5n5uinu2ghwzjo2272ztjvnnf7cnlt7hiqwxo4cq3hhq  POST /v1/raster_bundle/resolve  check=base32(blake3(canonical CBOR [member derivation cids…, "purpose:"+purpose]))
+trace     emem:trace:mxyer5c2oxn4ud3xqbtnaxcxhdv4kkxiu67q32inbwxgpa7r3s6a  POST /v1/trace_resolve  check=segment chain (prev_digest), merkle v1 root (leaf 0x00, node 0x01, chain order), trace_cid, the DEVICE's ed25519 over the os_trace preimage; golden vector at /v1/verifier_spec
+attest    emem:attestation:<cid>  POST /v1/trace_resolve  none backed by a manufacturer yet: vendor anchors are provisional, GET /v1/device_platforms
+state     emem:state:6omzeryht75zyabeajuimcqzm7pzenvy3y6p4irwxdpt7x5ayimq  GET /v1/state/<cid>  check=blake3(canonical_cbor_hex)==cid; walk derived_from back through the answer's stages
+tree      emem:tree:wkxa7tcmw2orf7ujjf5yi66dhe#row=1  Webb, Cosmic Cliffs  GET /v1/tree/<file_cid>?row=1  check=leaf from the note's row, log2(n) hashes to the note's root

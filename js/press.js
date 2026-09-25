@@ -10,6 +10,7 @@
  *   dify       the Dify Marketplace plugin's created_at
  *   commit     the commit that first linked a listing: its committer date
  *   mulesoft   MuleSoft's Anypoint Exchange: the asset's createdDate
+ *   vimeo      a Vimeo video's upload_date, from Vimeo's own oEmbed record
  *   tool       a tool that must be live on emem.dev now
  * A record that says another date is a failed check; a record that does not answer is not checked, and says so.
  * The numbers at the top are read live too.
@@ -35,14 +36,25 @@
     });
     if (month) month.hidden = !any;
   }
+  // a filter with nothing to show is not offered
+  chips.forEach(function (c) { var f = c.getAttribute('data-f'); if (f !== 'all' && !rows.some(function (li) { return li.getAttribute('data-kind') === f; })) c.hidden = true; });
   chips.forEach(function (c) {
     c.addEventListener('click', function () {
       var f = c.getAttribute('data-f'); show(f);
-      history.replaceState(null, '', f === 'all' ? location.pathname + '#timeline' : location.pathname + '#' + (f === 'listing' ? 'listings' : f));
+      history.replaceState(null, '', f === 'all' ? location.pathname + '#timeline' : location.pathname + '#' + (f === 'listing' ? 'listings' : f === 'video' ? 'videos' : f));
     });
   });
-  var h0 = location.hash.slice(1), map = { emem: 'emem', eudr: 'eudr', listings: 'listing', research: 'research', vortx: 'vortx' };
+  var h0 = location.hash.slice(1), map = { emem: 'emem', eudr: 'eudr', listings: 'listing', research: 'research', vortx: 'vortx', videos: 'video' };
   if (map[h0]) { show(map[h0]); var tl = document.getElementById('timeline'); if (tl) tl.scrollIntoView(); }
+
+  /* ---------- videos: the platform's player loads only when asked, in place ---------- */
+  root.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('.vd[data-embed]'); if (!b) return;
+    var f = document.createElement('iframe'), u = b.getAttribute('data-embed');
+    f.src = u + (u.indexOf('?') < 0 ? '?' : '&') + 'autoplay=1&dnt=1'; f.title = b.getAttribute('aria-label').replace(/^Play: /, '');
+    f.allow = 'autoplay; fullscreen; picture-in-picture'; f.setAttribute('allowfullscreen', ''); f.className = 'vd-f' + (b.classList.contains('vd-lg') ? ' vd-lg' : '');
+    b.replaceWith(f);
+  });
 
   /* ---------- the records that own the dates ---------- */
   var cache = {};
@@ -81,10 +93,11 @@
     hfspace: function (c) { return get('https://huggingface.co/api/spaces/' + c.id).then(function (j) { return { who: 'Hugging Face', date: j.createdAt && j.createdAt.slice(0, 10) }; }); },
     dify: function (c) { return get('https://marketplace.dify.ai/api/v1/plugins/' + c.plugin).then(function (j) { var p = (j.data || {}).plugin || {}; return { who: 'the Dify Marketplace', date: p.created_at && p.created_at.slice(0, 10) }; }); },
     commit: function (c) { return get('https://api.github.com/repos/' + c.repo + '/commits/' + c.sha).then(function (j) { var d = j.commit && j.commit.committer && j.commit.committer.date; return { who: 'GitHub', date: d && d.slice(0, 10) }; }); },
+    vimeo: function (c) { return get('https://vimeo.com/api/oembed.json?url=' + encodeURIComponent('https://vimeo.com/' + c.id)).then(function (j) { return { who: 'Vimeo', date: j.upload_date && j.upload_date.slice(0, 10) }; }); },
     mulesoft: function (c) { return get('https://anypoint.mulesoft.com/exchange/api/v2/assets?search=emem&limit=20').then(function (j) { var a = (Array.isArray(j) ? j : []).filter(function (x) { return x.assetId === c.asset; })[0]; return { who: 'MuleSoft Exchange', date: a && a.createdDate && a.createdDate.slice(0, 10) }; }); },
     tool: function (c) { return get('https://emem.dev/v1/tools').then(function (j) { var t = j.tools || j; return { who: 'emem.dev', live: (Array.isArray(t) ? t : []).some(function (x) { return x.name === c.name; }), name: c.name }; }); }
   };
-  var HOST = { changelog: 'raw.githubusercontent.com', mcpreg: 'registry.modelcontextprotocol.io', ghmcp: 'api.mcp.github.com', pypi: 'pypi.org', npm: 'registry.npmjs.org', zenodo: 'zenodo.org', hf: 'huggingface.co', hfspace: 'huggingface.co', dify: 'marketplace.dify.ai', commit: 'api.github.com', tool: 'emem.dev', mulesoft: 'anypoint.mulesoft.com' };
+  var HOST = { changelog: 'raw.githubusercontent.com', mcpreg: 'registry.modelcontextprotocol.io', ghmcp: 'api.mcp.github.com', pypi: 'pypi.org', npm: 'registry.npmjs.org', zenodo: 'zenodo.org', hf: 'huggingface.co', hfspace: 'huggingface.co', dify: 'marketplace.dify.ai', commit: 'api.github.com', tool: 'emem.dev', mulesoft: 'anypoint.mulesoft.com', vimeo: 'vimeo.com' };
 
   var done = 0, okN = 0, sum = root.querySelector('[data-checked]');
   function check(li) {
@@ -114,8 +127,8 @@
 
   /* ---------- the listing wall: each date that a record owns, marked when it agrees ---------- */
   var byDate = {};
-  rows.forEach(function (li) { if (li.hasAttribute('data-check') && /^(listing|research)$/.test(li.getAttribute('data-kind'))) byDate[li.getAttribute('data-date')] = li; });
-  var wall = [].slice.call(root.querySelectorAll('.ls-grid time[datetime]'));
+  rows.forEach(function (li) { if (li.hasAttribute('data-check') && /^(listing|research|video)$/.test(li.getAttribute('data-kind'))) byDate[li.getAttribute('data-date')] = li; });
+  var wall = [].slice.call(root.querySelectorAll('.ls-grid time[datetime], .wv time[datetime]'));
   var obs = new MutationObserver(function () {
     wall.forEach(function (t) { var li = byDate[t.getAttribute('datetime')]; if (li && li.classList.contains('is-ok')) t.classList.add('is-ok'); });
   });

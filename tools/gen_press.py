@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Render data/timeline.json into press/index.html, so the newsroom reads without JavaScript.
 
-The timeline, the listing wall and the press-kit counts live between marker comments:
+The timeline, the listing wall, the video wall and the press-kit counts live between marker comments:
     <!-- listed:start --> ... <!-- listed:end -->
+    <!-- watch:start --> ... <!-- watch:end -->
     <!-- timeline:start --> ... <!-- timeline:end -->
 Everything else in the page is hand-written. js/press.js then re-checks each dated entry
 against the record that owns its date (a registry, a changelog, a commit, a DOI), live.
@@ -22,7 +23,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data" / "timeline.json"
 PAGE = ROOT / "press" / "index.html"
-KIND = {"emem": "emem", "eudr": "eudr.dev", "listing": "listing", "research": "research", "vortx": "vortx.ai"}
+KIND = {"emem": "emem", "eudr": "eudr.dev", "listing": "listing", "research": "research", "vortx": "vortx.ai", "video": "video"}
 MON = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
 
@@ -38,6 +39,34 @@ def day(d):
 def link(p):
     ext = p["u"].startswith("http") and not p["u"].startswith("https://vortx.ai/")
     return f'<a class="lk" href="{esc(p["u"])}"' + (' target="_blank" rel="noopener"' if ext else "") + f'>{esc(p["t"])}{" ↗" if ext else ""}</a>'
+
+
+def mmss(sec):
+    sec = int(sec or 0)
+    return f"{sec // 60}:{sec % 60:02d}" if sec else ""
+
+
+def player(v, big=False):
+    """A thumbnail that becomes the platform's player on click; no third-party frame until then."""
+    return (f'<button class="vd{" vd-lg" if big else ""}" type="button" data-embed="{esc(v["embed"])}" aria-label="Play: {esc(v["title"])}, on {esc(v["platform"])}">'
+            f'<img src="{esc(v["thumb"])}" alt="" loading="lazy" decoding="async" width="1280" height="720">'
+            f'<span class="vd-p" aria-hidden="true"></span>'
+            + (f'<span class="vd-t">{mmss(v.get("duration"))}</span>' if v.get("duration") else "")
+            + "</button>")
+
+
+def watch(videos):
+    """The video wall, a whole section; nothing at all until there is a video to show."""
+    if not videos:
+        return ""
+    rows = []
+    for v in sorted(videos, key=lambda x: x["date"]):
+        d = day(v["date"])
+        rows.append(f'<li><figure class="wv">{player(v, True)}<figcaption><b class="v">{esc(v["verb"])}</b> <strong>{esc(v["noun"])}</strong>'
+                    f'<span>{esc(v["by"])} · <time datetime="{esc(v["date"])}">{d.day} {MON[d.month - 1][:3]} {d.year}</time> · <a class="lk" href="{esc(v["url"])}" target="_blank" rel="noopener">{esc(v["platform"])} ↗</a></span></figcaption></figure></li>')
+    return ('    <section class="section nr-sec" id="watch" aria-labelledby="watch-h">\n      <div class="wrap">\n'
+            '        <h2 class="nr-h" id="watch-h"><b class="v">watch</b> Vortx AI and emem, on camera</h2>\n'
+            '<ul class="wv-grid">\n' + "\n".join(rows) + "\n</ul>\n      </div>\n    </section>")
 
 
 def entry(e):
@@ -56,7 +85,9 @@ def entry(e):
     if checks:
         out.append('<p class="tl-ck">checking against its source…</p>')
     out.append("</div>")
-    if e.get("img"):
+    if e.get("video"):
+        out.append('<figure class="tl-im">' + player(e["video"]) + "</figure>")
+    elif e.get("img"):
         out.append(f'<figure class="tl-im"><a href="{esc(e["img"])}" target="_blank" rel="noopener"><img src="{esc(e["img"])}" alt="{esc(e.get("alt", ""))}" loading="lazy" decoding="async" width="1280" height="800"></a></figure>')
     elif e.get("card"):
         out.append('<div class="tl-card" aria-hidden="true">' + "".join(f"<code>{esc(c)}</code>" for c in e["card"]) + "</div>")
@@ -85,11 +116,13 @@ def listed(items):
 
 
 def render(page, data):
-    for name, body in (("listed", listed(data["listed"])), ("timeline", timeline(data["entries"]))):
-        page, n = re.subn(rf"(<!-- {name}:start -->).*?(<!-- {name}:end -->)", lambda m: m.group(1) + "\n" + body + "\n" + m.group(2), page, flags=re.S)
+    vids = {v["id"]: v for v in data.get("videos", [])}
+    entries = [dict(e, video=vids[e["video"]]) if isinstance(e.get("video"), str) else e for e in data["entries"]]
+    for name, body in (("listed", listed(data["listed"])), ("watch", watch(data.get("videos", []))), ("timeline", timeline(entries))):
+        page, n = re.subn(rf"(<!-- {name}:start -->).*?(<!-- {name}:end -->)", lambda m: m.group(1) + "\n" + (body + "\n" if body else "") + m.group(2), page, flags=re.S)
         if n != 1:
             sys.exit(f"press/index.html: expected one {name} marker pair, found {n}")
-    counts = {"entries": len(data["entries"]), "listed": len(data["listed"]), "checked": sum(1 for e in data["entries"] if e.get("check"))}
+    counts = {"entries": len(data["entries"]), "listed": len(data["listed"]), "checked": sum(1 for e in data["entries"] if e.get("check")), "videos": len(data.get("videos", []))}
     for k, v in counts.items():
         page = re.sub(rf'(data-n="{k}">)[^<]*(<)', rf"\g<1>{v}\2", page)
     return page
@@ -140,6 +173,14 @@ def read_date(c, memo):
             if a.get("assetId") == c["asset"]:
                 return (a.get("createdDate") or "")[:10] or None
         return None
+    if src == "vimeo":
+        from urllib.parse import quote
+        j = get("https://vimeo.com/api/oembed.json?url=" + quote("https://vimeo.com/" + c["id"], safe=""))
+        return (j.get("upload_date") or "")[:10] or None
+    if src == "youtube":
+        page = get("https://www.youtube.com/watch?v=" + c["id"], True)
+        m = re.search(r'itemprop="(?:uploadDate|datePublished)" content="(\d{4}-\d{2}-\d{2})', page) or re.search(r'"(?:uploadDate|publishDate)":"(\d{4}-\d{2}-\d{2})', page)
+        return m and m.group(1)
     if src == "tool":
         t = get("https://emem.dev/v1/tools"); t = t.get("tools", t) if isinstance(t, dict) else t
         return "live" if any(x.get("name") == c["name"] for x in t) else None

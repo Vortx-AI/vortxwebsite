@@ -1,0 +1,12 @@
+# vortx.ai · encode
+
+> A rung of https://vortx.ai/llms.txt: your file or device: the same note the page writes in the browser, byte for byte. Verbs first: each line reads `verb noun ref key=value`.
+
+## encode (your file or device; https://vortx.ai/#connect writes the same note in the browser, byte for byte, nothing uploaded)
+install   tools           `pip install blake3 "ememdev[signing]"`
+encode    file            `python3 emem_point.py FILE [--source URL] [--stamp] > FILE.md`  https://vortx.ai/tools/emem_point.py  4 MiB ranges, blake3 per range, Merkle root, kind from the first bytes, laid out as the ememdemo pointers; --stamp adds after: sth <size> <root> <signed_at> once the log head verifies
+name      note            cid26=base32(blake3(note)[0:16])  token=emem:tree:<cid26>#row=<i>  resolves once the note is published byte for byte
+publish   note            `ememdev write --path /memories/by_attester/<you>/FILE.md --body-file FILE.md`  your own namespace, signed with your key (`ememdev whoami`)
+decode    token           any agent with @emem reads the note, then fetches only the ranges it needs and checks each against its row
+example   satellite       `python3 emem_point.py TCI.tif --source https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/43/P/GQ/2026/5/S2B_43PGQ_20260512_0_L2A/TCI.tif --stamp > TCI.tif.md`
+sign      at capture      hardware-held keys on the device: book an integration session (below)

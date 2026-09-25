@@ -1,7 +1,8 @@
 # agents.md · vortx.ai
 
 For AI agents. Lines read `verb noun ref key=value`; prose appears only where a rule needs its reason.
-Siblings: https://vortx.ai/llms.txt (the index) · https://vortx.ai/.well-known/agent-card.json (A2A card).
+Siblings: https://vortx.ai/llms.txt (the top rung: start there, about 1.5k tokens, and climb down one rung at a time) · https://vortx.ai/.well-known/agent-card.json (A2A card). This guide is the long form, every rung at once.
+Words: every verb on vortx.ai means one thing; the meanings are one note, named by its blake3 like an emem note, listed as `words` in llms.txt.
 
 ## what
 

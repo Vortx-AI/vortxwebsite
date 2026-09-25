@@ -53,6 +53,8 @@ body.vx {
 .vx button { font: inherit; color: inherit; }
 .vx :focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; border-radius: 4px; }
 .vx ::selection { background: rgba(124, 199, 255, 0.28); }
+/* hidden means hidden, whatever display a component sets */
+[hidden] { display: none !important; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 .vx-skip { position: absolute; left: 12px; top: -60px; z-index: 100; background: var(--ink); color: var(--void); padding: 8px 14px; border-radius: 6px; font: 500 13px var(--mono); text-decoration: none; }
 .vx-skip:focus { top: 12px; }
@@ -433,6 +435,9 @@ a.door:hover { background: var(--panel-2); }
 .vx-foot .tag { margin: 12px 0 0; color: var(--ink-3); font-size: 14px; max-width: 34ch; }
 .vx-foot .release { margin: 40px 0 0; font: 400 11.5px/1.6 var(--mono); color: var(--ink-3); word-break: break-all; }
 .vx-foot .release a { display: inline; color: var(--ink-2); font-size: inherit; padding: 0; }
+.vx-foot .reading { display: flex; flex-wrap: wrap; gap: 2px 18px; margin: 10px 0 0; font: 400 11.5px/1.6 var(--mono); color: var(--ink-3); }
+.vx-foot .reading .v { margin-right: 6px; }
+.vx-foot .reading .lk { display: inline; padding: 0; font-size: inherit; }
 .vx-foot .base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; margin-top: 26px; padding-top: 18px; border-top: 1px solid var(--line); font: 400 12px var(--mono); color: var(--ink-3); }
 .vx-foot .base a { display: inline; font-size: inherit; padding: 0; color: var(--ink-3); }
 
@@ -541,6 +546,30 @@ body.pm-open { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
 }
+
+/* ---------- the ladder: a verb, or a term in a log line, opens its meaning (js/ladder.js) ---------- */
+.ld-more { margin: 16px 0 0; font: 400 12px/1.6 var(--mono); color: var(--ink-3); }
+.ld-more > summary { display: inline-flex; align-items: baseline; gap: 8px; cursor: pointer; list-style: none; color: var(--ink-2); }
+.ld-more > summary::-webkit-details-marker { display: none; }
+.ld-more > summary::after { content: '+'; color: var(--ink-3); font-weight: 600; }
+.ld-more[open] > summary::after { content: '−'; }
+.ld-more > summary:hover { color: var(--ink); }
+.ld-more > p { margin: 8px 0 0; max-width: 90ch; }
+.vx .v:not(a .v):not(button .v):not(summary .v):not(label .v):not(.btn .v):not(.chip .v), .vx .kv .k.is-word {
+  cursor: help; text-decoration: underline dotted transparent; text-underline-offset: 3px; text-decoration-thickness: 1px; transition: text-decoration-color .2s;
+}
+.vx .v:not(a .v):not(button .v):not(summary .v):not(label .v):not(.btn .v):not(.chip .v):hover, .vx .kv .k.is-word:hover, .vx .is-asked { text-decoration-color: currentColor; }
+.ld-pop { position: fixed; z-index: 95; padding: 12px 14px 11px; border-radius: 10px; border: 1px solid var(--line-2); background: #0b1119; box-shadow: 0 18px 50px rgba(0, 0, 0, .55); color: var(--ink); text-align: left; animation: ld-in .18s var(--ease) both; }
+@keyframes ld-in { from { opacity: 0; transform: translateY(-4px); } }
+.ld-w { margin: 0 0 4px; line-height: 1; }
+.ld-w .v { font-size: 13px; cursor: default; }
+.ld-t { font: 600 13px var(--mono); color: var(--signal); }
+.ld-m { margin: 0; font: 400 14px/1.5 var(--sans); color: var(--ink); letter-spacing: -.005em; }
+.ld-m.is-bad { color: var(--fail); }
+.ld-m.is-off { color: var(--claim); }
+.ld-s { margin: 8px 0 0; font: 400 10.5px/1.5 var(--mono); color: var(--ink-3); }
+.ld-s .lk { font-size: 10.5px; }
+@media (prefers-reduced-motion: reduce) { .ld-pop { animation: none; } }
 
 /* ============================================================
    Inner pages still use style.css for layout. These lines map its

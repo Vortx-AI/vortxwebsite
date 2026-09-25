@@ -1,0 +1,14 @@
+# vortx.ai · run
+
+> A rung of https://vortx.ai/llms.txt: the six devices on the home page, each a published sample run end to end; every step is a request you can make. Verbs first: each line reads `verb noun ref key=value`.
+
+## run (the home page's workflows: each step is a request you can make yourself; rows 0-based)
+satellite twlpco5kin6qlz5eplt2pjm7n4  Sentinel-2B scene, 351.0 MB  GET note → base32(blake3(note)[0:16])==cid → rebuild root → GET https://emem.dev/v1/tree/<cid>?row=68 (level 4 tile 0,0) → Range read 601,342 B from sentinel-cogs → blake3==row → inflate, undo predictor 2 → mean RGB 156,137,113 at 98% valid == the row's stats
+telescope wkxa7tcmw2orf7ujjf5yi66dhe  Webb, Cosmic Cliffs, 143.7 MB  row 1 (strip 0 rows 0…4), 80.0 KB from esawebb.org
+robot     qcoylkllqzfqnsinn4af5i2mi4  ALOHA arms, 502.5 MB MP4  row 3 (frames 5000…5001 · 100.0 s), 15.3 KB from huggingface.co (302 to its CDN)
+drone     ejvovl6sz7d3sugfcrwwie4rma  OpenAerialMap survey  row 77 (level 6 tile 0,0), 13.2 KB; decode = the header row's JPEGTables + the tile
+camera    t7ebh6s6imxrwdmizebnw52nwe  12 TfL cameras via geo.qa  row aldgate: GET clip → sha256 and blake3 == the row → GET https://emem.dev/v1/perception/verify/clip/<sha256> → ed25519 over the canonical payload JSON (sorted keys, no spaces), key yQOKkNB+c+zl9kxxanwcNTZLgtHBsLvQH+q8pECrm/Q= → NOAA sun from the signed lat, lng, captured_at within 0.1° of the note
+machine   emem:trace:mxyer5c2oxn4ud3xqbtnaxcxhdv4kkxiu67q32inbwxgpa7r3s6a  POST /v1/trace_resolve → POST /v1/trace_verify (host.counters.v1 → admit) → chain, root and the device's ed25519, rechecked
+send      Range           a single `Range: bytes=a-b` and no other header: esawebb.org, esahubble.org, oin-hotosm-temp and mux.dev refuse CORS preflights
+fallback  range_hash      POST https://emem.dev/v1/range_hash {"url","offset","length"} when a source refuses browsers; signed, domain emem.range_hash.v1
+count     moved           a token of 26 to 85 bytes instead of the file; each note costs ~1.2k to ~6.1k tokens to read, where the files cost ~91M to ~319M as raw bytes

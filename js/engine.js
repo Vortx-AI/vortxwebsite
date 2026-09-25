@@ -93,7 +93,7 @@
     var fb = String(fm.bytes || ''), about = /^about/.test(fb), noteB = +(fb.match(/\d+/) || [])[0] || null;
     var have = fm.chain ? null : await vx.headSize(src); if (R.stale()) return {};
     var out = { fileB: have || noteB, tb: null };
-    R.line('capture', x ? x.title : 'the file', { file: out.fileB ? (about && !have ? 'about ' : '') + vx.fmtBytes(out.fileB) : 'size not published', kind: fm.kind, at: host }, 'info', have ? host + ', now' : 'the note');
+    R.line('capture', x ? x.title : 'the file', { file: out.fileB ? (about && !have ? 'about ' : '') + vx.fmtSize(out.fileB) : 'size not published', kind: fm.kind, at: host }, 'info', have ? host + ', now' : 'the note');
     // encode: the note hashes to its name; a feed is chained instead of rooted
     var chained = !!fm.chain, rt = chained ? chain(rows) : vx.merkleRoot(rows);
     var named = R.ok(vx.cid26(nb) === r.cid), rooted = R.ok(rt === (chained ? fm.chain : fm.root)); R.named(named);
@@ -117,7 +117,7 @@
       var rr = await R.row(url, w); if (R.stale()) return out;
       if (!out.fileB && rr.total) out.fileB = rr.total;
       var same = R.ok(vx.cid52(rr.bytes) === w.hash);
-      R.line('check', 'the bytes of row ' + row, { read: vx.fmtBytes(w.length) + (out.fileB ? ' of ' + vx.fmtBytes(out.fileB) : ''), from: vx.hostOf(url), blake3: same ? 'matches the row ✓' : 'NO' }, same ? 'ok' : 'fail', 'your browser read it');
+      R.line('check', 'the bytes of row ' + row, { read: vx.fmtBytes(w.length) + (out.fileB ? ' of ' + vx.fmtSize(out.fileB) : ''), from: vx.hostOf(url), blake3: same ? 'matches the row ✓' : 'NO' }, same ? 'ok' : 'fail', 'your browser read it');
       if (same) {
         var seen = await see(R, fm, src, rows, w, rr.bytes).catch(function (e) { if (!R.stale()) R.line('see', 'not drawn', { why: vx.why(e, vx.hostOf(src)) }, 'info', null); return null; });
         if (seen != null) R.ok(seen);
@@ -126,7 +126,7 @@
       if (R.stale()) return out;
       var rh = await R.post('/v1/range_hash', { url: url, offset: w.offset, length: w.length }); if (R.stale()) return out;
       var sig = vx.verifyRangeHash(rh), same2 = R.ok(sig && rh.blake3_b32 === w.hash);
-      R.line('check', 'the bytes of row ' + row, { read: vx.fmtBytes(w.length) + (out.fileB ? ' of ' + vx.fmtBytes(out.fileB) : ''), at: vx.hostOf(url), by: 'emem, next to the data', signature: sig ? 'valid ✓' : 'INVALID', blake3: rh.blake3_b32 === w.hash ? 'matches the row ✓' : 'NO' }, same2 ? 'ok' : 'fail', vx.hostOf(url) + ' refuses browsers');
+      R.line('check', 'the bytes of row ' + row, { read: vx.fmtBytes(w.length) + (out.fileB ? ' of ' + vx.fmtSize(out.fileB) : ''), at: vx.hostOf(url), by: 'emem, next to the data', signature: sig ? 'valid ✓' : 'INVALID', blake3: rh.blake3_b32 === w.hash ? 'matches the row ✓' : 'NO' }, same2 ? 'ok' : 'fail', vx.hostOf(url) + ' refuses browsers');
     }
     return out;
   }
@@ -611,7 +611,7 @@
     box.innerHTML = ''; out = out || {};
     // to scale: next to the file, the token is a sliver
     if (out.fileB && out.tb) {
-      box.appendChild(bar('the file', 1, vx.fmtBytes(out.fileB) + ', stays put', 'is-file'));
+      box.appendChild(bar('the file', 1, vx.fmtSize(out.fileB) + ', stays put', 'is-file'));
       box.appendChild(bar('what moved', out.tb / out.fileB, out.tb + ' bytes, the token', 'is-tok'));
     }
     var nt = x && tokOf(x.kv.tok), rt = x && tokOf(x.kv.raw);

@@ -42,7 +42,7 @@
   },
   "checks": [
     { "fact": "emem.token_types", "file": "proof/index.html", "pattern": "nine token shapes" },
-    { "fact": "emem.token_types", "file": "llms.txt", "pattern": "nine token shapes" },
+    { "fact": "emem.token_types", "file": "llms/token.txt", "pattern": "nine token shapes" },
     { "fact": "emem.token_types", "file": "emem/index.html", "pattern": "Nine kinds of" },
     { "fact": "emem.fanout_min_readings", "file": "index.html", "pattern": "twenty-plus signed readings" },
     { "fact": "emem.fanout_min_readings", "file": "agents.md", "pattern": "twenty-plus signed readings" }

@@ -22,6 +22,12 @@ on:
       - 'press/index.html'
       - 'data/timeline.json'
       - 'tools/gen_press.py'
+      - '**/*.html'
+      - 'js/**'
+      - 'content/**'
+      - 'prose/**'
+      - 'llms/**'
+      - 'tools/gen_words.py'
   schedule:
     - cron: '17 3 * * 1'
   workflow_dispatch:
@@ -44,6 +50,10 @@ jobs:
           else
             python3 tools/drift_check.py
           fi
+      - name: One verb, one meaning; every page and every rung of llms.txt names the current words note
+        run: |
+          pip install blake3
+          python3 tools/gen_words.py --check
       - name: The newsroom renders from its data (push), and every date agrees with its record (schedule, manual)
         run: |
           python3 tools/gen_press.py --check

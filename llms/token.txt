@@ -1,0 +1,16 @@
+# vortx.ai · token
+
+> A rung of https://vortx.ai/llms.txt: the grammar and the checks: mint, resolve, hash, verify, read, root. Verbs first: each line reads `verb noun ref key=value`.
+
+## token
+mint      emem:fact:<cell64>:<fact_cid>   len=83..85  fact_cid=base32(blake3(canonical CBOR)), 52 chars, never truncated
+resolve   token                          POST https://emem.dev/v1/memory_token/resolve {"token":"emem:fact:…"}  returns fact + receipt; 409 if the cell and the bytes disagree
+hash      fact                           GET https://emem.dev/v1/facts/<fact_cid>  accept=application/cbor  check=base32(blake3(body))==fact_cid
+verify    receipt                        ed25519 over blake3("emem.preimage.v1\0" ‖ u32le(len) ‖ "receipt" ‖ tagged segments)  spec=https://emem.dev/v1/verifier_spec  js=https://emem.dev/emem-verify-core.js
+verify    log head                       GET https://emem.dev/v1/log/sth  ed25519 over the emem.translog.sth.v1 preimage {1 tree_size u64be, 2 root, 3 signed_at, 4 responder_pubkey}
+name      nine token shapes              fact (same bytes for everyone) · cell (an address, no body) · entity (a shared name, not shared bytes) · bundle · raster · cube · rasterset · trace · attestation
+note      pointer.v1                     https://emem.dev/memories/by_attester/<pubkey8>/<cid26>.md  cid26=base32(blake3(note)[0:16])  (the catalogue header's "base32(blake3(bytes))[0:26]" means this: the first 16 bytes, encoded)
+read      chunk                          GET <source> Range: bytes=<offset>-<offset+length-1>  check=base32(blake3(chunk))==row
+root      pointer                        merkle over leaf=blake3(utf8(url) ‖ u64be(offset) ‖ u64be(length) ‖ hash32), pairs blake3(l‖r), odd node promoted; a `·` url is the empty string in the leaf
+chain     feed                           link0=blake3(32 zero bytes ‖ hash0), linki=blake3(link(i-1) ‖ hashi), every row in order; GET /v1/tree does not apply
+hash      range at source                POST https://emem.dev/v1/range_hash {"url","offset","length"}  signed, domain emem.range_hash.v1; for sources that refuse cross-origin reads

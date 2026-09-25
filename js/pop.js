@@ -19,7 +19,7 @@
     '<div class="sp-in">' +
       '<div class="sp-media">' +
         '<div class="sp-pic" role="img"></div><div class="sp-live" hidden></div><span class="sp-tag"></span>' +
-        '<div class="sp-mt" role="group" aria-label="Picture"><button type="button" data-v="saved" aria-pressed="true">saved</button><button type="button" data-v="live" aria-pressed="false">read now ✓</button></div>' +
+        '<div class="sp-mt" role="group" aria-label="Picture"><button type="button" data-v="saved" aria-pressed="true" title="the picture saved with the catalogue">thumbnail</button><button type="button" data-v="live" aria-pressed="false" title="drawn in this browser from bytes that hashed true">decoded here ✓</button></div>' +
         '<button class="sp-go sp-prev" type="button" aria-label="Previous sample">‹</button><button class="sp-go sp-next" type="button" aria-label="Next sample">›</button>' +
       '</div>' +
       '<div class="sp-bd">' +
@@ -28,13 +28,16 @@
         '<ol class="vlog sp-log" aria-live="polite"></ol>' +
         '<div class="sp-data"></div><div class="sp-sum"></div>' +
         '<div class="sp-line"><code></code><button class="lk" type="button" data-sp-copy>copy</button></div>' +
-        '<p class="sp-acts"><button class="btn btn-sm" type="button" data-sp-again><span class="v">run</span> again</button><button class="btn btn-sm" type="button" data-sp-ask hidden><span class="v">ask</span> @emem here</button><a class="lk" data-sp-note target="_blank" rel="noopener">note ↗</a></p>' +
+        '<p class="sp-acts"><button class="btn btn-sm" type="button" data-sp-again><span class="v">run</span> again</button><button class="btn btn-sm" type="button" data-sp-ask hidden><span class="v">ask</span> @emem about this place</button><a class="lk" data-sp-note target="_blank" rel="noopener">open the note ↗</a></p>' +
+        '<div class="sp-ask" hidden><p class="sp-dh" data-sp-q></p><ol class="vlog sp-ask-log" aria-live="polite"></ol><ul class="ask-reads"></ul><p class="ask-ans" aria-live="polite"></p></div>' +
       '</div>' +
     '</div>';
   document.body.appendChild(dlg);
   var $ = function (s) { return dlg.querySelector(s); };
   var pic = $('.sp-pic'), live = $('.sp-live'), tag = $('.sp-tag'), mt = $('.sp-mt'), log = $('.sp-log'), data = $('.sp-data'), sum = $('.sp-sum');
   var list = [], at = 0, gen = 0, R = null, x = null, after = null, pushed = false, thumbsP = null;
+  var askBox = $('.sp-ask'), asker = window.vxAsk ? window.vxAsk({ log: $('.sp-ask-log'), reads: askBox.querySelector('.ask-reads'), ans: askBox.querySelector('.ask-ans') }) : null;
+  function askReset() { if (asker) asker.stop(); askBox.hidden = true; var b = $('[data-sp-ask]'); b.disabled = false; b.innerHTML = '<span class="v">ask</span> @emem about this place'; }
 
   function thumbs() {
     return thumbsP || (thumbsP = fetch('/data/thumbs.json').then(function (r) { return r.json(); }).then(function (j) { var m = {}; (j.thumbs || []).forEach(function (t) { if (t.record) m[t.record] = t; }); return m; }).catch(function () { return {}; }));
@@ -122,7 +125,7 @@
     $('.sp-n').textContent = list.length > 1 ? (at + 1) + ' / ' + list.length : '';
     dlg.querySelectorAll('.sp-go').forEach(function (b) { b.hidden = list.length < 2; });
     var note = $('[data-sp-note]'); note.href = E.NOTE(x.cid);
-    $('[data-sp-ask]').hidden = !x.at || !document.querySelector('#decode .ask-form');
+    askReset(); $('[data-sp-ask]').hidden = !x.at || !asker;
     // the saved picture: only the one its own thumb note carries
     pic.className = 'sp-pic'; pic.style.backgroundImage = ''; pic.style.removeProperty('--n'); pic.innerHTML = '';
     pic.setAttribute('aria-label', x.title + ', its saved picture');
@@ -188,7 +191,7 @@
     if (folding) return;
     gen++; pushed = false;
     var end = function () {
-      folding = false; dlg.classList.remove('is-fold', 'is-unfold'); clearLive();
+      folding = false; dlg.classList.remove('is-fold', 'is-unfold'); clearLive(); askReset();
       if (dlg.open) dlg.close();
       document.documentElement.classList.remove('sp-open');
       document.dispatchEvent(new CustomEvent('vx:pop', { detail: { open: false } }));
@@ -219,14 +222,17 @@
     var b = $('[data-sp-copy]');
     if (navigator.clipboard && x) navigator.clipboard.writeText(x.line).then(function () { b.textContent = 'copied'; setTimeout(function () { b.textContent = 'copy'; }, 1400); });
   });
-  // ask @emem about the place this sample is of, in the decode section
+  // ask @emem about the place this sample is of, here in the popup: the steps and the answer stream in below
   $('[data-sp-ask]').addEventListener('click', function () {
-    var it = x, f = document.querySelector('#decode .ask-form'); if (!it || !it.at || !f) return;
+    var it = x, b = $('[data-sp-ask]'); if (!it || !it.at || !asker) return;
     var q = /timelapse/.test(it.kind) ? 'how has this place changed' : /forest/.test(it.kind) ? 'has the forest changed here' : 'what is this place like';
-    close(function () {
-      f.q.value = q; f.place.value = it.at[0].toFixed(3) + ',' + it.at[1].toFixed(3);
-      document.getElementById('decode').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
-      if (f.requestSubmit) f.requestSubmit(); else f.dispatchEvent(new Event('submit', { cancelable: true }));
+    var place = it.at[0].toFixed(3) + ',' + it.at[1].toFixed(3), mine = gen;
+    askBox.hidden = false; $('[data-sp-q]').textContent = '“' + q + '” · ' + it.at[0].toFixed(3) + ', ' + it.at[1].toFixed(3) + ' · live from emem.dev';
+    b.disabled = true; b.innerHTML = '<span class="v">asking</span> @emem…';
+    askBox.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    asker.ask(q, place).then(function () {
+      if (mine !== gen) return; b.disabled = false; b.innerHTML = '<span class="v">ask</span> again';
+      var a = askBox.querySelector('.ask-ans'); if (a.textContent) a.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'nearest' });
     });
   });
 

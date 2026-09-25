@@ -1,0 +1,17 @@
+# vortx.ai · ground
+
+> A rung of https://vortx.ai/llms.txt: what the proof page recomputes in the browser, pixel by pixel. Verbs first: each line reads `verb noun ref key=value`.
+
+## ground (what https://vortx.ai/proof/#handoff runs in the browser, and the hero decodes once per visit; run it anywhere)
+recall    indices.ndvi                   at a cell; pick the newest by sources[0].captured_at
+mint      token                          emem:fact:<cell>:<fact_cid>; hand it to a second agent (the page uses a Web Worker)
+hash      fact                           the second agent fetches the CBOR and recomputes the cid; values are read from those bytes only
+verify    receipt                        with emem-verify-core (self-tested against the Rust signer's vectors)
+parse     derivation.args                [lat, lng, scene, epsg, formula, [dn_B08, dn_B04], cloud_pct, used_max_cloud, used_lookback_d, scl, scenes_tried, (search_url), (dn_offset)]
+project   lat,lng                        WGS84 → UTM(epsg), Snyder 1987 series, same as emem-fetch/src/proj.rs
+locate    pixel                          col=round(i+(E−X)/sx) row=round(j+(Y−N)/sy) from ModelTiepoint and ModelPixelScale
+read      tile                           one 1024×1024 tile per band, by HTTP Range, from sentinel-cogs on AWS Open Data
+decode    tile                           DEFLATE, TIFF predictor 2, uint16
+compute   ndvi                           r(dn)=(dn+offset)×1e-4; (r(B08)−r(B04))/(r(B08)+r(B04)) in f64 == the signed value, bit for bit
+check     capture                        SGP4 on CelesTrak elements at captured_at; cell within 145 km cross-track (290 km swath), elements within 20 d of capture
+count     bytes                          wire 83..85 B; the reader pulls about 3 MB of about 480 MB, from the source; zero bytes of imagery pass between agents

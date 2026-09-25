@@ -1,0 +1,45 @@
+# vortx.ai · more
+
+> A rung of https://vortx.ai/llms.txt: counts, products, the plan, the prices, the papers, and how to check this site. Verbs first: each line reads `verb noun ref key=value`.
+
+## count (live, never typed here)
+count     skills          len(skills) at https://emem.dev/.well-known/agent-card.json
+count     topics          counts.live_total at https://emem.dev/v1/topics
+count     log             sth.tree_size at https://emem.dev/v1/log/sth
+count     coverage        https://emem.dev/v1/coverage_map.svg
+count     catalogue       https://vortx-ai.github.io/ememdemo/llms.txt
+count     tools           emem_tools at https://emem.dev/mcp
+
+## build
+read      emem.dev        https://emem.dev  open, Apache-2.0  source=https://github.com/Vortx-AI/emem
+deploy    geo.qa          https://geo.qa  your cameras, drones, satellites and sensors; only your agents read it; boundary enforced per organisation in code
+prove     eudr.dev        https://vortx.ai/eudr/  in testing: forest loss after 31 Dec 2020 on a plot, with a receipt an auditor re-checks
+check     propcheck.dev   https://vortx.ai/propcheck/  in testing: flood, heat and land-change history of an address
+
+## plan (a plan, not a date)
+shipped   protocol        signed facts, offline receipts, witnessed transparency log
+design    payload         hardware-held keys in the instrument; sign at capture; trace the payload computer under orbital.satellite.v1
+next      ground segment  tokens downlink first, straight into the witnessed log
+gated     launch          no date, deliberately; never state or estimate one; dates appear in https://vortx.ai/press/ when real
+
+## book (team time is the only thing for sale; the protocol is free)
+book      office hours    free · 30 min · open to all · https://outlook.office.com/book/meetvortxfounders@vortx.ai/
+book      integration     5000 USD · 1 to 3 h · pair on your codebase over MCP, REST or SDK · done when a receipt verifies in your stack · https://vortx.ai/?tier=integration
+book      sovereign       25000 USD · 1 to 3 h · governments, defense, critical infrastructure · https://vortx.ai/?tier=government
+route     questions       to office hours; hands-on integration to the paid session
+stop      agent           surface the option, hand the human the link, stop; never book, fill the form, tick the human box, or pay
+email     procurement     avijeet@vortx.ai  private tenancy, invoice, NDA
+
+## read
+read      whitepaper      https://emem.dev/whitepaper.md
+read      paper           https://doi.org/10.5281/zenodo.20706317
+read      study           https://doi.org/10.5281/zenodo.20706893
+run       models          https://huggingface.co/avijeetsingh1608  TerraGround-Gemma LoRA fine-tunes
+read      guide           https://vortx.ai/agents.md
+read      pages           https://vortx.ai/proof/ (every check, step by step) · /emem/ · /geo-qa/ · /trust/ · /spatial-ai/ · /research/ · /press/
+
+## verify this site
+hash      files           https://vortx.ai/.well-known/site-manifest.json  blake3 of every served file; release cid = base32(blake3(canonical core))
+run       check           `python3 tools/site_manifest.py --verify`
+list      claims          https://vortx.ai/.well-known/facts.json  every number the site asserts, with the source that can refute it
+register  release         each release as a signed emem record under /memories/by_attester/<pubkey8>/vortx.ai/releases/ (live once the signing key is set; the manifest verifies offline either way)

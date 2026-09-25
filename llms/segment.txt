@@ -1,0 +1,16 @@
+# vortx.ai · segment
+
+> A rung of https://vortx.ai/llms.txt: who observes, and the emem profile that admits each. Verbs first: each line reads `verb noun ref key=value`.
+
+## segment (who observes, and the emem profile that admits it; status live at https://emem.dev/v1/substrates)
+observe   mars            space.deep.v1  subject anchored by identity, no latitude  pointer=fi67bt4rxkic3ssuag2v2hskly (Hubble's Mars)
+observe   L2              space.deep.v1  Webb  pointer=wkxa7tcmw2orf7ujjf5yi66dhe
+observe   moon            space.deep.v1  pointer=jxz6pghlsjbohvx6s5iw6yek4m (Kaguya terrain)
+observe   hubble          observatory.telescope.v1  site is a cell, target an identity  pointer=7rn7fxbl75o5cijqpnok5oc7rq (M51)
+capture   sentinel-2      earth.satellite.v0  the open archive, admitted by recomputation
+sign      your satellites orbital.satellite.v1  at capture on the payload computer; trace includes power and thermal
+lift      rockets         each object's launch is in its elements (international designator); a launch site is an emem:cell
+fly       drones          aerial.drone.v1  pointer=ejvovl6sz7d3sugfcrwwie4rma
+share     robots, rovers  robot.fleet.v1  pointer=lj4xi7iksjc4h3mr3prpz5gkne (ALOHA)
+trace     any machine     host.counters.v1  scheduler, memory, storage, network
+root      device keys     https://emem.dev/v1/device_platforms  hardware roots of trust by family

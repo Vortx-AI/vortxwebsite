@@ -1,0 +1,11 @@
+# vortx.ai · samples
+
+> A rung of https://vortx.ai/llms.txt: the ememdemo catalogue line, and how each sample opens on the page. Verbs first: each line reads `verb noun ref key=value`.
+
+## samples (the ememdemo standard, kept on every page; https://vortx-ai.github.io/ememdemo/llms.txt is the catalogue)
+line      catalogue       `verb kind cid key=value`: src size hashed=N/M at tok raw by t; tok=what reading the note costs, raw=the source's bytes as base64 (0.634 tokens per byte)
+keep      by              machine (signed by a system) · third-party (a publisher's file) · combined (joined from several) · human (a person's file)
+check     note            re-checked as each card loads: base32(blake3(note)[0:16])==cid → "✓ note", else "✗ name lies"; unreachable is not a failed check
+show      picture         only the image a thumb.v1 note carries: its name matches, its of: is the record, its data:image line is the file shown; https://vortx.ai/data/thumbs.json maps record → thumb
+print     values          verbatim, as signed; 0.767 for 0.767258382642998 is drift
+open      sample          https://vortx.ai/?s=<cid>  by schema: pointer.v1 name, root, one row proved and read by range, then a whole overview level (every tile hashed) or the photo · world.v1 bundle signed and recomputed, every reading inside it, one echoed verbatim · grid.v1 each map's bundle, every square a member · timelapse.v1 three cubes signed, first and last frames' pixels hashed to their names · camera.v1 clip, geo.qa signature, sun · directory.v1 root, one file against its publisher hash
