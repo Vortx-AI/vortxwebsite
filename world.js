@@ -33,7 +33,7 @@
   const featured = [
     {match:'gkc2jap4',name:'Amazon frontier',image:'amazon-frontier-2017-2025',position:[13,59],mobile:[21,57],line:'2017–2025 · FOREST MEMORY',description:'A place remembered across time. Follow the changing forest frontier through the archived observations, then carry the original memory into your reasoning.'},
     {match:'twlpco5k',name:'Bengaluru, from orbit',position:[58,45],mobile:[80,43],line:'SENTINEL-2 · TRUE COLOUR',description:'The city, seen from orbit. A Sentinel-2 scene becomes an address an agent can read, with the original source and evidence a link away.'},
-    {match:'sm45gry4',name:'Okavango, in motion',image:'okavango-delta-flood-pulse',position:[31,77],mobile:[79,70],line:'WATER · LAND · TIME',description:'Water moves. The memory remains. Explore the delta’s archived flood-pulse sequence and return to the evidence behind each observation.'},
+    {match:'sm45gry4',name:'Okavango, in motion',image:'okavango-delta-flood-pulse',position:[31,77],mobile:[79,59],line:'WATER · LAND · TIME',description:'Water moves. The memory remains. Explore the delta’s archived flood-pulse sequence and return to the evidence behind each observation.'},
     {match:'wkxa7tcm',name:'The Cosmic Cliffs',image:'carina',position:[84,28],mobile:[76,28],line:'DEEP SPACE · WEBB / NIRCAM',description:'A telescope observation of the Carina Nebula, beyond our solar system. This is astronomical evidence, not an Earth location. The original Webb image becomes an addressable memory for any AI agent.'}
   ];
   const memories = [...document.querySelectorAll('.observation')].map((card,index) => {
@@ -264,6 +264,7 @@
     canvas.width=Math.round(p.width*scale);canvas.height=Math.round(p.height*scale);
     if(gl)gl.viewport(0,0,canvas.width,canvas.height);
     connectorLayer.setAttribute('viewBox',`0 0 ${r.width} ${r.height}`);
+    orbitalScene.setAttribute('viewBox',`0 0 ${r.width} ${r.height}`);
     for(const m of memories.filter(m=>m.feature)) {
       const position=small.matches?m.feature.mobile:m.feature.position;
       m.element.style.setProperty('--x',position[0]+'%');m.element.style.setProperty('--y',position[1]+'%');
@@ -322,11 +323,6 @@
           color=mix(color,vec3(.4,.63,.7),min(1.,(orbit+orbit2)*3.));
           alpha=max(alpha,orbit+orbit2);
         }
-        vec2 satellite=turn(.31)*vec2(cos(clock*.10+.8)*.98,sin(clock*.10+.8)*.30);
-        if(length(satellite)>radius || sin(clock*.10+.8)<0.){
-          float dist=length(p-satellite);float glow=.8*exp(-dist*dist*80000.)+.23*exp(-dist*dist*1400.);
-          color+=vec3(.65,.83,.55)*glow;alpha=max(alpha,glow);
-        }
         gl_FragColor=vec4(color,alpha);
       }`;
     const shaders=[];
@@ -347,7 +343,50 @@
   function fallback(){ready=false;planet.classList.remove('ready');planet.classList.add('unavailable');$('#world-coordinates').textContent='EARTH / EXPLORE THE MEMORY WINDOWS';document.querySelectorAll('[data-world-view]').forEach(b=>b.disabled=true);updatePins();}
   function render(){
     if(gl && ready){gl.uniform2f(uniforms.resolution,canvas.width,canvas.height);gl.uniform1f(uniforms.rotation,rotation);gl.uniform1f(uniforms.pitch,pitch);gl.uniform1f(uniforms.clock,clock);gl.uniform1f(uniforms.memory,memoryMode);gl.drawArrays(gl.TRIANGLES,0,6);}
-    updatePins();drawStars();drawIntelligence();
+    updatePins();drawStars();drawOrbiters();drawIntelligence();
+  }
+
+  // Illustrative spacecraft, not live positions or a claim that Vortx has launched.
+  // The same sphere radius as the globe determines far-side occlusion.
+  const orbitalScene=$('#orbital-scene');
+  const orbiters=[
+    {model:'survey-craft',radius:1.22,tilt:.34,roll:-.65,phase:2.9,mobilePhase:1.6,speed:.046,scale:1.05},
+    {model:'relay-craft',radius:1.42,tilt:1.03,roll:.95,phase:4.65,mobilePhase:3.8,speed:-.033,scale:.8}
+  ].map(data=>{
+    const path=document.createElementNS(svgNS,'path');path.classList.add('orbital-track');
+    const craft=document.createElementNS(svgNS,'g');craft.classList.add('orbital-craft');
+    const model=document.createElementNS(svgNS,'use');model.setAttribute('href','#'+data.model);craft.append(model);
+    $('#orbital-paths').append(path);$('#orbital-crafts').append(craft);
+    return {...data,path,craft};
+  });
+  function orbitPoint(orbit,t){
+    const r=layout.radius*orbit.radius,xx=Math.cos(t)*r,yy=Math.sin(t)*r*Math.sin(orbit.tilt),z=Math.sin(t)*r*Math.cos(orbit.tilt);
+    const perspective=1/(1-z/(layout.radius*7));
+    const x=(xx*Math.cos(orbit.roll)-yy*Math.sin(orbit.roll))*perspective;
+    const y=(xx*Math.sin(orbit.roll)+yy*Math.cos(orbit.roll))*perspective;
+    return {x:layout.cx+x,y:layout.cy+y,z,perspective,hidden:z<0 && Math.hypot(x,y)<layout.radius+2};
+  }
+  function drawOrbiters(){
+    if(!layout.radius)return;
+    for(const orbit of orbiters){
+      // Paths only change on resize; craft position follows the shared motion clock.
+      const key=[layout.width,layout.height,layout.radius].join('/');
+      if(orbit.layoutKey!==key){
+        let path='',connected=false;
+        for(let i=0;i<=160;i++){
+          const p=orbitPoint(orbit,i/160*TAU);
+          if(p.hidden){connected=false;continue;}
+          path+=(connected?'L':'M')+p.x.toFixed(1)+' '+p.y.toFixed(1);connected=true;
+        }
+        orbit.path.setAttribute('d',path);orbit.layoutKey=key;
+      }
+      const t=(small.matches?orbit.mobilePhase:orbit.phase)+clock*orbit.speed,p=orbitPoint(orbit,t),next=orbitPoint(orbit,t+.001);
+      const angle=Math.atan2(next.y-p.y,next.x-p.x)*180/Math.PI+90;
+      const scale=orbit.scale*p.perspective*(small.matches ? .52 : Math.min(1,layout.width/1250));
+      orbit.craft.setAttribute('transform',`translate(${p.x.toFixed(2)} ${p.y.toFixed(2)}) rotate(${angle.toFixed(2)}) scale(${scale.toFixed(3)})`);
+      orbit.craft.setAttribute('opacity',p.hidden?'0':p.z<0?'.65':'.95');
+      orbit.craft.dataset.occluded=String(p.hidden);
+    }
   }
 
   // Stars and a faint orbital flow move at a capped cadence, and stop offscreen.
@@ -371,10 +410,10 @@
   setTimeout(()=>{if(currentPose==='greet')setPose('');},1500);
   // Sleep after prolonged inactivity
   function checkSleep(){
+    if(paused || !visible || document.hidden || station.open || viewer.open)return;
     if(currentPose==='sleep'||currentPose==='greet'||currentPose==='active'||currentPose==='think')return;
     if(Date.now()-sleepTimer>SLEEP_DELAY)setPose('sleep');
   }
-  setInterval(checkSleep,5000);
   // Wake on any interaction in the stage
   stage.addEventListener('pointerdown',()=>{if(currentPose==='sleep'){setPose('greet');setTimeout(()=>{if(currentPose==='greet')setPose('');},1200);}else{sleepTimer=Date.now();}},{passive:true});
   stage.addEventListener('pointermove',()=>{if(currentPose==='sleep'){setPose('');} sleepTimer=Date.now();},{passive:true});
@@ -385,8 +424,8 @@
     starsCanvas.width=Math.round(layout.width);starsCanvas.height=Math.round(layout.height);seed=17;
     intelligenceCanvas.width=starsCanvas.width;intelligenceCanvas.height=starsCanvas.height;
     const bounds=stage.getBoundingClientRect(),n=nexus.getBoundingClientRect();
-    const character=explorer.getBoundingClientRect();
-    nexusPoint={x:n.left-bounds.left+n.width/2,y:character.top-bounds.top-24};
+    // Anchor to the stable button, never to the animated image's changing bounds.
+    nexusPoint={x:n.left-bounds.left+n.width/2,y:n.top-bounds.top+26};
     stars=Array.from({length:small.matches?120:240},()=>({x:random(),y:random(),size:random()>.98?1.4:random()*.7+.2,alpha:.15+random()*.55,phase:random()*TAU}));
   }
   function drawStars(){
@@ -419,18 +458,40 @@
     const dx=reduced.matches?0:look.x,dy=reduced.matches?0:look.y+Math.sin(clock*.35)*2;
     explorer.style.setProperty('--explorer-x',dx+'px');explorer.style.setProperty('--explorer-y',dy+'px');
   }
-  // Companion click → think then active pose
+  // The character is a real entry point. Thinking is reserved for an actual request.
+  const companionInput=$('#companion-place'),recallForm=$('#recall-form');
   nexus.addEventListener('click',()=>{
-    setPose('think');
-    clearTimeout(poseTimer);
-    poseTimer=setTimeout(()=>{setPose('active');poseTimer=setTimeout(()=>setPose(''),3000);},2200);
+    setPose('attend');companionInput.focus({preventScroll:true});
   });
+  $('#companion-query').addEventListener('submit',event=>{
+    event.preventDefault();
+    const place=companionInput.value.trim();if(!place)return;
+    if(recallForm.dataset.busy){openStation('recall',companionInput);return;}
+    $('#recall-place').value=place;openStation('recall',companionInput);
+    recallForm.requestSubmit();
+  });
+  new MutationObserver(()=>{
+    clearTimeout(poseTimer);
+    if(recallForm.dataset.busy){setPose('think');return;}
+    setPose($('#terminal-indicator').textContent==='RECORD RECEIVED'?'active':'attend');
+    poseTimer=setTimeout(()=>setPose(''),3000);
+  }).observe(recallForm,{attributes:true,attributeFilter:['data-busy']});
   // Action buttons: companion leans toward hovered action
   const actionButtons=[...document.querySelectorAll('.companion-actions button')];
-  for(const button of actionButtons){
-    button.addEventListener('pointerenter',()=>{setPose('attend');explorer.style.setProperty('--companion-lean',(button.classList.contains('action-verify')||button.classList.contains('action-recall')?'3':button.classList.contains('action-locate')?'-3':'0')+'deg');});
-    button.addEventListener('pointerleave',()=>{if(currentPose==='attend')setPose('');explorer.style.setProperty('--companion-lean','0deg');});
+  function attendAction(button){
+    companionMode=button?.dataset.station || '';stage.dataset.companionAction=companionMode;
+    if(!recallForm.dataset.busy)setPose(button?'attend':'');
+    const lean=button?Math.sign(button.getBoundingClientRect().left-nexus.getBoundingClientRect().left)*3:0;
+    explorer.style.setProperty('--companion-lean',reduced.matches?'0deg':lean+'deg');
   }
+  for(const button of actionButtons){
+    button.addEventListener('pointerenter',()=>attendAction(button));
+    button.addEventListener('pointerleave',()=>attendAction(actionButtons.includes(document.activeElement)?document.activeElement:null));
+    button.addEventListener('focus',()=>attendAction(button));
+    button.addEventListener('blur',()=>attendAction(null));
+  }
+  companionInput.addEventListener('focus',()=>{if(!recallForm.dataset.busy)setPose('attend');});
+  companionInput.addEventListener('blur',()=>{if(!recallForm.dataset.busy)setPose('');});
   stage.addEventListener('pointermove',event=>{if(event.pointerType==='mouse' && !dragging){const r=stage.getBoundingClientRect();lookTarget={x:(event.clientX-r.left-r.width/2)/r.width*8,y:(event.clientY-r.top-r.height/2)/r.height*5};}},{passive:true});
   stage.addEventListener('pointerleave',()=>{lookTarget={x:0,y:0};});
   function frame(now){
@@ -438,13 +499,14 @@
     if(now-lastFrame>=1000/30){
       const dt=lastFrame?Math.min((now-lastFrame)/1000,.1):0;lastFrame=now;
       if(!paused){clock+=dt;if(target){rotation+=(target.rotation-rotation)*.075;pitch+=(target.pitch-pitch)*.075;if(Math.abs(target.rotation-rotation)<.001)target=null;}else if(!dragging && !hovering && !viewer.open && !station.open)rotation+=dt*.012;}
-      render();
+      checkSleep();render();
     }
     if(!paused)raf=requestAnimationFrame(frame);
   }
   function refresh(){
     if(raf)cancelAnimationFrame(raf);raf=0;lastFrame=0;
     document.body.classList.toggle('world-paused',paused);
+    document.body.classList.toggle('world-scene-inactive',!visible || document.hidden);
     const button=$('#world-motion');button.textContent=paused?'▷':'Ⅱ';button.setAttribute('aria-label',paused?'Play world motion':'Pause world motion');button.setAttribute('aria-pressed',String(paused));
     render();if(!paused && visible && !document.hidden)raf=requestAnimationFrame(frame);
   }

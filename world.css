@@ -335,3 +335,93 @@ body.world-dialog-open{overflow:hidden}
   .emem-world .emem-companion .ai-explorer,.emem-world .companion-halo{transition:none;animation:none!important}
   .emem-world .emem-companion .ai-explorer::before{animation:none!important}
 }
+
+/* Open controls retain the companion's poses and vocabulary, without a toolbar. */
+.orbital-scene{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;overflow:visible}
+.orbital-track{fill:none;stroke:#9ccee02b;stroke-width:.7;vector-effect:non-scaling-stroke}
+.orbital-craft{filter:drop-shadow(0 4px 6px #0009)}
+.open-memory-scene .world-dock{
+  left:74%;bottom:4.8%;width:min(640px,45vw);height:310px;display:block;
+  padding:0;border:0;border-radius:0;background:none;box-shadow:none;backdrop-filter:none;
+}
+.open-memory-scene .world-dock .emem-companion{
+  position:absolute;left:50%;top:0;transform:translateX(-50%);width:164px;height:248px;
+  padding:0;background:none;border:0;border-radius:60px;pointer-events:auto;
+}
+.open-memory-scene .emem-companion .ai-explorer{top:0;bottom:auto;width:205px;aspect-ratio:1}
+.open-memory-scene .emem-companion .nexus-name{bottom:25px;font-size:27px;letter-spacing:-1.6px}
+.open-memory-scene .emem-companion .nexus-invite{bottom:7px;font-size:8px;color:#9cbbb5;opacity:1}
+.open-memory-scene .companion-halo{bottom:53px;width:102px;opacity:.6}
+.companion-orbit{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.companion-orbit path{fill:none;stroke:#9bc7ba2b;stroke-width:.7;vector-effect:non-scaling-stroke}
+.companion-orbit .companion-orbit-inner{stroke:#9bc7ba10}
+.open-memory-scene .companion-actions{position:absolute;inset:0;display:block;margin:0;pointer-events:none}
+.open-memory-scene .companion-actions button{
+  position:absolute;display:flex;align-items:center;gap:9px;width:144px;min-height:58px;padding:10px 4px;
+  color:#e3eee9;border:0;border-radius:0;background:none;box-shadow:none;backdrop-filter:none;
+  text-align:left;font-size:13px;pointer-events:auto;transform:none;
+}
+.open-memory-scene .companion-actions .action-locate{left:0;top:116px}
+.open-memory-scene .companion-actions .action-cite{left:42px;top:199px}
+.open-memory-scene .companion-actions .action-verify{right:42px;top:199px}
+.open-memory-scene .companion-actions .action-recall{right:0;top:116px}
+.open-memory-scene .companion-actions .action-icon{
+  width:34px;height:34px;flex-shrink:0;display:grid;place-items:center;
+  border:1px solid #b8e8d857;border-radius:50%;font-size:17px;color:#b8e8d8;
+  background:#0b171b60;box-shadow:0 0 18px #b5f4d806;transition:border-color .25s,box-shadow .25s,background .25s;
+}
+.open-memory-scene .companion-actions button small{font-size:8px;color:#8ba8a3;margin-top:5px}
+.open-memory-scene .action-arrow{margin-left:auto;font-size:15px;color:#9fc8bc;transition:translate .25s,color .25s}
+.open-memory-scene .companion-actions button:hover,
+.open-memory-scene .companion-actions button:focus-visible{background:none;color:#fff;transform:none}
+.open-memory-scene .companion-actions button:hover .action-icon,
+.open-memory-scene .companion-actions button:focus-visible .action-icon{border-color:#c6ffe9;box-shadow:0 0 24px #b5f4d828;background:#14312db3}
+.open-memory-scene .companion-actions button:hover .action-arrow,
+.open-memory-scene .companion-actions button:focus-visible .action-arrow{translate:2px -2px;color:#d6ffe9}
+.open-memory-scene .companion-actions button:focus-visible,
+.open-memory-scene .emem-companion:focus-visible{outline:1px solid #b8e8d8;outline-offset:5px}
+.companion-query{
+  position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:300px;display:flex;
+  border:0;border-bottom:1px solid #c0e6d655;background:linear-gradient(0deg,#a3f2d708,transparent);pointer-events:auto;
+}
+.companion-query:focus-within{border-color:#c8ffe7;background:linear-gradient(0deg,#a3f2d714,transparent)}
+.companion-query input{min-width:0;flex:1;padding:12px 4px;color:#e1f5e8;font:12px Arial;border:0;outline:0;background:none}
+.companion-query input::placeholder{color:#9bb7b0;opacity:1}
+.companion-query button{width:44px;min-height:44px;color:#c6ebd7;font-size:21px}
+.companion-query button:hover,.companion-query button:focus-visible{color:#fff;background:#a3f2d718}
+.world-paused .emem-companion .ai-explorer,.world-paused .emem-companion .ai-explorer::before,
+.world-paused .emem-companion .companion-halo,.world-scene-inactive .emem-companion .ai-explorer,
+.world-scene-inactive .emem-companion .ai-explorer::before,.world-scene-inactive .emem-companion .companion-halo{animation-play-state:paused!important}
+@media(min-width:761px) and (max-width:1100px){
+  .open-memory-scene .world-dock{left:69%;width:min(530px,55vw)}
+  .open-memory-scene .companion-actions button{width:125px;font-size:12px;gap:7px}
+  .open-memory-scene .companion-actions button small{font-size:6px}
+  .open-memory-scene .companion-actions .action-cite{left:10px}
+  .open-memory-scene .companion-actions .action-verify{right:10px}
+  .open-memory-scene .emem-companion .ai-explorer{width:185px}
+  .open-memory-scene .emem-companion .nexus-invite{font-size:7px}
+  .open-memory-scene .companion-query{width:270px}
+}
+@media(max-width:760px){
+  .open-memory-scene .world-dock{left:50%;bottom:39px;width:90%;height:295px}
+  .open-memory-scene .world-dock .emem-companion{width:132px;height:209px}
+  .open-memory-scene .emem-companion .ai-explorer{width:154px}
+  .open-memory-scene .emem-companion .nexus-name{font-size:25px;bottom:28px}
+  .open-memory-scene .emem-companion .nexus-invite{font-size:7px;bottom:0;max-width:108px;margin-inline:auto;line-height:1.5;white-space:normal}
+  .open-memory-scene .companion-halo{bottom:64px;width:76px;height:11px}
+  .open-memory-scene .companion-actions button{width:96px;min-height:62px;gap:6px;padding:8px 0;font-size:11px;flex-wrap:wrap}
+  .open-memory-scene .companion-actions .action-icon{width:26px;height:26px;font-size:14px}
+  .open-memory-scene .companion-actions button small{font-size:6px;max-width:57px;white-space:normal;line-height:1.5}
+  .open-memory-scene .action-arrow{position:absolute;right:1px;top:0;font-size:13px;opacity:.85}
+  .open-memory-scene .companion-actions .action-locate{left:0;top:59px}
+  .open-memory-scene .companion-actions .action-cite{left:0;top:158px}
+  .open-memory-scene .companion-actions .action-verify{right:0;top:158px}
+  .open-memory-scene .companion-actions .action-recall{right:0;top:59px}
+  .open-memory-scene .companion-orbit{top:30px;height:210px}
+  .open-memory-scene .companion-query{width:86%;bottom:7px}
+  .open-memory-scene .companion-query input{font-size:12px}
+  .open-memory-scene .world-map-controls{top:35.5%;bottom:auto;left:6%;width:auto;display:flex;border-radius:22px;padding:3px}
+  .open-memory-scene .world-map-controls button{min-height:26px;padding:6px 8px}
+  .open-memory-scene .world-map-controls #world-motion,.open-memory-scene .world-map-controls #world-immersive{min-width:26px}
+}
+@media(prefers-reduced-motion:reduce){.open-memory-scene .action-arrow,.open-memory-scene .action-icon{transition:none}}

@@ -156,7 +156,7 @@
     </div>
   </header>
   <main id="main">
-    <section class="world-stage intelligence-observatory emem-world" id="hero" aria-labelledby="world-heading">
+    <section class="world-stage intelligence-observatory emem-world open-memory-scene" id="hero" aria-labelledby="world-heading">
       <canvas id="world-stars" aria-hidden="true"></canvas>
       <div class="world-aura" aria-hidden="true"></div>
       <div class="deep-space-field" aria-hidden="true"></div>
@@ -168,6 +168,33 @@
         <div class="atlas-fallback" aria-hidden="true"></div>
         <canvas id="atlas-canvas" tabindex="0" role="img" aria-label="Interactive Earth. Drag or use arrow keys to rotate. Choose a memory pin to explore."></canvas>
       </div>
+      <svg class="orbital-scene" id="orbital-scene" aria-hidden="true">
+        <defs>
+          <linearGradient id="craft-metal" x2=".8" y2="1"><stop stop-color="#eef2eb"/><stop offset=".4" stop-color="#a4b3b4"/><stop offset="1" stop-color="#394b56"/></linearGradient>
+          <linearGradient id="craft-foil" x2="1" y2="1"><stop stop-color="#dbc28b"/><stop offset=".5" stop-color="#9c8050"/><stop offset="1" stop-color="#46392c"/></linearGradient>
+          <pattern id="solar-cells" width="8" height="6" patternUnits="userSpaceOnUse"><rect width="8" height="6" fill="#183348"/><path d="M0 0H8V6" fill="none" stroke="#78a4b2" stroke-width=".55"/></pattern>
+          <g id="survey-craft">
+            <path d="M-36-9H-12V9H-36ZM12-9H36V9H12Z" fill="url(#solar-cells)" stroke="#94b7c0" stroke-width=".7"/>
+            <path d="M-12 0H12" stroke="#becdca" stroke-width="2"/>
+            <path d="M-7-10L5-13L11-8V10L-1 13L-7 8Z" fill="url(#craft-foil)" stroke="#d5d1ae" stroke-width=".65"/>
+            <path d="M-7-10L-1-5L11-8M-1-5V13" fill="none" stroke="#554633"/>
+            <ellipse cx="2" cy="-10" rx="5" ry="2.5" fill="#101c25" stroke="#a8babd" stroke-width=".6"/>
+            <path d="M-1 13V20M-6 17Q-1 24 4 17" fill="none" stroke="#d0d9cd" stroke-width="1"/>
+            <circle cx="8" cy="6" r="1.1" fill="#baffeb"/>
+          </g>
+          <g id="relay-craft">
+            <path d="M-37-7H-10V8H-37ZM10-7H37V8H10Z" fill="url(#solar-cells)" stroke="#b0c9d2" stroke-width=".7"/>
+            <path d="M-12 0H12" stroke="#b0c9d2" stroke-width="2"/>
+            <path d="M-8-10L3-14L10-8V9L-2 13L-8 7Z" fill="url(#craft-metal)" stroke="#d1d8d4" stroke-width=".6"/>
+            <path d="M-8-10L-2-5L10-8M-2-5V13" fill="none" stroke="#4c646f"/>
+            <path d="M0-12V-19M-8-24Q0-12 8-24Z" fill="#99afba" stroke="#c9dad9" stroke-width=".8"/>
+            <path d="M0-19L3-25" stroke="#d0d9cd" stroke-width=".8"/>
+            <circle cx="5" cy="6" r="1" fill="#c3f9e7"/>
+          </g>
+        </defs>
+        <g id="orbital-paths"></g>
+        <g id="orbital-crafts"></g>
+      </svg>
       <canvas id="intelligence-field" aria-hidden="true"></canvas>
       <svg class="world-connectors" id="world-connectors" aria-hidden="true"></svg>
       <div id="world-pins" aria-label="Geographically anchored observations"></div>
@@ -181,17 +208,23 @@
       </div>
       <div class="world-position"><span class="signal"></span><span id="world-coordinates">DRAG TO ORBIT · SELECT TO EXPLORE</span></div>
       <div class="world-dock" aria-label="emem — the world's shared memory">
-        <button class="memory-nexus emem-companion" type="button" aria-label="Open emem">
+        <svg class="companion-orbit" viewBox="0 0 640 310" preserveAspectRatio="none" aria-hidden="true"><path d="M72 145Q320 30 568 145M112 232Q320 305 528 232"/><path class="companion-orbit-inner" d="M95 149Q320 78 545 149"/></svg>
+        <button class="memory-nexus emem-companion" type="button" aria-label="Ask emem about a place" aria-controls="companion-place">
           <span class="companion-halo" aria-hidden="true"></span>
           <span class="ai-explorer" aria-hidden="true"><img src="assets/emem-companion.webp" alt="" width="1254" height="1254" fetchpriority="high" draggable="false"></span>
-          <span class="nexus-name">emem</span><span class="nexus-invite">the world's shared memory</span>
+          <span class="nexus-name">emem</span><span class="nexus-invite">Choose an action ↗</span>
         </button>
         <nav class="companion-actions" aria-label="Memory actions">
-          <button type="button" data-station="generate" class="action-locate"><span class="action-icon">⬡</span><span>Locate<small>Ground a place</small></span></button>
-          <button type="button" data-station="share" class="action-cite"><span class="action-icon">◇</span><span>Cite<small>Token for agents</small></span></button>
-          <button type="button" data-station="verify" class="action-verify"><span class="action-icon">⊘</span><span>Verify<small>Check the receipt</small></span></button>
-          <button type="button" data-station="recall" class="action-recall"><span class="action-icon">⌕</span><span>Recall<small>Ask a place</small></span></button>
+          <button type="button" data-station="generate" class="action-locate"><span class="action-icon" aria-hidden="true">⬡</span><span>Locate<small>Ground a place</small></span><span class="action-arrow" aria-hidden="true">↗</span></button>
+          <button type="button" data-station="share" class="action-cite"><span class="action-icon" aria-hidden="true">◇</span><span>Cite<small>Token for agents</small></span><span class="action-arrow" aria-hidden="true">↗</span></button>
+          <button type="button" data-station="verify" class="action-verify"><span class="action-icon" aria-hidden="true">⊘</span><span>Verify<small>Check the receipt</small></span><span class="action-arrow" aria-hidden="true">↗</span></button>
+          <button type="button" data-station="recall" class="action-recall"><span class="action-icon" aria-hidden="true">⌕</span><span>Recall<small>Ask a place</small></span><span class="action-arrow" aria-hidden="true">↗</span></button>
         </nav>
+        <form class="companion-query" id="companion-query">
+          <label class="sr-only" for="companion-place">Ask emem about a place</label>
+          <input id="companion-place" name="place" placeholder="Ask emem about a place…" required maxlength="240" autocomplete="off">
+          <button type="submit" aria-label="Recall this place">↗</button>
+        </form>
       </div>
       <div class="world-bottom"><span>emem <i>/</i> THE OPEN MEMORY PROTOCOL</span><a href="#explore">Explore the observation archive <span aria-hidden="true">↓</span></a></div>
       <noscript><p class="world-noscript">Explore the full <a href="#explore">observation archive ↓</a>. Enable JavaScript to rotate Earth and open memory stations.</p></noscript>
@@ -788,7 +821,7 @@
       </div>
       <div class="footer-wordmark" aria-hidden="true">vortx.ai</div>
       <div class="footer-base"><span>© 2026 Vortx AI Private Limited<br>CIN U72200JH2024PTC023101</span><span><a href="/privacy.html">Privacy</a> &nbsp; <a href="/terms.html">Terms</a> &nbsp; <a href="/refund.html">Refunds</a> &nbsp; <a href="/contact.html">Contact</a></span><span>12.9716° N / 77.5946° E<br>BENGALURU · EARTH</span></div>
-      <p class="asset-credits">Earth imagery: <a href="https://svs.gsfc.nasa.gov/2915" target="_blank" rel="noopener">NASA / Goddard SVS · Reto Stöckli</a>. Archive imagery and source records: <a href="https://vortx-ai.github.io/ememdemo/" target="_blank" rel="noopener">emem demo</a>, NASA, ESA, CSA, STScI, USGS and the credited Earth providers. Orbital paths and the memory grid are illustrative.</p>
+      <p class="asset-credits">Earth imagery: <a href="https://svs.gsfc.nasa.gov/2915" target="_blank" rel="noopener">NASA / Goddard SVS · Reto Stöckli</a>. Archive imagery and source records: <a href="https://vortx-ai.github.io/ememdemo/" target="_blank" rel="noopener">emem demo</a>, NASA, ESA, CSA, STScI, USGS and the credited Earth providers. Spacecraft, orbital paths and the memory grid are illustrative, not live positions.</p>
     </div>
   </footer>
   <script src="orbital.js" defer></script>
