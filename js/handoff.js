@@ -4,7 +4,8 @@
  * token. The only thing that crosses to agent B (js/receiver.js, a Web
  * Worker) is that token string: postMessage(token). Everything B reports it
  * fetched or computed itself. This file draws: the two verb logs, the wire,
- * the decoded tile, the 10 m pixel, the capture geometry, the byte ledger.
+ * the decoded tile, the 10 m pixel, the capture geometry, the byte ledger, and
+ * the line an agent's reasoning receives in place of the imagery.
  */
 /* global vx */
 (function () {
@@ -14,7 +15,7 @@
   var EMEM = 'https://emem.dev';
   var $ = function (s) { return root.querySelector(s); };
   var logA = $('[data-log="a"]'), logB = $('[data-log="b"]'), wire = $('[data-wire]'), packet = $('[data-packet]');
-  var goBtn = $('[data-handoff]'), tileCv = $('[data-tile]'), zoomCv = $('[data-zoom]'), capFig = $('[data-capture]'), ledgerEl = $('[data-ledger]');
+  var goBtn = $('[data-handoff]'), tileCv = $('[data-tile]'), zoomCv = $('[data-zoom]'), capFig = $('[data-capture]'), ledgerEl = $('[data-ledger]'), reasonEl = $('[data-reason]');
   var status = $('[data-status]');
   var state = { place: null, token: null, fact: null, running: false, worker: null, tiles: {}, t0: 0 };
   var saveData = navigator.connection && navigator.connection.saveData;
@@ -89,6 +90,8 @@
       var token = 'emem:fact:' + place.cell + ':' + f.fact_cid;
       state.token = token; state.fact = f;
       line(logA, { verb: 'mint', noun: 'token', kv: { token: token, bytes: new TextEncoder().encode(token).length }, state: 'ok', t: ms() });
+      window.vxLastToken = token;
+      document.dispatchEvent(new CustomEvent('vx:token', { detail: { token: token } }));
       packet.textContent = token;
       goBtn.disabled = false;
       setStatus('ready: agent A holds the fact; agent B holds nothing yet');
@@ -133,6 +136,7 @@
     else if (ok) setStatus('agent B verified the token; this fact is not re-derived here', 'is-ok');
     drawLedger(m);
     if (x.capture) drawCapture(x.capture);
+    if (ok) drawReason(x);
     root.classList.add('is-done');
   }
 
@@ -152,6 +156,7 @@
     [tileCv, zoomCv].forEach(function (c) { if (c) c.getContext('2d').clearRect(0, 0, c.width, c.height); });
     if (capFig) capFig.innerHTML = '';
     if (ledgerEl) ledgerEl.innerHTML = '';
+    if (reasonEl) reasonEl.innerHTML = '';
     root.classList.remove('is-done', 'has-tile');
     var cap = $('[data-tile-cap]'); if (cap) cap.textContent = '';
   }
@@ -247,6 +252,22 @@
       var w = Math.max(1.5, 100 * Math.log10(Math.max(1, r[2])) / max), pct = src ? (100 * r[2] / src) : 0;
       return '<div class="lg-row"><b class="v">' + r[0] + '</b><span class="lg-n">' + r[1] + '</span><span class="lg-bar"><i style="width:' + w.toFixed(1) + '%"></i></span><span class="lg-x">' + vx.group(r[2]) + ' B' + (src && r[0] !== 'files' ? ' · ' + (pct < 0.01 ? pct.toExponential(1) : pct.toFixed(2)) + '%' : '') + '</span></div>';
     }).join('') + '<p class="lg-foot">bar length is log<sub>10</sub>(bytes). ' + (src ? 'Agent B read ' + (100 * archive / src).toFixed(2) + '% of the files, from their source; zero bytes of imagery passed between the agents.' : '') + '</p>';
+  }
+
+  /* ---------- reason: what enters the agent's context instead of the imagery ---------- */
+  function drawReason(x) {
+    if (!reasonEl || !state.bfact) return;
+    var f = state.bfact, tok = state.token, src = x.source_bytes || 0;
+    var rows = [
+      ['read', 'the value', [['band', f.band], ['value', String(f.value)], ['captured', (f.captured_at || '').slice(0, 10)]]],
+      ['cite', 'the token', [['token', tok], ['bytes', vx.group(vx.enc.encode(tok).length)]]],
+      ['trust', 'the proof', [['receipt', 'verified here'], ['recomputed', x.exact ? 'bit for bit' : 'not re-derived'], ['signer', (f.signer || '').slice(0, 8) + '…']]],
+      ['keep', 'past compaction', [['re-verify', 'any agent, any time, from the token alone']]]
+    ];
+    var claim = f.band + '=' + f.value + ' ' + tok;
+    reasonEl.innerHTML = '<ul class="vl">' + rows.map(function (r) {
+      return '<li><b class="v">' + r[0] + '</b><span class="n">' + r[1] + ' ' + r[2].map(function (p) { return '<i class="kv"><span class="k">' + p[0] + '</span><span class="x">' + String(p[1]).replace(/[<&]/g, function (c) { return c === '<' ? '&lt;' : '&amp;'; }) + '</span></i>'; }).join(' ') + '</span></li>';
+    }).join('') + '</ul><p class="lg-foot">claim + citation: ' + vx.group(vx.enc.encode(claim).length) + ' bytes of context' + (src ? ' · imagery left in the archive: ' + vx.fmtBytes(src) : '') + '</p>';
   }
 
   /* ---------- controls ---------- */

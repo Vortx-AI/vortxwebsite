@@ -1,7 +1,8 @@
 /* orbit.js: the sky above the memory, computed, not drawn.
  *
- *   satellites  Sentinel-2A, 2B, 2C from public two-line elements (CelesTrak),
- *               propagated with SGP4 (vendor/sgp4.js) every frame
+ *   satellites  Sentinel-2A, 2B, 2C (imaging), the Hubble Space Telescope and the ISS,
+ *               from public two-line elements (CelesTrak), propagated with SGP4
+ *               (vendor/sgp4.js) every frame
  *   sun         Vallado's low-precision ephemeris (0.01 deg), so the day/night
  *               line and the city lights sit where they are right now
  *   stars       Yale Bright Star Catalogue (V <= 4.6), precessed J2000 -> date,
@@ -17,8 +18,16 @@
   if (!stage || !window.satellite) return;
 
   var RE = 6378.137, RMEAN = 6371.0088, HALF_SWATH = 145, DEG = Math.PI / 180;
-  var TLE_LIVE = 'https://celestrak.org/NORAD/elements/gp.php?NAME=SENTINEL-2&FORMAT=TLE';
-  var TLE_SNAPSHOT = '/data/tle-sentinel-2.txt';
+  // one query per object group, as CelesTrak asks; each cached two hours, each with the dated snapshot behind it
+  var TLE_SOURCES = [
+    { key: 's2', url: 'https://celestrak.org/NORAD/elements/gp.php?NAME=SENTINEL-2&FORMAT=TLE', norad: [40697, 42063, 60989] },
+    { key: 'hst', url: 'https://celestrak.org/NORAD/elements/gp.php?CATNR=20580&FORMAT=TLE', norad: [20580] },
+    { key: 'iss', url: 'https://celestrak.org/NORAD/elements/gp.php?CATNR=25544&FORMAT=TLE', norad: [25544] }
+  ];
+  var TLE_SNAPSHOT = '/data/tle.txt';
+  // what each object does; only the imagers get a swath and a next-pass search
+  var ROLE = { S2A: 'image', S2B: 'image', S2C: 'image', HST: 'observe', ISS: 'crew' };
+  function isImager(sat) { return ROLE[sat.short] === 'image'; }
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var sky = stage.querySelector('[data-sky]'), glc = stage.querySelector('[data-earth]'), over = stage.querySelector('[data-over]');
@@ -26,7 +35,8 @@
   var S = {
     sats: [], stars: [], place: null, follow: null, warp: 1, simAt: Date.now(), realAt: performance.now(),
     lat0: 13, lon0: 78, d: 3.25, tanHalf: Math.tan(23 * DEG), dragging: false, dirty: true, lastTrack: 0,
-    elements: null, visible: true, dpr: Math.min(window.devicePixelRatio || 1, 1.75), W: 0, H: 0, next: null
+    elements: null, visible: true, dpr: Math.min(window.devicePixelRatio || 1, 1.75), W: 0, H: 0, next: null,
+    cx: 0.5, cy: 0.5  // where the Earth's centre sits on the stage, as fractions; the stylesheet decides per layout
   };
 
   /* ---------- time ---------- */
@@ -52,7 +62,7 @@
   function project(cam, P) {
     var v = sub(P, cam.pos), z = dot(v, cam.fwd);
     if (z <= 0) return null;
-    return { x: S.W / 2 + cam.f * dot(v, cam.right) / z, y: S.H / 2 - cam.f * dot(v, cam.up) / z, z: z };
+    return { x: S.W * S.cx + cam.f * dot(v, cam.right) / z, y: S.H * S.cy - cam.f * dot(v, cam.up) / z, z: z };
   }
   function surfaceVisible(cam, P) { return dot(P, cam.pos) > 1.0005; }
   function occluded(cam, P) {
@@ -101,25 +111,43 @@
     for (var i = 0; i + 2 < L.length; i++) {
       if (L[i + 1][0] === '1' && L[i + 2][0] === '2') {
         var rec = satellite.twoline2satrec(L[i + 1], L[i + 2]);
-        var name = L[i].trim(), short = name.replace('SENTINEL-', 'S');
-        out.push({ name: name, short: short, rec: rec, norad: +L[i + 1].slice(2, 7), epoch: (rec.jdsatepoch + (rec.jdsatepochF || 0) - 2440587.5) * 86400000, track: [], state: null });
+        var name = L[i].trim(), short = name.replace('SENTINEL-', 'S').replace(/\s*\(.*\)$/, '');
+        // columns 10-17 of line 1: the international designator, i.e. the launch this object rode (yy, launch of the year, piece)
+        var id = L[i + 1].slice(9, 17).trim(), yy = +id.slice(0, 2);
+        var cospar = id ? (yy < 57 ? 2000 + yy : 1900 + yy) + '-' + id.slice(2, 5) + id.slice(5) : '';
+        out.push({ name: name, short: short, rec: rec, norad: +L[i + 1].slice(2, 7), cospar: cospar, epoch: (rec.jdsatepoch + (rec.jdsatepochF || 0) - 2440587.5) * 86400000, track: [], state: null });
         i += 2;
       }
     }
     return out;
   }
-  function cached() { try { var c = JSON.parse(localStorage.getItem('vx-tle') || 'null'); if (c && Date.now() - c.at < 2 * 3600e3) return c; } catch (e) {} return null; }
-  function loadElements() {
-    var c = cached();
-    if (c) return Promise.resolve({ txt: c.txt, from: 'celestrak.org', fetched: c.at });
-    // CelesTrak throttles repeat callers; give it a few seconds, then fall back to the dated snapshot
+  function cached(key) { try { var c = JSON.parse(localStorage.getItem('vx-tle-' + key) || 'null'); if (c && Date.now() - c.at < 2 * 3600e3) return c; } catch (e) {} return null; }
+  function fetchSource(src) {
+    var c = cached(src.key);
+    if (c) return Promise.resolve(c.txt);
+    // CelesTrak throttles repeat callers; give it a few seconds, then the dated snapshot stands in
     var ctl = window.AbortController ? new AbortController() : null, timer = ctl && setTimeout(function () { ctl.abort(); }, 6000);
-    return fetch(TLE_LIVE, ctl ? { signal: ctl.signal } : {}).then(function (r) { clearTimeout(timer); if (!r.ok) throw new Error(r.status); return r.text(); }).then(function (txt) {
+    return fetch(src.url, ctl ? { signal: ctl.signal } : {}).then(function (r) { clearTimeout(timer); if (!r.ok) throw new Error(r.status); return r.text(); }).then(function (txt) {
       if (!/^1 \d{5}/m.test(txt)) throw new Error('no elements');
-      try { localStorage.setItem('vx-tle', JSON.stringify({ at: Date.now(), txt: txt })); } catch (e) {}
-      return { txt: txt, from: 'celestrak.org', fetched: Date.now() };
-    }).catch(function () {
-      return fetch(TLE_SNAPSHOT).then(function (r) { return r.text(); }).then(function (txt) { return { txt: txt, from: 'vortx.ai snapshot (celestrak.org unreachable)', fetched: null }; });
+      try { localStorage.setItem('vx-tle-' + src.key, JSON.stringify({ at: Date.now(), txt: txt })); } catch (e) {}
+      return txt;
+    }).catch(function () { return null; });
+  }
+  function blocks(txt, norads) {
+    var L = txt.split(/\r?\n/).filter(function (l) { return l.trim(); }), out = [];
+    for (var i = 0; i + 2 < L.length; i++) if (L[i + 1][0] === '1' && L[i + 2][0] === '2' && norads.indexOf(+L[i + 1].slice(2, 7)) >= 0) { out.push(L[i], L[i + 1], L[i + 2]); i += 2; }
+    return out.join('\n');
+  }
+  function loadElements() {
+    return Promise.all(TLE_SOURCES.map(fetchSource)).then(function (got) {
+      var live = got.filter(Boolean).length, all = got.every(Boolean);
+      var join = function (snap) {
+        return TLE_SOURCES.map(function (s, i) { return got[i] ? blocks(got[i], s.norad) : blocks(snap || '', s.norad); }).filter(Boolean).join('\n');
+      };
+      if (all) return { txt: join(''), from: 'celestrak.org', fetched: Date.now() };
+      return fetch(TLE_SNAPSHOT).then(function (r) { return r.text(); }).catch(function () { return ''; }).then(function (snap) {
+        return { txt: join(snap), from: live ? 'celestrak.org + vortx.ai snapshot' : 'vortx.ai snapshot (celestrak.org unreachable)', fetched: null };
+      });
     });
   }
   function stateAt(sat, date) {
@@ -144,23 +172,24 @@
 
   /* ---------- next daylight pass inside the swath ---------- */
   function nextPass(place, from, cb) {
-    if (!place || !S.sats.length) return;
+    var sats = S.sats.filter(isImager);
+    if (!place || !sats.length) return;
     var P = ll(place.lat, place.lng), horizon = 6 * 86400e3, step = 30e3, t = from, best = null, token = {};
     S.nextJob = token;
-    var prev = S.sats.map(function () { return { d: Infinity, dd: -1 }; });
+    var prev = sats.map(function () { return { d: Infinity, dd: -1 }; });
     function angKm(sat, tt) { var st = stateAt(sat, new Date(tt)); return st ? Math.acos(Math.min(1, dot(norm(st.p), P))) * RMEAN : Infinity; }
     (function slice() {
       if (S.nextJob !== token) return;
       var end = Math.min(t + 2400 * step, from + horizon);
       for (; t < end; t += step) {
-        for (var i = 0; i < S.sats.length; i++) {
-          var d = angKm(S.sats[i], t), pr = prev[i];
+        for (var i = 0; i < sats.length; i++) {
+          var d = angKm(sats[i], t), pr = prev[i];
           if (pr.dd < 0 && d > pr.d && pr.d < HALF_SWATH * 1.3) {
             // a minimum just passed: refine to 1 s, then keep it if it is a daylight pass inside the swath
             var lo = t - 2 * step, hi = t, bt = lo, bd = Infinity;
-            for (var q = lo; q <= hi; q += 1000) { var dq = angKm(S.sats[i], q); if (dq < bd) { bd = dq; bt = q; } }
+            for (var q = lo; q <= hi; q += 1000) { var dq = angKm(sats[i], q); if (dq < bd) { bd = dq; bt = q; } }
             var sunEl = Math.asin(dot(sunEcef(new Date(bt)), P)) / DEG;
-            if (bd <= HALF_SWATH && sunEl > 0 && (!best || bt < best.t)) best = { t: bt, sat: S.sats[i], km: bd, sunEl: sunEl };
+            if (bd <= HALF_SWATH && sunEl > 0 && (!best || bt < best.t)) best = { t: bt, sat: sats[i], km: bd, sunEl: sunEl };
           }
           pr.dd = d - pr.d; pr.d = d;
         }
@@ -178,13 +207,13 @@
   var FS = [
     '#extension GL_OES_standard_derivatives : enable',
     'precision highp float;',
-    'varying vec2 v;uniform vec3 uPos,uFwd,uUp,uRight,uSun;uniform float uTan,uAsp;uniform sampler2D uDay,uNight;',
+    'varying vec2 v;uniform vec3 uPos,uFwd,uUp,uRight,uSun;uniform vec2 uOff;uniform float uTan,uAsp;uniform sampler2D uDay,uNight;',
     'const float PI=3.14159265359;',
     'vec4 tex(sampler2D s,float lon,float lat){',
     '  float u1=fract(lon/(2.*PI)+.5),u2=fract(lon/(2.*PI))-.5;float vv=.5-lat/PI;',
     '  float u=fwidth(u1)<=fwidth(u2)+1e-6?u1:u2;return texture2D(s,vec2(u,vv));}',
     'void main(){',
-    '  vec3 rd=normalize(uFwd+v.x*uTan*uAsp*uRight+v.y*uTan*uUp);vec3 ro=uPos;',
+    '  vec3 rd=normalize(uFwd+(v.x-uOff.x)*uTan*uAsp*uRight+(v.y-uOff.y)*uTan*uUp);vec3 ro=uPos;',
     '  float b=dot(ro,rd),c=dot(ro,ro)-1.,h=b*b-c;',
     '  vec3 pc=ro+rd*(-b);float dca=length(pc);',
     '  vec3 atm=vec3(.33,.58,1.);',
@@ -217,7 +246,7 @@
     var buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
     var loc = gl.getAttribLocation(prog, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
-    ['uPos', 'uFwd', 'uUp', 'uRight', 'uSun', 'uTan', 'uAsp', 'uDay', 'uNight'].forEach(function (k) { U[k] = gl.getUniformLocation(prog, k); });
+    ['uPos', 'uFwd', 'uUp', 'uRight', 'uSun', 'uOff', 'uTan', 'uAsp', 'uDay', 'uNight'].forEach(function (k) { U[k] = gl.getUniformLocation(prog, k); });
     gl.uniform1i(U.uDay, 0); gl.uniform1i(U.uNight, 1);
     gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
     return true;
@@ -242,7 +271,7 @@
     if (!gl || !ready) return;
     gl.viewport(0, 0, glc.width, glc.height); gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
     gl.uniform3fv(U.uPos, cam.pos); gl.uniform3fv(U.uFwd, cam.fwd); gl.uniform3fv(U.uUp, cam.up); gl.uniform3fv(U.uRight, cam.right);
-    gl.uniform3fv(U.uSun, sun); gl.uniform1f(U.uTan, S.tanHalf); gl.uniform1f(U.uAsp, S.W / S.H);
+    gl.uniform3fv(U.uSun, sun); gl.uniform2f(U.uOff, 2 * S.cx - 1, 1 - 2 * S.cy); gl.uniform1f(U.uTan, S.tanHalf); gl.uniform1f(U.uAsp, S.W / S.H);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
   }
 
@@ -255,7 +284,7 @@
     for (var i = 0; i < S.stars.length; i++) {
       var st = S.stars[i], e = eciToEcef(mul(M, st.u), g), z = dot(e, cam.fwd);
       if (z <= 0.2) continue;
-      var x = S.W / 2 + cam.f * dot(e, cam.right) / z, y = S.H / 2 - cam.f * dot(e, cam.up) / z;
+      var x = S.W * S.cx + cam.f * dot(e, cam.right) / z, y = S.H * S.cy - cam.f * dot(e, cam.up) / z;
       if (x < -4 || y < -4 || x > S.W + 4 || y > S.H + 4) continue;
       var r = Math.max(0.35, 1.9 - 0.34 * st.m);
       sx.globalAlpha = Math.max(0.18, Math.min(1, 1.15 - 0.17 * st.m));
@@ -285,7 +314,7 @@
     return [L, R];
   }
   // satellite hues stay clear of the semantic colours (green = verified here, amber = claimed, red = failed)
-  var COLORS = { S2A: '#8fb8ff', S2B: '#ff9f7a', S2C: '#cda8ff' };
+  var COLORS = { S2A: '#8fb8ff', S2B: '#ff9f7a', S2C: '#cda8ff', HST: '#f2f4f7', ISS: '#b9c3cf' };
   var MONO = '';
   function mono() { if (!MONO) MONO = (getComputedStyle(document.documentElement).getPropertyValue('--mono') || '').trim() || 'ui-monospace, monospace'; return MONO; }
   function drawOver(cam, t) {
@@ -293,7 +322,8 @@
     ox.lineCap = 'round'; ox.lineJoin = 'round';
     S.sats.forEach(function (sat) {
       var col = COLORS[sat.short] || '#ddd';
-      if (sat.track.length) {
+      var img = isImager(sat);
+      if (sat.track.length && img) {
         // swath: the 290 km ribbon the imager sweeps; brighter where the ground is sunlit (MSI images in daylight)
         var e = swathEdges(sat.track);
         [e[0], e[1]].forEach(function (edge) {
@@ -304,10 +334,12 @@
             }
           });
         });
+      }
+      if (sat.track.length) {
         trackPath(cam, sat.track, 1.001, function (seg) {
           for (var i = 1; i < seg.length; i++) {
             var fut = seg[i].k > 0;
-            ox.strokeStyle = col; ox.globalAlpha = (fut ? 0.55 : 0.9) * (seg[i].sun > 0 ? 1 : 0.45); ox.lineWidth = fut ? 1 : 1.6;
+            ox.strokeStyle = col; ox.globalAlpha = (fut ? 0.55 : 0.9) * (seg[i].sun > 0 ? 1 : 0.45) * (img ? 1 : 0.5); ox.lineWidth = img ? (fut ? 1 : 1.6) : 0.8;
             ox.setLineDash(fut ? [3, 4] : []);
             ox.beginPath(); ox.moveTo(seg[i - 1].x, seg[i - 1].y); ox.lineTo(seg[i].x, seg[i].y); ox.stroke();
           }
@@ -322,6 +354,7 @@
       var gr = ox.createRadialGradient(q.x, q.y, 0, q.x, q.y, 14); gr.addColorStop(0, col); gr.addColorStop(1, 'rgba(0,0,0,0)');
       ox.fillStyle = gr; ox.globalAlpha = 0.5; ox.beginPath(); ox.arc(q.x, q.y, 14, 0, 2 * Math.PI); ox.fill();
       ox.globalAlpha = 1; ox.fillStyle = '#fff'; ox.beginPath(); ox.arc(q.x, q.y, 2.6, 0, 2 * Math.PI); ox.fill();
+      if (!img) { ox.strokeStyle = col; ox.lineWidth = 1; ox.beginPath(); ox.arc(q.x, q.y, 6, 0, 2 * Math.PI); ox.stroke(); }
       ox.font = '600 11px ' + mono(); ox.fillStyle = col;
       ox.fillText(sat.short, q.x + 9, q.y - 8);
     });
@@ -360,10 +393,12 @@
     var r = stage.getBoundingClientRect();
     S.W = Math.max(1, r.width); S.H = Math.max(1, r.height);
     [sky, glc, over].forEach(function (c) { c.width = Math.round(S.W * S.dpr); c.height = Math.round(S.H * S.dpr); c.style.width = S.W + 'px'; c.style.height = S.H + 'px'; });
-    // keep the orbit shell (1.124 R) inside the shorter side
-    var fitH = Math.asin(1.13 / S.d) * 1.08;
-    var aspect = S.W / S.H;
-    S.tanHalf = aspect >= 1 ? Math.tan(fitH) : Math.tan(fitH) / aspect;
+    // the stylesheet places the Earth (--cx, --cy); keep the orbit shell (1.13 R, above the ISS and Sentinel-2) inside the nearest edge
+    var cs = getComputedStyle(stage);
+    S.cx = parseFloat(cs.getPropertyValue('--cx')) || 0.5; S.cy = parseFloat(cs.getPropertyValue('--cy')) || 0.5;
+    var room = Math.min(S.W * S.cx, S.W * (1 - S.cx), S.H * S.cy, S.H * (1 - S.cy)) * 0.96;
+    var f = room / Math.tan(Math.asin(1.13 / S.d) * 1.04);
+    S.tanHalf = (S.H / 2) / f;
     S.dirty = true;
   }
 
@@ -379,7 +414,7 @@
     S.sats.forEach(function (sat) {
       var st = sat.state; if (!st) return;
       var sunAt = dot(norm(st.p), sun) > 0 ? 'day' : 'night';
-      setLine(sat.short, '<b class="v" style="color:' + (COLORS[sat.short] || '#fff') + '">track</b> <span>' + sat.short + '</span> <i>' + ns(st.lat) + ' ' + ew(st.lon) + '</i> <i>alt ' + st.alt.toFixed(1) + ' km</i> <i>v ' + st.v.toFixed(3) + ' km/s</i> <i>' + sunAt + '</i>');
+      setLine(sat.short, '<b class="v" style="color:' + (COLORS[sat.short] || '#fff') + '">' + (ROLE[sat.short] || 'track') + '</b> <span>' + sat.short + '</span> <i>' + ns(st.lat) + ' ' + ew(st.lon) + '</i> <i>' + st.alt.toFixed(1) + ' km</i> <i>' + st.v.toFixed(3) + ' km/s</i> <i>' + sunAt + '</i>');
     });
     var ss = subsolar(sun);
     setLine('sun', '<b class="v">light</b> <span>subsolar</span> <i>' + ns(ss.lat) + ' ' + ew(ss.lon) + '</i> <i>' + utc(t) + (S.warp !== 1 ? ' · warp ×' + S.warp : '') + '</i>');
@@ -500,13 +535,25 @@
     // open on the satellite over the day side (the optical imager works in daylight), until the visitor steers
     if (!S.user) {
       var d0 = new Date(simNow()), sun0 = sunEcef(d0), pick = null, best = 0;
-      S.sats.forEach(function (sat) { var st = stateAt(sat, d0); if (st) { var el = dot(norm(st.p), sun0); if (el > best) { best = el; pick = sat; } } });
+      S.sats.filter(isImager).forEach(function (sat) { var st = stateAt(sat, d0); if (st) { var el = dot(norm(st.p), sun0); if (el > best) { best = el; pick = sat; } } });
       if (pick) S.follow = pick;
     }
     if (S.place) setPlace(S.place);
     markControls(); kick();
-    document.dispatchEvent(new CustomEvent('vx:elements', { detail: { from: el.from, sats: S.sats.map(function (s) { return { name: s.name, norad: s.norad, epoch: s.epoch }; }) } }));
+    document.dispatchEvent(new CustomEvent('vx:elements', { detail: { from: el.from, sats: S.sats.map(function (s) { return { name: s.name, short: s.short, norad: s.norad, cospar: s.cospar, epoch: s.epoch }; }) } }));
   });
+  // other sections read the same propagator rather than keeping a second copy of the sky
+  window.vxOrbit = {
+    now: simNow,
+    elements: function () { return S.elements; },
+    states: function (t) {
+      var d = new Date(t || simNow());
+      return S.sats.map(function (x) {
+        var st = stateAt(x, d);
+        return st && { short: x.short, name: x.name, norad: x.norad, cospar: x.cospar, role: ROLE[x.short], epoch: x.epoch, alt: st.alt, lat: st.lat, lon: st.lon, v: st.v };
+      }).filter(Boolean);
+    }
+  };
   // default place until the handoff names one
   var def = stage.getAttribute('data-place');
   if (def) { var p = def.split(','); setPlace({ name: p[0], lat: +p[1], lng: +p[2] }); }

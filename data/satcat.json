@@ -1,0 +1,77 @@
+{
+ "schema": "vortx.satcat_snapshot.v1",
+ "source": "https://celestrak.org/satcat/ (SATCAT records and launch-site codes)",
+ "fetched_at": "2026-09-25T00:05:55Z",
+ "records": [
+  {
+   "OBJECT_NAME": "SENTINEL-2A",
+   "OBJECT_ID": "2015-028A",
+   "NORAD_CAT_ID": 40697,
+   "OBJECT_TYPE": "PAY",
+   "OWNER": "ESA",
+   "LAUNCH_DATE": "2015-06-23",
+   "LAUNCH_SITE": "FRGUI",
+   "PERIOD": 100.64,
+   "INCLINATION": 98.57,
+   "APOGEE": 790,
+   "PERIGEE": 788
+  },
+  {
+   "OBJECT_NAME": "SENTINEL-2B",
+   "OBJECT_ID": "2017-013A",
+   "NORAD_CAT_ID": 42063,
+   "OBJECT_TYPE": "PAY",
+   "OWNER": "ESA",
+   "LAUNCH_DATE": "2017-03-07",
+   "LAUNCH_SITE": "FRGUI",
+   "PERIOD": 100.64,
+   "INCLINATION": 98.57,
+   "APOGEE": 790,
+   "PERIGEE": 788
+  },
+  {
+   "OBJECT_NAME": "SENTINEL-2C",
+   "OBJECT_ID": "2024-157A",
+   "NORAD_CAT_ID": 60989,
+   "OBJECT_TYPE": "PAY",
+   "OWNER": "ESA",
+   "LAUNCH_DATE": "2024-09-05",
+   "LAUNCH_SITE": "FRGUI",
+   "PERIOD": 100.64,
+   "INCLINATION": 98.57,
+   "APOGEE": 790,
+   "PERIGEE": 788
+  },
+  {
+   "OBJECT_NAME": "HST",
+   "OBJECT_ID": "1990-037B",
+   "NORAD_CAT_ID": 20580,
+   "OBJECT_TYPE": "PAY",
+   "OWNER": "US",
+   "LAUNCH_DATE": "1990-04-24",
+   "LAUNCH_SITE": "AFETR",
+   "PERIOD": 94.01,
+   "INCLINATION": 28.47,
+   "APOGEE": 472,
+   "PERIGEE": 470
+  },
+  {
+   "OBJECT_NAME": "ISS (ZARYA)",
+   "OBJECT_ID": "1998-067A",
+   "NORAD_CAT_ID": 25544,
+   "OBJECT_TYPE": "PAY",
+   "OWNER": "ISS",
+   "LAUNCH_DATE": "1998-11-20",
+   "LAUNCH_SITE": "TYMSC",
+   "PERIOD": 92.95,
+   "INCLINATION": 51.63,
+   "APOGEE": 422,
+   "PERIGEE": 416
+  }
+ ],
+ "sites": {
+  "AFETR": "Air Force Eastern Test Range, Florida, USA",
+  "FRGUI": "Europe's Spaceport, Kourou, French Guiana",
+  "TYMSC": "Tyuratam Missile and Space Center, Kazakhstan (Also known as Baikonur Cosmodrome)"
+ }
+}

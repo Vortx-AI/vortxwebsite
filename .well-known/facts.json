@@ -1,7 +1,7 @@
 {
   "schema": "vortx.facts.v1",
   "note": "Every number this site states about emem, with the live source that can refute it. kind=structural and kind=floor are asserted in copy and change only by decision; tools/drift_check.py checks that the copy still says them. kind=live is never typed into any page: the page fetches it at view time, and the weekly run only checks that its source still answers and derives. If a value here and a live endpoint disagree, trust the endpoint and fix this file.",
-  "as_of": "2026-09-24",
+  "as_of": "2026-09-25",
   "facts": {
     "emem.token_types": {
       "value": 9,

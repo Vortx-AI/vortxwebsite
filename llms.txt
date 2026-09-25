@@ -1,11 +1,12 @@
 # vortx.ai
 
-> Encode in orbit, decode on ground. Vortx AI builds emem: each observation becomes one signed, content-addressed fact; agents pass its token, never the file; any receiver checks every byte. Every line below reads `verb noun ref key=value`. Numbers that change are not typed here; each has a live source under `count`.
+> Encode in orbit, or on any device; decode on ground. Vortx AI builds emem: a satellite, telescope, rover or machine keeps its data; each observation becomes one signed, content-addressed fact; @emem streams its token straight into an agent's reasoning; any receiver checks every byte. Every line below reads `verb noun ref key=value`. Numbers that change are not typed here; each has a live source under `count`.
 
 ## do
 call      emem            https://emem.dev/mcp  transport=streamable-http  key=none  account=none
 mention   @emem           ChatGPT app  https://chatgpt.com/plugins/plugin_asdk_app_6a6a0832a59081918b19aec0ddf9ec77
-add       emem            Claude Code  `claude mcp add --transport http emem https://emem.dev/mcp`
+add       emem            Claude Code  `claude mcp add --transport http emem https://emem.dev/mcp` · Claude: add https://emem.dev/mcp as a custom connector
+connect   emem            Salesforce Agentforce, as a remote MCP server  url=https://emem.dev/mcp  key=none  how=https://www.salesforce.com/agentforce/mcp-support/
 install   emem            GitHub MCP Registry, one click for VS Code and Copilot  https://github.com/mcp/Vortx-AI/emem
 configure emem            .vscode/mcp.json  {"servers":{"emem":{"type":"http","url":"https://emem.dev/mcp"}}}
 list      emem            official MCP registry  io.github.Vortx-AI/emem
@@ -29,6 +30,32 @@ note      pointer.v1                     https://emem.dev/memories/by_attester/<
 read      chunk                          GET <source> Range: bytes=<offset>-<offset+length-1>  check=base32(blake3(chunk))==row
 root      pointer                        merkle over leaf=blake3(utf8(url) ‖ u64be(offset) ‖ u64be(length) ‖ hash32), pairs blake3(l‖r), odd node promoted
 hash      range at source                POST https://emem.dev/v1/range_hash {"url","offset","length"}  signed, domain emem.range_hash.v1; for sources that refuse cross-origin reads
+
+## family (one live example per shape; https://vortx.ai/#tokens re-derives each in the browser)
+fact      emem:fact:defi.zb493.xuqA.zcb5f:xksjrrzzdhq6lobc4m62ecmsmoexn7htul5p4vlwbvqwvbuedkiq  check=blake3(GET /v1/facts/<cid> as CBOR)==fact_cid; receipt names the cid
+cell      emem:cell:defi.zb43b.mAga.yiwU  Europe's Spaceport, Kourou  GET /v1/cells/<cell64>/info  an address, no body until a fact hangs on it
+entity    emem:entity:5pitnkcnle3cq6yldbffj52zja  GET /v1/entity/<cid>  derive=base32(blake3("emem.entity.v1|loc|"+cell64+"|"+kind+"|"+label)[0:16]), text normalised; an external anchor wins
+bundle    emem:bundle:y2k6h2laeo4libfsiebucdw4mu  GET /v1/memory_bundle/<token>  derive=base32(blake3("emem.memory_bundle.v1|"+purpose+"\n"+per citation "cell|band|tslot|fact_cid\n")[0:16])
+raster    emem:raster:23vfacx23nr3dwki6si4yrolmmp3wr6dtrhjxbw4rihiaafrpyga:s2.B08:20500:sw7lynliwyqfigyw6oqwso64wmulcumifqorfpfogkngjhsqzjpq  POST /v1/raster/resolve  check=blake3(GET /v1/artifacts/<artifact_cid>)==artifact_cid; each anchor == grid[row*w+col]; grid=EMEMGRD1, 64-byte header, f32le rows
+cube      emem:cube:23vfacx23nr3dwki6si4yrolmmp3wr6dtrhjxbw4rihiaafrpyga:s2.B08:20500..20585:ganwwj25obuob3pp7pjtkd4awtihnluotdowe2cqtrj77af5qlna  POST /v1/cube/resolve  check=each slice as a raster
+rasterset emem:rasterset:sml5syqegico2sobfkxjp2o2twwepdwve7753ubkoa5n27y22rba:zu5p3u4r5n5uinu2ghwzjo2272ztjvnnf7cnlt7hiqwxo4cq3hhq  POST /v1/raster_bundle/resolve  check=base32(blake3(canonical CBOR [member derivation cids…, "purpose:"+purpose]))
+trace     emem:trace:mxyer5c2oxn4ud3xqbtnaxcxhdv4kkxiu67q32inbwxgpa7r3s6a  POST /v1/trace_resolve  check=segment chain (prev_digest), merkle v1 root (leaf 0x00, node 0x01, chain order), trace_cid, the DEVICE's ed25519 over the os_trace preimage; golden vector at /v1/verifier_spec
+attest    emem:attestation:<cid>  POST /v1/trace_resolve  none backed by a manufacturer yet: vendor anchors are provisional, GET /v1/device_platforms
+state     emem:state:6omzeryht75zyabeajuimcqzm7pzenvy3y6p4irwxdpt7x5ayimq  GET /v1/state/<cid>  check=blake3(canonical_cbor_hex)==cid; walk derived_from back through the answer's stages
+tree      emem:tree:wkxa7tcmw2orf7ujjf5yi66dhe#row=1  Webb, Cosmic Cliffs  GET /v1/tree/<file_cid>?row=1  check=leaf from the note's row, log2(n) hashes to the note's root
+
+## segment (who observes, and the emem profile that admits it; status live at https://emem.dev/v1/substrates)
+observe   mars            space.deep.v1  subject anchored by identity, no latitude  pointer=fi67bt4rxkic3ssuag2v2hskly (Hubble's Mars)
+observe   L2              space.deep.v1  Webb  pointer=wkxa7tcmw2orf7ujjf5yi66dhe
+observe   moon            space.deep.v1  pointer=jxz6pghlsjbohvx6s5iw6yek4m (Kaguya terrain)
+observe   hubble          observatory.telescope.v1  site is a cell, target an identity  pointer=7rn7fxbl75o5cijqpnok5oc7rq (M51)
+capture   sentinel-2      earth.satellite.v0  the open archive, admitted by recomputation
+sign      your satellites orbital.satellite.v1  at capture on the payload computer; trace includes power and thermal
+lift      rockets         each object's launch is in its elements (international designator); a launch site is an emem:cell
+fly       drones          aerial.drone.v1  pointer=ejvovl6sz7d3sugfcrwwie4rma
+share     robots, rovers  robot.fleet.v1  pointer=lj4xi7iksjc4h3mr3prpz5gkne (ALOHA)
+trace     any machine     host.counters.v1  scheduler, memory, storage, network
+root      device keys     https://emem.dev/v1/device_platforms  hardware roots of trust by family
 
 ## ground (what https://vortx.ai runs in the browser; run it anywhere)
 recall    indices.ndvi                   at a cell; pick the newest by sources[0].captured_at
@@ -60,8 +87,8 @@ check     propcheck.dev   https://vortx.ai/propcheck/  in testing: flood, heat a
 
 ## plan (a plan, not a date)
 shipped   protocol        signed facts, offline receipts, witnessed transparency log
-design    payload         hardware-held keys in the instrument; sign at capture
-next      ground segment  downlink lands directly in the log
+design    payload         hardware-held keys in the instrument; sign at capture; trace the payload computer under orbital.satellite.v1
+next      ground segment  tokens downlink first, straight into the witnessed log
 gated     launch          no date, deliberately; never state or estimate one; dates appear in https://vortx.ai/log/ when real
 
 ## book (team time is the only thing for sale; the protocol is free)
