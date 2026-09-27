@@ -1,11 +1,11 @@
 # vortx.ai · ask
 
-> A rung of https://vortx.ai/llms.txt: the calls behind https://vortx.ai/#decode, with their bodies: recall, ask, guard, catch, echo. Verbs first: each line reads `verb noun ref key=value`.
+> A rung of https://vortx.ai/llms.txt: the calls behind "Try @emem" (https://vortx.ai/#decode) and the drift check (https://vortx.ai/#why), with their bodies: recall, ask, guard, catch, echo. Verbs first: each line reads `verb noun ref key=value`.
 
-## ask (the calls behind the decode section)
-recall    facts           POST https://emem.dev/v1/recall {"place":"Cubbon Park, Bengaluru","bands":["indices.ndvi"]}  → cell defi.zb493.yiwo.zcb4e, every signed NDVI reading with its date; the newest is decoded live at https://vortx.ai/#hero
+## ask (the calls behind Try @emem and the drift check)
+recall    facts           POST https://emem.dev/v1/recall {"place":"Cubbon Park, Bengaluru","bands":["indices.ndvi"]}  → facts[] at cell defi.zb493.yiwo.zcb4e, oldest first (fact_order=tslot_ascending), each with value_verbatim, sources[0].captured_at, memory_token; the newest is decoded live at https://vortx.ai/#hero
 ask       question        POST https://emem.dev/v1/ask {"q":"is this place flood-prone","place":"Ashok Nagar, Ranchi"}  fans out to twenty-plus signed readings under one receipt
 gate      draft           POST https://emem.dev/v1/guard/verdict  deny=PROV_SIG|PROV_BYTES|PROV_DRIFT  fix=refresh_token|remove_reference|contact_admin|cite_observation
-catch     drift           POST https://emem.dev/v1/guard/verdict {"texts":["… NDVI of 0.81 [emem:fact:defi.zb493.yiwo.zcb4e:eheadieomxr2zusgh4nx7mfisrtme23ztjiluyrfve64xoap6hka]"]}  → deny PROV_VALUE fix=correct_value
-echo      number          POST https://emem.dev/v1/echo_verify {"token":"emem:fact:defi.zb493.yiwo.zcb4e:eheadieomxr2zusgh4nx7mfisrtme23ztjiluyrfve64xoap6hka","claimed_value":"0.767"}  → drift=rounded; "0.767258382642998" → matches; print values verbatim
+catch     drift           POST https://emem.dev/v1/guard/verdict {"texts":["… NDVI of 0.81 [emem:fact:defi.zb493.yiwo.zcb4e:eheadieomxr2zusgh4nx7mfisrtme23ztjiluyrfve64xoap6hka]"]}  → deny PROV_VALUE fix=correct_value; the rounded 0.767 → allow (a rounding passes the guard; echo flags it)
+echo      number          POST https://emem.dev/v1/echo_verify {"token":"emem:fact:defi.zb493.yiwo.zcb4e:eheadieomxr2zusgh4nx7mfisrtme23ztjiluyrfve64xoap6hka","claimed_value":"0.767"}  → matches=false drift=rounded; "0.81" → drift=wrong; "0.767258382642998" → matches=true; print values verbatim
 point     file            https://vortx-ai.github.io/ememdemo/  leaves the bytes at the source, returns a signed pointer note

@@ -12,6 +12,12 @@
   if (!window.vx) return;
   function age(s) { var d = s / 86400; return d < 1 ? Math.round(s / 3600) + ' h' : d < 60 ? Math.round(d) + ' d' : Math.round(d / 30) + ' mo'; }
   function short(b) { return String(b).split('.').pop().replace(/_/g, ' '); }
+  // a reading, verbatim: never rounded; the digits after the third decimal are only dimmed
+  function exact(node, v) {
+    var s = String(v), i = s.indexOf('.'), cut = i >= 0 && !/e/i.test(s) ? i + 4 : s.length;
+    node.textContent = s.slice(0, cut);
+    if (cut < s.length) { var t = document.createElement('span'); t.className = 'tail'; t.textContent = s.slice(cut); node.appendChild(t); }
+  }
 
   // out: { log, reads, ans } elements; the asker writes only there
   function Asker(out) { this.out = out; this.ctl = null; this.t0 = 0; }
@@ -20,7 +26,10 @@
     li.innerHTML = '<b class="v"></b><span class="n"></span>'; li.firstChild.textContent = v; li.children[1].textContent = n;
     Object.keys(kv || {}).forEach(function (k) { if (kv[k] == null || kv[k] === '') return; li.appendChild(vx.kv(k, kv[k])); });
     if (ms != null) { var e = document.createElement('em'); e.textContent = (ms / 1000).toFixed(1) + ' s'; li.appendChild(e); }
-    this.out.log.appendChild(li); return li;
+    this.out.log.appendChild(li);
+    // the step in flight, in one line, for panels that keep the full log folded away
+    if (this.out.step && v !== 'stop') this.out.step.textContent = v + ' · ' + n + (ms != null ? ' · ' + (ms / 1000).toFixed(1) + ' s' : '');
+    return li;
   };
   Asker.prototype.stage = function (j) {
     var d = j.detail || {}, ms = j.at_ms, o = this.out, self = this;
@@ -34,8 +43,10 @@
       o.reads.innerHTML = '';
       pts.filter(function (p) { var k = short(p.band) + '|' + (+p.value).toPrecision(3); if (seen[k]) return false; seen[k] = 1; return true; }).slice(0, 9).forEach(function (p) {
         var li = document.createElement('li'), u = p.unit && p.unit !== 'unitless' && !/_/.test(p.unit) ? ' ' + p.unit : '';
-        li.innerHTML = '<b></b> <span></span>';
-        li.firstChild.textContent = short(p.band); li.lastChild.textContent = (Math.abs(p.value) >= 100 ? p.value.toFixed(0) : +p.value.toPrecision(3)) + u + (p.age_s ? ' · ' + age(p.age_s) + ' ago' : '');
+        li.innerHTML = '<b></b> <span></span><small></small>';
+        li.firstChild.textContent = short(p.band); exact(li.children[1], p.value);
+        li.lastChild.textContent = u + (p.age_s ? ' · ' + age(p.age_s) + ' ago' : '');
+        li.title = short(p.band) + ' = ' + p.value + u + ', verbatim, as signed';
         o.reads.appendChild(li);
       });
     }
@@ -56,15 +67,17 @@
       this.line('verify', 'the answer’s receipt', { ed25519: v && v.ok ? 'valid' : 'unchecked', facts: (d.fact_cids || []).length }, v && v.ok ? 'ok' : 'skip', performance.now() - self.t0);
       var st = ((d.reasoning || {}).states || []).slice(-1)[0];
       if (st) this.line('cite', 'this answer', { state: st.state.slice(0, 30) + '…' }, 'ok');
+      // the last word is the result, not the last step
+      if (o.step) { o.step.textContent = 'Answered in ' + ((performance.now() - self.t0) / 1000).toFixed(1) + ' s from ' + (d.fact_cids || []).length + ' signed readings · receipt ' + (v && v.ok ? 'checked here ✓' : 'not checked'); o.step.classList.toggle('is-ok', !!(v && v.ok)); }
     }
-    else if (j.stage === 'failed') this.line('stop', 'ask', { why: d.message || d.error || 'the responder could not answer' }, 'fail', ms);
+    else if (j.stage === 'failed') { var why = d.message || d.error || 'the responder could not answer'; this.line('stop', 'ask', { why: why }, 'fail', ms); if (o.step) o.step.textContent = 'Not answered: ' + why; }
   };
   Asker.prototype.stop = function () { if (this.ctl) this.ctl.abort(); this.ctl = null; };
   // resolves when the answer has streamed in (or the ask stopped); true when an answer arrived
   Asker.prototype.ask = async function (q, place) {
     this.stop();
     var ctl = this.ctl = new AbortController(), o = this.out, self = this, got = false; this.t0 = performance.now();
-    o.log.innerHTML = ''; o.ans.textContent = ''; o.reads.innerHTML = '';
+    o.log.innerHTML = ''; o.ans.textContent = ''; o.reads.innerHTML = ''; if (o.step) { o.step.textContent = ''; o.step.classList.remove('is-ok'); }
     var wait = this.line('ask', '@emem', { q: q, place: place }, 'run');
     try {
       var r = await fetch('https://emem.dev/v1/ask', { method: 'POST', signal: ctl.signal, headers: { 'content-type': 'application/json', accept: 'text/event-stream' }, body: JSON.stringify({ q: q, place: place }) });
@@ -86,6 +99,7 @@
       if (e.name === 'AbortError') return false;
       if (wait.className === 'is-run') wait.className = 'is-fail';
       this.line('stop', 'ask', { why: vx.why(e, 'emem.dev') }, 'fail');
+      if (o.step) o.step.textContent = 'Not answered just now: ' + vx.why(e, 'emem.dev');
     }
     if (this.ctl === ctl) this.ctl = null;
     return got;
@@ -97,7 +111,7 @@
   if (!root) return;
   var form = root.querySelector('.ask-form'), idle = root.querySelector('.ask-idle');
   if (!form) return;
-  var A = new Asker({ log: root.querySelector('.ask-out .vlog'), ans: root.querySelector('.ask-ans'), reads: root.querySelector('.ask-reads') });
+  var A = new Asker({ log: root.querySelector('.ask-out .vlog'), ans: root.querySelector('.ask-ans'), reads: root.querySelector('.ask-reads'), step: root.querySelector('.ask-step') });
   function go(q, p) { if (idle) idle.hidden = true; A.ask(q, p); }
   form.addEventListener('submit', function (e) {
     e.preventDefault();

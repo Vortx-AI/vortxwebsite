@@ -124,7 +124,7 @@
     // the human prompt: payment never proceeds without an explicit human confirmation
     var human = document.getElementById('pm-human');
     if (c.amount && human && !human.checked) {
-      formNote('Tick the confirmation above first. An agent must not book without its human.', 'err');
+      formNote('Tick the confirmation above first. It is for the person booking; an AI agent never ticks it.', 'err');
       human.focus();
       return;
     }
@@ -301,6 +301,7 @@
     var q = new URLSearchParams(window.location.search);
     if (q.get('state') === 'confirmed') { open({ step: 'confirmed' }); return; }
     var tier = q.get('tier');
+    if (tier === 'sovereign') tier = 'government'; // the name on the page; the config keeps its key
     if (window.location.hash === '#book' || q.has('book') || tier) {
       open({ tier: tier && conf(tier) ? tier : null });
     }

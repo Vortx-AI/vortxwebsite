@@ -3,7 +3,7 @@
 > A rung of https://vortx.ai/llms.txt: the grammar and the checks: mint, resolve, hash, verify, read, root. Verbs first: each line reads `verb noun ref key=value`.
 
 ## token
-mint      emem:fact:<cell64>:<fact_cid>   len=83..85  fact_cid=base32(blake3(canonical CBOR)), 52 chars, never truncated
+mint      emem:fact:<cell64>:<fact_cid>   len=83..85  fact_cid=base32(blake3(canonical CBOR)), 52 chars, never truncated; recall also returns a descriptor form, emem:fact:<lat>,<lng>@<date>@<band>:<fact_cid>, longer, resolving to the same fact
 resolve   token                          POST https://emem.dev/v1/memory_token/resolve {"token":"emem:fact:…"}  returns fact + receipt; 409 if the cell and the bytes disagree
 hash      fact                           GET https://emem.dev/v1/facts/<fact_cid>  accept=application/cbor  check=base32(blake3(body))==fact_cid
 verify    receipt                        ed25519 over blake3("emem.preimage.v1\0" ‖ u32le(len) ‖ "receipt" ‖ tagged segments)  spec=https://emem.dev/v1/verifier_spec  js=https://emem.dev/emem-verify-core.js

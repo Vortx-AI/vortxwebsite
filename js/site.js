@@ -34,12 +34,16 @@
   }
   var links = document.querySelectorAll('.vx-nav a[href^="#"]');
   if (links.length && 'IntersectionObserver' in window) {
-    var map = {};
-    links.forEach(function (a) { var s = document.querySelector(a.getAttribute('href')); if (s) map[s.id] = a; });
+    // a link marks the section it leads to while that section crosses the middle of the screen, and nothing
+    // is marked above the first one (an alias anchor stands for the section it sits in)
+    var map = new Map(), inside = new Set();
+    links.forEach(function (a) { var s = document.querySelector(a.getAttribute('href')); if (s && s.classList.contains('alias')) s = s.closest('section'); if (s) map.set(s, a); });
     var spy = new IntersectionObserver(function (en) {
-      en.forEach(function (e) { var a = map[e.target.id]; if (a && e.isIntersecting) { links.forEach(function (x) { x.removeAttribute('aria-current'); }); a.setAttribute('aria-current', 'true'); } });
+      en.forEach(function (e) { if (e.isIntersecting) inside.add(e.target); else inside.delete(e.target); });
+      var on = null; map.forEach(function (a, s) { if (!on && inside.has(s)) on = a; });
+      links.forEach(function (x) { if (x === on) x.setAttribute('aria-current', 'true'); else x.removeAttribute('aria-current'); });
     }, { rootMargin: '-45% 0px -50% 0px' });
-    Object.keys(map).forEach(function (id) { spy.observe(document.getElementById(id)); });
+    map.forEach(function (a, s) { spy.observe(s); });
   }
   document.querySelectorAll('a[href^="#"]').forEach(function (a) {
     a.addEventListener('click', function (e) {
@@ -87,14 +91,14 @@
       logEls.forEach(function (el) {
         el.hidden = false;
         var n = el.querySelector('[data-n]'); if (n) n.textContent = Number(s.tree_size).toLocaleString('en-US');
-        var m = el.querySelector('[data-mark]'); if (m) { m.textContent = ok ? 'signed ✓' : 'unchecked'; m.className = ok ? 'is-ok' : 'is-warn'; }
-        el.title = ok ? 'emem transparency log: ' + s.tree_size + ' entries. The signed tree head was verified in your browser (ed25519 over blake3 of the emem.translog.sth.v1 preimage), signed ' + s.signed_at + '.' : 'emem transparency log head (signature not checked on this page)';
+        var m = el.querySelector('[data-mark]'); if (m) { m.textContent = ok ? '✓' : 'unchecked'; m.className = ok ? 'is-ok' : 'is-warn'; }
+        el.title = ok ? 'emem’s public log holds ' + Number(s.tree_size).toLocaleString('en-US') + ' records. The signature on its head was checked in your browser (ed25519), signed ' + s.signed_at + '.' : 'emem’s public log (its signature was not checked on this page)';
       });
     }).catch(function () {});
   }
 
-  /* GitHub stars */
-  if (document.querySelector('[data-stars]')) {
+  /* GitHub stars: not shown in the top bar any more (a count is not a check); kept for pages that ask with data-stars-show */
+  if (document.querySelector('[data-stars][data-stars-show]')) {
     fetch('https://api.github.com/repos/Vortx-AI/emem').then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (j) {
       if (typeof j.stargazers_count === 'number') setText('[data-stars]', '★ ' + j.stargazers_count);
     }).catch(function () {});

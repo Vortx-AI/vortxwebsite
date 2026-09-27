@@ -1,18 +1,22 @@
 # vortx.ai: the pages
 
-> A rung of https://vortx.ai/llms.txt: every page and section, and what it does. Verbs first: each line reads `verb noun ref key=value`. People and agents read the same structure; each line mirrors one section.
+> A rung of https://vortx.ai/llms.txt: every page, and the home page's sections in the order a visitor reads them. Verbs first: each line reads `verb noun ref key=value`. People and agents read the same structure.
+
+## home (one story, seven chapters)
+see       /                 the promise and the live Earth; @emem decodes one signed fact per visit: Cubbon Park, Bengaluru, NDVI
+list      /                 where emem is listed (ChatGPT, the MCP registries, MuleSoft, Dify, PyPI, npm, Hugging Face) and the programmes Vortx AI is part of
+why       /#why             01 the problem: a 351.0 MB scene no agent can read; two drafts checked live, one paraphrased (caught), one cited (passes)
+run       /#how             02 how it works: keep, encode, send, decode, check, filled live by one device's real file; alias /#run
+browse    /#samples         03 what it remembers: the sample catalogue (Earth, Space, Machines), each note re-checked as it loads
+start     /#start           04 start: add @emem to an agent (/#plug), encode your own files (/#connect), try @emem here (/#decode)
+build     /#products        05 products: emem.dev (live, free), geo.qa (private tenancy), eudr.dev and propcheck.dev (in testing)
+plan      /#plan            06 the plan: protocol shipped, payload in design, ground segment next, launch gated, not dated; alias /#mission
+book      /#book            07 work with us: office hours free, integration 5000 USD, sovereign 25000 USD per session; a person books
+open      /?s=<cid>         any sample, opened on the page (a globe pin, a card): it runs end to end, its picture drawn from bytes checked here
 
 ## pages
-see       /                 the live Earth; @emem decodes one signed fact per visit: Cubbon Park, Bengaluru, NDVI
-run       /#run             six devices, one published sample each, run end to end in the browser
-encode    /#connect         your file, hashed on your device, nothing uploaded; tools/emem_point.py for the device
-decode    /#decode          ask @emem; catch a drifted number; @emem in ChatGPT, Claude, Agentforce, Dify, VS Code
-plug      /#plug            every way in, each asked live as the page loads: MCP tools/list, both A2A cards, REST with its ed25519 checked, the OpenAPI spec, the SDKs' newest releases
-browse    /#samples         the ememdemo catalogue: Earth, Space, Machines; each note re-checked as it loads
-open      /?s=<cid>         any sample, opened on the page (a globe pin, a card): it runs end to end, its picture drawn from bytes checked here
-news      /press/           every release, upgrade and listing, dated; each date re-read live from the record that owns it; images and facts for press; as data: /data/timeline.json
-watch     /press/#watch     the story on camera from the Seraphim Space pitch (Vimeo, 19 Jun 2025), in five chapters; each video dated by its platform; as data: videos in /data/timeline.json
-plan      /#plan            the satellite plan, deliberately without a date
-book      /#book            team time; the protocol is free
+news      /press/           every release, upgrade and listing, dated; each date re-read live from the record that owns it; as data: /data/timeline.json
+watch     /press/#watch     the story on camera from the Seraphim Space pitch (Vimeo, 19 Jun 2025), in five chapters, each video dated by its platform
 check     /proof/           every check, step by step: handoff, observers, token family, files, trust chain
-read      /emem/ protocol · /geo-qa/ private tenancy · /eudr/ · /propcheck/ · /trust/ · /spatial-ai/ glossary · /research/ · /press/ newsroom
+read      /emem/ the protocol · /geo-qa/ private tenancy · /eudr/ · /propcheck/ · /trust/ trust and security · /spatial-ai/ what spatial AI is · /research/ papers and models
+define    /prose/<cid26>.md the glossary: every term and verb on the site, one meaning each (its name is in llms.txt)

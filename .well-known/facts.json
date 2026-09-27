@@ -1,7 +1,7 @@
 {
   "schema": "vortx.facts.v1",
-  "note": "Every number this site states about emem, with the live source that can refute it. kind=structural and kind=floor are asserted in copy and change only by decision; tools/drift_check.py checks that the copy still says them. kind=live is never typed into any page: the page fetches it at view time, and the weekly run only checks that its source still answers and derives. If a value here and a live endpoint disagree, trust the endpoint and fix this file.",
-  "as_of": "2026-09-25",
+  "note": "The numbers this site states, each with the source that can refute it: emem's own counts, the home page's sample figures and the session prices. kind=structural and kind=floor are asserted in copy and change only by decision; tools/drift_check.py checks that the copy still says them. kind=live is never typed into any page: the page fetches it at view time, and the weekly run only checks that its source still answers and derives. If a value here and a live endpoint disagree, trust the endpoint and fix this file.",
+  "as_of": "2026-09-27",
   "facts": {
     "emem.token_types": {
       "value": 9,
@@ -38,6 +38,42 @@
       "derive": "sth.tree_size",
       "kind": "live",
       "rendered": "[data-loghead] on every page, its ed25519 signature verified in the browser"
+    },
+    "site.sample.file_size": {
+      "value": "351.0 MB",
+      "source": "https://vortx-ai.github.io/ememdemo/llms.txt",
+      "derive": "size= on the twlpco5kin6qlz5eplt2pjm7n4 line (Sentinel-2B over Bengaluru, 12 May 2026); the home page also reads it from the source by HEAD",
+      "kind": "structural"
+    },
+    "site.sample.raw_context_tokens": {
+      "value": "~223M",
+      "source": "https://vortx-ai.github.io/ememdemo/llms.txt",
+      "derive": "raw= on the twlpco5kin6qlz5eplt2pjm7n4 line: the file's bytes as base64, in context tokens",
+      "kind": "structural"
+    },
+    "site.sample.token_bytes": {
+      "value": 43,
+      "source": "https://vortx.ai/#how",
+      "derive": "len(utf8('emem:tree:twlpco5kin6qlz5eplt2pjm7n4#row=68')), the token the home page's satellite run sends",
+      "kind": "structural"
+    },
+    "site.listings": {
+      "value": 15,
+      "source": "https://vortx.ai/press/#listed",
+      "derive": "the dated listings on the newsroom",
+      "kind": "structural"
+    },
+    "site.price.integration_usd": {
+      "value": 5000,
+      "source": "https://vortx.ai/#book",
+      "derive": "the integration session, per session, 1 to 3 h; also the JSON-LD Offer",
+      "kind": "structural"
+    },
+    "site.price.sovereign_usd": {
+      "value": 25000,
+      "source": "https://vortx.ai/#book",
+      "derive": "the sovereign session, per session, 1 to 3 h; also the JSON-LD Offer",
+      "kind": "structural"
     }
   },
   "checks": [
@@ -45,6 +81,14 @@
     { "fact": "emem.token_types", "file": "llms/token.txt", "pattern": "nine token shapes" },
     { "fact": "emem.token_types", "file": "emem/index.html", "pattern": "Nine kinds of" },
     { "fact": "emem.fanout_min_readings", "file": "index.html", "pattern": "twenty-plus signed readings" },
-    { "fact": "emem.fanout_min_readings", "file": "agents.md", "pattern": "twenty-plus signed readings" }
+    { "fact": "emem.fanout_min_readings", "file": "agents.md", "pattern": "twenty-plus signed readings" },
+    { "fact": "site.sample.file_size", "file": "index.html", "pattern": "<b>{value}</b>" },
+    { "fact": "site.sample.raw_context_tokens", "file": "index.html", "pattern": "<b>{value}</b>" },
+    { "fact": "site.sample.token_bytes", "file": "index.html", "pattern": "<b>{value} bytes</b>" },
+    { "fact": "site.listings", "file": "index.html", "pattern": "all {value}, dated" },
+    { "fact": "site.price.integration_usd", "file": "llms.txt", "pattern": "integration {value} USD" },
+    { "fact": "site.price.integration_usd", "file": "index.html", "pattern": "\"price\": \"{value}\"" },
+    { "fact": "site.price.sovereign_usd", "file": "llms.txt", "pattern": "sovereign {value} USD" },
+    { "fact": "site.price.sovereign_usd", "file": "index.html", "pattern": "\"price\": \"{value}\"" }
   ]
 }

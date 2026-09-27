@@ -25,8 +25,12 @@
   var KEEP_T = { machine: 'signed by a system', 'third party': 'a publisher’s file', combined: 'joined from several', human: 'a person’s file' };
   var filter = root.getAttribute('data-filter') || 'All', items = [], thumbs = {}, pics = {}, expanded = false;
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-  // first, the samples this page already uses: the hero's place, then one per device the run above checks
-  var FIRST = ['ia3cqu7ycf455mjs2vue33cnfi', 'twlpco5kin6qlz5eplt2pjm7n4', 'wkxa7tcmw2orf7ujjf5yi66dhe', 'qcoylkllqzfqnsinn4af5i2mi4', 'ejvovl6sz7d3sugfcrwwie4rma', 't7ebh6s6imxrwdmizebnw52nwe'];
+  // first, six the page has not shown yet (the hero's cards and the run's samples come later): a galaxy,
+  // a forest frontier, a delta, a fire, a mine and a city, so the gallery adds to the story instead of repeating it
+  var FIRST = ['4uweu43yaiik2mw5nc4eznztbu', 'gkc2jap4r47zgs4t2sja4qderu', 'sm45gry43cubuqjp2cpu5bit6i', 'ota6xerxrqzya5txb4jxvzpb2q', 'fdobixnnucctqkn2qtii7kibyq', 'jnt6yrjflrxu3apgde37ykn55e'];
+  // what each catalogue section is, in a word a visitor knows
+  var SEC = { earth: 'Earth', disaster: 'Disaster', cities: 'City', wildlife: 'Wildlife', mines: 'Mine', government: 'Government', archives: 'Archive', places: 'Place',
+    space: 'Space', robotics: 'Robot', drones: 'Drone', cameras: 'Camera', gatherings: 'Gathering', '3d': '3D' };
   var moreBtn = root.querySelector('[data-more-cards]');
 
   /* the ememdemo token estimate (emem.mjs count, tok) */
@@ -93,7 +97,7 @@
       state(card, ok ? 'is-ok' : 'is-bad', ok ? '✓ note' : '✗ name lies', ok ? 'this note hashes to its name, checked in your browser' : 'the bytes do not hash to the name');
       if (!ok) return;
       var r = verbs(vx.dec.decode(nb));
-      if (r.list.length) card.querySelector('.sc-verbs').textContent = r.list.join(' · ');
+      var vb = card.querySelector('.sc-verbs'); if (vb && r.list.length) vb.textContent = r.list.join(' · ');
       if (r.saved) card.querySelector('.sc-saved').textContent = 'saved ' + r.saved;
     } catch (e) { state(card, 'is-off', 'unreachable', 'not checked: the source could not be reached, which is not a failed check'); }
   }
@@ -134,24 +138,25 @@
     } else if (t) { pic.style.backgroundImage = 'url(' + t.file + ')'; if (t.frames > 1) { pic.classList.add('is-sprite'); pic.style.setProperty('--n', t.frames); } pic.setAttribute('aria-label', x.title + ', its saved picture'); }
     else { pic.classList.add('is-none'); pic.appendChild(el('span', null, 'no saved picture')); }
     li.appendChild(pic);
+    // the card says what it is, how big the source is, what a model reads instead, and whether its note checked out
     var bd = el('div', 'sc-bd'), head = el('p', 'sc-head');
-    head.appendChild(el('span', 'sc-tag', x.verb + ' ' + x.kind));
-    var keep = KEEP[x.kv.by] || x.kv.by || ''; if (keep) { var kp = el('span', 'sc-keep', keep); kp.title = KEEP_T[keep] || ''; head.appendChild(kp); }
+    head.appendChild(el('span', 'sc-tag', SEC[x.sec] || x.group));
+    var keep = KEEP[x.kv.by] || x.kv.by || ''; if (keep) { var kp = el('span', 'sc-keep', KEEP_T[keep] || keep); kp.title = 'who keeps the file: ' + keep; head.appendChild(kp); }
     head.appendChild(el('span', 'sc-state', 'checking…'));
     bd.appendChild(head);
     var h = el('h3'), a = el('a', null, x.title); a.href = NOTE(x.cid); a.target = '_blank'; a.rel = 'noopener'; here(a, x); h.appendChild(a); bd.appendChild(h);
-    var meta = el('p', 'sc-meta'); meta.appendChild(el('span', 'sc-saved')); if (x.kv.src) meta.appendChild(el('span', null, x.kv.src)); bd.appendChild(meta);
-    bd.appendChild(el('p', 'sc-big', big(x)));
+    var meta = el('p', 'sc-meta'); meta.appendChild(el('span', null, big(x))); if (x.kv.src) meta.appendChild(el('span', null, x.kv.src)); meta.appendChild(el('span', 'sc-saved')); bd.appendChild(meta);
     var tk = num(x.kv.tok), rw = num(x.kv.raw), tl = el('p', 'sc-tok');
-    if (tk) { tl.appendChild(document.createTextNode('agent reads ')); var tb = el('b', null, tok(tk) + ' context tokens'); tb.setAttribute('data-term', 'context tokens'); tl.appendChild(tb); tl.appendChild(document.createTextNode(' (the catalogue line: ' + tok(count(line)) + ')')); }
-    if (tk && rw) tl.appendChild(document.createTextNode(' · source ' + tok(rw).slice(1) + ' as raw bytes · ' + Math.round(rw / tk).toLocaleString('en-US') + '× less'));
+    if (tk) {
+      tl.appendChild(document.createTextNode('A model reads '));
+      var tb = el('b', null, tok(tk) + ' context tokens'); tb.setAttribute('data-term', 'context tokens'); tl.appendChild(tb);
+      tl.appendChild(document.createTextNode(rw ? ', not ' + tok(rw).slice(1) + ' as raw bytes' : ', the note'));
+      tl.title = 'the note costs ' + tok(tk) + ' context tokens; its catalogue line, ' + tok(count(line)) + (rw ? '; the source as raw bytes, ' + tok(rw).slice(1) + ' (' + Math.round(rw / tk).toLocaleString('en-US') + '× more)' : '');
+    }
     bd.appendChild(tl);
-    bd.appendChild(el('p', 'sc-verbs', ''));
-    var acts = el('p', 'sc-acts'), rn = el('button', 'lk', 'run it'); rn.type = 'button'; here(rn, x);
-    var cp = el('button', 'lk', 'copy agent line'); cp.type = 'button';
-    cp.addEventListener('click', function () { if (navigator.clipboard) navigator.clipboard.writeText(line).then(function () { cp.textContent = 'copied'; setTimeout(function () { cp.textContent = 'copy agent line'; }, 1400); }); });
-    var op = el('a', 'lk', 'note ↗'); op.href = NOTE(x.cid); op.target = '_blank'; op.rel = 'noopener';
-    acts.appendChild(rn); acts.appendChild(document.createTextNode(' · ')); acts.appendChild(cp); acts.appendChild(document.createTextNode(' · ')); acts.appendChild(op); bd.appendChild(acts);
+    var acts = el('p', 'sc-acts'), rn = el('button', 'lk', 'Run it here'); rn.type = 'button'; here(rn, x);
+    var op = el('a', 'lk', 'Note ↗'); op.href = NOTE(x.cid); op.target = '_blank'; op.rel = 'noopener';
+    acts.appendChild(rn); acts.appendChild(op); bd.appendChild(acts);
     li.appendChild(bd);
     li.vxRun = function () { queue.push(function () { return check(x, li); }); if (sharp) queue.push(function () { return sharpCheck(w, sharp, li); }); else if (t) queue.push(function () { return picture(t, li); }); pump(); };
     return li;
@@ -179,7 +184,7 @@
     (cut ? list.slice(0, FIRST.length) : list).forEach(function (x) {
       var c = card(x); grid.appendChild(c); if (io) io.observe(c); else c.vxRun();
     });
-    if (moreBtn) { moreBtn.hidden = !cut; moreBtn.textContent = 'show all ' + list.length; }
+    if (moreBtn) { moreBtn.hidden = !cut; moreBtn.textContent = 'Show all ' + list.length; }
   }
   if (moreBtn) moreBtn.addEventListener('click', function () { expanded = true; render(); });
   function start() {

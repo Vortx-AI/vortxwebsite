@@ -122,9 +122,11 @@
   // each card re-checks its note as the page loads: base32(blake3(bytes)[0:16]) must equal its name
   function checkNote(c, cid) {
     var body = c.querySelector('.hc-more'); if (!body) return;
-    // the check leads the credit line; it is in the markup already, so the card's size does not change when it lands
+    // the check leads the credit line; it is in the markup already (empty, so a page read without scripts never says
+    // "checking" for ever), and it says so the moment the check starts, before the card is first laid out
     var b = body.querySelector('.hc-ck');
-    if (!b) { b = document.createElement('i'); b.className = 'hc-ck'; b.textContent = 'checking'; body.appendChild(b); }
+    if (!b) { b = document.createElement('i'); b.className = 'hc-ck'; body.appendChild(b); }
+    b.textContent = 'checking';
     vx.getBytes(NOTE(cid)).then(function (r) {
       var ok = vx.cid26(r.bytes) === cid;
       b.textContent = ok ? '✓ note' : '✗ name lies'; b.className = 'hc-ck ' + (ok ? 'is-ok' : 'is-bad');

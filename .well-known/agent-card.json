@@ -1,7 +1,7 @@
 {
   "protocolVersion": "1.0",
   "name": "Vortx AI",
-  "description": "Spatial AI lab; maker and maintainer of the emem protocol. Encode on device, decode with @emem: don't move your files, deliver tokenised context. Satellites, telescopes, rovers, drones, robots, cameras and machines keep their files; emem encodes each observation as one signed, content-addressed token (nine token shapes: emem:fact:, emem:cell:, emem:entity:, emem:bundle:, emem:raster:, emem:cube:, emem:rasterset:, emem:trace:, emem:attestation:; plus emem:state: and emem:tree: addresses); agents pass the token, never the file, and @emem decodes it straight into their context (ChatGPT, Claude, Salesforce Agentforce, Dify, any MCP client), so every agent cites the same bytes instead of a drifting paraphrase; any receiver resolves it, hashes the bytes, verifies the ed25519 receipt and can recompute the value from the raw source (https://vortx.ai/ decodes one live token in the hero; https://vortx.ai/#run runs six devices' published samples end to end in the browser; https://vortx.ai/#connect encodes a file on the visitor's device with nothing uploaded; https://vortx.ai/#decode catches a drifted number; https://vortx.ai/proof/ runs every check step by step and re-derives one live example of every token shape). emem is Apache-2.0, free to read, verifiable offline. geo.qa is the same memory on a private tenant. The planned satellite signs at the instrument, on a published plan with deliberately no date. The only thing for sale is team time: free office hours, a paid integration session, a sovereign session.",
+  "description": "Vortx AI Private Limited, a spatial AI lab, builds emem: shared, verifiable memory for AI agents. Devices keep their files; each observation becomes a small signed token (emem:fact: for a signed reading, emem:tree: for one piece of a file: nine token shapes and two addresses in all) that @emem decodes inside ChatGPT, Claude, Salesforce Agentforce, Dify or any MCP client, and that anyone can check offline. emem is free and Apache-2.0; geo.qa runs the same memory in a private tenancy; eudr.dev and propcheck.dev are in testing. The home page tells it in order: https://vortx.ai/#why (the problem, checked live), https://vortx.ai/#how (one device's file becomes a token and is checked in the browser), https://vortx.ai/#start (connect an agent, encode a file). The only thing for sale is team time (see x-session): agents never book or pay. The satellite plan has deliberately no date. Start at https://vortx.ai/llms.txt.",
   "url": "https://emem.dev/a2a/tasks",
   "preferredTransport": "JSONRPC",
   "supportedInterfaces": [
@@ -13,7 +13,8 @@
   },
   "documentationUrl": "https://vortx.ai/agents.md",
   "iconUrl": "https://vortx.ai/assets/og-logo.png",
-  "version": "2.1.0",
+  "version": "2.2.0",
+  "x-versionOf": "this card; emem's own version is in https://emem.dev/.well-known/agent-card.json",
   "capabilities": {
     "streaming": false,
     "pushNotifications": false,
@@ -23,9 +24,9 @@
   "defaultOutputModes": ["text/plain"],
   "skills": [
     {
-      "id": "read_earth_memory",
-      "name": "Read verifiable Earth memory",
-      "description": "Resolve a place to a stable ~10 m cell address and read signed, content-addressed facts about it (vegetation, water, heat, forest change, and more). Reads need no key or account; every fact verifies offline via ed25519 signature and blake3 address. Use the emem MCP server or HTTP API.",
+      "id": "emem_recall",
+      "name": "Recall signed facts about a place",
+      "description": "emem's own skill, run at url: resolve a place to one cell (about 10 m) and read its signed facts (vegetation, water, heat, forest change and more). The answer lists facts oldest first, each with value_verbatim, sources[0].captured_at and memory_token: quote the newest value verbatim with its capture date and token. Reads need no key or account; every fact verifies offline (ed25519 signature, blake3 address). Also over MCP (emem_recall) and REST (POST https://emem.dev/v1/recall).",
       "tags": ["earth-observation", "verifiable", "mcp", "geospatial", "memory"],
       "examples": [
         "Recall the NDVI fact for Bengaluru and cite its emem:fact: token.",
@@ -33,9 +34,9 @@
       ]
     },
     {
-      "id": "encode_device_file",
-      "name": "Encode a device's file as emem tokens",
-      "description": "Keep a large file (a satellite scene, a robot log, a drone or camera video) on the device that made it and publish only its pointer.v1 note: 4 MiB ranges, a blake3 hash per range, one Merkle root. The note's name is base32(blake3(note)[0:16]) and its rows are addressed as emem:tree:<cid26>#row=<i>, so an agent reads the note and fetches only the ranges it needs, each checked against its row. Encode with https://vortx.ai/tools/emem_point.py (or in the browser at https://vortx.ai/#connect, nothing uploaded); publish in your own namespace with `ememdev write`.",
+      "id": "emem_memory_create",
+      "name": "Publish a device file's note",
+      "description": "emem's own skill, run at url: publish the pointer.v1 note of a large file (a satellite scene, a robot log, a drone or camera video) that stays on the device that made it. Encode the note first, locally, with https://vortx.ai/tools/emem_point.py (or in the browser at https://vortx.ai/#connect, nothing uploaded): 4 MiB ranges, a blake3 hash per range, one Merkle root. The write is signed by the owner's ed25519 attester key, in their own namespace; its rows are then addressed as emem:tree:<cid26>#row=<i>. Ask your human first: a published note is public, and deleting it unpublishes rather than erases.",
       "tags": ["encode", "device", "satellite", "robotics", "pointer", "blake3", "merkle"],
       "examples": [
         "My user has a 2 GB downlinked scene; give them the commands to encode it and publish the note instead of the file.",
@@ -95,14 +96,14 @@
     "status": "a plan, not a date",
     "thesis": "the evidence half: traceable from photon to token, downlinked straight into emem, landing in the witnessed public log",
     "phases": ["protocol (shipped)", "payload (in design)", "ground segment (next)", "launch (gated, not dated)"],
-    "details": "https://vortx.ai/#mission",
+    "details": "https://vortx.ai/#plan",
     "agentGuidance": "There is no launch date, deliberately. Never state or estimate one; dates are announced in https://vortx.ai/press/ when real."
   },
   "x-site": {
     "contentAddressed": "https://vortx.ai/.well-known/site-manifest.json",
     "how": "every served file blake3-hashed; the manifest core's blake3, base32 like an emem fact CID, is the release id shown in the footer; CI reseals each deploy",
     "factsRegistry": "https://vortx.ai/.well-known/facts.json",
-    "factsNote": "every number this site asserts about emem, each with the live source that can refute it; if registry and endpoint disagree, trust the endpoint",
+    "factsNote": "the numbers this site states, each with the source that can refute it; if registry and endpoint disagree, trust the endpoint",
     "proof": "https://vortx.ai/proof/"
   },
   "x-research": {
@@ -120,7 +121,7 @@
     "payment": "Razorpay hosted checkout; human completes payment",
     "contact": "avijeet@vortx.ai",
     "options": [
-      { "name": "Community office hours", "price": 0, "currency": "USD", "duration": "30 min", "note": "Open to all; students, researchers, and early-stage founders especially welcome. Architecture questions, integration guidance, protocol deep-dives. Book directly at schedulingUrl." },
+      { "name": "Community office hours", "price": 0, "currency": "USD", "duration": "30 min", "note": "Open to all; students, researchers, and early-stage founders especially welcome. Architecture questions, integration guidance, protocol deep-dives. A person books at schedulingUrl; an agent hands over the link and stops." },
       { "name": "Integration session", "price": 5000, "currency": "USD", "duration": "1-3 hours", "note": "The core team pairs on your codebase over MCP, REST, or SDK. Exit criterion: recall running and a receipt verifying in your stack." },
       { "name": "Sovereign session", "price": 25000, "currency": "USD", "duration": "1-3 hours", "note": "Governments, defense, critical infrastructure. Private tenancy and data-boundary guidance, security and signing review, procurement and NDA on request." }
     ],

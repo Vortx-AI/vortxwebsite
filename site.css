@@ -35,6 +35,14 @@
   --sans: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   --mono: 'Geist Mono', ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace;
   --wrap: min(1240px, calc(100vw - 48px));
+  /* one type scale: display serif for statements, sans for reading, mono only for data (tokens, hashes, values) */
+  --t-h1: clamp(44px, 4.9vw, 80px);
+  --t-h2: clamp(32px, 3.5vw, 52px);
+  --t-h3: 24px;
+  --t-lede: 17px;
+  --t-body: 15px;
+  --t-small: 13px;
+  --t-data: 12px;
   --r: 10px;
   --ease: cubic-bezier(.22, 1, .36, 1);
   color-scheme: dark;
@@ -62,7 +70,7 @@ body.vx {
 .alias { position: absolute; top: 0; left: 0; width: 1px; height: 1px; pointer-events: none; }
 
 /* ---------- verbs, the one convention ---------- */
-.v { font: 600 max(10.5px, 0.78em)/1 var(--mono); letter-spacing: 0.02em; color: var(--ok); text-transform: lowercase; } /* the verb leads the line: never smaller than the text it leads */
+.v { font: 600 max(10.5px, 0.78em)/1 var(--mono); letter-spacing: 0.02em; color: var(--ink-2); text-transform: lowercase; } /* the verb labels the line: never smaller than the text it leads; green is only for what was checked */
 .v.is-claim { color: var(--claim); }
 .mono { font-family: var(--mono); }
 
@@ -95,11 +103,11 @@ body.vx {
 .vx-nav { display: flex; align-items: center; gap: 2px; margin-left: 8px; }
 .vx-nav a {
   padding: 7px 10px; border-radius: 6px; text-decoration: none; color: var(--ink-2);
-  font: 500 13px var(--mono); letter-spacing: 0.01em; transition: color .2s, background .2s;
+  font: 500 14px var(--sans); letter-spacing: -0.005em; transition: color .2s, background .2s;
 }
 .vx-nav a:hover { color: var(--ink); background: var(--panel-2); }
 .vx-nav a[aria-current="true"] { color: var(--ink); }
-.vx-nav a[aria-current="true"]::before { content: ''; display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--ok); margin-right: 7px; vertical-align: 2px; }
+.vx-nav a[aria-current="true"]::before { content: ''; display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--ink-2); margin-right: 7px; vertical-align: 2px; }
 .vx-nav .ext::after { content: ' \2197'; color: var(--ink-3); }
 .vx-status { margin-left: auto; display: flex; align-items: center; gap: 14px; font: 500 12px var(--mono); color: var(--ink-3); }
 .vx-status a { text-decoration: none; color: var(--ink-2); }
@@ -112,7 +120,7 @@ body.vx {
 .btn {
   display: inline-flex; align-items: center; gap: 9px; height: 42px; padding: 0 18px;
   border-radius: 8px; border: 1px solid var(--line-2); background: transparent; color: var(--ink);
-  font: 500 14px var(--mono); letter-spacing: 0; text-decoration: none; cursor: pointer; white-space: nowrap;
+  font: 500 14px var(--sans); letter-spacing: -0.005em; text-decoration: none; cursor: pointer; white-space: nowrap;
   transition: background .2s, border-color .2s, color .2s, transform .2s var(--ease);
 }
 .btn:hover { border-color: var(--ink-2); background: var(--panel-2); }
@@ -120,20 +128,20 @@ body.vx {
 .btn[disabled] { opacity: .45; cursor: default; }
 .vx .btn-lit { background: var(--ink); color: var(--void); border-color: var(--ink); }
 .vx .btn-lit:hover { background: #fff; border-color: #fff; color: var(--void); }
-.btn-sm { height: 34px; padding: 0 12px; font-size: 12.5px; }
+.btn-sm { height: 36px; padding: 0 14px; font-size: 13.5px; }
 .btn .v { color: inherit; font-size: 1em; opacity: .7; }
-/* a <button> and a link styled as one read in the same face: the verb stands out by weight, not by a second font */
-.vx button.btn { font: 500 14px var(--mono); letter-spacing: 0; }
-.vx button.btn-sm { font-size: 12.5px; }
+/* a <button> and a link styled as one read in the same face */
+.vx button.btn { font: 500 14px var(--sans); letter-spacing: -0.005em; }
+.vx button.btn-sm { font-size: 13.5px; }
 .chip {
   display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px; border-radius: 99px;
   border: 1px solid var(--line-2); background: transparent; cursor: pointer; color: var(--ink-2);
-  font: 500 12.5px var(--mono); transition: all .2s;
+  font: 500 13px var(--sans); transition: all .2s;
 }
 .chip:hover { color: var(--ink); border-color: var(--ink-3); }
 .chip[aria-pressed="true"] { color: var(--void); background: var(--ink); border-color: var(--ink); }
 .chip-n { font-size: 11px; opacity: .6; }
-.vx .lk { background: none; border: 0; padding: 0; color: var(--signal); font: 500 12.5px var(--mono); text-decoration: none; cursor: pointer; }
+.vx .lk { background: none; border: 0; padding: 0; color: var(--signal); font: inherit; font-weight: 500; text-decoration: none; cursor: pointer; }
 .lk:hover { text-decoration: underline; text-underline-offset: 3px; }
 .lk[disabled] { opacity: .5; }
 
@@ -424,7 +432,8 @@ a.door:hover { background: var(--panel-2); }
 .tier h3 .v { font-size: 13px; }
 .tier .vl > li { grid-template-columns: 4.4em minmax(0, 1fr); font-size: 13.5px; padding: 7px 0; }
 .tier .btn { margin-top: auto; justify-content: center; }
-.guard { margin: 22px 0 0; padding: 12px 16px; border: 1px dashed var(--line-2); border-radius: 8px; font: 400 12px/1.6 var(--mono); color: var(--ink-3); }
+.guard { margin: 22px 0 0; padding: 12px 16px; border: 1px dashed var(--line-2); border-radius: 8px; font: 400 13px/1.6 var(--sans); color: var(--ink-3); }
+.guard b { color: var(--ink-2); font-weight: 500; }
 .guard a { color: var(--ink-2); }
 .backers { display: flex; flex-wrap: wrap; gap: 8px 28px; align-items: center; margin-top: 60px; font: 500 12.5px var(--mono); color: var(--ink-3); }
 .backers b { color: var(--ink-2); font-weight: 500; }
@@ -432,13 +441,14 @@ a.door:hover { background: var(--panel-2); }
 /* ---------- footer ---------- */
 .vx-foot { border-top: 1px solid var(--line); padding: 64px 0 40px; background: var(--void); }
 .vx-foot .cols { display: grid; grid-template-columns: 1.4fr repeat(4, minmax(0, 1fr)); gap: 32px; }
-.vx-foot h4 { margin: 0 0 12px; font: 600 12px var(--mono); color: var(--ok); letter-spacing: .02em; }
+.vx-foot h4 { margin: 0 0 12px; font: 600 13px var(--sans); color: var(--ink); letter-spacing: -.005em; }
 .vx-foot a { display: block; padding: 4px 0; text-decoration: none; color: var(--ink-2); font-size: 14px; }
 .vx-foot a:hover { color: var(--ink); }
 .vx-foot .tag { margin: 12px 0 0; color: var(--ink-3); font-size: 14px; max-width: 34ch; }
-.vx-foot .release { margin: 40px 0 0; font: 400 11.5px/1.6 var(--mono); color: var(--ink-3); word-break: break-all; }
+.vx-foot .release { margin: 40px 0 0; font: 400 12px/1.6 var(--sans); color: var(--ink-3); overflow-wrap: anywhere; }
+.vx-foot .release a { font-family: var(--mono); }
 .vx-foot .release a { display: inline; color: var(--ink-2); font-size: inherit; padding: 0; }
-.vx-foot .reading { display: flex; flex-wrap: wrap; gap: 2px 18px; margin: 10px 0 0; font: 400 11.5px/1.6 var(--mono); color: var(--ink-3); }
+.vx-foot .reading { display: block; margin: 10px 0 0; font: 400 12px/1.6 var(--sans); color: var(--ink-3); }
 .vx-foot .reading .v { margin-right: 6px; }
 .vx-foot .reading .lk { display: inline; padding: 0; font-size: inherit; }
 .vx-foot .base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; margin-top: 26px; padding-top: 18px; border-top: 1px solid var(--line); font: 400 12px var(--mono); color: var(--ink-3); }

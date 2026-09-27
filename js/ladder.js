@@ -100,13 +100,13 @@
   function meter() {
     var foot = document.querySelector('.vx-foot .wrap'), main = document.querySelector('main'); if (!foot || !main || foot.querySelector('.reading')) return;
     var top = +document.documentElement.getAttribute('data-llms-size'), size = +document.documentElement.getAttribute('data-words-size');
-    var p = el('p', 'reading'), seg = function (v, parts) { var sp = el('span'); sp.appendChild(el('b', 'v', v)); parts.forEach(function (x) { sp.appendChild(typeof x === 'string' ? document.createTextNode(x) : x); }); p.appendChild(sp); };
+    var p = el('p', 'reading'), put = function (parts) { parts.forEach(function (x) { p.appendChild(typeof x === 'string' ? document.createTextNode(x) : x); }); };
     var a = el('a', 'lk', 'llms.txt'); a.href = '/llms.txt';
-    var w = el('a', 'lk', 'the site’s words'); w.href = URL_;
+    var w = el('a', 'lk', 'glossary'); w.href = URL_;
     var n = el('span', null, '…');
-    seg('read', [' as an agent: this page ≈ ', n, ' context tokens of text, counted when you reach this line']);
-    seg('start', [' at ', a, ', ≈ ' + (top ? tok(top) : '…') + ', then one rung at a time']);
-    seg('keep', [' ', w, ' aside, ≈ ' + (size ? tok(size) : '…') + ': a page carries their 26-character name, and decodes them when you click a verb']);
+    // one plain sentence: what this page costs an agent to read, where to start instead, and what is fetched only on demand
+    put(['For agents: this page is ≈ ', n, ' context tokens of text. Start at ', a, ' (≈ ' + (top ? tok(top) : '…') + ') and read one rung at a time; the site’s ', w,
+      ' (≈ ' + (size ? tok(size) : '…') + ') is fetched only when a term is opened.']);
     var base = foot.querySelector('.base'); foot.insertBefore(p, base || null);
     // the live sections fill in as they are seen, so the page is counted when its end is, and again each time
     var count = function () { n.textContent = tok(main.innerText.length); };

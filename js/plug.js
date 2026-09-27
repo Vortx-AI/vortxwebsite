@@ -16,11 +16,13 @@
   var MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   function day(iso) { var d = new Date(iso); return isNaN(d) ? '' : d.getUTCDate() + ' ' + MON[d.getUTCMonth()] + ' ' + d.getUTCFullYear(); }
   function put(k, st, t) { var e = root.querySelector('[data-pl="' + k + '"]'); if (!e) return; e.className = 'pl-s is-' + st; e.textContent = (st === 'ok' ? '✓ ' : '') + t; }
-  // a surface that did not answer says so once, quietly, with a way to ask again; it is not a failed check
+  // a surface that did not answer says so once, quietly, with a way to ask again; it is not a failed check,
+  // and the reason goes in the tooltip, not across the panel
   function fail(k, host) {
     return function (e) {
-      put(k, 'off', 'not reached just now: ' + (window.vx ? vx.why(e, host) : host + ' did not answer'));
+      put(k, 'off', 'no answer just now');
       var s = root.querySelector('[data-pl="' + k + '"]'); if (!s) return;
+      s.title = window.vx ? vx.why(e, host) : host + ' did not answer';
       var b = document.createElement('button'); b.type = 'button'; b.className = 'lk pl-retry'; b.textContent = 'try again';
       b.addEventListener('click', function () { s.className = 'pl-s'; s.textContent = 'asking again'; start(); });
       s.appendChild(document.createTextNode(' · ')); s.appendChild(b);
@@ -28,6 +30,8 @@
   }
   function json(u, o) { return fetch(u, o).then(function (r) { if (!r.ok) throw new Error(new URL(u).host + ' answered ' + r.status); return r.json(); }); }
   function start() {
+    // each surface says it is being asked only once it is (the markup is empty, so a page read without scripts never waits for ever)
+    root.querySelectorAll('.pl-s').forEach(function (s) { if (!/is-/.test(s.className)) s.textContent = 'asking…'; });
     // MCP: the core loop a client sees on connect, and the whole catalogue behind emem_tools
     Promise.all([
       json(EMEM + '/mcp', { method: 'POST', headers: { 'content-type': 'application/json', accept: 'application/json, text/event-stream' }, body: JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'tools/list', params: {} }) }),
@@ -35,7 +39,8 @@
     ]).then(function (r) {
       var core = ((r[0] || {}).result || {}).tools || [], all = r[1] && (Array.isArray(r[1]) ? r[1] : r[1].tools);
       if (!core.length) throw new Error('emem.dev listed no tools');
-      put('mcp', 'ok', core.length + ' tools in the core loop' + (all ? ' · ' + all.length + ' in all' : '') + ' · answered now');
+      put('mcp', 'ok', 'answered now · ' + core.length + ' core tools');
+      var e = root.querySelector('[data-pl="mcp"]'); if (e && all) e.title = all.length + ' tools in the whole catalogue, behind emem_tools';
     }).catch(fail('mcp', 'emem.dev'));
     // A2A: both cards, as a client reads them
     json(EMEM + '/.well-known/agent-card.json').then(function (j) {
@@ -43,7 +48,7 @@
     }).catch(fail('a2a-emem', 'emem.dev'));
     json('/.well-known/agent-card.json').then(function (j) {
       var sk = (j.skills || []).map(function (x) { return x.name || x.id; }).filter(Boolean), at = j.url ? new URL(j.url).host : '';
-      put('a2a-vortx', 'ok', [j.name + (j.version ? ' v' + j.version : ''), j.protocolVersion ? 'A2A ' + j.protocolVersion : '', sk.length + ' skills' + (at ? ', run on ' + at : '')].filter(Boolean).join(' · '));
+      put('a2a-vortx', 'ok', [j.protocolVersion ? 'A2A ' + j.protocolVersion : '', sk.length + ' skills' + (at ? ', run on ' + at : '')].filter(Boolean).join(' · '));
       var e = root.querySelector('[data-pl="a2a-vortx"]'); if (e) e.title = sk.join(' · ');
     }).catch(fail('a2a-vortx', 'vortx.ai'));
     // REST: one call, and its signature checked here

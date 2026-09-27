@@ -49,6 +49,7 @@
     o = o || {};
     this.log = o.log; this.live = o.live || function () { return true; };
     this.show = o.show || function () {}; this.retag = o.retag || function () {}; this.data = o.data || function () {}; this.named = o.named || function () {};
+    this.step = o.step || null; // told of every line as it is written: the pipeline on the page draws from it
     this.whole = !!o.whole; this.t0 = performance.now(); this.L = new vx.Ledger(); this.checks = 0; this.passed = 0; this.cache = {};
   }
   Run.prototype.ms = function () { return Math.round(performance.now() - this.t0); };
@@ -62,6 +63,7 @@
     Object.keys(kv || {}).forEach(function (k) { if (kv[k] == null || kv[k] === '') return; li.appendChild(vx.kv(k, kv[k])); });
     if (where !== null) li.appendChild(el('em', null, [where, (this.ms() / 1000).toFixed(1) + ' s'].filter(Boolean).join(' · ')));
     if (this.log) this.log.appendChild(li);
+    if (this.step) try { this.step(v, n, kv || {}, st || 'ok'); } catch (e) {}
     return li;
   };
   Run.prototype.stop = function (e, host) { return this.line('stop', 'this step', { why: vx.why(e, host || 'a source') }, 'fail', null); };
