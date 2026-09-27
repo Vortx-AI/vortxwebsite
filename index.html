@@ -167,7 +167,7 @@
           <div class="h3o-copy">
             <h1 id="hero-h"><span>Encode on device.</span><span>Decode with <span class="at" data-term="@emem">@emem</span>.</span></h1>
             <p class="h3o-sub">Don't move your files. <b>Deliver <span data-term="tokenised context">tokenised context</span>.</b></p>
-            <p class="h3o-what"><b>emem</b> is shared, verifiable memory for AI agents. Telescopes, satellites, cameras, drones and robots keep their files; agents get small signed tokens they can cite, and anyone can check.</p>
+            <p class="h3o-what"><b>emem</b> lets AI agents cite what telescopes, satellites, cameras, drones and robots record, and lets anyone check every number. The files stay where they are; agents carry small signed tokens.</p>
             <div class="h3o-acts">
               <a class="btn btn-lit" href="#how">See how it works</a>
               <a class="btn" href="#start">Add @emem to your agent</a>
@@ -234,7 +234,7 @@
         <div class="h3o-pins" role="group" aria-label="Places the memory holds"></div>
         <div class="h3o-foot">
           <div class="h3o-live" data-live-orbits aria-live="off"></div>
-          <p class="h3o-hint">tap to open · drag to turn or move · double-click to return</p>
+          <p class="h3o-hint"><span class="on-fine">click</span><span class="on-touch">tap</span> to open · drag to turn or move · double-click to return</p>
           <button class="h3o-tidy lk" type="button" data-tidy hidden>↺ tidy the cards</button>
           <button class="h3o-back btn" type="button" data-sky-back hidden>↩ back to Earth</button>
         </div>
@@ -262,18 +262,19 @@
         <ol class="scale" aria-label="One real file, three numbers">
           <li><b>351.0 MB</b><span>One Sentinel-2 satellite scene over Bengaluru, 12 May 2026.</span><small>sentinel-cogs.s3.us-west-2.amazonaws.com</small></li>
           <li><b>~223M</b><span><span data-term="context tokens">Context tokens</span> an AI model would need to read that file as raw bytes.</span><small>the public sample catalogue’s estimate</small></li>
-          <li><b>43 bytes</b><span>What emem sends instead: a <span data-term="token">token</span> that names the one piece an agent needs.</span><small>emem:tree:twlpco5k…#row=68</small></li>
+          <li><b>43 bytes</b><span>What emem sends instead: an <span data-term="token">emem token</span> that names the one piece an agent needs.</span><small>emem:tree:twlpco5k…#row=68</small></li>
         </ol>
+        <p class="cases-q">Ask two agents how green Cubbon Park was when Sentinel-2 passed over it on 16 June 2026. Both cite the same signed reading; emem checks each draft, live.</p>
         <div class="cases" id="drift" data-token="emem:fact:defi.zb493.yiwo.zcb4e:eheadieomxr2zusgh4nx7mfisrtme23ztjiluyrfve64xoap6hka">
           <article class="case" data-case="0.81">
-            <h3><i aria-hidden="true">✕</i> An agent, paraphrasing</h3>
+            <h3><i aria-hidden="true">✕</i> <span>An agent, paraphrasing</span></h3>
             <p class="case-q">“Cubbon Park in Bengaluru has an NDVI of <mark data-case-v>0.81</mark>.”<small>cites the Sentinel-2 reading of 16 Jun 2026 · emem:fact:defi.zb493.yiwo.zcb4e:eheadieomxr2…</small></p>
             <p class="drift-say" aria-live="polite">Checked live by emem as it comes into view.</p>
             <p class="case-alt">What if it wrote <button class="chip" type="button" data-claim="0.81" aria-pressed="true">0.81</button> <button class="chip" type="button" data-claim="0.767" aria-pressed="false">0.767</button></p>
             <details class="case-how"><summary>How it was checked</summary><ol class="vlog drift-log"></ol></details>
           </article>
           <article class="case is-cite" data-case="0.767258382642998">
-            <h3><i aria-hidden="true">✓</i> An agent, citing</h3>
+            <h3><i aria-hidden="true">✓</i> <span>An agent, citing</span></h3>
             <p class="case-q">“Cubbon Park in Bengaluru has an NDVI of <mark data-case-v>0.767258382642998</mark>.”<small>cites the Sentinel-2 reading of 16 Jun 2026 · emem:fact:defi.zb493.yiwo.zcb4e:eheadieomxr2…</small></p>
             <p class="drift-say" aria-live="polite">Checked live by emem as it comes into view.</p>
             <p class="case-alt">The number is the one signed, printed verbatim.</p>
@@ -304,7 +305,7 @@
             <p class="eyebrow"><span>02</span>How it works</p>
             <h2 id="run-h">Keep the file. <em>Send the token.</em></h2>
           </div>
-          <p class="lede">Pick a device. One of its real files becomes a token, and this browser checks it, byte for byte, against the file itself and emem.dev. Nothing here is staged.</p>
+          <p class="lede">An agent never reads the file. It carries an emem token, reads the file’s short note, and fetches only the one piece it needs. Pick a device and watch it happen, live, against the real file.</p>
         </header>
         <div class="run-f" role="group" aria-label="Devices">
           <button class="chip" type="button" data-run="satellite" data-cid="twlpco5kin6qlz5eplt2pjm7n4" data-label="level 4 tile 0,0" data-who="Sentinel-2B, 12 May 2026" aria-selected="true">satellite</button>
@@ -316,17 +317,18 @@
         </div>
         <ol class="pipe" aria-label="Each step of the run">
           <li class="pp" data-pp="capture"><span class="pp-dot" aria-hidden="true"></span><b class="pp-v">keep</b><span class="pp-d">The file stays where the device put it. Nothing is copied.</span><strong class="pp-x" data-pp-x>–</strong><span class="pp-y" data-pp-y></span></li>
-          <li class="pp" data-pp="encode"><span class="pp-dot" aria-hidden="true"></span><b class="pp-v">encode</b><span class="pp-d">Its <span data-term="note">note</span>: a small text file saying where the file is, with a fingerprint of each piece.</span><strong class="pp-x" data-pp-x>–</strong><span class="pp-y" data-pp-y></span></li>
-          <li class="pp" data-pp="send"><span class="pp-dot" aria-hidden="true"></span><b class="pp-v">send</b><span class="pp-d">A <span data-term="token">token</span> names one piece of the file. It is all an agent carries.</span><strong class="pp-x" data-pp-x>–</strong><span class="pp-y" data-pp-y></span></li>
+          <li class="pp" data-pp="encode"><span class="pp-dot" aria-hidden="true"></span><b class="pp-v">encode</b><span class="pp-d">Its <span data-term="note">note</span>: a small text file saying where the file is, with fingerprints of its pieces.</span><strong class="pp-x" data-pp-x>–</strong><span class="pp-y" data-pp-y></span></li>
+          <li class="pp" data-pp="send"><span class="pp-dot" aria-hidden="true"></span><b class="pp-v">send</b><span class="pp-d">An <span data-term="token">emem token</span> names one piece of the file. It is all an agent carries.</span><strong class="pp-x" data-pp-x>–</strong><span class="pp-y" data-pp-y></span></li>
           <li class="pp" data-pp="decode"><span class="pp-dot" aria-hidden="true"></span><b class="pp-v">decode</b><span class="pp-d"><span data-term="@emem">@emem</span>, emem’s agent, proves that piece belongs to the note.</span><strong class="pp-x" data-pp-x>–</strong><span class="pp-y" data-pp-y></span></li>
           <li class="pp" data-pp="check"><span class="pp-dot" aria-hidden="true"></span><b class="pp-v">check</b><span class="pp-d">This browser reads that one piece from the file and hashes it.</span><strong class="pp-x" data-pp-x>–</strong><span class="pp-y" data-pp-y></span></li>
         </ol>
         <noscript><p class="sec-note">This chapter runs in your browser; without scripts it cannot. The same steps, as requests you can make: <a href="/llms/run.txt">/llms/run.txt</a>.</p></noscript>
         <div class="run">
           <div class="run-side">
-            <figure class="run-fig"><div class="run-pic" role="img" aria-label="the sample's saved picture"></div><figcaption class="run-cap"></figcaption></figure>
+            <figure class="run-fig"><div class="run-pic" role="img" aria-label="the sample's saved picture"></div></figure>
           </div>
           <div class="run-body">
+            <div class="run-cap"></div>
             <p class="run-verdict" aria-live="polite"></p>
             <div class="run-sum"></div>
             <p class="run-acts"><button class="btn btn-sm" type="button" data-run-again disabled>Run again</button><a class="lk" data-run-note target="_blank" rel="noopener">Open the note ↗</a><button class="lk" type="button" data-run-copy>Copy the agent line</button></p>
@@ -343,15 +345,15 @@
         <header class="sec-head">
           <div class="sec-t">
             <p class="eyebrow"><span>03</span>What it remembers</p>
-            <h2 id="samples-h">One memory. <em>Many devices.</em></h2>
+            <h2 id="samples-h">One memory. <em>From orbit to the street.</em></h2>
           </div>
-          <p class="lede">Every sample is a real file, from orbit to the street, already encoded. Open one and it runs end to end, here in the page.</p>
+          <p class="lede">Every sample is a real file, already encoded: galaxies and forests, deltas and mines, robots, drones and street cameras. Open one and it runs end to end, here in the page.</p>
         </header>
         <div class="sc-f" role="group" aria-label="Filter"></div>
         <ol class="sc-grid"></ol>
         <noscript><ul class="sc-nojs"><li><a href="https://emem.dev/memories/by_attester/ddzmyzhn/4uweu43yaiik2mw5nc4eznztbu.md">Sombrero galaxy</a></li><li><a href="https://emem.dev/memories/by_attester/ddzmyzhn/gkc2jap4r47zgs4t2sja4qderu.md">Amazon frontier, 2017–2025</a></li><li><a href="https://emem.dev/memories/by_attester/ddzmyzhn/sm45gry43cubuqjp2cpu5bit6i.md">Okavango Delta, flood pulse</a></li><li><a href="https://emem.dev/memories/by_attester/ddzmyzhn/ota6xerxrqzya5txb4jxvzpb2q.md">Lahaina, before and after fire</a></li><li><a href="https://emem.dev/memories/by_attester/ddzmyzhn/fdobixnnucctqkn2qtii7kibyq.md">Super Pit, Kalgoorlie</a></li><li><a href="https://emem.dev/memories/by_attester/ddzmyzhn/jnt6yrjflrxu3apgde37ykn55e.md">Phoenix: green vs heat</a></li></ul><p class="sec-note">Each is a note on emem.dev; with scripts, each opens and runs here.</p></noscript>
         <p class="sc-more"><button class="btn btn-sm" type="button" data-more-cards hidden>Show all</button></p>
-        <p class="sec-note">Live from the public sample catalogue: <a href="https://vortx-ai.github.io/ememdemo/llms.txt" target="_blank" rel="noopener">its agent list</a> · <a data-more href="https://vortx-ai.github.io/ememdemo/" target="_blank" rel="noopener">browse all of it ↗</a></p>
+        <p class="sec-note">Live from the public sample catalogue: <a href="https://vortx-ai.github.io/ememdemo/llms.txt" target="_blank" rel="noopener">its agent list</a> · <a data-more href="https://vortx-ai.github.io/ememdemo/" target="_blank" rel="noopener">browse the full catalogue ↗</a></p>
       </div>
     </section>
 
@@ -382,7 +384,7 @@
             <div class="ends">
               <div class="end"><b>MCP</b><code>https://emem.dev/mcp</code><button class="lk" type="button" data-copy="https://emem.dev/mcp">copy</button><span class="pl-s" data-pl="mcp"></span></div>
               <details class="door-dev">
-                <summary>More ways in: A2A, REST and the SDKs</summary>
+                <summary>More ways in: <span data-term="A2A">A2A</span>, REST and the SDKs</summary>
               <div class="ends-more">
               <div class="end"><b>A2A</b><code>emem.dev/.well-known/agent-card.json</code><button class="lk" type="button" data-copy="https://emem.dev/.well-known/agent-card.json">copy</button><span class="pl-s" data-pl="a2a-emem"></span></div>
               <div class="end"><b>REST</b><code>GET emem.dev/v1/log/sth</code><button class="lk" type="button" data-copy="curl https://emem.dev/v1/log/sth" title="copies the curl line">copy</button><span class="pl-s" data-pl="rest"></span></div>
@@ -398,7 +400,7 @@
             <h3 id="connect-h">Encode your own files</h3>
             <p class="door-d">Fingerprint a file where it is, publish its note, and any agent can decode it. The file itself never moves.</p>
             <label class="drop"><input type="file" aria-label="Choose a file to encode"><span><b>Drop a file</b><span>an image, a clip, a dataset · any size · hashed here, never uploaded</span></span></label>
-            <label class="enc-stamp"><input type="checkbox" id="enc-stamp"> <span>Timestamp the note with emem’s signed log head</span></label>
+            <label class="enc-stamp"><input type="checkbox" id="enc-stamp"> <span>Timestamp the note with emem’s signed <span data-term="log head">log head</span></span></label>
             <div class="enc" aria-live="polite">
               <p class="hd-meta" data-enc="name"></p>
               <div class="enc-prog"><u></u></div>
@@ -447,11 +449,11 @@
         <div class="try" id="decode">
           <form class="ask-form try-in">
             <h3>Try @emem here</h3>
-            <p class="try-d">Ask about any place on Earth. The answer cites signed readings, and its receipt is checked in this browser.</p>
+            <p class="try-d">Ask about any place on Earth. The answer cites signed readings, and its <span data-term="receipt">receipt</span> is checked in this browser.</p>
             <label for="ask-q">Question</label>
             <input id="ask-q" name="q" value="how green is this place" maxlength="200" autocomplete="off">
             <label for="ask-p">Place</label>
-            <input id="ask-p" name="place" value="Bengaluru" maxlength="120" autocomplete="off">
+            <input id="ask-p" name="place" value="Cubbon Park, Bengaluru" maxlength="120" autocomplete="off">
             <div class="ask-q" role="group" aria-label="Examples">
               <button class="chip" type="button" data-q="is this place flood-prone" data-p="Ashok Nagar, Ranchi">flood risk, Ranchi</button>
               <button class="chip" type="button" data-q="what is the air quality here" data-p="Delhi">air, Delhi</button>
@@ -480,7 +482,7 @@
             <p class="eyebrow"><span>05</span>Products</p>
             <h2 id="products-h">Built on emem. <em>Open at the core.</em></h2>
           </div>
-          <p class="lede">One open protocol anyone can use for free, and the products Vortx builds on it.</p>
+          <p class="lede">Vortx AI is the company. emem is its open protocol, free for anyone; @emem is emem inside your agent; the rest are products Vortx builds on it.</p>
         </header>
         <div class="prods">
           <a class="prod" href="https://emem.dev" target="_blank" rel="noopener" data-track="click_emem_dev" data-where="build"><span class="prod-st is-live">Live · free, no key</span><h3>emem<b>.dev</b></h3><p>The open protocol: signed facts any agent can read, with no key and no account. Apache-2.0.</p><span class="prod-for">For anyone building agents</span><span class="door-act">Open emem.dev ↗</span></a>
@@ -500,7 +502,7 @@
             <p class="eyebrow"><span>06</span>The plan</p>
             <h2 id="mission-h">Signed on the ground today. <em>In orbit next.</em></h2>
           </div>
-          <p class="lede">Today emem signs what devices have already recorded. Next, the instrument signs at the moment of capture. Each phase is dated when it ships, not before.</p>
+          <p class="lede">Today any device encodes its own files, and emem signs what it measures. Next, the instrument itself signs at the moment of capture. Each phase is dated when it ships, not before.</p>
         </header>
         <ol class="mission">
           <li class="is-done"><span class="ms-st">Shipped</span><h3>The protocol</h3><p>Signed facts, offline checks, a witnessed log.</p></li>
@@ -535,7 +537,7 @@
             <h3>Integration</h3>
             <div class="price">$5,000 <small>per session · 1 to 3 h</small></div>
             <p class="tier-who">We pair on your codebase until signed facts flow.</p>
-            <ul class="tier-list"><li>Live integration over MCP, REST or SDK</li><li>Ends when a receipt verifies in your stack</li></ul>
+            <ul class="tier-list"><li>Live integration over MCP, REST or SDK</li><li>The goal: a receipt verifying in your stack</li></ul>
             <button class="btn btn-lit" type="button" data-open-pricing data-tier="integration" data-track="pricing_open_click" data-where="book">Book the session</button>
           </article>
           <article class="tier" aria-label="Sovereign session, twenty five thousand dollars">

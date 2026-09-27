@@ -52,12 +52,13 @@
     }
     else if (j.stage === 'scored') this.line('score', 'derived values', { evaluated: d.evaluated, produced: d.produced_a_value }, 'ok', ms);
     else if (j.stage === 'answer') {
-      var full = String(d.answer || '').replace(/\s*\(\+\d+ more signed readings\)/, '');
+      // emem's words, kept; only a plural that reads wrong is set right ("1 days ago")
+      var full = String(d.answer || '').replace(/\s*\(\+\d+ more signed readings\)/, '').replace(/\b1 days\b/g, '1 day');
       // emem's own verdict sentence ("Scored: …") leads, word for word; the readings it rests on follow, in full on request
       var sc = /Scored: .*?\.(?=\s|$)/.exec(full), lead = sc ? sc[0] : '', rest = sc ? (full.slice(0, sc.index) + full.slice(sc.index + lead.length)).replace(/\s+/g, ' ').trim() : full;
       var paint = function (all) {
         o.ans.textContent = '';
-        if (lead) { var b = document.createElement('b'); b.className = 'ask-lead'; b.textContent = lead; o.ans.appendChild(b); o.ans.appendChild(document.createTextNode(' ')); }
+        if (lead) { var lb = document.createElement('small'); lb.className = 'ask-lab'; lb.textContent = 'emem’s scores, word for word'; o.ans.appendChild(lb); var b = document.createElement('b'); b.className = 'ask-lead'; b.textContent = lead; o.ans.appendChild(b); o.ans.appendChild(document.createTextNode(' ')); }
         var cut = !all && rest.length > 260, body = cut ? rest.slice(0, Math.max(rest.lastIndexOf(',', 260), 120)) + ' …' : rest;
         o.ans.appendChild(document.createTextNode(body));
         if (cut) { var mo = document.createElement('button'); mo.type = 'button'; mo.className = 'lk'; mo.textContent = ' read all'; mo.onclick = function () { paint(true); }; o.ans.appendChild(mo); }

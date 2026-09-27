@@ -107,7 +107,9 @@ body.vx {
 }
 .vx-nav a:hover { color: var(--ink); background: var(--panel-2); }
 .vx-nav a[aria-current="true"] { color: var(--ink); }
-.vx-nav a[aria-current="true"]::before { content: ''; display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--ink-2); margin-right: 7px; vertical-align: 2px; }
+.vx-nav a { position: relative; }
+.vx-nav a[aria-current="true"] { color: var(--ink); }
+.vx-nav a[aria-current="true"]::before { content: ''; position: absolute; left: 50%; bottom: 1px; width: 4px; height: 4px; margin-left: -2px; border-radius: 50%; background: var(--ink-2); }
 .vx-nav .ext::after { content: ' \2197'; color: var(--ink-3); }
 .vx-status { margin-left: auto; display: flex; align-items: center; gap: 14px; font: 500 12px var(--mono); color: var(--ink-3); }
 .vx-status a { text-decoration: none; color: var(--ink-2); }
@@ -446,7 +448,7 @@ a.door:hover { background: var(--panel-2); }
 .vx-foot a:hover { color: var(--ink); }
 .vx-foot .tag { margin: 12px 0 0; color: var(--ink-3); font-size: 14px; max-width: 34ch; }
 .vx-foot .release { margin: 40px 0 0; font: 400 12px/1.6 var(--sans); color: var(--ink-3); overflow-wrap: anywhere; }
-.vx-foot .release a { font-family: var(--mono); }
+.vx-foot .release a { font-family: var(--mono); word-break: break-all; }
 .vx-foot .release a { display: inline; color: var(--ink-2); font-size: inherit; padding: 0; }
 .vx-foot .reading { display: block; margin: 10px 0 0; font: 400 12px/1.6 var(--sans); color: var(--ink-3); }
 .vx-foot .reading .v { margin-right: 6px; }
@@ -529,8 +531,10 @@ body.pm-open { overflow: hidden; }
 }
 @media (max-width: 860px) {
   .vx-nav { display: none; position: fixed; top: 60px; left: 0; right: 0; flex-direction: column; align-items: stretch; gap: 0; margin: 0; padding: 8px 12px 14px; background: var(--void); border-bottom: 1px solid var(--line-2); box-shadow: 0 24px 48px rgba(0, 0, 0, .6); }
-  .vx-nav.is-open { display: flex; }
-  .vx-nav a { padding: 11px 10px; font-size: 14px; }
+  /* open, the menu dims the page under it */
+  .vx-nav.is-open { display: flex; box-shadow: 0 24px 48px rgba(0, 0, 0, .6), 0 100vh 0 100vh rgba(4, 7, 11, .62); }
+  .vx-nav a { padding: 11px 10px 11px 18px; font-size: 15px; }
+  .vx-nav a[aria-current="true"]::before { left: 6px; top: 50%; bottom: auto; margin: -2px 0 0; }
   .vx-toggle { display: inline-block; }
   .vx-status { display: none; }
   .tiers { grid-template-columns: 1fr; }

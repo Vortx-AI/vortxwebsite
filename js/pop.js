@@ -11,6 +11,10 @@
   var E = window.vxEngine;
   if (!window.vx || !E || !document.body) return;
   var el = E.el, KEEP = { machine: 'machine', 'third-party': 'third party', combined: 'combined', human: 'human' };
+  // the same plain words the gallery cards use: what the sample is, and who keeps its file
+  var SEC = { earth: 'Earth', disaster: 'Disaster', cities: 'City', wildlife: 'Wildlife', mines: 'Mine', government: 'Government', archives: 'Archive', places: 'Place',
+    space: 'Space', robotics: 'Robot', drones: 'Drone', cameras: 'Camera', gatherings: 'Gathering', '3d': '3D' };
+  var KEEP_T = { machine: 'signed by a system', 'third party': 'a publisher’s file', combined: 'joined from several', human: 'a person’s file' };
   var ORDER = ['indices.ndvi', 'copdem30m.elevation_mean', 'weather.temperature_2m', 'cams.pm25', 'hansen.tree_cover_2000', 'modis.lst_day_8day', 'soilgrids.phh2o_0_30cm', 'overture.buildings.count'];
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -128,8 +132,8 @@
     x = list[at]; var g = ++gen, k = x.kv; exact = '';
     clearLive(); log.innerHTML = ''; data.innerHTML = ''; sum.innerHTML = '';
     view('saved');
-    $('.sc-tag').textContent = x.verb + ' ' + x.kind;
-    var kp = KEEP[k.by] || k.by || ''; $('.sc-keep').textContent = kp; $('.sc-keep').hidden = !kp;
+    $('.sc-tag').textContent = SEC[x.sec] || x.verb + ' ' + x.kind; $('.sc-tag').title = x.verb + ' ' + x.kind + ', as the catalogue line says';
+    var kp = KEEP[k.by] || k.by || ''; $('.sc-keep').textContent = KEEP_T[kp] || kp; $('.sc-keep').title = kp ? 'who keeps the file: ' + kp : ''; $('.sc-keep').hidden = !kp;
     var st = $('.sc-state'); st.className = 'sc-state'; st.textContent = 'checking…';
     $('#sp-h').textContent = x.title;
     var meta = $('.sp-meta'); meta.innerHTML = '';

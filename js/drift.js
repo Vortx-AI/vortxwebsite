@@ -52,15 +52,21 @@
       this.line('guard', 'would it pass?', { verdict: gv.action, code: gv.code || '', fix: gv.fix || '' }, gv.action === 'allow' ? 'ok' : 'warn', 'emem.dev');
       var e = await post('/v1/echo_verify', { token: tok, claimed_value: num }); if (!live()) return;
       var said = e.matches ? 'verbatim ✓' : e.drift === 'rounded' ? 'rounded' : 'a different number';
-      // the quoted number takes the colour of what it turned out to be: signed, rounded, or wrong
-      this.node.setAttribute('data-v', e.matches ? 'ok' : e.drift === 'rounded' ? 'rounded' : 'wrong');
+      // the quoted number, the card's mark and its title take what it turned out to be: signed, rounded, or wrong
+      var kind = e.matches ? 'ok' : e.drift === 'rounded' ? 'rounded' : 'wrong';
+      this.node.setAttribute('data-v', kind);
+      var h = this.node.querySelector('h3');
+      if (h && this.node.hasAttribute('data-case')) {
+        h.querySelector('i').textContent = { ok: '✓', rounded: '≈', wrong: '✕' }[kind];
+        var t = h.querySelector('span'); if (t) t.textContent = { ok: 'An agent, citing', rounded: 'An agent, rounding', wrong: 'An agent, paraphrasing' }[kind];
+      }
       this.line('echo', 'is it the signed number?', { wrote: num, signed: e.resolved_value_verbatim, verdict: said }, e.matches ? 'ok' : 'warn', 'emem.dev');
       var v = e.receipt ? ememVerify.verifyReceipt(e.receipt) : { ok: false }, bound = v.ok && (e.receipt.fact_cids || []).indexOf(tok.split(':').pop()) >= 0;
       this.line('verify', 'the answer itself', { receipt: v.ok ? 'ed25519 ✓' : 'INVALID', names: bound ? 'this fact ✓' : 'NO' }, bound ? 'ok' : 'fail', 'this browser');
       if (!bound) this.verdict('is-bad', 'Not trusted:', 'the answer’s own signature did not check out here.');
       else if (e.matches) this.verdict('is-ok', 'Passes ✓', 'The number is the one signed, ' + e.resolved_value_verbatim + ', quoted verbatim. Anyone can check the signature, offline, with no key.');
-      else if (gv.action !== 'allow') this.verdict('is-caught', 'Caught ✓', 'The draft says ' + num + '; the signed value is ' + e.resolved_value_verbatim + '. emem’s guard stops the draft before a person reads it: ' + (WORDS[gv.code] || gv.code || 'denied') + (gv.fix ? ', so ' + (WORDS[gv.fix] || gv.fix) : '') + '.');
-      else this.verdict('is-caught', 'Flagged: rounded', 'The draft says ' + num + '; the signed value is ' + e.resolved_value_verbatim + '. The guard lets a rounding through, and the echo marks it rounded, so an agent that needs the exact number knows.');
+      else if (gv.action !== 'allow') this.verdict('is-bad', 'Blocked ✕', 'The draft says ' + num + '; the signed value is ' + e.resolved_value_verbatim + '. emem’s guard stops the draft before a person reads it: ' + (WORDS[gv.code] || gv.code || 'denied') + (gv.fix ? ', so ' + (WORDS[gv.fix] || gv.fix) : '') + '.');
+      else this.verdict('is-caught', 'Flagged ≈', 'The draft says ' + num + '; the signed value is ' + e.resolved_value_verbatim + '. The guard lets a rounding through, and the echo marks it rounded, so an agent that needs the exact number knows.');
     } catch (err) { if (!live()) return; this.line('stop', 'check', { why: vx.why(err, 'emem.dev') }, 'fail'); this.verdict('is-off', 'Not checked:', vx.why(err, 'emem.dev') + '.'); }
   };
 

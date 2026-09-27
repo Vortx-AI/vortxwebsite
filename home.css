@@ -69,7 +69,7 @@
 .h3o-sub { margin: 18px 0 0; font: 400 clamp(18px, 1.6vw, 23px)/1.35 var(--sans); color: var(--ink-2); letter-spacing: -.01em; text-shadow: 0 1px 18px rgba(0, 0, 0, .8); }
 .h3o-sub b { color: var(--ink); font-weight: 500; }
 /* the noun under the verbs: what emem is, who keeps what, and what is for sale */
-.h3o-what { margin: 14px 0 0; max-width: 500px; font: 400 14.5px/1.5 var(--sans); color: var(--ink-2); text-shadow: 0 1px 14px rgba(0, 0, 0, .9); }
+.h3o-what { margin: 16px 0 0; max-width: 540px; font: 400 16px/1.55 var(--sans); color: var(--ink-2); text-shadow: 0 1px 14px rgba(0, 0, 0, .9); text-wrap: pretty; }
 .h3o-what b { color: var(--ink); font-weight: 600; }
 .vx .h3o-what .lk { font: inherit; color: var(--ink); text-decoration: underline; text-decoration-color: rgba(232, 237, 242, .3); text-underline-offset: 3px; }
 .vx .h3o-what .lk:hover { text-decoration-color: currentColor; }
@@ -224,6 +224,12 @@
 .case-how > summary:hover, .case-own > summary:hover, .run-how > summary:hover, .ask-how > summary:hover, .door-dev > summary:hover { color: var(--ink); }
 /* a verbatim value: every digit kept, the ones past the third decimal quieter */
 .tail { color: var(--ink-3); }
+/* no word left alone at the end of a heading or a paragraph */
+.vx main > .sec .sec-head h2, .case-q, .start .door h3, .try-in h3, .mission h3 { text-wrap: balance; }
+.lede, .h3o-free, .sec-note, .door-d, .try-d, .tier-who, .prod-sec .prod p, .mission p, .scale span, .cases-q, .pp-d, .drift-say, .cx-note, .bridge { text-wrap: pretty; }
+/* words for the pointer in hand: click with a mouse, tap on glass */
+.on-touch { display: none; }
+@media (pointer: coarse) { .on-touch { display: inline; } .on-fine { display: none; } }
 
 /* ---------- trust: where emem is listed, and what Vortx is part of ---------- */
 .trust { padding: 22px 0 24px; border-top: 1px solid var(--line); }
@@ -246,6 +252,11 @@
 .case h3 { display: flex; align-items: center; gap: 10px; margin: 0 0 14px; font: 500 13.5px var(--sans); color: var(--ink-3); }
 .case h3 i { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; border: 1px solid rgba(255, 107, 107, .45); font: 600 11px/1 var(--mono); font-style: normal; color: var(--fail); }
 .case.is-cite h3 i { border-color: rgba(61, 220, 151, .45); color: var(--ok); }
+/* once checked, the mark is what the draft turned out to be */
+.case[data-v="ok"] h3 i { border-color: rgba(61, 220, 151, .45); color: var(--ok); }
+.case[data-v="rounded"] h3 i { border-color: rgba(255, 196, 107, .45); color: var(--claim); }
+.case[data-v="wrong"] h3 i { border-color: rgba(255, 107, 107, .45); color: var(--fail); }
+.cases-q { max-width: 70ch; margin: 0 0 18px; font: 400 16px/1.55 var(--sans); color: var(--ink-2); }
 .case-q { margin: 0; font: 400 clamp(20px, 1.9vw, 25px)/1.35 var(--serif); color: var(--ink); overflow-wrap: anywhere; }
 .case-q mark { background: none; color: var(--ink); border-bottom: 1px dashed var(--ink-3); transition: color .3s, border-color .3s; }
 .case[data-v="wrong"] .case-q mark { color: var(--fail); border-bottom-color: var(--fail); }
@@ -312,7 +323,8 @@
 .run-pic.is-tile { position: relative; background: #05080d; }
 .run-pic.is-tile canvas { display: block; width: 100%; height: 100%; object-fit: cover; }
 .run-tag { position: absolute; left: 10px; bottom: 10px; right: 10px; padding: 5px 9px; border-radius: 8px; background: rgba(4, 7, 11, .8); font: 400 11.5px/1.4 var(--mono); color: var(--ok); }
-.run-cap { display: grid; gap: 4px; margin-top: 14px; font: 400 14px/1.5 var(--sans); color: var(--ink-3); }
+.run-cap { display: grid; gap: 4px; margin: 0 0 22px; padding-bottom: 18px; border-bottom: 1px solid var(--line); font: 400 14px/1.5 var(--sans); color: var(--ink-3); }
+.run-cap:empty { display: none; }
 .run-cap strong { font: 500 16px/1.3 var(--sans); color: var(--ink); letter-spacing: -.01em; }
 .run-seen { font: 400 12px/1.5 var(--mono); color: var(--ink-3); }
 .run-seen.is-bad { color: var(--fail); }
@@ -437,6 +449,7 @@
 .ask-ans { margin: 14px 0 0; font: 400 16px/1.6 var(--sans); color: var(--ink-2); }
 .ask-ans:empty { display: none; }
 .ask-ans .ask-lead { display: block; margin-bottom: 8px; font: 500 17px/1.45 var(--sans); color: var(--ink); }
+.ask-ans .ask-lab { display: block; margin-bottom: 4px; font: 500 12px var(--sans); color: var(--ink-3); }
 .ask-reads { display: flex; flex-wrap: wrap; gap: 6px; margin: 16px 0 0; padding: 0; list-style: none; }
 .ask-reads:empty { display: none; }
 .ask-reads li { padding: 5px 10px; border-radius: 99px; border: 1px solid var(--line-2); font: 400 12px var(--mono); color: var(--ink); }
@@ -682,6 +695,7 @@ html.sp-open { overflow: hidden; }
 }
 @media (max-width: 560px) {
   .vx main > .sec { padding: 52px 0; }
+  .h3o-acts .btn { flex: 1 1 100%; justify-content: center; }
   .try-out { min-height: 200px; }
   .cx-url { flex-direction: column; }
   .cx-url input { flex: none; }

@@ -25,9 +25,9 @@
   var KEEP_T = { machine: 'signed by a system', 'third party': 'a publisher’s file', combined: 'joined from several', human: 'a person’s file' };
   var filter = root.getAttribute('data-filter') || 'All', items = [], thumbs = {}, pics = {}, expanded = false;
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-  // first, six the page has not shown yet (the hero's cards and the run's samples come later): a galaxy,
-  // a forest frontier, a delta, a fire, a mine and a city, so the gallery adds to the story instead of repeating it
-  var FIRST = ['4uweu43yaiik2mw5nc4eznztbu', 'gkc2jap4r47zgs4t2sja4qderu', 'sm45gry43cubuqjp2cpu5bit6i', 'ota6xerxrqzya5txb4jxvzpb2q', 'fdobixnnucctqkn2qtii7kibyq', 'jnt6yrjflrxu3apgde37ykn55e'];
+  // first, six that add to the story rather than repeat it: a galaxy, a forest frontier, a delta, a fire, a mine,
+  // and the robot's own camera (the hero shows it only as a closed card)
+  var FIRST = ['4uweu43yaiik2mw5nc4eznztbu', 'gkc2jap4r47zgs4t2sja4qderu', 'sm45gry43cubuqjp2cpu5bit6i', 'ota6xerxrqzya5txb4jxvzpb2q', 'fdobixnnucctqkn2qtii7kibyq', 'qcoylkllqzfqnsinn4af5i2mi4'];
   // what each catalogue section is, in a word a visitor knows
   var SEC = { earth: 'Earth', disaster: 'Disaster', cities: 'City', wildlife: 'Wildlife', mines: 'Mine', government: 'Government', archives: 'Archive', places: 'Place',
     space: 'Space', robotics: 'Robot', drones: 'Drone', cameras: 'Camera', gatherings: 'Gathering', '3d': '3D' };
@@ -140,7 +140,7 @@
     li.appendChild(pic);
     // the card says what it is, how big the source is, what a model reads instead, and whether its note checked out
     var bd = el('div', 'sc-bd'), head = el('p', 'sc-head');
-    head.appendChild(el('span', 'sc-tag', SEC[x.sec] || x.group));
+    var sw = SEC[x.sec] || x.group; head.appendChild(el('span', 'sc-tag', sw === x.group ? sw : x.group + ' · ' + sw));
     var keep = KEEP[x.kv.by] || x.kv.by || ''; if (keep) { var kp = el('span', 'sc-keep', KEEP_T[keep] || keep); kp.title = 'who keeps the file: ' + keep; head.appendChild(kp); }
     head.appendChild(el('span', 'sc-state', 'checking…'));
     bd.appendChild(head);
@@ -205,7 +205,7 @@
         b.addEventListener('click', function () { filter = g; chips.querySelectorAll('.chip').forEach(function (c) { c.setAttribute('aria-pressed', c === b ? 'true' : 'false'); }); render(); });
         chips.appendChild(b);
       });
-      if (more) { var rest = all.length - items.length; more.textContent = rest > 0 ? rest + ' more in the full catalogue: models, medicine, documents, code' : 'the full catalogue'; }
+      if (more) more.textContent = 'browse the full catalogue ↗';
       render();
     }).catch(function () {
       grid.innerHTML = ''; var li = el('li', 'sc-off'); li.textContent = 'the catalogue at vortx-ai.github.io/ememdemo did not answer this browser; open it directly'; grid.appendChild(li);

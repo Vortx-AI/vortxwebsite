@@ -161,7 +161,7 @@
     verdict.className = 'run-verdict ' + (ok ? 'is-ok' : 'is-fail'); verdict.innerHTML = '';
     verdict.appendChild(el('b', null, R.passed + '/' + R.checks + (ok ? ' ✓' : ' ✕')));
     verdict.appendChild(el('span', null, ok ? 'checks passed in this browser' : 'checks passed in this browser; the others failed'));
-    if (nt && rt) verdict.appendChild(el('span', 'run-less', Math.round(rt / nt).toLocaleString('en-US') + '× less for a model to read than the raw file'));
+    if (nt && rt) verdict.appendChild(el('span', 'run-less', 'The note is ' + Math.round(rt / nt).toLocaleString('en-US') + '× fewer context tokens than the file would be, handed to a model as raw bytes'));
     (R.notes || []).forEach(function (t) { verdict.appendChild(el('span', 'is-note', '! ' + t)); });
     if (sum) { sum.innerHTML = ''; sum.appendChild(el('p', 'run-score', vx.fmtBytes(R.L.total) + ' fetched in all, from ' + Object.keys(R.L.hosts).join(', '))); }
     // a run that checks its piece without drawing it says so, rather than leave the placeholder

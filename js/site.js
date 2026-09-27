@@ -18,11 +18,14 @@
   /* nav */
   var nav = document.querySelector('[data-nav]'), tog = document.querySelector('[data-nav-toggle]');
   if (nav && tog) {
+    // the button says what it will do: open the menu, or close it
+    var shut = function () { nav.classList.remove('is-open'); tog.setAttribute('aria-expanded', 'false'); tog.textContent = 'menu'; };
     tog.addEventListener('click', function () {
       var open = nav.classList.toggle('is-open');
-      tog.setAttribute('aria-expanded', open ? 'true' : 'false');
+      tog.setAttribute('aria-expanded', open ? 'true' : 'false'); tog.textContent = open ? 'close' : 'menu';
     });
-    nav.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { nav.classList.remove('is-open'); tog.setAttribute('aria-expanded', 'false'); }); });
+    nav.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', shut); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && nav.classList.contains('is-open')) { shut(); tog.focus(); } });
   }
   var head = document.querySelector('.vx-top');
   if (head) {
