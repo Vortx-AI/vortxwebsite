@@ -1,8 +1,8 @@
 {
   "schema": "vortx.site_manifest.v1",
-  "cid": "yopko2i6urro7f6lcqqewofysruoibjljlbbdmah57eroxyontha",
-  "commit": "a39b256519b2ddecdccb19388bc58f80d52ef5b0",
-  "generated_at": "2026-09-25T14:16:39Z",
+  "cid": "rhlcvtjkngvipvsldqcttxpxhyeqiw54lj3kqhmfvfqh7pjpg6ta",
+  "commit": "cddb76df9e66beb57ac3273485900738d4cbb1cd",
+  "generated_at": "2026-09-27T06:13:28Z",
   "files": {
     ".nojekyll": {
       "blake3": "v4jutopv7gq2nicajxvdnxgjjgn4wjojvxarfn6mtkj4vza7gjra",
@@ -264,6 +264,158 @@
       "blake3": "3okdc3ktktqhoslgkl5776mstlcoalj5yz7zj56dykou5dsjs7wa",
       "bytes": 40630
     },
+    "assets/press/mini/emem-2.4.0-release-art.webp": {
+      "blake3": "46y7jxrfijaqhf7wnly5vbzn7r5ljq5qxehdgima3pgjgncqg6rq",
+      "bytes": 2598
+    },
+    "assets/press/mini/emem-guard.webp": {
+      "blake3": "u7jepgqcfawmzshhxv6wd52sg4brfc3lz2kxkdxod7dppbv4fnla",
+      "bytes": 1514
+    },
+    "assets/press/mini/emem-home.webp": {
+      "blake3": "2waj4c7wzkg4wwzz7zg2wh2zy6p63hsiqng2b2aqqmw6edenjbmq",
+      "bytes": 2122
+    },
+    "assets/press/mini/emem-tools.webp": {
+      "blake3": "qzoydit2gjkzppb67xmqz54hcfyicu4qp2zelv7vwwmtuijsmrdq",
+      "bytes": 1758
+    },
+    "assets/press/mini/emem-verify.webp": {
+      "blake3": "3s5ad5s344kacuwqtevokmmt2lr6l7lluwsdypyrbyuykrmnhgvq",
+      "bytes": 1308
+    },
+    "assets/press/mini/emem-worlds.webp": {
+      "blake3": "q4nojp5rf6wqxqskedwoboivxd5dsark2su4bzkghoqgw4qimqdq",
+      "bytes": 2440
+    },
+    "assets/press/mini/ememdemo.webp": {
+      "blake3": "gqfqi4v6zubatt4a5pgtss36tuh4cvuausmznjejf26hxea7aa4q",
+      "bytes": 1866
+    },
+    "assets/press/mini/eudr-home.webp": {
+      "blake3": "x3byng2w5qwu4wfmqyyp544n4n2pikyb7kqewhcdhlratqtomezq",
+      "bytes": 1100
+    },
+    "assets/press/mini/geoqa-london.webp": {
+      "blake3": "h4ur4yggik6p3r4tcx4sbnoktcb77q5ab5nyxncppyb5d55lafuq",
+      "bytes": 2072
+    },
+    "assets/press/mini/listing-chatgpt.webp": {
+      "blake3": "533c5q4bzkq6asne36b5vntc36eu7qdyunzvgoihdpnyup4rrreq",
+      "bytes": 1526
+    },
+    "assets/press/mini/listing-context7.webp": {
+      "blake3": "4p2htqfcxrv4gns2xckldzwbycpbelrxbz7owwgxf5hll3l2e3xa",
+      "bytes": 976
+    },
+    "assets/press/mini/listing-dify.webp": {
+      "blake3": "wd7whlvtgwxsbja4jmnpbowieayjm2bd7w33xzdlnlw6qfeisova",
+      "bytes": 1942
+    },
+    "assets/press/mini/listing-github-mcp.webp": {
+      "blake3": "hh37dwameshd5dhpcwgmdspormnlzfeg6dlxkgehsw3ugo5qoasa",
+      "bytes": 1782
+    },
+    "assets/press/mini/listing-glama.webp": {
+      "blake3": "vfyfcsgtqdxn43scdgghlwzgttedr576rbn73mdlxttxtg75a2oa",
+      "bytes": 2206
+    },
+    "assets/press/mini/listing-huggingface.webp": {
+      "blake3": "dprlhzpdqj33tux2vwntavekyuy2sya2rjzqepqhgaarcgjvg4kq",
+      "bytes": 2120
+    },
+    "assets/press/mini/listing-mulesoft.webp": {
+      "blake3": "qpmx6kc2pkuzk32t35at7kyam4itjcsyqpiabjuspcpuftzbt2sq",
+      "bytes": 1968
+    },
+    "assets/press/mini/listing-npm.webp": {
+      "blake3": "brs3flhrk2isfrnlwcuqvhm5ia5xj5ji7t7ljnfikfoeiy5ow5la",
+      "bytes": 2208
+    },
+    "assets/press/mini/listing-pulsemcp.webp": {
+      "blake3": "5s4l7bnyx5laa6t6z5c4oj6cnkb5bdny7gxc55stafuxll4x4kaq",
+      "bytes": 1440
+    },
+    "assets/press/mini/podcast-earth-intelligence.webp": {
+      "blake3": "igphiqsaaf6r5fcdn7rgcrtvtgjxy5x7z5on46qtgsnk2hv3gyiq",
+      "bytes": 4358
+    },
+    "assets/press/mini/video-vimeo-1094736991.webp": {
+      "blake3": "ir5zntrafshbkf7sgnsbidznbv3zd5mjjgrgd76mujw5jzhzy3aa",
+      "bytes": 968
+    },
+    "assets/press/mini/video-yt-0gH-1Qepv24.webp": {
+      "blake3": "fwwwixss7ln4uh2dq5mhgtrzrijmsfvbcesn7znb4eq4ijruvh4a",
+      "bytes": 2252
+    },
+    "assets/press/mini/video-yt-1hqpvxl5YKw.webp": {
+      "blake3": "tyogx4oevmnpliahtwxovutf5qdu6rxjn5efdzass5q4wvmab3wq",
+      "bytes": 2232
+    },
+    "assets/press/mini/video-yt-8Frg8X7pRfk.webp": {
+      "blake3": "urehyauyvj64i3wtuhpcfrod7em7txj32qts2h7aonoka25tk6ea",
+      "bytes": 1946
+    },
+    "assets/press/mini/video-yt-E796tNJI8TM.webp": {
+      "blake3": "sdsrauov2253zkk6oohyg26xg5ba2nnk4qs734qqt55xlm24rf2q",
+      "bytes": 1248
+    },
+    "assets/press/mini/video-yt-KR6gSwQ6A7I.webp": {
+      "blake3": "mczmul7enjdax7kewgka62kwmrmt2xesa4rft2dfj3iaexjqhleq",
+      "bytes": 1528
+    },
+    "assets/press/mini/video-yt-L12opo7uyH8.webp": {
+      "blake3": "avoyfd6d43zcsoyb6d6hjoqr5yrkdq54bugodzujtdkmrly5jz7q",
+      "bytes": 2044
+    },
+    "assets/press/mini/video-yt-LTWOo61TxmI.webp": {
+      "blake3": "fasujlemu75sviltw5526k33qoh5whahowwncshh4qsghkqlcsaq",
+      "bytes": 3044
+    },
+    "assets/press/mini/video-yt-VLrBdCCcrWw.webp": {
+      "blake3": "f4fxgq252t76bl2qwe7rnzapvdwhxfoep36b5ptyxdoajxibdtoq",
+      "bytes": 1552
+    },
+    "assets/press/mini/video-yt-XzTMkGIe18Q.webp": {
+      "blake3": "x3prkjalxnnktzxnlfya4lxxpryiwkspy5evf54h4lmn2qvpctza",
+      "bytes": 2084
+    },
+    "assets/press/mini/video-yt-ajGu5IovxIM.webp": {
+      "blake3": "jfuuylh5ptaj32xrpfnl4awuaayxscjc6yf25hbl7fw37wiexlfq",
+      "bytes": 1992
+    },
+    "assets/press/mini/video-yt-mfNDR5SZLIM.webp": {
+      "blake3": "mp7il2j3czodn7i5vtofm4k36r2rnwsigawglyojnmputid5p6qq",
+      "bytes": 1040
+    },
+    "assets/press/mini/video-yt-td0yFCK29po.webp": {
+      "blake3": "z3uwxspaefdwlwtmr3hwwnivfogkzo3ky5poutjchkeaws3a2zma",
+      "bytes": 2006
+    },
+    "assets/press/mini/video-yt-vRHA0UHGk2I.webp": {
+      "blake3": "bdjy6dmsnbr7wcs5gt7tqavkjs6eqmc7epn5o2yiszbi4pmichpq",
+      "bytes": 1642
+    },
+    "assets/press/mini/video-yt-yw2ceN2dJ3c.webp": {
+      "blake3": "dxea7bmsnyljequo2gztqb6wi6id63s7jy7n3qmpvuv6vfv5cstq",
+      "bytes": 3694
+    },
+    "assets/press/mini/vortx-hero.webp": {
+      "blake3": "ccac3b7zmqb4vzwjv54o2yvjxmt63rtadt2lufat4okebvj25vzq",
+      "bytes": 3266
+    },
+    "assets/press/mini/vortx-popup-bengaluru.webp": {
+      "blake3": "nuoxe73u2v5h3se2hccqhchlcuo56pqykxkt3gqecaalozyzw6qq",
+      "bytes": 2838
+    },
+    "assets/press/mini/vortx-popup-kruger.webp": {
+      "blake3": "6a4b5evxlg5tx57hm42fkgmmzt3zfjxi6wdxijlrh5dxorwak4sq",
+      "bytes": 2106
+    },
+    "assets/press/mini/vortx-popup-lusail.webp": {
+      "blake3": "3iu6qsjxtq2audweq5hriqjxkyoyylpqzxdonxbbign46ljt46na",
+      "bytes": 2898
+    },
     "assets/press/podcast-earth-intelligence.webp": {
       "blake3": "56qw3myxmeunyj2woo5n7ue5a2xdlv56unne5tq654qr5nxc7mwq",
       "bytes": 40518
@@ -469,12 +621,12 @@
       "bytes": 11309
     },
     "home.css": {
-      "blake3": "masujtq7njdvcxczxpelrzwtsn7bgvzrrodqa3jzs7kvi5tcsqyq",
-      "bytes": 56634
+      "blake3": "4qmq2uccbnbc7xy7hefisnvwizhobjp4ciqelyfretu32ozxmwda",
+      "bytes": 56645
     },
     "index.html": {
-      "blake3": "u2lul2uy6pvvfdx5bnsgyqi5t627wk4u2b7pprvvbe4445rgv4ma",
-      "bytes": 54335
+      "blake3": "jzgqpzcb73ik4jwrqs2kjaopefikt6psci23armdd7cblbvguz6q",
+      "bytes": 54316
     },
     "js/ask.js": {
       "blake3": "we7qzbvcp5t5i443u7zi7qyuznflb7nvfnvm6ef2hwkbcqu33ida",
@@ -509,8 +661,8 @@
       "bytes": 20181
     },
     "js/hero.js": {
-      "blake3": "qr6ti45l2daywcajant65c2k452jtvbf2gins2tvnk2it67pdsdq",
-      "bytes": 47085
+      "blake3": "cpjvmc5mgrey6u5mv4mz5ezmdhi7bt4gz6nofql5bhprniy3csqa",
+      "bytes": 49584
     },
     "js/ladder.js": {
       "blake3": "l26vnwm4wpx5st7ptxzfmxarxge2zwya6rpsjgv7dhyjw4kewyvq",
@@ -533,8 +685,8 @@
       "bytes": 21429
     },
     "js/press.js": {
-      "blake3": "yvgunihxxwzxn577vks3z4ds2khvjjtjkbcsdvtynqpft4mbwu4a",
-      "bytes": 13982
+      "blake3": "b4qjansv23fylfjww7i2fiogsurcymid63qeqntpowfdifbekfiq",
+      "bytes": 15412
     },
     "js/reach.js": {
       "blake3": "xana4ntm653ww2rmb7mskmumdnadq5tgkxpiusawjvziwvjq3hka",
@@ -625,12 +777,12 @@
       "bytes": 2847
     },
     "press/index.html": {
-      "blake3": "z3lollppaopu7dzt7ffkgsbj4qk5ji7346e23pwgxmt7bwhwhayq",
-      "bytes": 74666
+      "blake3": "slo7g3s6wssrv3ybrahm5hniewd5ogvuatejlyic3cwuuxakjksq",
+      "bytes": 87063
     },
     "press/press.css": {
-      "blake3": "epugrqmkve6kyre4lgztjw5msjz5oxyayuqywsxh6vc4fvvu26va",
-      "bytes": 10640
+      "blake3": "cwcqvswqizmjvnwy5jeqrpflnf3xhnjq4or4z7fennrjpulmctaa",
+      "bytes": 14665
     },
     "privacy.html": {
       "blake3": "cpljgk4goqul3urudcvdbxhny7x3y5batjw2m4lezll7lng4i3la",
