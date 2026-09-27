@@ -8,8 +8,13 @@ The timeline, the listing wall, the video wall and the press-kit counts live bet
 Everything else in the page is hand-written. js/press.js then re-checks each dated entry
 against the record that owns its date (a registry, a changelog, a commit, a DOI), live.
 
-    python3 tools/gen_press.py          # rewrite press/index.html in place
-    python3 tools/gen_press.py --check  # exit 1 if the page is not what the data renders
+The page is a ladder: each entry and each chapter of videos is one line (its verb, its noun, its
+date, a small picture of what is inside); opening it shows the media, the proof and the check.
+The small pictures are cut here from the full ones, into assets/press/mini/, so a closed page
+loads a few kilobytes of pictures and the full ones only when a line is opened.
+
+    python3 tools/gen_press.py          # cut the small pictures and rewrite press/index.html in place
+    python3 tools/gen_press.py --check  # exit 1 if the page is not what the data renders, or a small picture is missing
     python3 tools/gen_press.py --verify # re-read every dated entry from its record; exit 1 on a date that disagrees
 """
 
@@ -23,6 +28,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data" / "timeline.json"
 PAGE = ROOT / "press" / "index.html"
+MINI = ROOT / "assets" / "press" / "mini"
+MW, MH = 176, 110  # every small picture: 16:10, twice the size it is shown at
 KIND = {"emem": "emem", "eudr": "eudr.dev", "listing": "listing", "research": "research", "vortx": "vortx.ai", "video": "video"}
 MON = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
@@ -61,6 +68,41 @@ def dims(src, fallback):
     return fallback
 
 
+def mini(src):
+    """The small picture cut from a full one in assets/press/, or None for anything else."""
+    return "/assets/press/mini/" + Path(src).stem + ".webp" if src and src.startswith("/assets/press/") else None
+
+
+def make_minis():
+    """Cut a 16:10 small picture from every full one, a little above the middle (a title, a face)."""
+    from PIL import Image
+    MINI.mkdir(parents=True, exist_ok=True)
+    n = 0
+    for src in sorted((ROOT / "assets" / "press").glob("*.webp")):
+        out = MINI / (src.stem + ".webp")
+        if out.exists() and out.stat().st_mtime >= src.stat().st_mtime:
+            continue
+        im = Image.open(src).convert("RGB")
+        w, h = im.size
+        cw, ch = (w, w * MH / MW) if w / h < MW / MH else (h * MW / MH, h)
+        y0 = min(max(0, h * .38 - ch / 2), h - ch)
+        im.crop((round((w - cw) / 2), round(y0), round((w + cw) / 2), round(y0 + ch))).resize((MW, MH), Image.LANCZOS).save(out, "WEBP", quality=72, method=6)
+        n += 1
+    return n
+
+
+def check_minis(page):
+    """Every small picture the page names exists, at its size."""
+    bad = [m for m in sorted(set(re.findall(r'/assets/press/mini/[\w.-]+\.webp', page))) if dims(m, None) != (MW, MH)]
+    if bad:
+        sys.exit("missing or wrong-sized small pictures (run python3 tools/gen_press.py): " + ", ".join(bad))
+
+
+def peek(src):
+    m = mini(src)
+    return (f'<img src="{m}" alt="" width="{MW // 2}" height="{MH // 2}" loading="lazy" decoding="async">' if m else "")
+
+
 def mmss(sec):
     sec = int(sec or 0)
     return f"{sec // 60}:{sec % 60:02d}" if sec else ""
@@ -79,7 +121,7 @@ def player(v, big=False):
 
 
 def watch(videos, chapters):
-    """The video wall, a whole section, one row per chapter; nothing at all until there is a video to show."""
+    """The video wall, a whole section, one line per chapter that opens onto its videos; nothing at all until there is a video to show."""
     if not videos:
         return ""
     rows = []
@@ -94,7 +136,11 @@ def watch(videos, chapters):
             what = f'<em>{esc(v["what"])}</em>' if v.get("what") else ""
             cards.append(f'<li><figure class="wv"{chk}>{player(v, len(vs) == 1)}<figcaption><strong>{esc(v["title"])}</strong>{what}'
                          f'<span>{esc(v["by"])} · <time datetime="{esc(v["date"])}">{d.day} {MON[d.month - 1][:3]} {d.year}</time> · <a class="lk" href="{esc(v["url"])}" target="_blank" rel="noopener">{esc(v["platform"])} ↗</a></span></figcaption></figure></li>')
-        rows.append(f'<div class="wv-ch{" is-one" if len(vs) == 1 else ""}"><h3><b class="v">{esc(ch["verb"])}</b> {esc(ch["noun"])}</h3>\n<ul class="wv-grid">\n' + "\n".join(cards) + "\n</ul></div>")
+        span = f'{day(vs[0]["date"]).year}' if day(vs[0]["date"]).year == day(vs[-1]["date"]).year else f'{day(vs[0]["date"]).year}–{day(vs[-1]["date"]).year}'
+        rows.append(f'<details class="wv-ch nr-x{" is-one" if len(vs) == 1 else ""}"><summary><h3><b class="v">{esc(ch["verb"])}</b> {esc(ch["noun"])}</h3>'
+                    f'<span class="nr-n2">{len(vs)} video{"s" if len(vs) > 1 else ""} · {span}</span>'
+                    f'<span class="nr-peek" aria-hidden="true">' + "".join(peek(v["thumb"]) for v in vs[:4]) + '</span></summary>\n'
+                    f'<ul class="wv-grid">\n' + "\n".join(cards) + "\n</ul></details>")
     return ('    <section class="section nr-sec" id="watch" aria-labelledby="watch-h">\n      <div class="wrap">\n'
             f'        <h2 class="nr-h" id="watch-h"><b class="v">watch</b> Vortx AI and emem, on camera</h2>\n'
             + "\n".join(rows) +
@@ -103,28 +149,38 @@ def watch(videos, chapters):
 
 
 def entry(e):
+    """One line: the date, what kind, the verb and its noun, a small picture; opened, the media, the proof, the check."""
     d = day(e["date"])
     checks = e.get("check")
     attrs = f' data-kind="{esc(e["kind"])}" data-date="{esc(e["date"])}"'
     if checks:
         attrs += f" data-check='{esc(json.dumps(checks if isinstance(checks, list) else [checks], separators=(',', ':')))}'"
-    out = [f'<li class="tl"{attrs}>',
-           f'<p class="tl-d"><time datetime="{esc(e["date"])}"><b>{d.day}</b><span>{MON[d.month - 1][:3]}</span></time><i>{esc(KIND.get(e["kind"], e["kind"]))}</i></p>',
-           '<div class="tl-bd">',
-           f'<h3><b class="v">{esc(e["verb"])}</b> {esc(e["noun"])}</h3>']
+    media = e.get("video") or e.get("audio")
+    if media:
+        look = f'<span class="nr-peek is-play" aria-hidden="true">{peek(media["thumb"])}</span>'
+    elif e.get("img"):
+        look = f'<span class="nr-peek" aria-hidden="true">{peek(e["img"])}</span>'
+    elif e.get("card"):
+        look = '<span class="nr-peek is-card" aria-hidden="true"><i></i><i></i><i></i></span>'
+    else:
+        look = ""
+    out = [f'<li class="tl"{attrs}><details class="tl-x nr-x"><summary>',
+           f'<span class="tl-d"><time datetime="{esc(e["date"])}"><b>{d.day}</b><span>{MON[d.month - 1][:3]}</span></time><i>{esc(KIND.get(e["kind"], e["kind"]))}</i></span>',
+           f'<h3><b class="v">{esc(e["verb"])}</b> {esc(e["noun"])}</h3>', look, '</summary>',
+           '<div class="tl-open"><div class="tl-bd">']
     if e.get("what"):
         out.append(f'<p class="tl-w">{esc(e["what"])}</p>')
     out.append('<p class="tl-p">' + " · ".join(link(p) for p in e.get("proof", [])) + "</p>")
     if checks:
         out.append('<p class="tl-ck">checking against its source…</p>')
     out.append("</div>")
-    if e.get("video") or e.get("audio"):
-        out.append('<figure class="tl-im">' + player(e.get("video") or e["audio"]) + "</figure>")
+    if media:
+        out.append('<figure class="tl-im">' + player(media) + "</figure>")
     elif e.get("img"):
         out.append(f'<figure class="tl-im"><a href="{esc(e["img"])}" target="_blank" rel="noopener"><img src="{esc(e["img"])}" alt="{esc(e.get("alt", ""))}" loading="lazy" decoding="async" width="{dims(e["img"], (1280, 800))[0]}" height="{dims(e["img"], (1280, 800))[1]}"></a></figure>')
     elif e.get("card"):
         out.append('<div class="tl-card" aria-hidden="true">' + "".join(f"<code>{esc(c)}</code>" for c in e["card"]) + "</div>")
-    out.append("</li>")
+    out.append("</div></details></li>")
     return "".join(out)
 
 
@@ -273,10 +329,13 @@ def main():
     if "--check" in sys.argv:
         if new != page:
             sys.exit("press/index.html is stale: run python3 tools/gen_press.py")
-        print("press/index.html matches data/timeline.json")
+        check_minis(new)
+        print("press/index.html matches data/timeline.json, and every small picture it names is cut")
         return
+    cut = make_minis()
     PAGE.write_text(new)
-    print(f"press/index.html: {len(data['entries'])} entries, {len(data['listed'])} listings")
+    check_minis(new)
+    print(f"press/index.html: {len(data['entries'])} entries, {len(data['listed'])} listings; {cut} small pictures cut")
 
 
 if __name__ == "__main__":

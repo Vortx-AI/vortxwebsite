@@ -4,8 +4,10 @@
  *            its sample here, in the popup (js/pop.js), where it runs end to end
  *   ring     one sample per device (telescope, satellite, camera, drone, robot, and the Moon and Mars
  *            tonight), each tethered to where it observed: Hubble's image to Hubble, where it is now.
- *            A card is a pill until it is opened; each finds its own place around the Earth, clear of
- *            the words and of each other, and can be dragged anywhere; the page remembers where
+ *            Every card starts as a pill. The sky stands in one column to the Earth's right, farthest
+ *            first; the Earth's own devices in one to its left, from orbit to the ground. Where a column
+ *            has no room, its cards find places around the Earth instead. Any card can be opened or
+ *            dragged anywhere, and the page remembers
  *   planets  Mars (distance, light time) and the Moon (distance, phase) from vx.eph, recomputed now
  *   decode   @emem decodes one live token: recall, mint, resolve, hash the CBOR, verify the receipt,
  *            all in this browser; then the token's path from its place to @emem is drawn once
@@ -233,7 +235,7 @@
 
   /* ---------- the ring: each card finds its own place, opens, closes, and goes where it is dragged ---------- */
   var copy = root.querySelector('.h3o-copy'), foot = root.querySelector('.h3o-foot'), tidy = root.querySelector('[data-tidy]');
-  var KEY = 'vx.hero.v2', saved = {}, laid = false, hot = null, zTop = 10;
+  var KEY = 'vx.hero.v3', saved = {}, laid = false, hot = null, zTop = 10;
   try { saved = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { saved = {}; }
   function keep() { try { if (Object.keys(saved).length) localStorage.setItem(KEY, JSON.stringify(saved)); else localStorage.removeItem(KEY); } catch (e) {} if (tidy) tidy.hidden = !Object.keys(saved).length; }
   function idOf(c) { return c === hd ? 'decode' : c.getAttribute('data-cid'); }
@@ -251,7 +253,8 @@
     if (c === hd) hd.classList.add('is-placed');
   }
   function raise(c) { c.style.zIndex = ++zTop; }
-  function byDefault(c) { return c === hd || c.hasAttribute('data-open'); }
+  // every card, the decoded token's too, starts closed; a card can still ask to start open (data-open)
+  function byDefault(c) { return c.hasAttribute('data-open'); }
   // only what the viewer changed is kept: a card back in its own state, where the page put it, is forgotten
   function remember(c) {
     var b = stageBox(), s = {};
@@ -303,13 +306,14 @@
     if (copy) taken.push(rect(copy, 14));
     // the orbit strip fills in after the cards are placed, and can wrap to two lines: keep the whole band clear
     if (foot) { var fr = rect(foot, 6); fr.t = Math.min(fr.t, b.H - 52); fr.l = Math.min(fr.l, 12); fr.r = Math.max(fr.r, b.W - 12); taken.push(fr); }
-    if (hd) { var sh = saved.decode; if (hd.vxMoved && sh && isFinite(sh.x)) put(hd, sh.x * b.W, sh.y * b.H); taken.push(rect(hd, 12)); }
+    // the decoded token's card keeps the room it needs open, so opening it never lands it on a column
+    if (hd) { var sh = saved.decode, shut = hd.classList.contains('is-shut'); if (hd.vxMoved && sh && isFinite(sh.x)) put(hd, sh.x * b.W, sh.y * b.H); if (shut) hd.classList.remove('is-shut'); taken.push(rect(hd, 12)); if (shut) hd.classList.add('is-shut'); }
     ring.forEach(function (c) {
       var s = saved[idOf(c)];
       if (c.vxMoved && s && isFinite(s.x)) { c.classList.remove('is-out'); put(c, s.x * b.W, s.y * b.H); taken.push(rect(c, 8)); var m = aim(c); if (m) lines.push([{ x: c.vxAt.x + c.offsetWidth / 2, y: c.vxAt.y + c.offsetHeight / 2 }, m]); }
     });
     var todo = ring.filter(function (c) { return !c.vxMoved; });
-    todo.forEach(function (c) { if (!c.vxUser) setOpen(c, c.hasAttribute('data-open')); });
+    todo.forEach(function (c) { if (!c.vxUser) setOpen(c, byDefault(c)); });
     // the big ones first, then the ones with a tether to draw, then the rest (sorted in the loop below)
     function hits(q) { return taken.some(function (t) { return q.r > t.l && q.l < t.r && q.b > t.t && q.t < t.b; }); }
     function find(c) {
@@ -335,6 +339,39 @@
       }
       return best;
     }
+    // two columns first: the sky to the Earth's right, the Earth's own devices to its left, in the page's order,
+    // each as near the globe's middle as the words, the decoded token and the orbit strip allow; a column
+    // that has no room beside the globe hands its cards to the ring below
+    function column(list, side) {
+      if (!list.length) return [];
+      var gap = 12, w = Math.max.apply(null, list.map(function (c) { return c.offsetWidth; }));
+      var hs = list.map(function (c) { return c.offsetHeight; }), tot = hs.reduce(function (n, h) { return n + h; }, 0) + gap * (list.length - 1);
+      // beside the globe, just clear of its orbits; on a narrow screen the column may slide in over its edge, never past it
+      var x = side > 0 ? Math.min(g.x + R * 1.1 + 16, b.W - 12 - w) : Math.max(g.x - R * 1.1 - 16 - w, 12), y = null;
+      if (side > 0 ? x < g.x + R * .88 : x + w > g.x - R * .88) return list;
+      for (var d = 0; d <= b.H && y === null; d += 8) {
+        for (var sg = -1; sg <= 1 && y === null; sg += 2) {
+          var yy = g.y - tot / 2 + sg * d;
+          if (yy >= 12 && yy + tot <= b.H - 12 && !hits({ l: x, r: x + w, t: yy, b: yy + tot })) y = yy;
+        }
+      }
+      if (y === null) return list;
+      var top = y;
+      list.forEach(function (c, i) {
+        c.classList.remove('is-out');
+        put(c, side > 0 ? x : x + w - c.offsetWidth, y);
+        var m = c.hasAttribute('data-sat') ? null : aim(c);
+        if (m) lines.push([{ x: c.vxAt.x + c.offsetWidth / 2, y: c.vxAt.y + c.offsetHeight / 2 }, m]);
+        y += hs[i] + gap;
+      });
+      taken.push({ l: x - 10, r: x + w + 10, t: top - 10, b: y - gap + 10 });
+      return [];
+    }
+    var closed = todo.filter(function (c) { return !isOpen(c); });
+    var left = todo.filter(function (c) { return isOpen(c); })
+      .concat(column(closed.filter(function (c) { return c.hasAttribute('data-sky'); }), 1))
+      .concat(column(closed.filter(function (c) { return !c.hasAttribute('data-sky'); }), -1));
+    todo = left;
     // every device on the stage beats a big picture: when one is left off, the default-open cards close, last first
     var base = taken.slice(), baseLines = lines.slice(), auto = todo.filter(function (c) { return !c.vxUser && c.hasAttribute('data-open'); });
     for (var tries = 0; tries <= auto.length; tries++) {

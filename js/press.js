@@ -16,6 +16,10 @@
  *   tool       a tool that must be live on emem.dev now
  * A record that says another date is a failed check; a record that does not answer is not checked, and says so.
  * The numbers at the top are read live too.
+
+ *
+ * Every entry, chapter of videos and set of pictures is one line (a <details>): opening it shows the media, the
+ * proof and the check. Closing one stops what was playing in it.
  */
 (function () {
   'use strict';
@@ -37,6 +41,7 @@
       var on = f === 'all' || li.getAttribute('data-kind') === f; li.hidden = !on; if (on) any = true;
     });
     if (month) month.hidden = !any;
+    sync();
   }
   // a filter with nothing to show is not offered
   chips.forEach(function (c) { var f = c.getAttribute('data-f'); if (f !== 'all' && !rows.some(function (li) { return li.getAttribute('data-kind') === f; })) c.hidden = true; });
@@ -48,6 +53,21 @@
   });
   var h0 = location.hash.slice(1), map = { emem: 'emem', eudr: 'eudr', listings: 'listing', research: 'research', vortx: 'vortx', videos: 'video' };
   if (map[h0]) { show(map[h0]); var tl = document.getElementById('timeline'); if (tl) tl.scrollIntoView(); }
+
+  /* ---------- the ladder: one line each; open every line in view, or each on its own ---------- */
+  var all = root.querySelector('[data-open-all]');
+  function lines() { return rows.filter(function (li) { return !li.hidden && !li.classList.contains('tl-m'); }).map(function (li) { return li.querySelector('details'); }).filter(Boolean); }
+  function sync() { if (!all) return; var ls = lines(), on = ls.length && ls.every(function (d) { return d.open; }); all.setAttribute('aria-pressed', on ? 'true' : 'false'); all.textContent = on ? 'close every line' : 'open every line'; }
+  if (all) all.addEventListener('click', function () { var ls = lines(), on = !ls.every(function (d) { return d.open; }); ls.forEach(function (d) { d.open = on; }); sync(); });
+  // a line that closes stops what it was playing: the player goes back to its picture
+  root.addEventListener('toggle', function (e) {
+    var d = e.target; if (!d || d.tagName !== 'DETAILS') return;
+    if (!d.open) {
+      d.querySelectorAll('iframe.vd-f').forEach(function (f) { if (f.vxBack) f.replaceWith(f.vxBack); });
+      d.querySelectorAll('audio').forEach(function (a) { a.pause(); });
+    }
+    if (d.classList.contains('tl-x')) sync();
+  }, true);
 
   /* ---------- videos: the platform's player loads only when asked, in place ---------- */
   root.addEventListener('click', function (e) {
@@ -61,7 +81,7 @@
     var f = document.createElement('iframe'), u = b.getAttribute('data-embed');
     f.src = u + (u.indexOf('?') < 0 ? '?' : '&') + 'autoplay=1&dnt=1'; f.title = b.getAttribute('aria-label').replace(/^Play: /, '');
     f.allow = 'autoplay; fullscreen; picture-in-picture'; f.setAttribute('allowfullscreen', ''); f.className = 'vd-f' + (b.classList.contains('vd-lg') ? ' vd-lg' : '');
-    b.replaceWith(f);
+    f.vxBack = b; b.replaceWith(f);
   });
 
   /* ---------- the records that own the dates ---------- */
