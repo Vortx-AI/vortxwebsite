@@ -34,11 +34,11 @@ One structure for people and agents; https://vortx.ai/llms/pages.txt lists the s
 - **see** `/` · the promise and the live Earth; @emem decodes one signed fact per visit (Cubbon Park, Bengaluru, NDVI)
 - **why** `/#why` · 01 the problem: a 351.0 MB scene no agent can read; two drafts checked live, one paraphrased (caught), one cited (passes)
 - **run** `/#how` (alias `/#run`) · 02 how it works: keep, encode, send, decode, check, filled live by one device's real file
-- **pass** `/#agents` · 03 many agents: emem's recording of one signed reading passed 24 hops between two model families, as words (rounded, then its place lost) and as a token (intact at every hop); a note two agents wrote for each other, checked three ways (bytes, author, log inclusion); who writes on the channel (`GET https://emem.dev/v1/agents`)
+- **pass** `/#agents` · 03 many agents: emem's recording of one signed reading passed 24 hops between two model families, as words (rounded, then its place lost) and as a token (intact at every hop); the standard two agents signed for each other, checked four ways (bytes, author, counter-signature, the log entry naming its bytes); who writes on the channel (`GET https://emem.dev/v1/agents`)
 - **browse** `/#samples` · 04 what it remembers: the ememdemo catalogue, each note re-checked as it loads
 - **start** `/#start` · 05 add @emem to an agent (`/#plug`: MCP `tools/list`, both A2A cards, REST with its ed25519 checked, the SDKs), encode your own files (`/#connect`, nothing uploaded; `tools/emem_point.py` on the device), try @emem here (`/#decode`)
 - **build** `/#products` · 06 emem.dev (live, free) · geo.qa (private tenancy) · eudr.dev and propcheck.dev (in testing)
-- **plan** `/#plan` · 07 the plan, deliberately without a date; the payload's trace rule runs live against emem's test trace (`POST https://emem.dev/v1/trace_verify`)
+- **plan** `/#plan` · 07 the plan, deliberately without a date; the payload's trace rule runs live against emem's test trace, as signed and with one byte changed (`POST https://emem.dev/v1/trace_verify`), and the page rebuilds the same checks in the browser
 - **join** `/#build` (alias `/#book`) · 08 build with us: encode your own data, read and try to break the code, sign at capture; free office hours, a person books
 - **open** `/?s=<cid>` · any sample, opened on the page from a globe pin or a card, run end to end, its picture drawn from bytes checked here
 - **news** `/press/` · every release, upgrade and listing, dated, each date re-read live from its own record; as data: `/data/timeline.json`

@@ -149,7 +149,8 @@
       return;
     }
     fetch('https://emem.dev/v1/log/consistency?first=' + prev.tree_size + '&second=' + s.tree_size).then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (c) {
-      var fine = c.first_root_b32 === prev.root_b32 && c.second_root_b32 === s.root_b32 &&
+      if (c.first_root_b32 !== prev.root_b32) { say('is-bad', 'At the length this browser saw on ' + when(prev.seen_at) + ', the log now has a different root: its history changed.'); return; }
+      var fine = c.second_root_b32 === s.root_b32 &&
         consistent(prev.tree_size, vx.unb32(prev.root_b32), s.tree_size, vx.unb32(s.root_b32), (c.consistency_proof_b32 || []).map(vx.unb32));
       if (fine) { say('is-ok', 'Since ' + when(prev.seen_at) + ' it grew by ' + grew(s.tree_size - prev.tree_size) + ', and the proof that it only grew checks here ✓'); keep(); }
       else say('is-bad', 'The proof that the log only grew since ' + when(prev.seen_at) + ' did not check.');

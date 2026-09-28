@@ -3,13 +3,15 @@
  *            words and once as a token (GET /data/relay-recording.json, drawn as recorded). On request, emem
  *            judges every distinct number the agents wrote (POST /v1/echo_verify, each receipt checked here),
  *            and the token is resolved: its fact's bytes hashed to their name, its receipt verified
- *   note     a note two agents wrote for each other, checked three ways: named by its bytes
+ *   note     the standard two agents wrote for each other, checked four ways: named by its bytes
  *            (base32(blake3(content)[0:16]) == file_cid), signed by its author (ed25519 over the
- *            emem.memory_write v2 preimage, body_hash == blake3(content)), and in the public log (an RFC 6962
- *            inclusion path over blake3, leaf = blake3(0x00|entry), node = blake3(0x01|l|r), up to the root of
- *            the signed tree head). Change one character and the checks say what broke
- *   channel  who has written to the agent channel (GET /v1/agents): counts and when each was last seen,
- *            never their words, which stay on emem.dev
+ *            emem.memory_write v2 preimage, body_hash == blake3(content)), counter-signed by another agent (its own
+ *            signed note names this file_cid), and in the public log (the entry's CBOR hashes to the leaf, names
+ *            these bytes by content_blake3, and an RFC 6962 path over blake3, leaf = blake3(0x00|entry),
+ *            node = blake3(0x01|l|r), reaches the root of the signed tree head). Change one character and every
+ *            check says what broke
+ *   channel  who has written to the agent channel (GET /v1/agents): how many, how many notes were addressed to
+ *            another agent, whose key a signature proves, and when each was last seen; never their words
  * Model output is data: it is printed as text, never as markup, and never followed.
  */
 /* global vx, ememVerify */
@@ -19,6 +21,8 @@
   if (!root || !window.fetch || !window.vx) return;
   var EMEM = 'https://emem.dev', KEY = '777er3yihgifqmv5hmc2wwmyszgddzderzhsx6rex4yoakwomvka';
   var NOTE = '/memories/by_attester/k572x7go/a2a-emem-standard-v2-consolidated-2026-07-19.md';
+  // navigatable_worlds' counter-signature of that standard, a signed note in its own namespace
+  var COUNTER = '/memories/by_attester/6ww7pxav/counter-attest-a2a-standard-v2-2026-07-19.md';
   var $ = function (s) { return root.querySelector(s); };
   function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
   function get(path, opt) {
@@ -141,8 +145,8 @@
       if (v === 2) { p.push(vx.enc.encode('|')); p.push(vx.enc.encode(base)); }
       return vx.blake3(vx.cat.apply(null, p));
     };
-    var tries = a.preimage_version === 2 ? [[2, a.base]] : a.preimage_version === 1 ? [[1, null]] : [[2, 'absent'], [1, null]];
-    var sigOk = tries.some(function (t) { return !(t[0] === 2 && typeof t[1] !== 'string') && vx.edVerify(a.sig_b32, build(t[0], t[1]), a.attester_pubkey_b32); });
+    var tries = a.preimage_version === 2 ? [[2, typeof a.base === 'string' ? a.base : 'absent']] : a.preimage_version === 1 ? [[1, null]] : [[2, 'absent'], [1, null]];
+    var sigOk = tries.some(function (t) { return vx.edVerify(a.sig_b32, build(t[0], t[1]), a.attester_pubkey_b32); });
     return { ok: sigOk && bodyOk, sigOk: sigOk, bodyOk: bodyOk };
   }
   // RFC 6962 inclusion, folded here: the path from this entry's leaf must end at the signed root
@@ -159,14 +163,34 @@
     }
     return i === path.length && vx.b32(acc) === rootB32;
   }
-  function inLog(entryB32) {
-    return get('/v1/log/inclusion?entry_hash=' + encodeURIComponent(entryB32)).then(function (p) {
+  // where the note sits in the log, proved once: an RFC 6962 path from its leaf to the signed head, and the entry's
+  // own bytes (GET /v1/log/entries), which must hash to that leaf's entry and name the note's content by blake3
+  var LOGGED = null, COUNTERED = null;
+  function logged() {
+    var h = N.log && N.log.entry_hash_b32;
+    if (!h) return Promise.resolve(null);
+    return LOGGED || (LOGGED = get('/v1/log/inclusion?entry_hash=' + encodeURIComponent(h)).then(function (p) {
       var sth = p.sth || {}, headOk = sth.responder_pubkey_b32 === KEY && vx.verifySTH(sth);
       var leaf = vx.blake3(vx.cat(new Uint8Array([0]), vx.unb32(p.entry_hash_b32)));
-      var ok = headOk && p.entry_hash_b32 === entryB32 && vx.b32(leaf) === p.leaf_hash_b32 && p.tree_size === sth.tree_size && p.root_b32 === sth.root_b32 &&
+      var pathOk = headOk && p.entry_hash_b32 === h && vx.b32(leaf) === p.leaf_hash_b32 && p.tree_size === sth.tree_size && p.root_b32 === sth.root_b32 &&
         walk(leaf, p.leaf_index, p.tree_size, p.audit_path_b32 || [], p.root_b32);
-      return { ok: ok, index: p.leaf_index, size: p.tree_size, steps: (p.audit_path_b32 || []).length };
-    });
+      return get('/v1/log/entries?start=' + p.leaf_index + '&end=' + (p.leaf_index + 1)).then(function (e) {
+        var row = (e.entries || [])[0] || {}, cbor = row.entry_cbor_b32 ? vx.unb32(row.entry_cbor_b32) : null, rec = null;
+        var bytesOk = !!cbor && row.leaf_index === p.leaf_index && vx.b32(vx.blake3(cbor)) === h;
+        try { rec = bytesOk ? vx.cborDecode(cbor) : null; } catch (x) { rec = null; }
+        var names = rec && rec.kind === 'emem.memory_write.v1' && rec.content_blake3 instanceof Uint8Array ? vx.b32(rec.content_blake3) : null;
+        return { pathOk: pathOk, entryOk: !!names, names: names, index: p.leaf_index, size: p.tree_size, steps: (p.audit_path_b32 || []).length };
+      });
+    }).catch(function (e) { LOGGED = null; throw e; }));
+  }
+  // the counter-signature, checked the same way: its bytes are its name, its signature is its author's, and that
+  // author owns the namespace it wrote in
+  function countered() {
+    return COUNTERED || (COUNTERED = get(COUNTER, { headers: { accept: 'application/json' } }).then(function (m) {
+      var c = typeof m.content === 'string' ? m.content : '', pk = (m.authorship && m.authorship.attester_pubkey_b32) || '';
+      var ok = author(m.authorship, c).ok === true && pk.slice(0, 8) === COUNTER.split('/')[3] && vx.cid26(vx.enc.encode(c)) === m.file_cid;
+      return { ok: ok, text: c, who: pk.slice(0, 8) };
+    }).catch(function (e) { COUNTERED = null; throw e; }));
   }
   function show(content, at) {
     if (!body) return;
@@ -176,36 +200,47 @@
     body.appendChild(el('mark', null, content.charAt(at)));
     body.appendChild(document.createTextNode(content.slice(at + 1)));
   }
-  function run(content, changed) {
-    var nameOk = vx.cid26(vx.enc.encode(content)) === N.file_cid;
-    mark('name', nameOk ? 'ok' : 'bad', nameOk ? 'blake3 of these bytes is its name, ' + N.file_cid.slice(0, 8) + '… ✓' : 'these bytes hash to ' + vx.cid26(vx.enc.encode(content)).slice(0, 8) + '…, not to its name');
+  function run(content) {
+    var bytes = vx.enc.encode(content), name = vx.cid26(bytes);
+    mark('name', name === N.file_cid ? 'ok' : 'bad', name === N.file_cid ? 'blake3 of these bytes is its name, ' + N.file_cid.slice(0, 8) + '… ✓' : 'these bytes hash to ' + name.slice(0, 8) + '…, not to its name');
     var a = author(N.authorship, content), who = (N.authorship && N.authorship.attester_pubkey_b32 || '').slice(0, 8);
     if (a.ok === null) mark('author', 'off', 'this note carries no signature of its writer’s own');
     else mark('author', a.ok ? 'ok' : 'bad', a.ok ? 'ed25519 by ' + who + '…, over exactly these bytes ✓' : a.sigOk ? 'the signature holds, but for other bytes than these' : 'the signature did not check');
+    mark('counter', 'run', 'reading the counter-signature…');
+    countered().then(function (c) {
+      if (!c.ok) mark('counter', 'bad', 'the counter-signature did not check');
+      else if (c.text.indexOf(name) >= 0) mark('counter', 'ok', c.who + '… (navigatable_worlds) signed a note naming these bytes, ' + name.slice(0, 8) + '… ✓');
+      else mark('counter', 'bad', c.who + '… signed a note naming ' + (c.text.indexOf(N.file_cid) >= 0 ? N.file_cid.slice(0, 8) + '…' : 'other bytes') + ', not these bytes');
+    }).catch(function (e) { mark('counter', 'off', 'not checked just now: ' + why(e)); });
     mark('log', 'run', 'folding the path to the signed head…');
-    var entry = changed ? vx.b32(vx.blake3(vx.enc.encode(content))) : N.log && N.log.entry_hash_b32;
-    if (!entry) { mark('log', 'off', 'no log entry is named for this note'); return; }
-    inLog(entry).then(function (r) {
-      mark('log', r.ok ? 'ok' : 'bad', r.ok ? 'entry ' + vx.group(r.index) + ' of ' + vx.group(r.size) + ', ' + r.steps + ' hashes to the signed head ✓' : 'the path did not reach the signed head');
-    }).catch(function (e) { mark('log', e.status === 404 ? 'bad' : 'off', e.status === 404 ? 'the log holds no entry for these bytes' : 'not checked just now: ' + why(e)); });
+    logged().then(function (r) {
+      var mine = vx.b32(vx.blake3(bytes));
+      if (!r) mark('log', 'off', 'no log entry is named for this note');
+      else if (!r.pathOk) mark('log', 'bad', 'the path did not reach the signed head');
+      else if (!r.entryOk) mark('log', 'bad', 'the logged entry did not check');
+      else if (r.names !== mine) mark('log', 'bad', 'leaf ' + vx.group(r.index) + ' is under the signed head, but its entry names other bytes, ' + r.names.slice(0, 8) + '…, not these');
+      else mark('log', 'ok', 'leaf ' + vx.group(r.index) + ' of ' + vx.group(r.size) + ' names these bytes; ' + r.steps + ' hashes reach the signed head ✓');
+    }).catch(function (e) { mark('log', 'off', 'not checked just now: ' + why(e)); });
   }
   function note() {
     get(NOTE, { headers: { accept: 'application/json' } }).then(function (m) {
       if (typeof m.content !== 'string' || !m.file_cid) throw new Error('the note came back without its content');
-      N = m; show(m.content); run(m.content, false);
+      N = m; show(m.content); run(m.content);
+      // a note its author later replaced says so above its bytes, which still verify
+      if (m.superseded_by && body) body.parentNode.insertBefore(el('p', 'notex-super', 'Its author has since replaced this note with ' + String(m.superseded_by).slice(0, 8) + '…. The bytes below still verify.'), body);
       if (tamper) tamper.disabled = false;
-    }).catch(function (e) { mark('name', 'off', 'not checked just now: ' + why(e)); mark('author', 'off', '–'); mark('log', 'off', '–'); });
+    }).catch(function (e) { mark('name', 'off', 'not checked just now: ' + why(e)); mark('author', 'off', '–'); mark('counter', 'off', '–'); mark('log', 'off', '–'); });
   }
   if (tamper) tamper.addEventListener('click', function () {
     if (!N) return;
     var on = tamper.getAttribute('aria-pressed') !== 'true';
     tamper.setAttribute('aria-pressed', on ? 'true' : 'false'); tamper.textContent = on ? 'Put it back' : 'Change one character';
-    if (!on) { show(N.content); run(N.content, false); return; }
+    if (!on) { show(N.content); run(N.content); return; }
     // the first letter after the title, swapped for its neighbour in the alphabet
     var c = N.content, at = c.search(/\n[^\n#]*[a-z]/); at = at < 0 ? 0 : c.slice(at).search(/[a-z]/) + at;
     var ch = c.charAt(at), sw = ch === 'z' ? 'y' : String.fromCharCode(ch.charCodeAt(0) + 1);
     var t = c.slice(0, at) + sw + c.slice(at + 1);
-    show(t, at); run(t, true);
+    show(t, at); run(t);
   });
 
   /* ---------- the channel: who writes, and when, never what ---------- */
@@ -214,8 +249,9 @@
       var a = Array.isArray(d.agents) ? d.agents : [];
       var put = function (k, v) { var e = $('[data-chan="' + k + '"]'); if (e) e.textContent = vx.group(v); };
       put('agents', typeof d.count === 'number' ? d.count : a.length);
-      put('notes', a.reduce(function (n, x) { return n + (+x.notes || 0); }, 0));
-      put('signed', a.reduce(function (n, x) { return n + (+x.caller_signed_notes || 0); }, 0));
+      // notes addressed to someone, so an agent journalling its own run does not read as a conversation
+      put('to', a.reduce(function (n, x) { return n + (+x.correspondence || 0); }, 0));
+      put('proven', a.filter(function (x) { return x.key_status === 'proven_by_signature'; }).length);
       var ol = $('[data-chan-recent]'); if (!ol) return;
       ol.textContent = '';
       a.slice(0, 5).forEach(function (x) {

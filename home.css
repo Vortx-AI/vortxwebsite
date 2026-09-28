@@ -580,6 +580,8 @@
 .ms-lab-out .is-ok { color: var(--ok); }
 .ms-lab-out .is-bad { color: var(--fail); }
 .ms-lab-out code { font: 400 12.5px var(--mono); color: var(--ink-3); }
+.ms-lab-chg { display: block; margin-bottom: 4px; font-size: 13px; color: var(--ink-3); }
+.ms-lab-mine { display: block; margin-top: 8px; font: 400 12.5px/1.5 var(--sans); color: var(--ink-3); }
 .ms-lab-note { margin: 10px 0 0; font: 400 12.5px/1.5 var(--sans); color: var(--ink-3); }
 @media (max-width: 900px) { .ms-lab { grid-template-columns: minmax(0, 1fr); } }
 .mission .ms-since.is-ok { color: var(--ok); }

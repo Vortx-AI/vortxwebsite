@@ -7,11 +7,11 @@ see       /                 the promise and the live Earth; @emem decodes one si
 list      /                 where emem is listed (ChatGPT, the MCP registries, MuleSoft, Dify, PyPI, npm, Hugging Face) and the programmes Vortx AI is part of
 why       /#why             01 the problem: a 351.0 MB scene no agent can read; two drafts checked live, one paraphrased (caught), one cited (passes)
 run       /#how             02 how it works: keep, encode, send, decode, check, filled live by one device's real file; alias /#run
-pass      /#agents          03 many agents: emem's recording of one signed reading passed 24 hops between two model families, as words (rounded, then its place lost) and as a token (intact), each hop re-judged live by echo_verify; a note two agents wrote for each other, checked three ways (bytes, author's ed25519, log inclusion); who writes on the agent channel
+pass      /#agents          03 many agents: emem's recording of one signed reading passed 24 hops between two model families, as words (rounded, then its place lost) and as a token (intact), each hop re-judged live by echo_verify; the standard two agents signed for each other, checked four ways (bytes, author's ed25519, the other agent's counter-signature, the log entry that names its bytes); who writes on the agent channel
 browse    /#samples         04 what it remembers: the sample catalogue (Earth, Space, Machines), each note re-checked as it loads
 start     /#start           05 start: add @emem to an agent (/#plug), encode your own files (/#connect), try @emem here (/#decode)
 build     /#products        06 products: emem.dev (live, free), geo.qa (private tenancy), eudr.dev and propcheck.dev (in testing)
-plan      /#plan            07 the plan: protocol shipped (the log, and since your last visit a consistency proof), payload in design (its trace rule run live on a test telescope trace), ground segment next, launch gated, not dated; alias /#mission
+plan      /#plan            07 the plan: protocol shipped (the log, and since your last visit a consistency proof), payload in design (its trace rule run live on emem's test telescope trace, as signed and with one byte changed, and rebuilt in the browser), ground segment next, launch gated, not dated; alias /#mission
 join      /#build           08 build with us: encode your own data, read and try to break the code, sign at capture; free office hours, a person books; alias /#book
 open      /?s=<cid>         any sample, opened on the page (a globe pin, a card): it runs end to end, its picture drawn from bytes checked here
 

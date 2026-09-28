@@ -1,7 +1,8 @@
 /* trust.js: the chain from photon to prompt, each link read live.
  *
  *   build    which code answered: /.well-known/emem.json's operator attestation, its ed25519 checked here over
- *            PreimageV1("emem.operator_attestation.v1"), the commit linked to its public source
+ *            PreimageV1("emem.operator_attestation.v1"), the commit linked to its public source and matched against
+ *            the X-Emem-Commit header the same response carries
  *   log      the transparency log head, signature checked by js/site.js ([data-loghead]), and since the last
  *            visit, a consistency proof folded there too ([data-logsince])
  *   witness  who co-signed which prefix of that log (/v1/log/witnesses), including how far
@@ -34,7 +35,8 @@
   function g(n) { return Number(n).toLocaleString('en-US'); }
   function start() {
     // the running code, signed: every field as its UTF-8 bytes except the key epoch, a u32 big-endian
-    j('/.well-known/emem.json').then(function (m) {
+    var hdr = null;
+    fetch(EMEM + '/.well-known/emem.json').then(function (r) { if (!r.ok) throw new Error(r.status); hdr = r.headers.get('x-emem-commit'); return r.json(); }).then(function (m) {
       var a = m.operator_attestation || {}, mf = m.manifests || {}, pub = (m.responder || {}).pubkey_b32, e = (+a.key_epoch) >>> 0;
       var u = function (s) { return vx.enc.encode(String(s == null ? '' : s)); };
       var d = vx.preimage('emem.operator_attestation.v1', [[1, u(a.version)], [2, new Uint8Array([e >>> 24 & 255, e >>> 16 & 255, e >>> 8 & 255, e & 255])],
@@ -43,10 +45,20 @@
       var el = root.querySelector('[data-trust="build"]'); if (!el) return;
       el.innerHTML = '';
       el.appendChild(vx.kv('version', a.version || '?', ': ')); el.appendChild(document.createTextNode(' '));
-      var c = document.createElement('a'); c.className = 'lk'; c.target = '_blank'; c.rel = 'noopener';
-      c.href = 'https://github.com/Vortx-AI/emem/commit/' + encodeURIComponent(a.git_commit || ''); c.textContent = 'commit ' + String(a.git_commit || '').slice(0, 7);
-      el.appendChild(c); el.appendChild(document.createTextNode(' · built ' + (a.build_timestamp || '?') + ' · '));
+      var sha = String(a.git_commit || '');
+      if (/^[0-9a-f]{7,40}$/.test(sha)) {
+        var c = document.createElement('a'); c.className = 'lk'; c.target = '_blank'; c.rel = 'noopener';
+        c.href = 'https://github.com/Vortx-AI/emem/commit/' + sha; c.textContent = 'commit ' + sha.slice(0, 7);
+        el.appendChild(c);
+      } else el.appendChild(document.createTextNode('commit not named by this build'));
+      el.appendChild(document.createTextNode(' · built ' + (a.build_timestamp || '?') + ' · '));
       var s = document.createElement('span'); s.className = ok ? 'is-ok' : 'is-warn'; s.textContent = ok ? 'signed by emem’s key, checked here ✓' : 'signature not checked'; el.appendChild(s);
+      // every emem response names its commit in a header; this one must name the commit it signed
+      if (hdr && /^[0-9a-f]{7,40}$/.test(sha)) {
+        var h = document.createElement('span'); h.className = hdr === sha ? 'is-ok' : 'is-bad';
+        h.textContent = hdr === sha ? ' · this response’s X-Emem-Commit header names the same commit ✓' : ' · this response’s X-Emem-Commit header names ' + hdr.slice(0, 7) + ', not the signed commit';
+        el.appendChild(h);
+      }
       el.appendChild(document.createTextNode(' · the binary’s hash is the operator’s word, not a hardware attestation'));
       el.closest('li') && el.closest('li').classList.add('is-live');
     }).catch(function () {});
