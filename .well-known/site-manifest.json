@@ -1,32 +1,32 @@
 {
   "schema": "vortx.site_manifest.v1",
-  "cid": "t22vjgz3xnm54gkupxgyo2optdwyqkrmauls3jut2fxfcml3kusq",
-  "commit": "893b6d37ea4281084f98087ff4336e69baecc7f6",
-  "generated_at": "2026-09-28T10:06:33Z",
+  "cid": "4rlgwxaunnxkqastbzhxqmj6ds65tayumhxdtwb2ck7zcnfdxywq",
+  "commit": "73c5c3120161ed2cd52ce2cac5b6406f362b2dc9",
+  "generated_at": "2026-09-28T11:31:56Z",
   "files": {
     ".nojekyll": {
       "blake3": "v4jutopv7gq2nicajxvdnxgjjgn4wjojvxarfn6mtkj4vza7gjra",
       "bytes": 0
     },
     ".well-known/agent-card.json": {
-      "blake3": "hlocxzuyjnd4x2pf6zfxzaybrz42n3mhrrrwaqd6xrftpjo7tweq",
-      "bytes": 9816
+      "blake3": "esmwk6qulggr6ehisf5bh25j7ngkoazgx6wbi4gn3omzsgum4btq",
+      "bytes": 9860
     },
     ".well-known/facts.json": {
-      "blake3": "4ehgd3yfxbcp26hybgzr72cwlaolicmcfaappzc36ktxomesj7pq",
-      "bytes": 4645
+      "blake3": "dv2zlo7cigep22qdjn3zmlgnibfqaxwozzs7ipvr37njgtbjcxca",
+      "bytes": 3772
     },
     "404.html": {
-      "blake3": "oe7t5dhe5vhqy2qrzi6dzvytg2sdinp2szc5je36hbcbnvjmou5a",
-      "bytes": 6016
+      "blake3": "ub2md5dfyyauz264qf6s477oyk47tgqbrfe6sppisqrbwvhl2xca",
+      "bytes": 6036
     },
     "CNAME": {
       "blake3": "aaa4wyxh5ofaowtjpuj6wmzlkqdatayykjztfm4h776nxnlk46pa",
       "bytes": 8
     },
     "agents.md": {
-      "blake3": "vqfi7xcjkbg5wo6v6trbqgfzjooepfkbx7xs7meysaw6rk2tm4lq",
-      "bytes": 16883
+      "blake3": "dh3wfkok2tjrtm6m4zc5dt6hncfyo45gg7cqi4c5jvwfakygmxaa",
+      "bytes": 16562
     },
     "apple-touch-icon.png": {
       "blake3": "tmchv7hjynhrjydegkd3acu7oa3qh372hxubq42iwxv2zs3fy2pq",
@@ -47,6 +47,10 @@
     "assets/earth/night-2048.webp": {
       "blake3": "vujj22lop366w4rfcxhgcv6yrwavzow3vgcktancik5gcbutecha",
       "bytes": 83864
+    },
+    "assets/emem-companion-256.webp": {
+      "blake3": "s5nqsnxvqvdoaps2ywzxvqufyllos54yecd6uzia66clzk4z5z3a",
+      "bytes": 14836
     },
     "assets/emem-companion.webp": {
       "blake3": "kmfah723jmumkvxsrpbiwgjpjosix4tfvzptob2n64kvr5zwiqjq",
@@ -177,8 +181,8 @@
       "bytes": 9558
     },
     "assets/observatory/carina.webp": {
-      "blake3": "yyywotuwapym3mpwuswq4nimaifgtgcssulxls2lcjbhsb56yaya",
-      "bytes": 275860
+      "blake3": "cmkoompbyzjv4p7pkv3vajcregw5w27ejf5ulvwel3arbaprpfza",
+      "bytes": 52272
     },
     "assets/og-card.png": {
       "blake3": "aswegtwmau5yp3zhfx375v3shqt527a4cjb47ocrx2cxzogpedoq",
@@ -569,12 +573,12 @@
       "bytes": 55044
     },
     "contact.html": {
-      "blake3": "osow3s5tjrn2d6pwe57zt445ew6pr6gleamvm2nbydvys545pgka",
-      "bytes": 8918
+      "blake3": "kbdln2lngbhmbsav3efamiwsp3duht6n7jz3ksxrtelmw2w2keaa",
+      "bytes": 9004
     },
     "content/words.md": {
-      "blake3": "dgi7r6t4mzpwwvbvdp5jyh3lc7bzqfv6gcdr753c4cm4pegiuwea",
-      "bytes": 13485
+      "blake3": "njj3qbsmkzl2amub7vqfovnr7mwgxhopo33bdspsxpviktlao2ia",
+      "bytes": 13504
     },
     "data/pictures.json": {
       "blake3": "zgawpw4q5wtnfkcxdyv4itwbcdg73wwyjfrtpk5qekaxazzi7q5q",
@@ -605,28 +609,28 @@
       "bytes": 752
     },
     "emem/index.html": {
-      "blake3": "ahtrnusbooi7u4psvulheym3kxjrrghf5bjkbwvtbcoszq7qcppq",
-      "bytes": 30295
+      "blake3": "b5s34vgn74ubgmqxzf3y4j23yq7erbkwzvi4eabiey5k2liasvbq",
+      "bytes": 30315
     },
     "eudr/index.html": {
-      "blake3": "jq7vlmtgjr6hhj5htaumcrwdt7suvf3gurvnmopb2d3rahr7gxnq",
-      "bytes": 12165
+      "blake3": "ommvfsrz2quumehmog3s5ktmsombpz3qlukjsopkkrjzd6z7utoa",
+      "bytes": 12185
     },
     "favicon.ico": {
       "blake3": "hc653mmrrq6nslaqgige5cg3hy23dwkupouqezuytlrzjhewezxa",
       "bytes": 4286
     },
     "geo-qa/index.html": {
-      "blake3": "kytp6lrivdg2shd2jooagihb4zlzlqplk47csp6dgkgxix5c6epq",
-      "bytes": 11330
+      "blake3": "zu5eggnt627qopmv4k2serbsn2ir2ky5ovbz5zguyultkhcrb2gq",
+      "bytes": 11350
     },
     "home.css": {
-      "blake3": "3tjkd6chp5gc2cq2tnpkwqcmwxrn7pyvjyseatpnprsricoysafa",
-      "bytes": 66797
+      "blake3": "mm7unxlf3cyvgacbcl3thf27sae6sicvl7ozpy2yz67vkqgvlgvq",
+      "bytes": 69176
     },
     "index.html": {
-      "blake3": "ef4n7zfivusueb5fmzlyx6qcl6djo7ndzfyvtn55752bwk2aj5rq",
-      "bytes": 62156
+      "blake3": "gvozizqxqmy3gxsmyrikdb3onuttc3242kjlyiwm3rsirlspr56q",
+      "bytes": 53730
     },
     "js/ask.js": {
       "blake3": "ygqjpuyeezrqerxyyob6avoafwpmkcrg6fjfllgag7mqzkrhrwmq",
@@ -661,8 +665,8 @@
       "bytes": 20181
     },
     "js/hero.js": {
-      "blake3": "gdhjzz6j5pecgmbsgnthahoppvtlrjqovubbhvcp46gz2jbq3l6q",
-      "bytes": 51533
+      "blake3": "ndwwmqnjty3lz2e6yccvs7gavvvyhvcay3v56dtngdechu7fzp4q",
+      "bytes": 52318
     },
     "js/ladder.js": {
       "blake3": "7c5rv6b2dt7bfevydbhgi4xbj3r4djkkmcu6z2bg4wyan5mg5nja",
@@ -677,8 +681,8 @@
       "bytes": 40793
     },
     "js/plug.js": {
-      "blake3": "rahifwq4vdqcuwln6xeirirrdcrqmaktvwwfakoy35p3guivcxra",
-      "bytes": 5719
+      "blake3": "ss52qwgxzenyt7phl2bdpvxi7k2jba3p2icmjawzbtxxgiavzcda",
+      "bytes": 6380
     },
     "js/pop.js": {
       "blake3": "xru5zh3iutvzalwpaquvpggbeeo25zme4htoxjhxj65uxrxerr4q",
@@ -697,16 +701,16 @@
       "bytes": 13893
     },
     "js/runs.js": {
-      "blake3": "a6gnxeltpxyggh54ygvbyj6ti2rapr73tczr7mcahsjdwnlh2rsq",
-      "bytes": 14287
+      "blake3": "fmyagxctlnrenv2kpfxdgzwbfnhtx362s6c7xhmjqsq7zfrucvfq",
+      "bytes": 14620
     },
     "js/samples.js": {
-      "blake3": "ezqcxxwt4uemrfzokk4hdnhdg7htt5vutgdjrrwxh2umxdm7a7kq",
-      "bytes": 16352
+      "blake3": "x7atomhwyzatrd6ynzvbj2bw2bweondatu5ckmba5q567yxpc2fq",
+      "bytes": 16717
     },
     "js/site.js": {
-      "blake3": "7vnqtcxulpljb732cy25wavntkvbtmaezu77ueildkvytgi36kdq",
-      "bytes": 9992
+      "blake3": "kviix2ttjsm5voy67bciwaieqw5rgxhqchb6slc24emozlzicria",
+      "bytes": 11144
     },
     "js/tokens.js": {
       "blake3": "c5zcqc7dzd33m3zlnklqd56acmfliqaih4tu4bzgmut56xosugwq",
@@ -717,8 +721,8 @@
       "bytes": 3403
     },
     "llms.txt": {
-      "blake3": "wbhetwgwrqrukbohhcyo5b7qmgm55k27tblczkttapw4jhojyxqq",
-      "bytes": 5127
+      "blake3": "ldjgl3swfsyzixgiqwc6ive76xpfrhuoj4c2dyya67olchgwa4zq",
+      "bytes": 5046
     },
     "llms/ask.txt": {
       "blake3": "fvewah6o3jwdqaiyn6okhsqvxyfocj5eu6irzngxst7ayn6vfbmq",
@@ -737,12 +741,12 @@
       "bytes": 1854
     },
     "llms/more.txt": {
-      "blake3": "ydkwupa5rhjw5ao2xofmylyp3uslft7hizeqpcxqgkp6r6cpwkuq",
-      "bytes": 3915
+      "blake3": "r5holy76offtyzafgndi24l5jhtuxzgtmckjsck5cqdn5xm54wpa",
+      "bytes": 3821
     },
     "llms/pages.txt": {
-      "blake3": "5dldecbjkwwjep6i3d2ecwii74ukz3vouezcjeev3yaoaqluskla",
-      "bytes": 2373
+      "blake3": "7afhqwtwlth2b5pfa47mx4gi4biwwhbac55vnel547stpwkvtywq",
+      "bytes": 2404
     },
     "llms/plug.txt": {
       "blake3": "ybu26jaxa6dg6f5y34z3jzvq2rpxqxl2ywzfqjhvivmqztwsmeeq",
@@ -765,80 +769,72 @@
       "bytes": 2277
     },
     "log/index.html": {
-      "blake3": "3otr2lfgoisiynpze6ppyxvcop5ldjztzzfvkfqjyuob63oph27q",
+      "blake3": "5qkllysam5x2lh5pjzgiluilz752ge6x62b2yhimnyofdg4ul6oa",
       "bytes": 1060
     },
-    "payments/checkout.js": {
-      "blake3": "6gm46n5xsz3xykmychgwjkkxyhiftkuojp2veklkw647e7tkdkjq",
-      "bytes": 13287
-    },
-    "payments/config.js": {
-      "blake3": "25tgq2jrh2vbjnlporrm7dmzcz3qzt7htjvf3k2z75taio2sc6vq",
-      "bytes": 2847
-    },
     "press/index.html": {
-      "blake3": "inqwwbawyxmy3q4k4yzpsbyrsfoeohn7emavhlcvlyilr5fjmj3q",
-      "bytes": 87078
+      "blake3": "ybjpkpxvf3ofeoqvbpndbignr5gk3g6in2a7jkhr6d2nay2wewpq",
+      "bytes": 87099
     },
     "press/press.css": {
       "blake3": "cwcqvswqizmjvnwy5jeqrpflnf3xhnjq4or4z7fennrjpulmctaa",
       "bytes": 14665
     },
     "privacy.html": {
-      "blake3": "hzbaz2lntqajuihvkwkb2qsn3hc7habxohygl4lrirb6esgvw6kq",
-      "bytes": 12815
+      "blake3": "vykh76yulvdrblhcbh4irtc6cmgxm32ybbnlxy7yys5hnr7yvjya",
+      "bytes": 12835
     },
     "proof/index.html": {
-      "blake3": "hejil3ypjw46sgxsuv5qqcsynwawbewyd7irvcpbjkgan4hvkbhq",
-      "bytes": 39166
+      "blake3": "p6hs24gjqmegdrgemoi2rx3hoiu7q2wnnixsaahk6swicnjxbbjq",
+      "bytes": 39186
     },
     "propcheck/index.html": {
-      "blake3": "2v6oqecudkgbxgracvwfgbhkqe55xujmmymz5spxhz6frqxrj2fq",
-      "bytes": 12508
+      "blake3": "qduke5kjy4stp5fi3dxrkrdhreoideswkjh6si4emqh4pj5hgfaq",
+      "bytes": 12528
     },
-    "prose/dgi7r6t4mzpwwvbvdp5jyh3lc4.md": {
-      "blake3": "dgi7r6t4mzpwwvbvdp5jyh3lc7bzqfv6gcdr753c4cm4pegiuwea",
-      "bytes": 13485
+    "prose/njj3qbsmkzl2amub7vqfovnr7m.md": {
+      "blake3": "njj3qbsmkzl2amub7vqfovnr7mwgxhopo33bdspsxpviktlao2ia",
+      "bytes": 13504
     },
     "refund.html": {
-      "blake3": "uzlzsel2r3p5ie5tnnhyvjy6axzyyqw2yd4z6exupzhrrhyo6kdq",
-      "bytes": 9273
+      "blake3": "l72kmedgo3joscvc2vfjuqxjmz3ilvaahwh3mmylxjoblw237xpa",
+      "bytes": 9293
     },
     "research/index.html": {
-      "blake3": "4ke3i5fpnp2bu3oyfyzdo6gh2l72xhjyi7i2ghze3uuwytgj2ima",
-      "bytes": 26645
+      "blake3": "6roawzydutkqbehkfmeoi4bjihrh6av7pygi2eikmvaui3qlps4q",
+      "bytes": 26665
     },
     "robots.txt": {
       "blake3": "wekcptwfqvbg4rcu3yegchpojqcgzyz67of6l265f43tnm3finbq",
       "bytes": 61
     },
     "shipping.html": {
-      "blake3": "px6epbuuk6nb7ce2tcryi4asoftdzkjcnlwp7sy6b35irgbmgh3q",
-      "bytes": 8968
+      "blake3": "mr3esc3bvofyh4r2ymzmfr7uaq4yjomp5kef2co7tm5fbme44n7q",
+      "bytes": 8988
     },
     "site.css": {
-      "blake3": "pquqmcq5x5dfwtogqiwprr743udq27zgsxlsth4hapd5xboivbna",
-      "bytes": 50458
+      "blake3": "bmiwbjgn2dfadf6ut2nf4slwixlqgwjo3wwypuksea7a5ahpuekq",
+      "bytes": 46416
     },
     "sitemap.xml": {
       "blake3": "vwwo35xbsy4xoo2ztsg7ojwp2kaikzan3zls5p5ydjd5ax25rwuq",
       "bytes": 2135
     },
     "spatial-ai/index.html": {
-      "blake3": "jexh6q7fwotj4s6lfesc4exxlertoo6msi35b5ulynkl52cnfxrq",
-      "bytes": 21006
+      "blake3": "adfprmu44cpldtlkrdc7malagxasj3llmxce7kmo24c72jcg2ysa",
+      "bytes": 21026
     },
     "style.css": {
       "blake3": "cvanc23qystzq3tebs4ixosito3soctnw7ov5h7roamu3qxmobbq",
       "bytes": 110758
     },
     "terms.html": {
-      "blake3": "ww4s6zdkamtq2vhaqf5spf6kqceyxlkem3zbzlsojdvlcqmsbnxq",
-      "bytes": 10389
+      "blake3": "zlnbpt7f7fxizin2kapcnvfeczmqemm4h6fcdvdbxyaoqqvc25ma",
+      "bytes": 10409
     },
     "trust/index.html": {
-      "blake3": "clsf4nwlerqtaix6w653oklcmqtypqk3hulhynmf72tfbwm5yw2q",
-      "bytes": 17244
+      "blake3": "frem24c3pvzmewbevqv3lvhpkjuoizzfkvq4uz6qaa4kpl2qti6a",
+      "bytes": 17264
     },
     "vendor/emem-verify-core.js": {
       "blake3": "eaeu46adggghbznladunkc4aihzhcwiq7daxpcz6m2j7dl6egodq",
