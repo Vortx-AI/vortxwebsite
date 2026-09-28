@@ -29,7 +29,7 @@ gated     launch          no date, deliberately; never state or estimate one; da
 
 ## ladder (fetch only the rung you need)
 plug      https://vortx.ai/llms/plug.txt  size=1847  cid26=ybu26jaxa6dg6f5y34z3jzvq2q  connect: ChatGPT, Claude, Agentforce, VS Code, Dify, MuleSoft, the SDKs, A2A
-pages     https://vortx.ai/llms/pages.txt  size=3011  cid26=jca2d4cf6ckk3zott3zh7umxwe  every page and section of this site, in the home page's order
+pages     https://vortx.ai/llms/pages.txt  size=3084  cid26=t5uuaatz4fjmlg373g3iwuj6xa  every page and section of this site, in the home page's order
 run       https://vortx.ai/llms/run.txt  size=2133  cid26=naaeglwudtxo5jadxm5q5jzjgm  the six devices on the home page, each run end to end
 ask       https://vortx.ai/llms/ask.txt  size=1717  cid26=fvewah6o3jwdqaiyn6okhsqvxy  the calls behind "Try @emem" and the drift check: recall, ask, guard, echo
 encode    https://vortx.ai/llms/encode.txt  size=1451  cid26=45y34pj7xmjz5dnaj2hkk7f6oi  your file or device: the same note the page writes

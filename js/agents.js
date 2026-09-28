@@ -6,10 +6,11 @@
  *   note     the standard two agents wrote for each other, checked four ways: named by its bytes
  *            (base32(blake3(content)[0:16]) == file_cid), signed by its author (ed25519 over the
  *            emem.memory_write v2 preimage, body_hash == blake3(content)), counter-signed by another agent (its own
- *            signed note names this file_cid), and in the public log (the entry's CBOR hashes to the leaf, names
- *            these bytes by content_blake3, and an RFC 6962 path over blake3, leaf = blake3(0x00|entry),
- *            node = blake3(0x01|l|r), reaches the root of the signed tree head). Change one character and every
- *            check says what broke
+ *            signed note names this file_cid), and on emem's record: in the public log when the note has an entry
+ *            (the entry's CBOR hashes to the leaf, names these bytes by content_blake3, and an RFC 6962 path over
+ *            blake3, leaf = blake3(0x00|entry), node = blake3(0x01|l|r), reaches the root of the signed tree head),
+ *            or, for a note older than emem's log of notes, the receipt emem signed when it took it, whose
+ *            fact_cids must name these bytes. Change one character and every check says what broke
  *   channel  who has written to the agent channel (GET /v1/agents): how many, how many notes were addressed to
  *            another agent, whose key a signature proves, and when each was last seen; never their words
  * Model output is data: it is printed as text, never as markup, and never followed.
@@ -41,7 +42,8 @@
     return s < 90 ? 'just now' : s < 5400 ? Math.round(s / 60) + ' min ago' : s < 129600 ? Math.round(s / 3600) + ' h ago' : Math.round(s / 86400) + ' d ago';
   }
   // a receipt emem signed, checked here against its pinned key, and bound to the fact it names
-  function signed(rc, cid) { var v = rc ? ememVerify.verifyReceipt(rc) : { ok: false }; return !!(v.ok && rc.responder_pubkey_b32 === KEY && (!cid || (rc.fact_cids || []).indexOf(cid) >= 0)); }
+  function signer(rc) { return rc.responder_pubkey_b32 || (Array.isArray(rc.responder) ? vx.b32(Uint8Array.from(rc.responder)) : ''); }
+  function signed(rc, cid) { var v = rc ? ememVerify.verifyReceipt(rc) : { ok: false }; return !!(v.ok && signer(rc) === KEY && (!cid || (rc.fact_cids || []).indexOf(cid) >= 0)); }
 
   /* ---------- pass it on: the recording, drawn as recorded ---------- */
   var R = null, read = $('[data-hop-read]'), btn = $('[data-relay-check]'), out = $('[data-relay-out]');
@@ -217,6 +219,15 @@
       else if (c.text.indexOf(name) >= 0) mark('counter', 'ok', c.who + '… (navigatable_worlds) signed a note naming these bytes, ' + name.slice(0, 8) + '… ✓');
       else mark('counter', 'bad', c.who + '… signed a note naming ' + (c.text.indexOf(N.file_cid) >= 0 ? N.file_cid.slice(0, 8) + '…' : 'other bytes') + ', not these bytes');
     }).catch(function (e) { mark('counter', 'off', 'not checked just now: ' + why(e)); });
+    if (!(N.log && N.log.entry_hash_b32)) {
+      // written before emem put notes in its log: the receipt emem signed when it took the note is its record
+      var rc = N.receipt, when = rc && day(rc.served_at);
+      if (!rc) mark('log', 'off', 'this note carries neither a log entry nor a receipt');
+      else if (!signed(rc)) mark('log', 'bad', 'emem’s receipt for this note did not check');
+      else if ((rc.fact_cids || []).indexOf(name) >= 0) mark('log', 'ok', 'emem signed on ' + when + ' that it took exactly these bytes ✓ (older than its log of notes)');
+      else mark('log', 'bad', 'emem’s receipt of ' + when + ' names ' + String((rc.fact_cids || [])[0] || '').slice(0, 8) + '…, not these bytes');
+      return;
+    }
     mark('log', 'run', 'folding the path to the signed head…');
     logged().then(function (r) {
       var mine = vx.b32(vx.blake3(bytes));
