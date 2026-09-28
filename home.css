@@ -426,6 +426,9 @@
 .chan-recent code { font: 400 12px var(--mono); color: var(--ink); }
 .chan-recent .is-ok { color: var(--ok); }
 .chan-recent time { white-space: nowrap; }
+.chan-case { margin: 0; font: 400 13.5px/1.55 var(--sans); color: var(--ink-3); text-wrap: pretty; }
+.chan-case b { font-weight: 500; color: var(--ink-2); }
+.chan-case .lk { white-space: nowrap; }
 @media (max-width: 900px) { .agents-2 { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 560px) {
   .hops { grid-template-columns: repeat(12, minmax(0, 1fr)); min-height: 65px; }
