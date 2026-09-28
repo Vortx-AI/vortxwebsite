@@ -48,11 +48,12 @@
   function short(model) { return String(model || '').split('/').pop(); }
   // how far a sentence kept the reading: its number against the signed value, its place against the cell id
   function judge(h, exact, cell) {
-    var tail = cell.split('.').slice(1).join('.');
-    var place = h.text.indexOf(cell) >= 0 ? 'kept' : tail && h.text.indexOf(tail) >= 0 ? 'cut' : 'gone';
+    var parts = cell.split('.'), tail = parts.slice(1).join('.');
+    var left = parts.filter(function (p) { return new RegExp('(^|[^A-Za-z0-9])' + p.replace(/[^A-Za-z0-9]/g, '') + '($|[^A-Za-z0-9])').test(h.text); }).length;
+    var place = h.text.indexOf(cell) >= 0 ? 'kept' : tail && h.text.indexOf(tail) >= 0 ? 'cut' : left ? 'part' : 'gone';
     var v = typeof h.value === 'number' ? h.value : null, value = v === null ? 'none' : v === exact ? 'exact' : 'rounded';
     if (value === 'rounded') { var dp = (String(v).split('.')[1] || '').length, f = Math.pow(10, dp); if (Math.round(v * f) !== Math.round(exact * f)) value = 'wrong'; }
-    return { place: place, value: value };
+    return { place: place, value: value, left: left, of: parts.length };
   }
   function lane(key, hops, fill) {
     var ol = $('[data-hops="' + key + '"]'); if (!ol) return;
@@ -82,7 +83,8 @@
       lane('words', words, function (h) {
         var j = judge(h, exact, cell);
         var cls = j.place !== 'kept' ? 'is-lost' : j.value === 'exact' ? 'is-ok' : 'is-drift';
-        var label = (h.value != null ? String(h.value) : 'no number') + (j.value === 'exact' ? ', exact' : j.value === 'rounded' ? ', rounded' : j.value === 'wrong' ? ', wrong' : '') + (j.place === 'kept' ? '; place kept' : j.place === 'cut' ? '; the place lost part of its name' : '; no place at all');
+        var label = (h.value != null ? String(h.value) : 'no number') + (j.value === 'exact' ? ', exact' : j.value === 'rounded' ? ', rounded' : j.value === 'wrong' ? ', wrong' : '') +
+          (j.place === 'kept' ? '; place kept' : j.place === 'cut' ? '; the place lost part of its name' : j.place === 'part' ? '; ' + j.left + ' of the place’s ' + j.of + ' parts left' : '; no place at all');
         return { cls: cls, label: label };
       });
       lane('token', toks, function (h) {
@@ -93,11 +95,14 @@
       var first = function (f) { for (var i = 0; i < words.length; i++) if (f(words[i])) return words[i]; return null; };
       var r1 = first(function (h) { return typeof h.value === 'number' && h.value !== exact; });
       var r3 = first(function (h) { return typeof h.value === 'number' && (String(h.value).split('.')[1] || '').length <= 3; });
-      var cut = first(function (h) { return judge(h, exact, cell).place === 'cut'; });
-      var gone = first(function (h) { return judge(h, exact, cell).place === 'gone'; });
-      var said = [];
+      var at = function (k) { return first(function (h) { return judge(h, exact, cell).place === k; }); };
+      var cut = at('cut'), part = at('part'), gone = at('gone'), W = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+      var said = [], bits = [];
       if (r1) said.push(String(exact) + ' became ' + r1.value + ' at hop ' + r1.hop + (r3 && r3 !== r1 ? ' and ' + r3.value + ' at hop ' + r3.hop : '') + '.');
-      if (cut || gone) said.push('The place ' + (cut ? 'lost part of its name at hop ' + cut.hop : '') + (cut && gone ? ' and ' : '') + (gone ? 'was gone by hop ' + gone.hop : '') + '.');
+      if (cut) bits.push('lost part of its name at hop ' + cut.hop);
+      if (part) { var jp = judge(part, exact, cell); bits.push('kept ' + (W[jp.left] || jp.left) + ' of its ' + (W[jp.of] || jp.of) + ' parts at hop ' + part.hop); }
+      if (gone) bits.push('was gone at hop ' + gone.hop);
+      if (bits.length) said.push('The place ' + (bits.length > 1 ? bits.slice(0, -1).join(', ') + ', and ' + bits[bits.length - 1] : bits[0]) + '.');
       var sw = $('[data-lane-say="words"]'); if (sw) sw.textContent = said.length ? said.join(' ') : 'every hop kept the reading.';
       var intact = toks.filter(function (h) { return h.token_intact === true && h.text.indexOf(d.token) >= 0; }).length;
       var st = $('[data-lane-say="token"]'); if (st) st.textContent = (intact === toks.length ? 'intact at all ' + toks.length + ' hops' : 'intact at ' + intact + ' of ' + toks.length + ' hops') + '; it names ' + String(d.fact_cid).slice(0, 8) + '…, the signed fact.';
