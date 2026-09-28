@@ -1,8 +1,8 @@
 {
   "schema": "vortx.site_manifest.v1",
-  "cid": "d7ssph7t5k4dkvaqnu73v4c74msgknlcgpyhwli5gis5sx5qbtta",
-  "commit": "15ee715ffe5d1376c0e17de9dd9d3fbc13da9cc6",
-  "generated_at": "2026-09-27T07:44:57Z",
+  "cid": "t22vjgz3xnm54gkupxgyo2optdwyqkrmauls3jut2fxfcml3kusq",
+  "commit": "893b6d37ea4281084f98087ff4336e69baecc7f6",
+  "generated_at": "2026-09-28T10:06:33Z",
   "files": {
     ".nojekyll": {
       "blake3": "v4jutopv7gq2nicajxvdnxgjjgn4wjojvxarfn6mtkj4vza7gjra",
@@ -621,12 +621,12 @@
       "bytes": 11330
     },
     "home.css": {
-      "blake3": "xaanhfptk2erhne2jios355gxeof7kckhc6intbubty45x2dh4pq",
-      "bytes": 66424
+      "blake3": "3tjkd6chp5gc2cq2tnpkwqcmwxrn7pyvjyseatpnprsricoysafa",
+      "bytes": 66797
     },
     "index.html": {
-      "blake3": "tgy4lvcd2aqvd56dvzbptwsfw5gh45yh2bzq77dql7b3z4wsb5ha",
-      "bytes": 62240
+      "blake3": "ef4n7zfivusueb5fmzlyx6qcl6djo7ndzfyvtn55752bwk2aj5rq",
+      "bytes": 62156
     },
     "js/ask.js": {
       "blake3": "ygqjpuyeezrqerxyyob6avoafwpmkcrg6fjfllgag7mqzkrhrwmq",
@@ -637,8 +637,8 @@
       "bytes": 12906
     },
     "js/drift.js": {
-      "blake3": "ruuf7sn6ml7563hoblyeoeprrioqjyrxa75m2w5wfi6c4olbkl5q",
-      "bytes": 7395
+      "blake3": "6hp33fcajltoikadbeah735wgcm3awwr3yeovd5cc7yageuskhma",
+      "bytes": 7038
     },
     "js/encoder.js": {
       "blake3": "tcweuu5uyz56jzx2srkmwxn5sd2rshiievclo3murcxew3ebenla",
@@ -661,8 +661,8 @@
       "bytes": 20181
     },
     "js/hero.js": {
-      "blake3": "ayxu63tn57o3tmsvckjqmp6jo56iqtmyxzvo25cj36enfrc26xdq",
-      "bytes": 49695
+      "blake3": "gdhjzz6j5pecgmbsgnthahoppvtlrjqovubbhvcp46gz2jbq3l6q",
+      "bytes": 51533
     },
     "js/ladder.js": {
       "blake3": "7c5rv6b2dt7bfevydbhgi4xbj3r4djkkmcu6z2bg4wyan5mg5nja",
@@ -817,8 +817,8 @@
       "bytes": 8968
     },
     "site.css": {
-      "blake3": "3xxbrvxu7feggjsih2f56imji2c6ta5cu2k4ztkps57i7m4qs6va",
-      "bytes": 50427
+      "blake3": "pquqmcq5x5dfwtogqiwprr743udq27zgsxlsth4hapd5xboivbna",
+      "bytes": 50458
     },
     "sitemap.xml": {
       "blake3": "vwwo35xbsy4xoo2ztsg7ojwp2kaikzan3zls5p5ydjd5ax25rwuq",
