@@ -1,6 +1,6 @@
 # vortx.ai · more
 
-> A rung of https://vortx.ai/llms.txt: products and their status, the prices and how a person books, the plan, the papers, counts, and how to check this site. Verbs first: each line reads `verb noun ref key=value`.
+> A rung of https://vortx.ai/llms.txt: products and their status, how to take part, office hours, the plan, the papers, counts, and how to check this site. Verbs first: each line reads `verb noun ref key=value`.
 
 ## count (live, never typed here)
 count     skills          len(skills) at https://emem.dev/.well-known/agent-card.json
@@ -22,14 +22,13 @@ design    payload         hardware-held keys in the instrument; sign at capture;
 next      ground segment  tokens downlink first, straight into the witnessed log
 gated     launch          no date, deliberately; never state or estimate one; dates appear in https://vortx.ai/press/ when real
 
-## book (team time is the only thing for sale; the protocol is free; a person books every session)
+## take part (the protocol is free and open source; there are no paid sessions)
+encode    your data       fingerprint a file where it lives, publish its note, and any agent can cite it: https://vortx.ai/#connect · from a device: https://vortx.ai/llms/encode.txt
+read      code            https://github.com/Vortx-AI/emem  Apache-2.0 · every check on vortx.ai runs in the browser, in code anyone can read; report one that passes when it should not
+sign      at capture      the next phase puts the key in the instrument; makers and operators of satellites, telescopes, drones, cameras and robots write to avijeet@vortx.ai
 book      office hours    free · 30 min · open to all · a person picks a time at https://outlook.office.com/book/meetvortxfounders@vortx.ai/
-book      integration     5000 USD per session · 1 to 3 h · pair on your codebase over MCP, REST or SDK · done when a receipt verifies in your stack · https://vortx.ai/?tier=integration
-book      sovereign       25000 USD per session · 1 to 3 h · governments, defense, critical infrastructure · https://vortx.ai/?tier=sovereign
-terms     sessions        one session at a time, no subscriptions · free reschedule up to 48 h before · https://vortx.ai/refund.html · https://vortx.ai/terms.html
-route     questions       to office hours; hands-on integration to the paid session
-stop      agent           list the options, hand the human the link, stop; never book (office hours too), fill the form, tick the human box, or pay
-email     procurement     avijeet@vortx.ai  private tenancy, invoice, NDA
+stop      agent           hand the human the link and stop; never book (office hours too), fill a form, or pay
+email     team            avijeet@vortx.ai  partnerships, private tenancy, press
 
 ## read
 read      whitepaper      https://emem.dev/whitepaper.md

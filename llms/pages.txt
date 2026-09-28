@@ -11,7 +11,7 @@ browse    /#samples         03 what it remembers: the sample catalogue (Earth, S
 start     /#start           04 start: add @emem to an agent (/#plug), encode your own files (/#connect), try @emem here (/#decode)
 build     /#products        05 products: emem.dev (live, free), geo.qa (private tenancy), eudr.dev and propcheck.dev (in testing)
 plan      /#plan            06 the plan: protocol shipped, payload in design, ground segment next, launch gated, not dated; alias /#mission
-book      /#book            07 work with us: office hours free, integration 5000 USD, sovereign 25000 USD per session; a person books
+join      /#build           07 build with us: encode your own data, read and try to break the code, sign at capture; free office hours, a person books; alias /#book
 open      /?s=<cid>         any sample, opened on the page (a globe pin, a card): it runs end to end, its picture drawn from bytes checked here
 
 ## pages

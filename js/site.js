@@ -19,10 +19,10 @@
   var nav = document.querySelector('[data-nav]'), tog = document.querySelector('[data-nav-toggle]');
   if (nav && tog) {
     // the button says what it will do: open the menu, or close it
-    var shut = function () { nav.classList.remove('is-open'); tog.setAttribute('aria-expanded', 'false'); tog.textContent = 'menu'; };
+    var shut = function () { nav.classList.remove('is-open'); tog.setAttribute('aria-expanded', 'false'); tog.textContent = 'Menu'; };
     tog.addEventListener('click', function () {
       var open = nav.classList.toggle('is-open');
-      tog.setAttribute('aria-expanded', open ? 'true' : 'false'); tog.textContent = open ? 'close' : 'menu';
+      tog.setAttribute('aria-expanded', open ? 'true' : 'false'); tog.textContent = open ? 'Close' : 'Menu';
     });
     nav.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', shut); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && nav.classList.contains('is-open')) { shut(); tog.focus(); } });
@@ -48,6 +48,8 @@
     }, { rootMargin: '-45% 0px -50% 0px' });
     map.forEach(function (a, s) { spy.observe(s); });
   }
+  // the paid sessions are retired: an old ?tier= link lands on the chapter that replaced them
+  if (/[?&]tier=/.test(location.search)) { var bw = document.getElementById('build'); if (bw) window.addEventListener('load', function () { bw.scrollIntoView({ block: 'start' }); }); }
   document.querySelectorAll('a[href^="#"]').forEach(function (a) {
     a.addEventListener('click', function (e) {
       var id = a.getAttribute('href'); if (id.length < 2) return;
@@ -59,10 +61,15 @@
 
   /* copy */
   document.querySelectorAll('[data-copy]').forEach(function (b) {
+    // a bare "copy" says what it copies, so a list of buttons can be told apart
+    if (!b.hasAttribute('aria-label') && /^copy$/i.test(b.textContent.trim())) {
+      var hd = b.closest('.codeblock-head'), what = hd && hd.querySelector('span') ? hd.querySelector('span').textContent.trim() : '', t = b.getAttribute('data-copy');
+      b.setAttribute('aria-label', 'Copy' + (what ? ' from ' + what : '') + ': ' + (t.length > 56 ? t.slice(0, 55) + '…' : t));
+    }
     b.addEventListener('click', function () {
       if (b.classList.contains('is-copied')) return;
       var text = b.getAttribute('data-copy'), was = b.innerHTML;
-      var ok = function () { b.textContent = 'copied'; b.classList.add('is-copied'); setTimeout(function () { b.innerHTML = was; b.classList.remove('is-copied'); }, 1500); };
+      var ok = function () { b.textContent = /^[A-Z]/.test(b.textContent.trim()) ? 'Copied' : 'copied'; b.classList.add('is-copied'); setTimeout(function () { b.innerHTML = was; b.classList.remove('is-copied'); }, 1500); };
       if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(ok, fallback); else fallback();
       function fallback() {
         var ta = document.createElement('textarea'); ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'absolute'; ta.style.left = '-9999px';
@@ -95,6 +102,7 @@
         el.hidden = false;
         var n = el.querySelector('[data-n]'); if (n) n.textContent = Number(s.tree_size).toLocaleString('en-US');
         var m = el.querySelector('[data-mark]'); if (m) { m.textContent = ok ? '✓' : 'unchecked'; m.className = ok ? 'is-ok' : 'is-warn'; }
+        var w = el.querySelector('[data-lh]'); if (w) w.hidden = false;
         el.title = ok ? 'emem’s public log holds ' + Number(s.tree_size).toLocaleString('en-US') + ' records. The signature on its head was checked in your browser (ed25519), signed ' + s.signed_at + '.' : 'emem’s public log (its signature was not checked on this page)';
       });
     }).catch(function () {});
@@ -143,8 +151,10 @@
     if (m && typeof m.cid === 'string' && m.cid.length >= 32) { var a = rel.querySelector('a'); if (a) a.textContent = m.cid; rel.hidden = false; }
   }).catch(function () {});
 
-  /* analytics after load and idle, so it never delays a first paint */
-  window.addEventListener('load', function () {
+  /* analytics after load and idle, so it never delays a first paint; never for a browser that asks not to be
+     tracked (Global Privacy Control or Do Not Track), and never with ad signals (the consent defaults in <head>) */
+  var optout = navigator.globalPrivacyControl === true || navigator.doNotTrack === '1' || window.doNotTrack === '1';
+  if (!optout) window.addEventListener('load', function () {
     var go = function () { var s = document.createElement('script'); s.async = true; s.src = 'https://www.googletagmanager.com/gtag/js?id=G-D71W1Q8YRZ'; document.head.appendChild(s); };
     if ('requestIdleCallback' in window) requestIdleCallback(go, { timeout: 5000 }); else setTimeout(go, 3000);
   });

@@ -132,7 +132,7 @@
       if (w.files.loop_webm && !reduce) {
         var v = document.createElement('video'); v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'none'; v.poster = sharp.path; v.setAttribute('aria-hidden', 'true');
         [['loop_webm', 'video/webm'], ['loop_mp4', 'video/mp4']].forEach(function (f) { if (w.files[f[0]]) { var so = document.createElement('source'); so.src = w.files[f[0]].path; so.type = f[1]; v.appendChild(so); } });
-        pic.appendChild(v); if (clips) clips.observe(v);
+        pic.appendChild(v); still(v, li);
       }
       pic.appendChild(el('span', 'sc-cr', w.credit + ' · ' + w.licence));
     } else if (t) { pic.style.backgroundImage = 'url(' + t.file + ')'; if (t.frames > 1) { pic.classList.add('is-sprite'); pic.style.setProperty('--n', t.frames); } pic.setAttribute('aria-label', x.title + ', its saved picture'); }
@@ -154,17 +154,20 @@
       tl.title = 'the note costs ' + tok(tk) + ' context tokens; its catalogue line, ' + tok(count(line)) + (rw ? '; the source as raw bytes, ' + tok(rw).slice(1) + ' (' + Math.round(rw / tk).toLocaleString('en-US') + '× more)' : '');
     }
     bd.appendChild(tl);
-    var acts = el('p', 'sc-acts'), rn = el('button', 'lk', 'Run it here'); rn.type = 'button'; here(rn, x);
-    var op = el('a', 'lk', 'Note ↗'); op.href = NOTE(x.cid); op.target = '_blank'; op.rel = 'noopener';
+    // each card's actions carry its title, so a list of links still says which sample each one opens
+    var acts = el('p', 'sc-acts'), rn = el('button', 'lk', 'Run it here'); rn.type = 'button'; rn.setAttribute('aria-label', 'Run it here: ' + x.title); here(rn, x);
+    var op = el('a', 'lk', 'Note ↗'); op.href = NOTE(x.cid); op.target = '_blank'; op.rel = 'noopener'; op.setAttribute('aria-label', 'Note for ' + x.title + ', on emem.dev');
     acts.appendChild(rn); acts.appendChild(op); bd.appendChild(acts);
     li.appendChild(bd);
     li.vxRun = function () { queue.push(function () { return check(x, li); }); if (sharp) queue.push(function () { return sharpCheck(w, sharp, li); }); else if (t) queue.push(function () { return picture(t, li); }); pump(); };
     return li;
   }
-  // a clip plays only while it can be seen
-  var clips = 'IntersectionObserver' in window ? new IntersectionObserver(function (en) {
-    en.forEach(function (e) { var v = e.target; if (e.isIntersecting) { v.preload = 'auto'; var p = v.play(); if (p && p.catch) p.catch(function () {}); } else v.pause(); });
-  }, { threshold: .25 }) : null;
+  // a clip rests on its poster, and plays while its card is pointed at or focused
+  function still(v, card) {
+    var on = function () { v.preload = 'auto'; var p = v.play(); if (p && p.catch) p.catch(function () {}); }, off = function () { v.pause(); };
+    card.addEventListener('pointerenter', on); card.addEventListener('pointerleave', off);
+    card.addEventListener('focusin', on); card.addEventListener('focusout', function (e) { if (!card.contains(e.relatedTarget)) off(); });
+  }
   var io = 'IntersectionObserver' in window ? new IntersectionObserver(function (en) {
     en.forEach(function (e) { if (e.isIntersecting) { io.unobserve(e.target); e.target.vxRun(); } });
   }, { rootMargin: '300px' }) : null;

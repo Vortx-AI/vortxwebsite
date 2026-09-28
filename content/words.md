@@ -441,7 +441,7 @@ Send us a message.
 Tell us what broke; a person answers and puts it right.
 
 ### book
-Reserve time with the team: office hours are free; integration and sovereign sessions are paid.
+Reserve time with the team: free office hours, 30 minutes. A person books; an agent hands over the link and stops.
 
 ### pitch
 Present Vortx AI to investors and the world.

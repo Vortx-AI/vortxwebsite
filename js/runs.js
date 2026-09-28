@@ -31,6 +31,9 @@
 
   /* ---------- the pipeline: five stages, filled by the run ---------- */
   function stage(k) { return pipe && pipe.querySelector('[data-pp="' + k + '"]'); }
+  // words in the reading face; the strings a machine reads (a token, a host) in the data face
+  var MACH = /(emem:[^\s·,]+|\b[a-z0-9-]+(?:\.[a-z0-9-]+)*\.(?:com|dev|org|io|ai|net|uk|qa)\b)/g;
+  function words(node, t) { String(t).split(MACH).forEach(function (s, i) { if (s) node.appendChild(i % 2 ? el('code', null, s) : document.createTextNode(s)); }); return node; }
   function paint(li, x, unit, y) {
     var X = li.querySelector('[data-pp-x]'), Y = li.querySelector('[data-pp-y]');
     X.textContent = x || '–';
@@ -39,7 +42,7 @@
     (y || []).filter(Boolean).forEach(function (t, i) {
       if (i) Y.appendChild(document.createTextNode(' · '));
       // a passed check reads in green; everything else is plain
-      if (/✓/.test(t)) Y.appendChild(el('b', null, t)); else Y.appendChild(document.createTextNode(t));
+      words(/✓/.test(t) ? Y.appendChild(el('b')) : Y, t);
     });
   }
   function reset() {
@@ -163,7 +166,7 @@
     verdict.appendChild(el('span', null, ok ? 'checks passed in this browser' : 'checks passed in this browser; the others failed'));
     if (nt && rt) verdict.appendChild(el('span', 'run-less', 'The note is ' + Math.round(rt / nt).toLocaleString('en-US') + '× fewer context tokens than the file would be, handed to a model as raw bytes'));
     (R.notes || []).forEach(function (t) { verdict.appendChild(el('span', 'is-note', '! ' + t)); });
-    if (sum) { sum.innerHTML = ''; sum.appendChild(el('p', 'run-score', vx.fmtBytes(R.L.total) + ' fetched in all, from ' + Object.keys(R.L.hosts).join(', '))); }
+    if (sum) { sum.innerHTML = ''; sum.appendChild(words(el('p', 'run-score'), vx.fmtBytes(R.L.total) + ' fetched in all, from ' + Object.keys(R.L.hosts).join(', '))); }
     // a run that checks its piece without drawing it says so, rather than leave the placeholder
     var s = cap && cap.querySelector('.run-seen'); if (s && !s.vxSeen) s.textContent = 'The saved picture: this run checks the piece’s bytes; it does not draw them';
   }

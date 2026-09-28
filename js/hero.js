@@ -729,8 +729,6 @@
     var x = (1 - e) * (1 - e) * from.x + 2 * (1 - e) * e * cx + e * e * to.x, y = (1 - e) * (1 - e) * from.y + 2 * (1 - e) * e * cy + e * e * to.y;
     svg.appendChild(el('path', { d: 'M' + from.x + ' ' + from.y + ' Q' + cx + ' ' + cy + ' ' + to.x + ' ' + to.y, 'class': 'is-sat', style: 'stroke: rgba(61,220,151,.45)' }));
     svg.appendChild(el('circle', { cx: x, cy: y, r: 4, 'class': 'pk' }));
-    var lb = el('text', { x: x + 8, y: y - 8, 'class': 'pk-l' }); lb.textContent = window.vxLastToken ? vx.enc.encode(window.vxLastToken).length + ' B' : 'token';
-    svg.appendChild(lb);
   }
   var again = root.querySelector('[data-decode]');
   if (again) again.addEventListener('click', decode);
@@ -744,15 +742,29 @@
   document.addEventListener('vx:elements', go);
   setTimeout(go, 4000);
 
-  /* ---------- the live strip ---------- */
+  /* ---------- the legend under the Earth: which spacecraft, in words; the numbers wait in the titles ---------- */
   var live = root.querySelector('[data-live-orbits]'), COL = { S2A: '#8fb8ff', S2B: '#ff9f7a', S2C: '#cda8ff', HST: '#f2f4f7', ISS: '#b9c3cf' };
   var FULL = { S2A: 'Sentinel-2A', S2B: 'Sentinel-2B', S2C: 'Sentinel-2C', HST: 'the Hubble Space Telescope', ISS: 'the International Space Station' };
+  var SAY = { S2A: 'Sentinel-2A', S2B: '2B', S2C: '2C', HST: 'Hubble', ISS: 'the ISS' }, built = '';
   function strip() {
     if (!live || !window.vxOrbit || !window.vxOrbit.elements()) return;
     var st = window.vxOrbit.states(), el2 = window.vxOrbit.elements(), ep = Math.max.apply(null, st.map(function (s) { return s.epoch; }));
-    var age = (Date.now() - ep) / 3600e3;
-    live.innerHTML = st.map(function (s) { return '<span title="' + (FULL[s.short] || s.short) + ', ' + Math.round(s.alt) + ' km up now"><span class="dot" style="background:' + (COL[s.short] || '#fff') + '"></span>' + s.short + ' <i>' + Math.round(s.alt) + ' km</i></span>'; }).join('') +
-      '<span title="positions propagated with SGP4 in this browser, from ' + (el2.from.indexOf('snapshot') >= 0 ? 'a dated snapshot of the published orbital elements' : 'orbital elements fetched from CelesTrak') + '">computed here from orbits <i>' + (age < 48 ? age.toFixed(0) + ' h' : (age / 24).toFixed(0) + ' d') + ' old</i></span>';
+    var h = Math.round((Date.now() - ep) / 3600e3), old = h < 48 ? h + (h === 1 ? ' hour' : ' hours') : Math.round(h / 24) + ' days';
+    var keys = st.map(function (s) { return s.short; }).join();
+    if (built !== keys) {
+      built = keys;
+      live.innerHTML = st.map(function (s) { return '<span data-s="' + s.short + '"><span class="dot" style="background:' + (COL[s.short] || '#fff') + '"></span>' + (SAY[s.short] || s.short) + '</span>'; }).join('') +
+        '<span class="h3o-live-say">on their real orbits, computed in this browser</span>';
+    }
+    // rewritten in place, so a title being read is not pulled away
+    st.forEach(function (s) { var e = live.querySelector('[data-s="' + s.short + '"]'); if (e) e.title = (FULL[s.short] || s.short) + ', ' + Math.round(s.alt) + ' km up now'; });
+    live.lastChild.title = 'Positions propagated with SGP4 in this browser, from ' + (el2.from.indexOf('snapshot') >= 0 ? 'a dated snapshot of the published orbital elements' : 'orbital elements fetched from CelesTrak') + ', ' + old + ' old';
   }
-  setInterval(strip, 2000); document.addEventListener('vx:elements', strip);
+  setInterval(strip, 5000); document.addEventListener('vx:elements', strip);
+
+  /* one hint at a time: how to turn the Earth, then, once it has been turned, how to bring it back */
+  var hint = root.querySelector('[data-hint]'), over = root.querySelector('[data-over]');
+  if (hint && over) over.addEventListener('pointerup', function () {
+    hint.innerHTML = '<span class="on-fine">Double-click</span><span class="on-touch">Double-tap</span> the Earth to bring it back';
+  }, { once: true });
 })();

@@ -1,7 +1,7 @@
 {
   "protocolVersion": "1.0",
   "name": "Vortx AI",
-  "description": "Vortx AI Private Limited, a spatial AI lab, builds emem: shared, verifiable memory for AI agents. Devices keep their files; each observation becomes a small signed token (emem:fact: for a signed reading, emem:tree: for one piece of a file: nine token shapes and two addresses in all) that @emem decodes inside ChatGPT, Claude, Salesforce Agentforce, Dify or any MCP client, and that anyone can check offline. emem is free and Apache-2.0; geo.qa runs the same memory in a private tenancy; eudr.dev and propcheck.dev are in testing. The home page tells it in order: https://vortx.ai/#why (the problem, checked live), https://vortx.ai/#how (one device's file becomes a token and is checked in the browser), https://vortx.ai/#start (connect an agent, encode a file). The only thing for sale is team time (see x-session): agents never book or pay. The satellite plan has deliberately no date. Start at https://vortx.ai/llms.txt.",
+  "description": "Vortx AI Private Limited, a spatial AI lab, builds emem: shared, verifiable memory for AI agents. Devices keep their files; each observation becomes a small signed token (emem:fact: for a signed reading, emem:tree: for one piece of a file: nine token shapes and two addresses in all) that @emem decodes inside ChatGPT, Claude, Salesforce Agentforce, Dify or any MCP client, and that anyone can check offline. emem is free and Apache-2.0; geo.qa runs the same memory in a private tenancy; eudr.dev and propcheck.dev are in testing. The home page tells it in order: https://vortx.ai/#why (the problem, checked live), https://vortx.ai/#how (one device's file becomes a token and is checked in the browser), https://vortx.ai/#start (connect an agent, encode a file). Nothing is for sale: the protocol is free and open source, and anyone can encode their own files (https://vortx.ai/#build); free office hours are in x-session, and agents never book or pay. The satellite plan has deliberately no date. Start at https://vortx.ai/llms.txt.",
   "url": "https://emem.dev/a2a/tasks",
   "preferredTransport": "JSONRPC",
   "supportedInterfaces": [
@@ -114,18 +114,21 @@
   },
   "x-endpoint": "vortx.ai serves no A2A endpoint of its own: its skills run on emem.dev's (every emem tool is an A2A skill), so url points there. Booking team time is not a skill an agent executes: see x-session.",
   "x-session": {
-    "name": "Team time",
-    "bookingUrl": "https://vortx.ai/#book",
+    "name": "Office hours",
+    "retired": "Vortx AI no longer sells sessions. The integration and sovereign sessions are retired; the protocol is free and open source, and there is nothing to pay for on vortx.ai.",
+    "bookingUrl": "https://vortx.ai/#build",
     "schedulingUrl": "https://outlook.office.com/book/meetvortxfounders@vortx.ai/",
-    "format": "one-on-one, remote worldwide",
-    "payment": "Razorpay hosted checkout; human completes payment",
+    "format": "one-on-one, remote worldwide, free, 30 min",
     "contact": "avijeet@vortx.ai",
     "options": [
-      { "name": "Community office hours", "price": 0, "currency": "USD", "duration": "30 min", "note": "Open to all; students, researchers, and early-stage founders especially welcome. Architecture questions, integration guidance, protocol deep-dives. A person books at schedulingUrl; an agent hands over the link and stops." },
-      { "name": "Integration session", "price": 5000, "currency": "USD", "duration": "1-3 hours", "note": "The core team pairs on your codebase over MCP, REST, or SDK. Exit criterion: recall running and a receipt verifying in your stack." },
-      { "name": "Sovereign session", "price": 25000, "currency": "USD", "duration": "1-3 hours", "note": "Governments, defense, critical infrastructure. Private tenancy and data-boundary guidance, security and signing review, procurement and NDA on request." }
+      { "name": "Community office hours", "price": 0, "currency": "USD", "duration": "30 min", "note": "Open to all; students, researchers, and early-stage founders especially welcome. Architecture questions, integration guidance, protocol deep-dives. A person books at schedulingUrl; an agent hands over the link and stops." }
     ],
-    "agentGuidance": "The protocol is free; only team time is priced. Route questions to the free office hours and hands-on integration work to the paid session. Hand the human the link. Never enter card details or complete payment programmatically.",
-    "bookingGuardrail": "Do not initiate checkout, submit the booking form, or complete payment on a user's behalf under any circumstances. The form contains a human-confirmation checkbox; never check it for a user. Surface the option, hand over the URL, and stop. Sessions are one at a time: no subscriptions, no retainers, no upsell."
+    "takePart": [
+      { "verb": "encode", "what": "your own data, where it lives; publish its note and any agent can cite it", "url": "https://vortx.ai/#connect" },
+      { "verb": "read", "what": "the code; every check on vortx.ai runs in the browser, in readable code; report one that passes when it should not", "url": "https://github.com/Vortx-AI/emem" },
+      { "verb": "sign", "what": "at capture: makers and operators of instruments write to the team about keys in the instrument", "url": "mailto:avijeet@vortx.ai" }
+    ],
+    "agentGuidance": "Nothing is for sale here: the protocol is free and open source. Route questions to the free office hours and hand the human the link. Quote no prices.",
+    "bookingGuardrail": "Do not book, fill a form, or pay on a user's behalf under any circumstances, free office hours included. Surface the option, hand over the URL, and stop."
   }
 }

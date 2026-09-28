@@ -1,6 +1,6 @@
 {
   "schema": "vortx.facts.v1",
-  "note": "The numbers this site states, each with the source that can refute it: emem's own counts, the home page's sample figures and the session prices. kind=structural and kind=floor are asserted in copy and change only by decision; tools/drift_check.py checks that the copy still says them. kind=live is never typed into any page: the page fetches it at view time, and the weekly run only checks that its source still answers and derives. If a value here and a live endpoint disagree, trust the endpoint and fix this file.",
+  "note": "The numbers this site states, each with the source that can refute it: emem's own counts and the home page's sample figures. kind=structural and kind=floor are asserted in copy and change only by decision; tools/drift_check.py checks that the copy still says them. kind=live is never typed into any page: the page fetches it at view time, and the weekly run only checks that its source still answers and derives. If a value here and a live endpoint disagree, trust the endpoint and fix this file.",
   "as_of": "2026-09-27",
   "facts": {
     "emem.token_types": {
@@ -62,18 +62,6 @@
       "source": "https://vortx.ai/press/#listed",
       "derive": "the dated listings on the newsroom",
       "kind": "structural"
-    },
-    "site.price.integration_usd": {
-      "value": 5000,
-      "source": "https://vortx.ai/#book",
-      "derive": "the integration session, per session, 1 to 3 h; also the JSON-LD Offer",
-      "kind": "structural"
-    },
-    "site.price.sovereign_usd": {
-      "value": 25000,
-      "source": "https://vortx.ai/#book",
-      "derive": "the sovereign session, per session, 1 to 3 h; also the JSON-LD Offer",
-      "kind": "structural"
     }
   },
   "checks": [
@@ -85,10 +73,6 @@
     { "fact": "site.sample.file_size", "file": "index.html", "pattern": "<b>{value}</b>" },
     { "fact": "site.sample.raw_context_tokens", "file": "index.html", "pattern": "<b>{value}</b>" },
     { "fact": "site.sample.token_bytes", "file": "index.html", "pattern": "<b>{value} bytes</b>" },
-    { "fact": "site.listings", "file": "index.html", "pattern": "all {value}, dated" },
-    { "fact": "site.price.integration_usd", "file": "llms.txt", "pattern": "integration {value} USD" },
-    { "fact": "site.price.integration_usd", "file": "index.html", "pattern": "\"price\": \"{value}\"" },
-    { "fact": "site.price.sovereign_usd", "file": "llms.txt", "pattern": "sovereign {value} USD" },
-    { "fact": "site.price.sovereign_usd", "file": "index.html", "pattern": "\"price\": \"{value}\"" }
+    { "fact": "site.listings", "file": "index.html", "pattern": "All {value} listings" }
   ]
 }
