@@ -34,12 +34,13 @@
   --serif: 'Instrument Serif', 'Iowan Old Style', Georgia, serif;
   --sans: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   --mono: 'Geist Mono', ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace;
-  --wrap: min(1240px, calc(100vw - 48px));
+  --wrap-max: 1120px;
+  --wrap: min(var(--wrap-max), calc(100vw - 64px));
   /* one type scale: display serif for statements, sans for reading, mono only for data (tokens, hashes, values) */
-  --t-h1: clamp(44px, 4.9vw, 80px);
-  --t-h2: clamp(32px, 3.5vw, 52px);
-  --t-h3: 24px;
-  --t-lede: 17px;
+  --t-h1: clamp(38px, 3.9vw, 62px);
+  --t-h2: clamp(28px, 2.7vw, 40px);
+  --t-h3: 22px;
+  --t-lede: 15.5px;
   --t-body: 15px;
   --t-small: 13px;
   --t-data: 12px;
@@ -103,7 +104,7 @@ body.vx {
 .vx-nav { display: flex; align-items: center; gap: 2px; margin-left: 8px; }
 .vx-nav a {
   padding: 7px 10px; border-radius: 6px; text-decoration: none; color: var(--ink-2);
-  font: 500 14px var(--sans); letter-spacing: -0.005em; transition: color .2s, background .2s;
+  font: 500 13.5px var(--sans); letter-spacing: -0.005em; transition: color .2s, background .2s;
 }
 .vx-nav a:hover { color: var(--ink); background: var(--panel-2); }
 .vx-nav a[aria-current="true"] { color: var(--ink); }
@@ -120,7 +121,7 @@ body.vx {
 
 /* ---------- buttons, chips ---------- */
 .btn {
-  display: inline-flex; align-items: center; gap: 9px; height: 42px; padding: 0 18px;
+  display: inline-flex; align-items: center; gap: 9px; height: 40px; padding: 0 16px;
   border-radius: 8px; border: 1px solid var(--line-2); background: transparent; color: var(--ink);
   font: 500 14px var(--sans); letter-spacing: -0.005em; text-decoration: none; cursor: pointer; white-space: nowrap;
   transition: background .2s, border-color .2s, color .2s, transform .2s var(--ease);
@@ -130,11 +131,11 @@ body.vx {
 .btn[disabled] { opacity: .45; cursor: default; }
 .vx .btn-lit { background: var(--ink); color: var(--void); border-color: var(--ink); }
 .vx .btn-lit:hover { background: #fff; border-color: #fff; color: var(--void); }
-.btn-sm { height: 36px; padding: 0 14px; font-size: 13.5px; }
+.btn-sm { height: 34px; padding: 0 13px; font-size: 13px; }
 .btn .v { color: inherit; font-size: 1em; opacity: .7; }
 /* a <button> and a link styled as one read in the same face */
 .vx button.btn { font: 500 14px var(--sans); letter-spacing: -0.005em; }
-.vx button.btn-sm { font-size: 13.5px; }
+.vx button.btn-sm { font-size: 13px; }
 .chip {
   display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px; border-radius: 99px;
   border: 1px solid var(--line-2); background: transparent; cursor: pointer; color: var(--ink-2);

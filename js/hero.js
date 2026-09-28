@@ -357,7 +357,7 @@
           if (yy >= 12 && yy + tot <= b.H - 12 && !hits({ l: x, r: x + w, t: yy, b: yy + tot })) y = yy;
         }
       }
-      if (y === null) return list;
+      if (y === null) return list.length > 2 ? pairs(list, side, gap) : list;
       var top = y;
       list.forEach(function (c, i) {
         c.classList.remove('is-out');
@@ -367,6 +367,36 @@
         y += hs[i] + gap;
       });
       taken.push({ l: x - 10, r: x + w + 10, t: top - 10, b: y - gap + 10 });
+      return [];
+    }
+    // a short screen has no room for a column: the same cards, two by two, in the page's order, still beside the globe
+    function pairs(list, side, gap) {
+      var rows = []; for (var i = 0; i < list.length; i += 2) rows.push(list.slice(i, i + 2));
+      var cw = [0, 1].map(function (j) { return Math.max.apply(null, rows.map(function (r) { return r[j] ? r[j].offsetWidth : 0; })); });
+      var rh = rows.map(function (r) { return Math.max.apply(null, r.map(function (c) { return c.offsetHeight; })); });
+      var bw = cw[0] + gap + cw[1], bh = rh.reduce(function (n, h) { return n + h; }, 0) + gap * (rows.length - 1);
+      var x = side > 0 ? Math.min(g.x + R * 1.1 + 16, b.W - 12 - bw) : Math.max(g.x - R * 1.1 - 16 - bw, 12), y = null;
+      if (side > 0 ? x < g.x + R * .88 : x + bw > g.x - R * .88) return list;
+      for (var d = 0; d <= b.H && y === null; d += 8) {
+        for (var sg = -1; sg <= 1 && y === null; sg += 2) {
+          var yy = g.y - bh / 2 + sg * d;
+          if (yy >= 12 && yy + bh <= b.H - 12 && !hits({ l: x, r: x + bw, t: yy, b: yy + bh })) y = yy;
+        }
+      }
+      if (y === null) return list;
+      var top = y;
+      rows.forEach(function (r, i) {
+        r.forEach(function (c, j) {
+          // each card leans toward the globe inside its cell, as the column's do
+          var cx = x + (j ? cw[0] + gap : 0), cell = cw[j];
+          c.classList.remove('is-out');
+          put(c, side > 0 ? cx : cx + cell - c.offsetWidth, y);
+          var m = c.hasAttribute('data-sat') ? null : aim(c);
+          if (m) lines.push([{ x: c.vxAt.x + c.offsetWidth / 2, y: c.vxAt.y + c.offsetHeight / 2 }, m]);
+        });
+        y += rh[i] + gap;
+      });
+      taken.push({ l: x - 10, r: x + bw + 10, t: top - 10, b: y - gap + 10 });
       return [];
     }
     var closed = todo.filter(function (c) { return !isOpen(c); });

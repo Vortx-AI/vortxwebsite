@@ -13,8 +13,6 @@
   var root = document.getElementById('drift');
   if (!root || !window.vx) return;
   var EMEM = 'https://emem.dev', TOKEN = root.getAttribute('data-token');
-  // emem's codes, in words; the code itself is still printed, verbatim, in the steps
-  var WORDS = { PROV_VALUE: 'the number is not the one signed', correct_value: 'quote the signed value' };
   function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
   function draft(value) { return 'Cubbon Park in Bengaluru has an NDVI of ' + value + ' [' + TOKEN + ']'; }
   async function post(path, body) {
@@ -64,9 +62,10 @@
       var v = e.receipt ? ememVerify.verifyReceipt(e.receipt) : { ok: false }, bound = v.ok && (e.receipt.fact_cids || []).indexOf(tok.split(':').pop()) >= 0;
       this.line('verify', 'the answer itself', { receipt: v.ok ? 'ed25519 ✓' : 'INVALID', names: bound ? 'this fact ✓' : 'NO' }, bound ? 'ok' : 'fail', 'this browser');
       if (!bound) this.verdict('is-bad', 'Not trusted:', 'the answer’s own signature did not check out here.');
-      else if (e.matches) this.verdict('is-ok', 'Passes ✓', 'The number is the one signed, ' + e.resolved_value_verbatim + ', quoted verbatim. Anyone can check the signature, offline, with no key.');
-      else if (gv.action !== 'allow') this.verdict('is-bad', 'Blocked ✕', 'The draft says ' + num + '; the signed value is ' + e.resolved_value_verbatim + '. emem’s guard stops the draft before a person reads it: ' + (WORDS[gv.code] || gv.code || 'denied') + (gv.fix ? ', so ' + (WORDS[gv.fix] || gv.fix) : '') + '.');
-      else this.verdict('is-caught', 'Flagged ≈', 'The draft says ' + num + '; the signed value is ' + e.resolved_value_verbatim + '. The guard lets a rounding through, and the echo marks it rounded, so an agent that needs the exact number knows.');
+      // one short sentence each: what emem decided, and why; the codes stay in the steps below
+      else if (e.matches) this.verdict('is-ok', 'Passes ✓', 'It quotes the signed value verbatim. Anyone can check the signature, offline, with no key.');
+      else if (gv.action !== 'allow') this.verdict('is-bad', 'Blocked ✕', 'The signed value is ' + e.resolved_value_verbatim + '. emem’s guard stops this draft before a person reads it.');
+      else this.verdict('is-caught', 'Flagged ≈', 'The signed value is ' + e.resolved_value_verbatim + '. A rounding passes the guard; the echo marks it rounded.');
     } catch (err) { if (!live()) return; this.line('stop', 'check', { why: vx.why(err, 'emem.dev') }, 'fail'); this.verdict('is-off', 'Not checked:', vx.why(err, 'emem.dev') + '.'); }
   };
 
