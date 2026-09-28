@@ -105,6 +105,54 @@
         var w = el.querySelector('[data-lh]'); if (w) w.hidden = false;
         el.title = ok ? 'emem’s public log holds ' + Number(s.tree_size).toLocaleString('en-US') + ' records. The signature on its head was checked in your browser (ed25519), signed ' + s.signed_at + '.' : 'emem’s public log (its signature was not checked on this page)';
       });
+      var sinceEls = document.querySelectorAll('[data-logsince]');
+      if (ok && sinceEls.length) since(s, sinceEls);
+    }).catch(function () {});
+  }
+
+  /* since this browser last saw the log: the head it remembered must be a prefix of the head now, proved by an
+     RFC 6962 consistency proof folded here over blake3 (node = blake3(0x01|l|r)). A first visit proves nothing,
+     and says so; the remembered head never leaves this browser */
+  var LOGPIN = '777er3yihgifqmv5hmc2wwmyszgddzderzhsx6rex4yoakwomvka', LOGKEY = 'vx.loghead.v1';
+  function sameBytes(a, b) { if (a.length !== b.length) return false; for (var i = 0; i < a.length; i++) if (a[i] !== b[i]) return false; return true; }
+  function consistent(m, r1, n, r2, proof) {
+    if (m === 0 || m > n) return false;
+    if (m === n) return proof.length === 0 && sameBytes(r1, r2);
+    var node = function (l, r) { return vx.blake3(vx.cat(new Uint8Array([1]), l, r)); };
+    var p = proof.slice(), fn = m - 1, sn = n - 1;
+    if ((m & (m - 1)) === 0) p.unshift(r1);
+    if (!p.length) return false;
+    while (fn % 2 === 1) { fn = Math.floor(fn / 2); sn = Math.floor(sn / 2); }
+    var fr = p[0], sr = p[0];
+    for (var i = 1; i < p.length; i++) {
+      if (sn === 0) return false;
+      if (fn % 2 === 1 || fn === sn) {
+        fr = node(p[i], fr); sr = node(p[i], sr);
+        while (fn % 2 === 0 && fn !== 0) { fn = Math.floor(fn / 2); sn = Math.floor(sn / 2); }
+      } else sr = node(sr, p[i]);
+      fn = Math.floor(fn / 2); sn = Math.floor(sn / 2);
+    }
+    return sn === 0 && sameBytes(fr, r1) && sameBytes(sr, r2);
+  }
+  function since(s, els) {
+    if (s.responder_pubkey_b32 !== LOGPIN || !window.vx) return;
+    var prev = null; try { prev = JSON.parse(localStorage.getItem(LOGKEY) || 'null'); } catch (e) { prev = null; }
+    var keep = function () { try { localStorage.setItem(LOGKEY, JSON.stringify({ tree_size: s.tree_size, root_b32: s.root_b32, seen_at: new Date().toISOString() })); } catch (e) {} };
+    var say = function (cls, t) { els.forEach(function (e) { e.hidden = false; e.classList.remove('is-ok', 'is-bad'); if (cls) e.classList.add(cls); e.textContent = t; }); };
+    var when = function (iso) { var d = new Date(iso); return isNaN(d) ? 'your last visit' : d.toUTCString().slice(5, 16) + ', ' + d.toUTCString().slice(17, 22) + ' UTC'; };
+    var grew = function (n) { return Number(n).toLocaleString('en-US'); };
+    if (!prev || !prev.tree_size || !prev.root_b32) { keep(); say('', 'This browser now remembers the log’s signed head. Come back later, and it will prove the log only grew.'); return; }
+    if (prev.tree_size > s.tree_size) { say('is-bad', 'The log is shorter than when this browser saw it on ' + when(prev.seen_at) + '.'); return; }
+    if (prev.tree_size === s.tree_size) {
+      if (prev.root_b32 === s.root_b32) say('is-ok', 'Unchanged since ' + when(prev.seen_at) + ' ✓');
+      else say('is-bad', 'Same length as on ' + when(prev.seen_at) + ', but a different root: history changed.');
+      return;
+    }
+    fetch('https://emem.dev/v1/log/consistency?first=' + prev.tree_size + '&second=' + s.tree_size).then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (c) {
+      var fine = c.first_root_b32 === prev.root_b32 && c.second_root_b32 === s.root_b32 &&
+        consistent(prev.tree_size, vx.unb32(prev.root_b32), s.tree_size, vx.unb32(s.root_b32), (c.consistency_proof_b32 || []).map(vx.unb32));
+      if (fine) { say('is-ok', 'Since ' + when(prev.seen_at) + ' it grew by ' + grew(s.tree_size - prev.tree_size) + ', and the proof that it only grew checks here ✓'); keep(); }
+      else say('is-bad', 'The proof that the log only grew since ' + when(prev.seen_at) + ' did not check.');
     }).catch(function () {});
   }
 

@@ -225,7 +225,7 @@
 .case-how > summary, .case-own > summary, .run-how > summary, .ask-how > summary, .door-dev > summary {
   display: inline-flex; align-items: center; gap: 8px; padding-block: 5px; margin-block: -5px; cursor: pointer; list-style: none; font: 500 13.5px var(--sans); color: var(--ink-2); transition: color .2s; }
 /* small text controls keep a 24px target (WCAG 2.5.8) without moving the line they sit in */
-.mem .sc-acts .lk, .run-acts .lk, .end .lk, .end-more .lk { padding-block: 5px; margin-block: -5px; }
+.mem .sc-acts .lk, .run-acts .lk, .end .lk, .end-more .lk, .notex-acts .lk, .chan-acts .lk { padding-block: 5px; margin-block: -5px; }
 .trust-row a, .mem .sc h3 a { padding-block: 4px; }
 .case-how > summary::-webkit-details-marker, .case-own > summary::-webkit-details-marker, .run-how > summary::-webkit-details-marker, .ask-how > summary::-webkit-details-marker, .door-dev > summary::-webkit-details-marker { display: none; }
 .case-how > summary::after, .case-own > summary::after, .run-how > summary::after, .ask-how > summary::after, .door-dev > summary::after { content: '+'; font: 500 14.5px var(--mono); color: var(--ink-3); }
@@ -296,7 +296,7 @@
 .drift-say.is-bad b { color: var(--fail); }
 .drift-say.is-off { color: var(--ink-3); }
 .bridge { margin: clamp(28px, 3.4vw, 40px) 0 0; text-align: center; font: 400 15.5px var(--sans); }
-.bridge a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line-2); padding-bottom: 3px; transition: border-color .2s; }
+.bridge a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line-2); padding: 3px 0; transition: border-color .2s; }
 .bridge a:hover { border-bottom-color: var(--ink); }
 
 /* ---------- 02 how it works: the pipeline, filled by the run, then what the agent sees ---------- */
@@ -373,7 +373,68 @@
 .run-how { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); }
 .run-how .vlog { margin-top: 10px; max-height: 380px; }
 
-/* ---------- 03 what it remembers: the gallery ---------- */
+/* ---------- 03 many agents: the relay, a note checked three ways, the channel ---------- */
+/* colour keeps its one meaning: green checked, amber rounded, red lost or failed */
+.relay { padding: clamp(20px, 2.2vw, 28px); border: 1px solid var(--line); border-radius: 16px; background: var(--deep); }
+.relay-top { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 24px; margin-bottom: 18px; }
+.relay h3, .notex h3, .chan h3 { margin: 0; font: 400 clamp(22px, 1.9vw, 26px)/1.15 var(--serif); letter-spacing: -.01em; text-wrap: balance; }
+.relay-src { margin: 0; max-width: 64ch; font: 400 13.5px/1.5 var(--sans); color: var(--ink-3); }
+.lanes { display: grid; gap: 16px; }
+.lane-h { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; min-height: 1.5em; margin: 0 0 8px; font: 400 13.5px/1.5 var(--sans); color: var(--ink-2); }
+.lane-h b { min-width: 6.5em; font-weight: 600; color: var(--ink); }
+.hops { display: grid; grid-template-columns: repeat(24, minmax(0, 1fr)); gap: 5px; min-height: 30px; margin: 0; padding: 0; list-style: none; }
+.hop { width: 100%; height: 30px; padding: 0; border-radius: 8px; border: 1px solid var(--line-2); background: rgba(255, 255, 255, .02); color: var(--ink-3); font: 500 11.5px var(--sans); font-variant-numeric: tabular-nums; cursor: pointer; transition: border-color .2s, color .2s; }
+.hop.is-ok { border-color: rgba(61, 220, 151, .5); background: rgba(61, 220, 151, .12); color: var(--ok); }
+.hop.is-drift { border-color: rgba(255, 196, 107, .45); background: rgba(255, 196, 107, .1); color: var(--claim); }
+.hop.is-lost { border-color: rgba(255, 107, 107, .45); background: rgba(255, 107, 107, .1); color: var(--fail); }
+.hop:hover, .hop:focus-visible { border-color: var(--ink-2); color: var(--ink); }
+.lanes-key { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 0; font: 400 12.5px var(--sans); color: var(--ink-3); }
+.lanes-key span::before { content: ''; display: inline-block; width: 10px; height: 10px; margin-right: 6px; border-radius: 3px; vertical-align: -1px; border: 1px solid; }
+.lanes-key .k-ok::before { border-color: rgba(61, 220, 151, .6); background: rgba(61, 220, 151, .2); }
+.lanes-key .k-drift::before { border-color: rgba(255, 196, 107, .6); background: rgba(255, 196, 107, .18); }
+.lanes-key .k-lost::before { border-color: rgba(255, 107, 107, .6); background: rgba(255, 107, 107, .18); }
+.hop-read { min-height: 3.2em; margin: 14px 0 0; font: 400 13.5px/1.55 var(--sans); color: var(--ink-3); }
+.hop-read b { margin-right: 8px; font-weight: 500; color: var(--ink-2); }
+.hop-read q { font: 400 12.5px var(--mono); color: var(--ink); white-space: pre-wrap; }
+.hop-read .hop-j { margin-left: 8px; }
+.relay-check { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 10px 18px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
+.relay-out { flex: 1; min-width: 260px; min-height: 3em; margin: 0; font: 400 13.5px/1.5 var(--sans); color: var(--ink-3); }
+.rc-line { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; margin: 0 0 6px; }
+.rc-line b { font-weight: 500; color: var(--ink-2); }
+.rc-v.is-ok { color: var(--ok); }
+.rc-v.is-drift { color: var(--claim); }
+.rc-v.is-bad { color: var(--fail); }
+.agents-2 { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 16px; margin-top: 16px; }
+.notex, .chan { display: flex; flex-direction: column; gap: 12px; min-width: 0; padding: clamp(20px, 2.2vw, 26px); border: 1px solid var(--line); border-radius: 16px; background: var(--deep); }
+.notex-d, .chan-d { margin: 0; font: 400 14.5px/1.55 var(--sans); color: var(--ink-2); text-wrap: pretty; }
+.notex-body { height: 180px; overflow: auto; margin: 0; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); background: rgba(0, 0, 0, .3); font: 400 12px/1.55 var(--mono); color: var(--ink-2); white-space: pre-wrap; overflow-wrap: anywhere; }
+.notex-body mark { border-radius: 2px; background: rgba(255, 107, 107, .4); color: var(--ink); }
+.notex-checks { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.notex-checks li { display: grid; grid-template-columns: 10.5em minmax(0, 1fr); gap: 10px; align-items: baseline; min-height: 40px; padding: 9px 12px; border-radius: 12px; border: 1px solid var(--line); font: 400 13.5px/1.45 var(--sans); color: var(--ink-3); }
+.notex-checks li b { font-weight: 500; color: var(--ink-2); }
+.notex-checks li.is-ok { border-color: rgba(61, 220, 151, .4); background: rgba(61, 220, 151, .05); }
+.notex-checks li.is-ok span { color: var(--ok); }
+.notex-checks li.is-bad { border-color: rgba(255, 107, 107, .45); background: rgba(255, 107, 107, .05); }
+.notex-checks li.is-bad span { color: var(--fail); }
+.notex-acts, .chan-acts { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; margin: auto 0 0; font: 400 14.5px var(--sans); }
+.chan-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
+.chan-stats b { display: block; font: 400 clamp(28px, 2.4vw, 34px)/1 var(--serif); letter-spacing: -.02em; color: var(--ink); font-variant-numeric: tabular-nums; }
+.chan-stats span { display: block; margin-top: 6px; font: 400 12.5px/1.4 var(--sans); color: var(--ink-3); }
+.chan-recent { display: grid; align-content: start; min-height: 170px; margin: 0; padding: 0; list-style: none; }
+.chan-recent li { display: grid; grid-template-columns: 6.5em 5.5em minmax(0, 1fr) auto; gap: 8px; align-items: baseline; padding: 7px 0; border-top: 1px solid var(--line); font: 400 12.5px/1.4 var(--sans); color: var(--ink-3); }
+.chan-recent li.is-off { display: block; }
+.chan-recent code { font: 400 12px var(--mono); color: var(--ink); }
+.chan-recent .is-ok { color: var(--ok); }
+.chan-recent time { white-space: nowrap; }
+@media (max-width: 900px) { .agents-2 { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 560px) {
+  .hops { grid-template-columns: repeat(12, minmax(0, 1fr)); min-height: 65px; }
+  .notex-checks li { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  .chan-recent li { grid-template-columns: 6.5em minmax(0, 1fr) auto; }
+  .chan-recent li span:first-of-type { display: none; }
+}
+
+/* ---------- 04 what it remembers: the gallery ---------- */
 .mem .sc-grid { gap: 16px; }
 /* the gallery's pictures a little wider than tall, so two rows sit in one screen */
 .mem .sc-pic { aspect-ratio: 16 / 9; }
@@ -508,6 +569,21 @@
 .mission .is-now .ms-st { color: var(--claim); }
 .mission h3 { margin: 8px 0 6px; font: 400 23px/1.1 var(--serif); }
 .mission p { margin: 0; font: 400 14.5px/1.55 var(--sans); color: var(--ink-2); }
+/* the payload rule, run live against emem's published test trace */
+.ms-lab { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(16px, 2.4vw, 36px); margin-top: clamp(26px, 2.8vw, 36px); padding: clamp(20px, 2.2vw, 26px); border: 1px solid var(--line); border-radius: 16px; background: var(--deep); }
+.ms-lab h3 { margin: 0 0 8px; font: 400 clamp(22px, 1.9vw, 26px)/1.15 var(--serif); letter-spacing: -.01em; }
+.ms-lab-t p { margin: 0; font: 400 14.5px/1.55 var(--sans); color: var(--ink-2); text-wrap: pretty; }
+.ms-lab-t [data-trace-dev] { font: 400 .92em var(--mono); color: var(--ink); }
+.ms-lab-acts { display: flex; flex-wrap: wrap; gap: 10px; margin: 0; }
+.ms-lab-out { min-height: 3em; margin: 14px 0 0; font: 400 14.5px/1.55 var(--sans); color: var(--ink-2); }
+.ms-lab-out b { font-weight: 600; }
+.ms-lab-out .is-ok { color: var(--ok); }
+.ms-lab-out .is-bad { color: var(--fail); }
+.ms-lab-out code { font: 400 12.5px var(--mono); color: var(--ink-3); }
+.ms-lab-note { margin: 10px 0 0; font: 400 12.5px/1.5 var(--sans); color: var(--ink-3); }
+@media (max-width: 900px) { .ms-lab { grid-template-columns: minmax(0, 1fr); } }
+.mission .ms-since.is-ok { color: var(--ok); }
+.mission .ms-since.is-bad { color: var(--fail); }
 /* the shipped phase, proved live: the log's size, read now, its signed head checked in this browser */
 .mission .ms-live { margin-top: 10px; font: 400 12.5px/1.5 var(--sans); color: var(--ink-3); }
 .mission .ms-live [data-n] { font-variant-numeric: tabular-nums; color: var(--ink-2); }

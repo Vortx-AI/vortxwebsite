@@ -16,6 +16,7 @@ recall    facts           POST https://emem.dev/v1/recall {"place":"Cubbon Park,
 resolve   example         POST https://emem.dev/v1/memory_token/resolve {"token":"emem:fact:defi.zb493.yiwo.zcb4e:eheadieomxr2zusgh4nx7mfisrtme23ztjiluyrfve64xoap6hka"}  value=0.767258382642998  band=indices.ndvi  place=Cubbon Park, Bengaluru  captured=2026-06-16
 cite      answer          "NDVI 0.767258382642998, Sentinel-2, captured 2026-06-16 [emem:fact:defi.zb493.yiwo.zcb4e:eheadieo…]": the value verbatim, its capture date, its full token beside it
 read      place           a place is one cell, about 9.55 m × 9.31 m at Bengaluru, not an average over the area its name covers
+hand      another agent   pass the token, never your summary of it; the next agent resolves it itself. emem's recording: 24 hops, two model families, the words rounded then lost their place, the token intact at every hop (https://emem.dev/data/relay-recording.json)
 
 ## rules
 print     values          verbatim, as signed; words may sit beside a value, never replace it; 0.767 for 0.767258382642998 is rounded (echo: drift=rounded), 0.81 is wrong (guard: deny PROV_VALUE)
@@ -28,7 +29,7 @@ gated     launch          no date, deliberately; never state or estimate one; da
 
 ## ladder (fetch only the rung you need)
 plug      https://vortx.ai/llms/plug.txt  size=1847  cid26=ybu26jaxa6dg6f5y34z3jzvq2q  connect: ChatGPT, Claude, Agentforce, VS Code, Dify, MuleSoft, the SDKs, A2A
-pages     https://vortx.ai/llms/pages.txt  size=2404  cid26=7afhqwtwlth2b5pfa47mx4gi4a  every page and section of this site, in the home page's order
+pages     https://vortx.ai/llms/pages.txt  size=2877  cid26=5jeiuryai426nzwhcxbgmw2mmm  every page and section of this site, in the home page's order
 run       https://vortx.ai/llms/run.txt  size=2133  cid26=naaeglwudtxo5jadxm5q5jzjgm  the six devices on the home page, each run end to end
 ask       https://vortx.ai/llms/ask.txt  size=1717  cid26=fvewah6o3jwdqaiyn6okhsqvxy  the calls behind "Try @emem" and the drift check: recall, ask, guard, echo
 encode    https://vortx.ai/llms/encode.txt  size=1451  cid26=45y34pj7xmjz5dnaj2hkk7f6oi  your file or device: the same note the page writes

@@ -29,16 +29,17 @@ Words: every verb on vortx.ai means one thing; the meanings are one note, named 
 
 ## pages
 
-One structure for people and agents; https://vortx.ai/llms/pages.txt lists the same sections. The home page is one story in seven chapters.
+One structure for people and agents; https://vortx.ai/llms/pages.txt lists the same sections. The home page is one story in eight chapters.
 
 - **see** `/` · the promise and the live Earth; @emem decodes one signed fact per visit (Cubbon Park, Bengaluru, NDVI)
 - **why** `/#why` · 01 the problem: a 351.0 MB scene no agent can read; two drafts checked live, one paraphrased (caught), one cited (passes)
 - **run** `/#how` (alias `/#run`) · 02 how it works: keep, encode, send, decode, check, filled live by one device's real file
-- **browse** `/#samples` · 03 what it remembers: the ememdemo catalogue, each note re-checked as it loads
-- **start** `/#start` · 04 add @emem to an agent (`/#plug`: MCP `tools/list`, both A2A cards, REST with its ed25519 checked, the SDKs), encode your own files (`/#connect`, nothing uploaded; `tools/emem_point.py` on the device), try @emem here (`/#decode`)
-- **build** `/#products` · 05 emem.dev (live, free) · geo.qa (private tenancy) · eudr.dev and propcheck.dev (in testing)
-- **plan** `/#plan` · 06 the plan, deliberately without a date
-- **join** `/#build` (alias `/#book`) · 07 build with us: encode your own data, read and try to break the code, sign at capture; free office hours, a person books
+- **pass** `/#agents` · 03 many agents: emem's recording of one signed reading passed 24 hops between two model families, as words (rounded, then its place lost) and as a token (intact at every hop); a note two agents wrote for each other, checked three ways (bytes, author, log inclusion); who writes on the channel (`GET https://emem.dev/v1/agents`)
+- **browse** `/#samples` · 04 what it remembers: the ememdemo catalogue, each note re-checked as it loads
+- **start** `/#start` · 05 add @emem to an agent (`/#plug`: MCP `tools/list`, both A2A cards, REST with its ed25519 checked, the SDKs), encode your own files (`/#connect`, nothing uploaded; `tools/emem_point.py` on the device), try @emem here (`/#decode`)
+- **build** `/#products` · 06 emem.dev (live, free) · geo.qa (private tenancy) · eudr.dev and propcheck.dev (in testing)
+- **plan** `/#plan` · 07 the plan, deliberately without a date; the payload's trace rule runs live against emem's test trace (`POST https://emem.dev/v1/trace_verify`)
+- **join** `/#build` (alias `/#book`) · 08 build with us: encode your own data, read and try to break the code, sign at capture; free office hours, a person books
 - **open** `/?s=<cid>` · any sample, opened on the page from a globe pin or a card, run end to end, its picture drawn from bytes checked here
 - **news** `/press/` · every release, upgrade and listing, dated, each date re-read live from its own record; as data: `/data/timeline.json`
 - **watch** `/press/#watch` · the story on camera from the Seraphim Space pitch (Vimeo, 19 Jun 2025), in five chapters, each video dated by its platform

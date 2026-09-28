@@ -408,7 +408,9 @@ a.door:hover { background: var(--panel-2); }
 .ch-live .kv { font-style: normal; margin-right: 6px; overflow-wrap: anywhere; }
 .ch-live .kv .x { color: var(--ink); }
 .ch-live q.said { display: block; margin: 8px 0; font: 400 18px/1.4 var(--serif); color: var(--ink-2); quotes: '\201C' '\201D'; }
-.ch-live [data-mark].is-ok { color: var(--ok); }
+.ch-live [data-mark].is-ok, .ch-live .is-ok, .ch-live.is-ok { color: var(--ok); }
+.ch-live .is-warn { color: var(--claim); }
+.ch-live.is-bad { color: var(--fail); }
 
 /* ---------- plan ---------- */
 .plan { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin: 0; padding: 0; border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
@@ -485,7 +487,7 @@ a.door:hover { background: var(--panel-2); }
   .plan > li:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
   .vx-foot .cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
-@media (max-width: 860px) {
+@media (max-width: 900px) {
   .vx-nav { display: none; position: fixed; top: 60px; left: 0; right: 0; flex-direction: column; align-items: stretch; gap: 0; margin: 0; padding: 8px 12px 14px; background: var(--void); border-bottom: 1px solid var(--line-2); box-shadow: 0 24px 48px rgba(0, 0, 0, .6); }
   /* open, the menu dims the page under it */
   .vx-nav.is-open { display: flex; box-shadow: 0 24px 48px rgba(0, 0, 0, .6), 0 100vh 0 100vh rgba(4, 7, 11, .62); }
@@ -515,6 +517,8 @@ a.door:hover { background: var(--panel-2); }
   .lg-row .lg-bar { grid-column: 1 / -1; grid-row: 2; }
   .vx-foot .cols { grid-template-columns: 1fr 1fr; }
 }
+/* a mid-size screen keeps every link on one line: tighter links before the menu folds away at 900 px */
+@media (min-width: 901px) and (max-width: 1120px) { .vx-top .wrap { gap: 14px; } .vx-nav { margin-left: 0; } .vx-nav a { padding: 7px 7px; font-size: 13px; } .vx .vx-cta { margin-right: 2px; } }
 /* a narrow phone keeps all four in the bar: tighter gaps first, then the logo without its wordmark */
 @media (max-width: 400px) { .vx-top .wrap { gap: 6px; } .vx .vx-cta { margin-right: 2px; padding: 0 12px; } .vx .vx-toggle { padding: 0 10px; } }
 @media (max-width: 370px) { .vx-brand span { display: none; } }
