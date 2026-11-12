@@ -19,18 +19,23 @@
   if (!root || !window.vx) return;
   var grid = root.querySelector('.sc-grid'), chips = root.querySelector('.sc-f'), more = root.querySelector('[data-more]');
   var NOTE = function (cid) { return 'https://emem.dev/memories/by_attester/ddzmyzhn/' + cid + '.md'; };
+  // every catalogue section the cards can run, not only the planet: model weights, medical images, code
+  // and papers were left out, so the page read as satellites alone
   var GROUP = { earth: 'Earth', disaster: 'Earth', cities: 'Earth', wildlife: 'Earth', mines: 'Earth', government: 'Earth', archives: 'Earth', places: 'Earth',
-    space: 'Space', robotics: 'Machines', drones: 'Machines', cameras: 'Machines', gatherings: 'Machines', '3d': 'Machines' };
+    space: 'Space', robotics: 'Machines', drones: 'Machines', cameras: 'Machines', gatherings: 'Machines', '3d': 'Machines',
+    models: 'Models', medical: 'Medicine', code: 'Code', documents: 'Documents' };
   var KEEP = { machine: 'machine', 'third-party': 'third party', combined: 'combined', human: 'human' };
   var KEEP_T = { machine: 'signed by a system', 'third party': 'a publisher’s file', combined: 'joined from several', human: 'a person’s file' };
   var filter = root.getAttribute('data-filter') || 'All', items = [], thumbs = {}, pics = {}, expanded = false;
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-  // first, six that add to the story rather than repeat it: a galaxy, a forest frontier, a delta, a fire, a mine,
-  // and the robot's own camera (the hero shows it only as a closed card)
-  var FIRST = ['4uweu43yaiik2mw5nc4eznztbu', 'gkc2jap4r47zgs4t2sja4qderu', 'sm45gry43cubuqjp2cpu5bit6i', 'ota6xerxrqzya5txb4jxvzpb2q', 'fdobixnnucctqkn2qtii7kibyq', 'qcoylkllqzfqnsinn4af5i2mi4'];
+  // first, six that are not satellite pictures, so nobody reads emem as an NDVI service: a CT slice, GPT-2's
+  // weights, the robot's own camera, a code repository, a train as 3D splats and a paper, those with a saved
+  // picture between those without; the planet follows
+  var FIRST = ['elk3oajsbjlws4ad4up7ha7rey', 'amii4tnpkfoofsyzrbbs2vxsj4', 'qcoylkllqzfqnsinn4af5i2mi4', '5otn33skohjocfbhychddlovme', 'qfclw5qafxejoqabrtnjlqbvxu', '5k4rsdbh3oe3zudjanr42mh6wy'];
   // what each catalogue section is, in a word a visitor knows
   var SEC = { earth: 'Earth', disaster: 'Disaster', cities: 'City', wildlife: 'Wildlife', mines: 'Mine', government: 'Government', archives: 'Archive', places: 'Place',
-    space: 'Space', robotics: 'Robot', drones: 'Drone', cameras: 'Camera', gatherings: 'Gathering', '3d': '3D' };
+    space: 'Space', robotics: 'Robot', drones: 'Drone', cameras: 'Camera', gatherings: 'Gathering', '3d': '3D',
+    models: 'Models', medical: 'Medicine', code: 'Code', documents: 'Documents' };
   var moreBtn = root.querySelector('[data-more-cards]');
 
   /* the ememdemo token estimate (emem.mjs count, tok) */
@@ -199,7 +204,7 @@
       // the page's own samples first, then pictures, as the demo leads with them
       var rank = function (x) { var i = FIRST.indexOf(x.cid); return i >= 0 ? i : FIRST.length + (thumbs[x.cid] ? 0 : 1); };
       items.sort(function (a, b) { return rank(a) - rank(b); });
-      var groups = ['All'].concat(['Earth', 'Space', 'Machines'].filter(function (g) { return items.some(function (x) { return x.group === g; }); }));
+      var groups = ['All'].concat(['Models', 'Medicine', 'Code', 'Documents', 'Machines', 'Earth', 'Space'].filter(function (g) { return items.some(function (x) { return x.group === g; }); }));
       chips.innerHTML = '';
       groups.forEach(function (g) {
         var b = el('button', 'chip', g); b.type = 'button';

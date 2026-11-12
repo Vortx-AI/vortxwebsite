@@ -13,7 +13,8 @@
   var el = E.el, KEEP = { machine: 'machine', 'third-party': 'third party', combined: 'combined', human: 'human' };
   // the same plain words the gallery cards use: what the sample is, and who keeps its file
   var SEC = { earth: 'Earth', disaster: 'Disaster', cities: 'City', wildlife: 'Wildlife', mines: 'Mine', government: 'Government', archives: 'Archive', places: 'Place',
-    space: 'Space', robotics: 'Robot', drones: 'Drone', cameras: 'Camera', gatherings: 'Gathering', '3d': '3D' };
+    space: 'Space', robotics: 'Robot', drones: 'Drone', cameras: 'Camera', gatherings: 'Gathering', '3d': '3D',
+    models: 'Models', medical: 'Medicine', code: 'Code', documents: 'Documents' };
   var KEEP_T = { machine: 'signed by a system', 'third party': 'a publisher’s file', combined: 'joined from several', human: 'a person’s file' };
   var ORDER = ['indices.ndvi', 'copdem30m.elevation_mean', 'weather.temperature_2m', 'cams.pm25', 'hansen.tree_cover_2000', 'modis.lst_day_8day', 'soilgrids.phh2o_0_30cm', 'overture.buildings.count'];
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
