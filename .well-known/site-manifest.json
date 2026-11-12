@@ -1,8 +1,8 @@
 {
   "schema": "vortx.site_manifest.v1",
-  "cid": "rrwzi35uwmspwbb7b75rijuxkjytttcdfykxtvvz3tqibye5ierq",
-  "commit": "ba3431b7bd5b9f29fe45403dbc25ba60e2687769",
-  "generated_at": "2026-09-28T19:32:53Z",
+  "cid": "u4s646qtq6mcgrqykiozlbw5pt3qjpo75ivtyqdbjm7ghrrujauq",
+  "commit": "56477b35cef72dc7fa036af3db1fdd9444b79f60",
+  "generated_at": "2026-11-12T20:12:34Z",
   "files": {
     ".nojekyll": {
       "blake3": "v4jutopv7gq2nicajxvdnxgjjgn4wjojvxarfn6mtkj4vza7gjra",
@@ -637,8 +637,8 @@
       "bytes": 77121
     },
     "index.html": {
-      "blake3": "rwvp2mchhxdbhzekzsvmj3gje4iiublicjriqh3vleswllkmd2lq",
-      "bytes": 62928
+      "blake3": "nbtpbfft7tyksjebbf3fy4z3dmgbus643n4jusgnvwakngzx7n3a",
+      "bytes": 63754
     },
     "js/agents.js": {
       "blake3": "opkegrbp6gyyjgl7lv62vj3ajcjnrtiegbdt2q3ft3wcoapg3gra",
@@ -701,8 +701,8 @@
       "bytes": 6380
     },
     "js/pop.js": {
-      "blake3": "xru5zh3iutvzalwpaquvpggbeeo25zme4htoxjhxj65uxrxerr4q",
-      "bytes": 22120
+      "blake3": "mqocdm3zoh2rzm2l3qge3v634fgdsu6t7p3e3tx6gfpvca2dlymq",
+      "bytes": 22201
     },
     "js/press.js": {
       "blake3": "b4qjansv23fylfjww7i2fiogsurcymid63qeqntpowfdifbekfiq",
@@ -721,8 +721,8 @@
       "bytes": 14620
     },
     "js/samples.js": {
-      "blake3": "x7atomhwyzatrd6ynzvbj2bw2bweondatu5ckmba5q567yxpc2fq",
-      "bytes": 16717
+      "blake3": "zkeuxbrjo34f36uyt2o6hkxii7mr7tzpl73wlsqxsd5e5zhct7aq",
+      "bytes": 17181
     },
     "js/site.js": {
       "blake3": "f646kcuyzzwlcjrd6sweqz6wnbecnpoyicorcelqpbjkovkswhmq",
